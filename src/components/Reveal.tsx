@@ -30,7 +30,7 @@ export function Reveal({ children, delay = 0, className = "", as = "div" }: Reve
           }
         });
       },
-      { threshold: 0.12 },
+      { threshold: 0.05, rootMargin: "0px 0px -10% 0px" },
     );
     obs.observe(el);
     return () => obs.disconnect();
