@@ -9,21 +9,28 @@ interface RevealProps {
 
 export function Reveal({ children, delay = 0, className = "", as = "div" }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
-  const [visible, setVisible] = useState(false);
+  // Start visible by default (covers SSR + first paint). We only HIDE if we can
+  // confirm in the browser that the element is below the fold.
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof IntersectionObserver === "undefined") return;
     const el = ref.current;
     if (!el) return;
+    const rect = el.getBoundingClientRect();
+    // Only hide-then-animate for elements that start below the viewport.
+    if (rect.top < window.innerHeight - 60) return;
+    setHidden(true);
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisible(true);
+            setHidden(false);
             obs.disconnect();
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.12 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -34,9 +41,11 @@ export function Reveal({ children, delay = 0, className = "", as = "div" }: Reve
     {
       ref,
       className,
-      style: visible
-        ? { animation: `fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms forwards` }
-        : { opacity: 0 },
+      style: hidden
+        ? { opacity: 0 }
+        : {
+            animation: `fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms both`,
+          },
     },
     children,
   );
