@@ -124,7 +124,7 @@ function SpeakerDetail() {
           Conferencias insignia
         </h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {speaker.charlas.map((c, i) => (
+          {speaker.charlas.map((c: string, i: number) => (
             <Reveal key={c} delay={i * 80}>
               <div className="group h-full border-l-2 border-foreground/15 pl-6 transition-colors hover:border-brand">
                 <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
