@@ -93,16 +93,16 @@ function Home() {
           </Reveal>
 
           <Reveal delay={600}>
-            <div className="mt-24 grid grid-cols-2 gap-8 md:grid-cols-4">
+            <div className="mt-24 grid grid-cols-2 gap-px overflow-hidden border-y border-foreground/15 bg-foreground/15 md:grid-cols-4">
               {[
                 ["+1.500", "Conferencias dictadas"],
                 ["14", "Países"],
                 ["+500K", "Vidas impactadas"],
                 ["5", "Voces curadas"],
               ].map(([n, l]) => (
-                <div key={l}>
+                <div key={l} className="bg-background px-2 py-6">
                   <div className="font-display text-4xl md:text-5xl">{n}</div>
-                  <div className="mt-2 text-xs uppercase tracking-widest text-muted-foreground">
+                  <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {l}
                   </div>
                 </div>
