@@ -84,7 +84,7 @@ function SpeakerDetail() {
                 {speaker.nombre}
               </h1>
               <div className="mt-6 flex flex-wrap gap-2">
-                {speaker.tematicas.map((t) => (
+                {speaker.tematicas.map((t: string) => (
                   <span key={t} className="bubble bubble-yellow">
                     {t}
                   </span>
