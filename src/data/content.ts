@@ -1,13 +1,13 @@
-import julianImg from "@/assets/speaker-julian.jpg";
-import carlosImg from "@/assets/speaker-carlos.jpg";
-import valentinaImg from "@/assets/speaker-valentina.jpg";
-import sofiaImg from "@/assets/speaker-sofia.jpg";
-import andresImg from "@/assets/speaker-andres.jpg";
+import julianImg from "@/assets/speaker-julian-giraldo.png";
+import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
+import elaineImg from "@/assets/speaker-elaine-miranda.png";
+import paolaImg from "@/assets/speaker-paola-aldaz.jpg";
+import williamImg from "@/assets/speaker-william-vinasco.webp";
 
 import bookMilagrosamente from "@/assets/book-milagrosamente.jpg";
 import bookClientesFans from "@/assets/book-clientes-fans.jpg";
-import bookLiderazgo from "@/assets/book-liderazgo.jpg";
-import bookFuturoTrabajo from "@/assets/book-futuro-trabajo.jpg";
+import bookMujeresFinanzas from "@/assets/book-mujeres-finanzas.jpg";
+import bookBrandExponential from "@/assets/book-brand-exponential.jpg";
 
 export interface Speaker {
   slug: string;
@@ -40,105 +40,95 @@ export interface Book {
 
 export const speakers: Speaker[] = [
   {
-    slug: "julian-giraldo",
-    nombre: "Julián Giraldo",
-    especialidad: "MilagrosaMENTE bien",
-    foto: julianImg,
-    bio: "Conferencista internacional sobre bienestar mental y resiliencia. Más de 400 conferencias en 14 países, autor del bestseller 'Milagrosamente Bien'. Su charla transforma la manera en que líderes y equipos enfrentan la incertidumbre.",
-    tematicas: ["Bienestar", "Resiliencia", "Liderazgo"],
-    destacado: true,
-    quote:
-      "Cuando te concentras en lo que tienes y no en lo que te hace falta, tienes el poder de hacer milagros.",
-  },
-  {
     slug: "carlos-laguna",
     nombre: "Carlos Laguna",
-    especialidad: "De clientes a fans",
+    especialidad: "Marketing, creatividad & experiencia de cliente",
     foto: carlosImg,
-    bio: "Estratega de experiencia al cliente. 20 años construyendo culturas de servicio en empresas Fortune 500 de LATAM. Su metodología 'Cliente Fan' ha sido adoptada por más de 60 marcas líderes.",
-    tematicas: ["Customer Experience", "Cultura", "Ventas"],
+    bio: "CEO de CPC Group y autor de 'De clientes a fans'. Su trabajo transforma la relación entre marcas y clientes con una mirada provocadora sobre ventas, posicionamiento, creatividad y construcción de experiencias memorables. Estilo directo, cero tolerancia a los discursos vacíos. Creador de Toolkit Talks, evento de marketing y creatividad en Colombia.",
+    tematicas: ["Marketing", "Creatividad", "Ventas", "Experiencia de cliente", "Marca"],
     destacado: true,
-    quote:
-      "El cliente perdona un error, pero jamás perdona tu actitud frente al error.",
+    quote: "El cliente perdona un error, pero jamás perdona tu actitud frente al error.",
   },
   {
-    slug: "valentina-rios",
-    nombre: "Valentina Ríos",
-    especialidad: "Liderazgo radical",
-    foto: valentinaImg,
-    bio: "CEO, autora y conferencista sobre liderazgo femenino y transformación organizacional. Reconocida por Forbes 40 under 40. Sus ponencias combinan datos duros con narrativa íntima.",
-    tematicas: ["Liderazgo", "Diversidad", "Transformación"],
+    slug: "elaine-miranda",
+    nombre: "Elaine Miranda",
+    especialidad: "Bienestar financiero corporativo",
+    foto: elaineImg,
+    bio: "Conferencista internacional, autora del bestseller 'Mujeres y Finanzas' y fundadora de Plata con Plática. Ha transformado la vida financiera de más de 500.000 personas. Con más de 1.500 conferencias en 10 países y una comunidad digital de más de 200.000 seguidores, combina storytelling, neurofinanzas y psicología del comportamiento.",
+    tematicas: ["Bienestar financiero", "Finanzas personales", "Neurofinanzas", "Psicología del comportamiento", "Storytelling"],
     destacado: true,
-    quote: "Liderar no es ocupar el espacio. Es crearlo para que otros crezcan.",
+    quote: "Hablar de dinero con claridad, empatía y acción sin excusas.",
   },
   {
-    slug: "sofia-mendoza",
-    nombre: "Sofía Mendoza",
-    especialidad: "El futuro del trabajo",
-    foto: sofiaImg,
-    bio: "Investigadora del futuro del trabajo y cultura digital. Ex-McKinsey, profesora invitada en IE Business School. Especialista en IA aplicada a equipos humanos.",
-    tematicas: ["Futuro del trabajo", "IA", "Cultura digital"],
-    destacado: false,
-    quote: "La pregunta no es qué reemplazará la IA, sino qué nos hace irremplazables.",
+    slug: "paola-aldaz",
+    nombre: "Paola Aldaz",
+    especialidad: "Marketing exponencial, innovación & transformación digital",
+    foto: paolaImg,
+    bio: "Una de las speakers internacionales más influyentes en innovación, liderazgo y transformación digital en Latinoamérica. Experta en marketing exponencial y autora de 'Brand Exponential'. Head de Marketing & Brand en Keralty; ex VP de Marketing de Mastercard en Colombia y Ecuador.",
+    tematicas: ["Marketing exponencial", "Innovación", "Liderazgo", "Transformación digital", "Marca"],
+    destacado: true,
+    quote: "Las marcas exponenciales no se construyen: se desencadenan.",
   },
   {
-    slug: "andres-villalobos",
-    nombre: "Andrés Villalobos",
-    especialidad: "Pensamiento crítico en la era del ruido",
-    foto: andresImg,
-    bio: "Filósofo, columnista y autor de seis libros sobre ética contemporánea. Sus conferencias son un espacio para repensar las preguntas que dejamos de hacernos.",
-    tematicas: ["Filosofía", "Ética", "Pensamiento crítico"],
+    slug: "julian-giraldo",
+    nombre: "Julián Giraldo",
+    especialidad: "Inspiración, inclusión & propósito",
+    foto: julianImg,
+    bio: "Ingeniero industrial, especialista en Finanzas Corporativas del CESA y magíster en Marketing. Cofundador y VP Estratégico de CPC Group. Tras sobrevivir a un ACV que afectó el 70% de su hemisferio cerebral izquierdo, transformó su historia en propósito. Autor de 'Milagrosa mente bien' y fundador de una iniciativa de discapacidad física e inclusión.",
+    tematicas: ["Resiliencia", "Inclusión", "Propósito", "Liderazgo personal", "Transformación"],
     destacado: false,
-    quote: "La velocidad nos confunde. Pensar bien sigue siendo el verdadero lujo.",
+    quote: "Cuando te concentras en lo que tienes y no en lo que te hace falta, tienes el poder de hacer milagros.",
+  },
+  {
+    slug: "william-vinasco",
+    nombre: "William Vinasco",
+    especialidad: "Comunicación, narración & liderazgo desde la voz",
+    foto: williamImg,
+    bio: "Narrador oficial de la Selección Colombia, empresario, fundador de Radiopolis y figura con más de 50 años de trayectoria. Su propuesta gira alrededor del poder de la voz, la comunicación auténtica, la motivación y reflexiones sobre éxito, felicidad y propósito.",
+    tematicas: ["Comunicación", "Narración", "Liderazgo", "Motivación", "Propósito"],
+    destacado: false,
+    quote: "La voz no se impone: se afina hasta que se vuelve verdad.",
   },
 ];
 
 export const events: EventItem[] = [
   {
     id: "ev-1",
-    titulo: "Cumbre Latam de Liderazgo Consciente",
+    titulo: "Toolkit Talks 2026",
     fecha: "2026-08-14",
     ciudad: "Bogotá",
-    descripcion: "Tres días con los referentes regionales en liderazgo y bienestar.",
-    speakerSlug: "julian-giraldo",
-  },
-  {
-    id: "ev-2",
-    titulo: "Foro Customer Experience 2026",
-    fecha: "2026-09-22",
-    ciudad: "Ciudad de México",
-    descripcion: "Carlos Laguna abre el foro con su keynote 'De clientes a fans'.",
+    descripcion: "Encuentro de marketing y creatividad creado por Carlos Laguna.",
     speakerSlug: "carlos-laguna",
   },
   {
+    id: "ev-2",
+    titulo: "Cumbre de Bienestar Financiero Corporativo",
+    fecha: "2026-09-22",
+    ciudad: "Ciudad de México",
+    descripcion: "Elaine Miranda abre la cumbre con su keynote sobre neurofinanzas aplicadas a equipos.",
+    speakerSlug: "elaine-miranda",
+  },
+  {
     id: "ev-3",
-    titulo: "Women Leadership Summit",
+    titulo: "Brand Exponential Summit",
     fecha: "2026-10-05",
     ciudad: "Madrid",
-    descripcion: "Valentina Ríos junto a un panel internacional de CEOs.",
-    speakerSlug: "valentina-rios",
+    descripcion: "Paola Aldaz lidera una conversación internacional sobre marcas exponenciales.",
+    speakerSlug: "paola-aldaz",
   },
   {
     id: "ev-4",
-    titulo: "AI & Future Work — Conferencia Anual",
+    titulo: "MilagrosaMENTE bien — Conferencia Anual",
     fecha: "2026-11-18",
     ciudad: "Lima",
-    descripcion: "Sofía Mendoza presenta su nueva investigación sobre IA aplicada.",
-    speakerSlug: "sofia-mendoza",
+    descripcion: "Julián Giraldo presenta su charla insignia sobre resiliencia, inclusión y propósito.",
+    speakerSlug: "julian-giraldo",
   },
 ];
 
 export const books: Book[] = [
   {
     id: "b-1",
-    titulo: "Milagrosamente Bien",
-    autorSlug: "julian-giraldo",
-    portada: bookMilagrosamente,
-    descripcion: "Un manifiesto sobre la resiliencia desde la gratitud.",
-    anio: 2024,
-  },
-  {
-    id: "b-2",
     titulo: "De Clientes a Fans",
     autorSlug: "carlos-laguna",
     portada: bookClientesFans,
@@ -146,19 +136,27 @@ export const books: Book[] = [
     anio: 2023,
   },
   {
+    id: "b-2",
+    titulo: "Mujeres y Finanzas",
+    autorSlug: "elaine-miranda",
+    portada: bookMujeresFinanzas,
+    descripcion: "Bestseller sobre bienestar financiero con enfoque humano y práctico.",
+    anio: 2022,
+  },
+  {
     id: "b-3",
-    titulo: "Liderazgo Radical",
-    autorSlug: "valentina-rios",
-    portada: bookLiderazgo,
-    descripcion: "Cómo liderar abriendo espacio en vez de ocuparlo.",
-    anio: 2025,
+    titulo: "Brand Exponential",
+    autorSlug: "paola-aldaz",
+    portada: bookBrandExponential,
+    descripcion: "Marketing exponencial para marcas que quieren crecer sin pedir permiso.",
+    anio: 2024,
   },
   {
     id: "b-4",
-    titulo: "El Futuro del Trabajo",
-    autorSlug: "sofia-mendoza",
-    portada: bookFuturoTrabajo,
-    descripcion: "Una guía pragmática para equipos en transformación.",
+    titulo: "Milagrosa mente bien",
+    autorSlug: "julian-giraldo",
+    portada: bookMilagrosamente,
+    descripcion: "Un manifiesto sobre la resiliencia desde la gratitud y el propósito.",
     anio: 2024,
   },
 ];
