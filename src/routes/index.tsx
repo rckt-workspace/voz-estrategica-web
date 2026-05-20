@@ -264,10 +264,13 @@ function Home() {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <Reveal>
-              <span className="section-badge">03 · Publicaciones</span>
+              <div className="flex items-center gap-4">
+                <span className="section-badge">03 · Publicaciones</span>
+                <div className="h-px flex-1 bg-foreground/15" />
+              </div>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="mt-6 font-display text-5xl uppercase md:text-6xl">
+              <h2 className="mt-8 font-display text-5xl uppercase md:text-6xl">
                 Libros publicados
               </h2>
             </Reveal>
