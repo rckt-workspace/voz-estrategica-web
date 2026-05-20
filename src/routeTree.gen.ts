@@ -9,38 +9,104 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpeakersRouteImport } from './routes/speakers'
+import { Route as LibrosRouteImport } from './routes/libros'
+import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 
+const SpeakersRoute = SpeakersRouteImport.update({
+  id: '/speakers',
+  path: '/speakers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibrosRoute = LibrosRouteImport.update({
+  id: '/libros',
+  path: '/libros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SpeakersRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/eventos': typeof EventosRoute
+  '/libros': typeof LibrosRoute
+  '/speakers': typeof SpeakersRouteWithChildren
+  '/speakers/$slug': typeof SpeakersSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/eventos': typeof EventosRoute
+  '/libros': typeof LibrosRoute
+  '/speakers': typeof SpeakersRouteWithChildren
+  '/speakers/$slug': typeof SpeakersSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/eventos': typeof EventosRoute
+  '/libros': typeof LibrosRoute
+  '/speakers': typeof SpeakersRouteWithChildren
+  '/speakers/$slug': typeof SpeakersSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/eventos' | '/libros' | '/speakers' | '/speakers/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/eventos' | '/libros' | '/speakers' | '/speakers/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/eventos'
+    | '/libros'
+    | '/speakers'
+    | '/speakers/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EventosRoute: typeof EventosRoute
+  LibrosRoute: typeof LibrosRoute
+  SpeakersRoute: typeof SpeakersRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/speakers': {
+      id: '/speakers'
+      path: '/speakers'
+      fullPath: '/speakers'
+      preLoaderRoute: typeof SpeakersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/libros': {
+      id: '/libros'
+      path: '/libros'
+      fullPath: '/libros'
+      preLoaderRoute: typeof LibrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +114,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/speakers/$slug': {
+      id: '/speakers/$slug'
+      path: '/$slug'
+      fullPath: '/speakers/$slug'
+      preLoaderRoute: typeof SpeakersSlugRouteImport
+      parentRoute: typeof SpeakersRoute
+    }
   }
 }
 
+interface SpeakersRouteChildren {
+  SpeakersSlugRoute: typeof SpeakersSlugRoute
+}
+
+const SpeakersRouteChildren: SpeakersRouteChildren = {
+  SpeakersSlugRoute: SpeakersSlugRoute,
+}
+
+const SpeakersRouteWithChildren = SpeakersRoute._addFileChildren(
+  SpeakersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EventosRoute: EventosRoute,
+  LibrosRoute: LibrosRoute,
+  SpeakersRoute: SpeakersRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
