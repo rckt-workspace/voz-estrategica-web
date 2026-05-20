@@ -331,7 +331,7 @@ function Home() {
               ¿Tu evento necesita una voz que se recuerde?
             </h2>
             <p className="relative mx-auto mt-6 max-w-xl text-foreground/80 md:text-lg">
-              Contános el contexto y te armamos una propuesta a medida en menos
+              Cuéntanos el contexto y te armamos una propuesta a medida en menos
               de 48 horas.
             </p>
             <Link

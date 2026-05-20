@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { speakers } from "@/data/content";
 
 const schema = z.object({
-  organizacion: z.string().min(2, "Indicá tu organización").max(200),
+  organizacion: z.string().min(2, "Indica tu organización").max(200),
   contacto: z.string().min(2, "Tu nombre, por favor").max(120),
   email: z.string().email("Email inválido").max(200),
   telefono: z.string().max(40).optional().or(z.literal("")),
@@ -17,7 +17,7 @@ const schema = z.object({
   speaker: z.string().optional().or(z.literal("")),
   tipo_evento: z.string().max(120).optional().or(z.literal("")),
   presupuesto: z.string().max(120).optional().or(z.literal("")),
-  mensaje: z.string().min(10, "Contanos un poco más (mín. 10 caracteres)").max(2000),
+  mensaje: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)").max(2000),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/contratar")({
       {
         name: "description",
         content:
-          "Solicitá una propuesta a medida en menos de 48 horas. Contános el contexto de tu evento.",
+          "Solicita una propuesta a medida en menos de 48 horas. Cuéntanos el contexto de tu evento.",
       },
       { property: "og:title", content: "Contratar Speaker — Voz Estratégica" },
       {
@@ -76,7 +76,7 @@ function ContratarPage() {
     });
 
     if (error) {
-      toast.error("No pudimos enviar tu solicitud. Probá de nuevo.");
+      toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
       return;
     }
     toast.success(
@@ -93,7 +93,7 @@ function ContratarPage() {
         badge="Contratación"
         titulo={
           <>
-            Contános tu{" "}
+            Cuéntanos tu{" "}
             <span className="highlight-yellow">
               <span>evento</span>
               <span />
@@ -173,7 +173,7 @@ function ContratarPage() {
               />
             </Field>
 
-            <Field label="Contanos sobre el evento" error={errors.mensaje?.message}>
+            <Field label="Cuéntanos sobre el evento" error={errors.mensaje?.message}>
               <textarea rows={6} className={input} {...register("mensaje")} />
             </Field>
 

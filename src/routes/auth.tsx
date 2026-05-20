@@ -100,7 +100,7 @@ function AuthPage() {
         >
           {mode === "signin"
             ? "¿Sos nuevo? Crear cuenta"
-            : "¿Ya tenés cuenta? Ingresar"}
+            : "¿Ya tienes cuenta? Ingresar"}
         </button>
       </div>
     </div>

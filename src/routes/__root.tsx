@@ -24,7 +24,7 @@ function NotFoundComponent() {
         <span className="bubble bubble-yellow mb-6">404</span>
         <h1 className="font-display text-6xl uppercase">Página no encontrada</h1>
         <p className="mt-4 text-muted-foreground">
-          Lo que buscás se mudó o nunca existió. Volvé al inicio y seguimos.
+          Lo que buscas se mudó o nunca existió. Vuelve al inicio y seguimos.
         </p>
         <Link to="/" className="bubble bubble-black mt-8 inline-flex">
           Volver al inicio →
