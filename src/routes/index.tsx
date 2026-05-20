@@ -95,10 +95,10 @@ function Home() {
           <Reveal delay={600}>
             <div className="mt-24 grid grid-cols-2 gap-8 md:grid-cols-4">
               {[
-                ["+400", "Conferencias dictadas"],
+                ["+1.500", "Conferencias dictadas"],
                 ["14", "Países"],
-                ["60+", "Marcas activas"],
-                ["12 años", "Curando voces"],
+                ["+500K", "Vidas impactadas"],
+                ["5", "Voces curadas"],
               ].map(([n, l]) => (
                 <div key={l}>
                   <div className="font-display text-4xl md:text-5xl">{n}</div>
@@ -120,10 +120,10 @@ function Home() {
               <span
                 key={`${name}-${i}`}
                 className={`mx-6 font-display text-5xl uppercase md:text-7xl ${
-                  i % 2 === 0 ? "text-foreground/20" : "text-brand"
+                  i % 3 === 0 ? "text-brand" : "text-foreground"
                 }`}
               >
-                {name} ✦
+                {name} <span className="text-brand">✦</span>
               </span>
             ))}
           </div>
@@ -161,9 +161,9 @@ function Home() {
                   loading="lazy"
                   width={768}
                   height={1024}
-                  className="absolute inset-0 h-full w-full object-cover grayscale transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-background">
                   <div className="text-xs font-bold uppercase tracking-widest text-brand">
                     {s.especialidad}
