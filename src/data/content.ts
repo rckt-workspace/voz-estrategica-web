@@ -4,10 +4,10 @@ import elaineImg from "@/assets/speaker-elaine-miranda.png";
 import paolaImg from "@/assets/speaker-paola-aldaz.jpg";
 import williamImg from "@/assets/speaker-william-vinasco.webp";
 
-import bookMilagrosamente from "@/assets/book-milagrosamente.jpg";
-import bookClientesFans from "@/assets/book-clientes-fans.jpg";
-import bookMujeresFinanzas from "@/assets/book-mujeres-finanzas.jpg";
-import bookBrandExponential from "@/assets/book-brand-exponential.jpg";
+import bookMilagrosamente from "@/assets/book-milagrosamente.webp";
+import bookClientesFans from "@/assets/book-clientes-fans.webp";
+import bookMujeresFinanzas from "@/assets/book-mujeres-finanzas-new.jpg";
+import bookBrandExponential from "@/assets/book-brand-exponential-new.jpg";
 
 export interface Speaker {
   slug: string;
