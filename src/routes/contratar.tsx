@@ -131,14 +131,30 @@ function ContratarPage() {
 
             <div className="grid gap-6 md:grid-cols-2">
               <Field label="Speaker preferido" error={errors.speaker?.message}>
-                <select className={input} {...register("speaker")} defaultValue={prefSpeaker ?? ""}>
-                  <option value="">Sin preferencia</option>
-                  {speakers.map((s) => (
-                    <option key={s.slug} value={s.slug}>
-                      {s.nombre}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    className={`${input} appearance-none pr-12 cursor-pointer`}
+                    {...register("speaker")}
+                    defaultValue={prefSpeaker ?? ""}
+                  >
+                    <option value="">Sin preferencia</option>
+                    {speakers.map((s) => (
+                      <option key={s.slug} value={s.slug}>
+                        {s.nombre}
+                      </option>
+                    ))}
+                  </select>
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 20 20"
+                    className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 8l5 5 5-5" />
+                  </svg>
+                </div>
               </Field>
               <Field label="Tipo de evento" error={errors.tipo_evento?.message}>
                 <input
