@@ -9,24 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SpeakersRouteImport } from './routes/speakers'
 import { Route as LibrosRouteImport } from './routes/libros'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ContratarRouteImport } from './routes/contratar'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 
-const SpeakersRoute = SpeakersRouteImport.update({
-  id: '/speakers',
-  path: '/speakers',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LibrosRoute = LibrosRouteImport.update({
   id: '/libros',
   path: '/libros',
@@ -57,15 +52,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpeakersIndexRoute = SpeakersIndexRouteImport.update({
+  id: '/speakers/',
+  path: '/speakers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
 const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => SpeakersRoute,
+  id: '/speakers/$slug',
+  path: '/speakers/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
   id: '/speakers',
@@ -90,12 +90,12 @@ export interface FileRoutesByFullPath {
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
-  '/speakers': typeof SpeakersRouteWithChildren
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/speakers/': typeof SpeakersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -103,12 +103,12 @@ export interface FileRoutesByTo {
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
-  '/speakers': typeof SpeakersRouteWithChildren
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/speakers': typeof SpeakersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -118,12 +118,12 @@ export interface FileRoutesById {
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
-  '/speakers': typeof SpeakersRouteWithChildren
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/speakers/': typeof SpeakersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -134,12 +134,12 @@ export interface FileRouteTypes {
     | '/contratar'
     | '/eventos'
     | '/libros'
-    | '/speakers'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
     | '/speakers/$slug'
     | '/admin/'
+    | '/speakers/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -147,12 +147,12 @@ export interface FileRouteTypes {
     | '/contratar'
     | '/eventos'
     | '/libros'
-    | '/speakers'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
     | '/speakers/$slug'
     | '/admin'
+    | '/speakers'
   id:
     | '__root__'
     | '/'
@@ -161,12 +161,12 @@ export interface FileRouteTypes {
     | '/contratar'
     | '/eventos'
     | '/libros'
-    | '/speakers'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
     | '/speakers/$slug'
     | '/admin/'
+    | '/speakers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -176,18 +176,12 @@ export interface RootRouteChildren {
   ContratarRoute: typeof ContratarRoute
   EventosRoute: typeof EventosRoute
   LibrosRoute: typeof LibrosRoute
-  SpeakersRoute: typeof SpeakersRouteWithChildren
+  SpeakersSlugRoute: typeof SpeakersSlugRoute
+  SpeakersIndexRoute: typeof SpeakersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/speakers': {
-      id: '/speakers'
-      path: '/speakers'
-      fullPath: '/speakers'
-      preLoaderRoute: typeof SpeakersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/libros': {
       id: '/libros'
       path: '/libros'
@@ -230,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/speakers/': {
+      id: '/speakers/'
+      path: '/speakers'
+      fullPath: '/speakers/'
+      preLoaderRoute: typeof SpeakersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
@@ -239,10 +240,10 @@ declare module '@tanstack/react-router' {
     }
     '/speakers/$slug': {
       id: '/speakers/$slug'
-      path: '/$slug'
+      path: '/speakers/$slug'
       fullPath: '/speakers/$slug'
       preLoaderRoute: typeof SpeakersSlugRouteImport
-      parentRoute: typeof SpeakersRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/speakers': {
       id: '/admin/speakers'
@@ -284,18 +285,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface SpeakersRouteChildren {
-  SpeakersSlugRoute: typeof SpeakersSlugRoute
-}
-
-const SpeakersRouteChildren: SpeakersRouteChildren = {
-  SpeakersSlugRoute: SpeakersSlugRoute,
-}
-
-const SpeakersRouteWithChildren = SpeakersRoute._addFileChildren(
-  SpeakersRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -303,8 +292,19 @@ const rootRouteChildren: RootRouteChildren = {
   ContratarRoute: ContratarRoute,
   EventosRoute: EventosRoute,
   LibrosRoute: LibrosRoute,
-  SpeakersRoute: SpeakersRouteWithChildren,
+  SpeakersSlugRoute: SpeakersSlugRoute,
+  SpeakersIndexRoute: SpeakersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

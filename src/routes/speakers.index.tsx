@@ -5,7 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { speakers, tematicas } from "@/data/content";
 
-export const Route = createFileRoute("/speakers")({
+export const Route = createFileRoute("/speakers/")({
   head: () => ({
     meta: [
       { title: "Speakers — Voz Estratégica" },
