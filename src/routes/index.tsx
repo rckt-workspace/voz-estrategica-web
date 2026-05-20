@@ -222,10 +222,13 @@ function Home() {
         />
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
-            <span className="section-badge section-badge-dark">02 · Agenda</span>
+            <div className="flex items-center gap-4">
+              <span className="section-badge section-badge-dark">02 · Agenda</span>
+              <div className="h-px flex-1 bg-background/15" />
+            </div>
           </Reveal>
           <Reveal delay={100}>
-            <h2 className="mt-6 font-display text-5xl uppercase md:text-8xl">
+            <h2 className="mt-8 font-display text-5xl uppercase md:text-8xl">
               Próximos eventos
             </h2>
           </Reveal>
