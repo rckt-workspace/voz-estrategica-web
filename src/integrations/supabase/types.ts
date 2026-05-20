@@ -14,16 +14,225 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      booking_requests: {
+        Row: {
+          contacto: string
+          created_at: string
+          email: string
+          estado: string
+          fecha_evento: string | null
+          id: string
+          mensaje: string | null
+          organizacion: string
+          presupuesto: string | null
+          speaker_id: string | null
+          telefono: string | null
+          tipo_evento: string | null
+        }
+        Insert: {
+          contacto: string
+          created_at?: string
+          email: string
+          estado?: string
+          fecha_evento?: string | null
+          id?: string
+          mensaje?: string | null
+          organizacion: string
+          presupuesto?: string | null
+          speaker_id?: string | null
+          telefono?: string | null
+          tipo_evento?: string | null
+        }
+        Update: {
+          contacto?: string
+          created_at?: string
+          email?: string
+          estado?: string
+          fecha_evento?: string | null
+          id?: string
+          mensaje?: string | null
+          organizacion?: string
+          presupuesto?: string | null
+          speaker_id?: string | null
+          telefono?: string | null
+          tipo_evento?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_requests_speaker_id_fkey"
+            columns: ["speaker_id"]
+            isOneToOne: false
+            referencedRelation: "speakers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      books: {
+        Row: {
+          anio: number | null
+          autor_speaker_id: string | null
+          created_at: string
+          descripcion: string | null
+          id: string
+          link_compra: string | null
+          portada_url: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          anio?: number | null
+          autor_speaker_id?: string | null
+          created_at?: string
+          descripcion?: string | null
+          id?: string
+          link_compra?: string | null
+          portada_url?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          anio?: number | null
+          autor_speaker_id?: string | null
+          created_at?: string
+          descripcion?: string | null
+          id?: string
+          link_compra?: string | null
+          portada_url?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "books_autor_speaker_id_fkey"
+            columns: ["autor_speaker_id"]
+            isOneToOne: false
+            referencedRelation: "speakers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          ciudad: string
+          created_at: string
+          descripcion: string | null
+          fecha: string
+          id: string
+          imagen_url: string | null
+          speaker_id: string | null
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ciudad: string
+          created_at?: string
+          descripcion?: string | null
+          fecha: string
+          id?: string
+          imagen_url?: string | null
+          speaker_id?: string | null
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ciudad?: string
+          created_at?: string
+          descripcion?: string | null
+          fecha?: string
+          id?: string
+          imagen_url?: string | null
+          speaker_id?: string | null
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_speaker_id_fkey"
+            columns: ["speaker_id"]
+            isOneToOne: false
+            referencedRelation: "speakers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      speakers: {
+        Row: {
+          bio: string | null
+          created_at: string
+          destacado: boolean
+          especialidad: string
+          foto_url: string | null
+          id: string
+          nombre: string
+          orden: number
+          slug: string
+          tematicas: string[]
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string
+          destacado?: boolean
+          especialidad: string
+          foto_url?: string | null
+          id?: string
+          nombre: string
+          orden?: number
+          slug: string
+          tematicas?: string[]
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string
+          destacado?: boolean
+          especialidad?: string
+          foto_url?: string | null
+          id?: string
+          nombre?: string
+          orden?: number
+          slug?: string
+          tematicas?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +359,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const
