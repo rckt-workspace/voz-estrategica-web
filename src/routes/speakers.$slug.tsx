@@ -17,12 +17,13 @@ export const Route = createFileRoute("/speakers/$slug")({
   head: ({ loaderData }) => {
     const s = loaderData?.speaker;
     if (!s) return { meta: [] };
+    const bioText = s.bio.join(" ");
     return {
       meta: [
         { title: `${s.nombre} — Voz Estratégica` },
-        { name: "description", content: `${s.nombre}, ${s.especialidad}. ${s.bio.slice(0, 130)}` },
+        { name: "description", content: `${s.nombre}, ${s.especialidad}. ${bioText.slice(0, 130)}` },
         { property: "og:title", content: `${s.nombre} — ${s.especialidad}` },
-        { property: "og:description", content: s.bio.slice(0, 160) },
+        { property: "og:description", content: bioText.slice(0, 160) },
         { property: "og:image", content: s.foto },
       ],
       scripts: [
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/speakers/$slug")({
             "@type": "Person",
             name: s.nombre,
             jobTitle: s.especialidad,
-            description: s.bio,
+            description: bioText,
             image: s.foto,
           }),
         },
