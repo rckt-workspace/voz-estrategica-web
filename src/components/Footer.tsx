@@ -7,7 +7,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
         <div className="grid gap-12 md:grid-cols-3">
           <div>
-            <Logo className="h-14 w-auto" variant="white" />
+            <Logo className="h-14 w-auto" />
             <p className="mt-6 max-w-xs text-sm text-background/70">
               Agencia de speakers. Las voces que cambian la conversación.
             </p>
