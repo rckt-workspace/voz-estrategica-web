@@ -38,8 +38,8 @@ export function Header() {
             <Link
               key={n.to}
               to={n.to}
-              className="rounded-full px-4 py-2 text-sm font-semibold text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
-              activeProps={{ className: "rounded-full px-4 py-2 text-sm font-semibold bg-foreground text-background" }}
+              className="rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
+              activeProps={{ className: "rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider bg-black text-white" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
@@ -71,8 +71,8 @@ export function Header() {
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className="rounded-full px-4 py-3 text-base font-semibold"
-                activeProps={{ className: "rounded-full px-4 py-3 text-base font-semibold bg-foreground text-background" }}
+                className="rounded-full px-4 py-3 text-sm font-semibold uppercase tracking-wider"
+                activeProps={{ className: "rounded-full px-4 py-3 text-sm font-semibold uppercase tracking-wider bg-black text-white" }}
                 activeOptions={{ exact: n.to === "/" }}
               >
                 {n.label}
