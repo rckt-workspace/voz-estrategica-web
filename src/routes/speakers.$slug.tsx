@@ -97,7 +97,7 @@ function SpeakerDetail() {
                 </blockquote>
               ) : null}
               <div className="mt-8 space-y-5 text-lg text-muted-foreground">
-                {speaker.bio.map((p, i) => (
+                {speaker.bio.map((p: string, i: number) => (
                   <p key={i}>{p}</p>
                 ))}
               </div>
