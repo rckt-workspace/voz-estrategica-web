@@ -18,6 +18,9 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
+import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
+import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
+import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 
 const SpeakersRoute = SpeakersRouteImport.update({
   id: '/speakers',
@@ -64,6 +67,21 @@ const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => SpeakersRoute,
 } as any)
+const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
+  id: '/speakers',
+  path: '/speakers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLibrosRoute = AdminLibrosRouteImport.update({
+  id: '/libros',
+  path: '/libros',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventosRoute = AdminEventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,6 +91,9 @@ export interface FileRoutesByFullPath {
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/speakers': typeof SpeakersRouteWithChildren
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/libros': typeof AdminLibrosRoute
+  '/admin/speakers': typeof AdminSpeakersRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -83,6 +104,9 @@ export interface FileRoutesByTo {
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/speakers': typeof SpeakersRouteWithChildren
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/libros': typeof AdminLibrosRoute
+  '/admin/speakers': typeof AdminSpeakersRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -95,6 +119,9 @@ export interface FileRoutesById {
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/speakers': typeof SpeakersRouteWithChildren
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/libros': typeof AdminLibrosRoute
+  '/admin/speakers': typeof AdminSpeakersRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -108,6 +135,9 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/libros'
     | '/speakers'
+    | '/admin/eventos'
+    | '/admin/libros'
+    | '/admin/speakers'
     | '/speakers/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -118,6 +148,9 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/libros'
     | '/speakers'
+    | '/admin/eventos'
+    | '/admin/libros'
+    | '/admin/speakers'
     | '/speakers/$slug'
     | '/admin'
   id:
@@ -129,6 +162,9 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/libros'
     | '/speakers'
+    | '/admin/eventos'
+    | '/admin/libros'
+    | '/admin/speakers'
     | '/speakers/$slug'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -208,14 +244,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeakersSlugRouteImport
       parentRoute: typeof SpeakersRoute
     }
+    '/admin/speakers': {
+      id: '/admin/speakers'
+      path: '/speakers'
+      fullPath: '/admin/speakers'
+      preLoaderRoute: typeof AdminSpeakersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/libros': {
+      id: '/admin/libros'
+      path: '/libros'
+      fullPath: '/admin/libros'
+      preLoaderRoute: typeof AdminLibrosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/eventos': {
+      id: '/admin/eventos'
+      path: '/eventos'
+      fullPath: '/admin/eventos'
+      preLoaderRoute: typeof AdminEventosRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminEventosRoute: typeof AdminEventosRoute
+  AdminLibrosRoute: typeof AdminLibrosRoute
+  AdminSpeakersRoute: typeof AdminSpeakersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminEventosRoute: AdminEventosRoute,
+  AdminLibrosRoute: AdminLibrosRoute,
+  AdminSpeakersRoute: AdminSpeakersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
