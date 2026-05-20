@@ -14,10 +14,12 @@ export interface Speaker {
   nombre: string;
   especialidad: string;
   foto: string;
-  bio: string;
+  bio: string[];
   tematicas: string[];
+  charlas: string[];
   destacado: boolean;
   quote?: string;
+  fuente?: string;
 }
 
 export interface EventItem {
@@ -44,50 +46,95 @@ export const speakers: Speaker[] = [
     nombre: "Carlos Laguna",
     especialidad: "Marketing, creatividad & experiencia de cliente",
     foto: carlosImg,
-    bio: "CEO de CPC Group y autor de 'De clientes a fans'. Su trabajo transforma la relación entre marcas y clientes con una mirada provocadora sobre ventas, posicionamiento, creatividad y construcción de experiencias memorables. Estilo directo, cero tolerancia a los discursos vacíos. Creador de Toolkit Talks, evento de marketing y creatividad en Colombia.",
+    bio: [
+      "CEO de CPC Group y autor de De clientes a fans. Su trabajo se enfoca en transformar la relación entre marcas y clientes, con una mirada provocadora sobre ventas, posicionamiento, creatividad y construcción de experiencias memorables.",
+      "Como speaker de Voz Estratégica, aparece asociado a un estilo directo, provocador y de cero tolerancia a los discursos vacíos. También es creador de Toolkit Talks, evento de marketing y creatividad en Colombia.",
+    ],
     tematicas: ["Marketing", "Creatividad", "Ventas", "Experiencia de cliente", "Marca"],
+    charlas: [
+      "De clientes a fans: cómo construir lealtad real",
+      "Marketing sin discursos vacíos",
+      "Toolkit Talks: creatividad aplicada a negocios",
+    ],
     destacado: true,
     quote: "El cliente perdona un error, pero jamás perdona tu actitud frente al error.",
+    fuente: "https://vozestrategica.com/carlos-laguna/",
   },
   {
     slug: "elaine-miranda",
     nombre: "Elaine Miranda",
     especialidad: "Bienestar financiero corporativo",
     foto: elaineImg,
-    bio: "Conferencista internacional, autora del bestseller 'Mujeres y Finanzas' y fundadora de Plata con Plática. Ha transformado la vida financiera de más de 500.000 personas. Con más de 1.500 conferencias en 10 países y una comunidad digital de más de 200.000 seguidores, combina storytelling, neurofinanzas y psicología del comportamiento.",
+    bio: [
+      "Conferencista internacional, autora y experta en bienestar financiero corporativo. Elaine Miranda es la autora del best-seller Mujeres y Finanzas y fundadora de Plata con Plática; ha transformado la vida financiera de más de 500.000 personas a través de conferencias, talleres, contenido digital y programas corporativos en la región.",
+      "Con más de 1.500 conferencias impartidas en 10 países y una comunidad digital de más de 200.000 seguidores, combina claridad, empatía y estrategia para hablar de dinero con un enfoque humano, práctico y transformador. Su estilo mezcla storytelling, neurofinanzas, psicología del comportamiento y acción sin excusas.",
+    ],
     tematicas: ["Bienestar financiero", "Finanzas personales", "Neurofinanzas", "Psicología del comportamiento", "Storytelling"],
+    charlas: [
+      "Mujeres y finanzas: hablar de dinero sin miedo",
+      "Neurofinanzas aplicadas a equipos de alto desempeño",
+      "Plata con plática: bienestar financiero corporativo",
+    ],
     destacado: true,
     quote: "Hablar de dinero con claridad, empatía y acción sin excusas.",
+    fuente: "https://vozestrategica.com/elaine-miranda/",
   },
   {
     slug: "paola-aldaz",
     nombre: "Paola Aldaz",
     especialidad: "Marketing exponencial, innovación & transformación digital",
     foto: paolaImg,
-    bio: "Una de las speakers internacionales más influyentes en innovación, liderazgo y transformación digital en Latinoamérica. Experta en marketing exponencial y autora de 'Brand Exponential'. Head de Marketing & Brand en Keralty; ex VP de Marketing de Mastercard en Colombia y Ecuador.",
+    bio: [
+      "Reconocida como una de las speakers internacionales más influyentes en innovación, liderazgo y transformación digital en Latinoamérica. Es experta en marketing exponencial y escritora del libro Brand Exponential.",
+      "También aparece asociada a cargos senior de marketing y marca, incluyendo Head de Marketing & Brand en Keralty y experiencia previa como VP de Marketing de Mastercard en Colombia y Ecuador.",
+    ],
     tematicas: ["Marketing exponencial", "Innovación", "Liderazgo", "Transformación digital", "Marca"],
+    charlas: [
+      "Brand Exponential: marcas que crecen sin pedir permiso",
+      "Liderazgo en la era de la transformación digital",
+      "Innovación con propósito en organizaciones globales",
+    ],
     destacado: true,
     quote: "Las marcas exponenciales no se construyen: se desencadenan.",
+    fuente: "https://vozestrategica.com/paola-aldaz/",
   },
   {
     slug: "julian-giraldo",
     nombre: "Julián Giraldo",
     especialidad: "Inspiración, inclusión & propósito",
     foto: julianImg,
-    bio: "Ingeniero industrial, especialista en Finanzas Corporativas del CESA y magíster en Marketing. Cofundador y VP Estratégico de CPC Group. Tras sobrevivir a un ACV que afectó el 70% de su hemisferio cerebral izquierdo, transformó su historia en propósito. Autor de 'Milagrosa mente bien' y fundador de una iniciativa de discapacidad física e inclusión.",
+    bio: [
+      "Ingeniero industrial, especialista en Finanzas Corporativas del CESA y mágister en Marketing de la Universidad Católica. Cofundador y VP Estratégico de CPC Group.",
+      "Tras sobrevivir a un accidente cerebrovascular que afectó el 70% de su hemisferio cerebral izquierdo, transformó su historia en propósito: impulsar conversaciones sobre resiliencia, inclusión, consciencia y segundas oportunidades. Es autor de Milagrosa mente bien y fundador de una iniciativa enfocada en discapacidad física e inclusión.",
+    ],
     tematicas: ["Resiliencia", "Inclusión", "Propósito", "Liderazgo personal", "Transformación"],
+    charlas: [
+      "milagrosaMENTE bien",
+      "ABC de la inclusión",
+      "Segundas oportunidades: liderar desde el propósito",
+    ],
     destacado: false,
     quote: "Cuando te concentras en lo que tienes y no en lo que te hace falta, tienes el poder de hacer milagros.",
+    fuente: "https://vozestrategica.com/julian-giraldo/",
   },
   {
     slug: "william-vinasco",
     nombre: "William Vinasco",
     especialidad: "Comunicación, narración & liderazgo desde la voz",
     foto: williamImg,
-    bio: "Narrador oficial de la Selección Colombia, empresario, fundador de Radiopolis y figura con más de 50 años de trayectoria. Su propuesta gira alrededor del poder de la voz, la comunicación auténtica, la motivación y reflexiones sobre éxito, felicidad y propósito.",
+    bio: [
+      "Narrador oficial de la Selección Colombia, empresario, fundador de Radiopolis y figura con más de 50 años de trayectoria. Su perfil está construido alrededor del poder de la voz, la comunicación y la conexión emocional con las audiencias.",
+      "Como speaker de Voz Estratégica, su propuesta se asocia con experiencia, comunicación auténtica, motivación y reflexiones sobre éxito, felicidad y propósito.",
+    ],
     tematicas: ["Comunicación", "Narración", "Liderazgo", "Motivación", "Propósito"],
+    charlas: [
+      "El poder de la voz en el liderazgo",
+      "Narrar para conectar: comunicación auténtica",
+      "Éxito, felicidad y propósito: 50 años en el micrófono",
+    ],
     destacado: false,
     quote: "La voz no se impone: se afina hasta que se vuelve verdad.",
+    fuente: "https://vozestrategica.com/william_vinasco/",
   },
 ];
 
