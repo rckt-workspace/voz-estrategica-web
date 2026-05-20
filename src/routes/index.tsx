@@ -112,68 +112,93 @@ function Home() {
         </div>
       </section>
 
-      {/* 2. MARQUEE */}
-      <section className="relative -mt-4 overflow-hidden border-y border-foreground/10 bg-background py-8">
-        <div className="-rotate-1">
-          <div className="flex w-[200%] animate-marquee whitespace-nowrap">
-            {marqueeNames.map((name, i) => (
-              <span
-                key={`${name}-${i}`}
-                className={`mx-6 font-display text-5xl uppercase md:text-7xl ${
-                  i % 3 === 0 ? "text-brand" : "text-foreground"
-                }`}
-              >
-                {name} <span className="text-brand">✦</span>
+      {/* 2. MARQUEE — multi-treatment editorial */}
+      <section className="relative -mt-4 overflow-hidden border-y border-foreground/15 bg-background py-10">
+        <div className="flex w-[200%] animate-marquee items-center whitespace-nowrap">
+          {marqueeNames.map((name, i) => {
+            const treatment = i % 4;
+            const cls =
+              treatment === 0
+                ? "text-foreground"
+                : treatment === 1
+                ? "text-brand"
+                : treatment === 2
+                ? "text-transparent [-webkit-text-stroke:1.5px_var(--foreground)]"
+                : "text-foreground/25";
+            return (
+              <span key={`${name}-${i}`} className="flex items-center">
+                <span className={`mx-8 font-display text-5xl uppercase md:text-8xl ${cls}`}>{name}</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  className={`h-7 w-7 md:h-10 md:w-10 shrink-0 ${
+                    treatment % 2 === 0 ? "text-foreground" : "text-brand"
+                  } ${treatment === 3 ? "opacity-20" : ""}`}
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path d="M12 2 L13.2 10.8 L22 12 L13.2 13.2 L12 22 L10.8 13.2 L2 12 L10.8 10.8 Z" />
+                </svg>
               </span>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* 3. SPEAKERS DESTACADOS */}
+      {/* 3. SPEAKERS DESTACADOS — editorial offset grid */}
       <section className="relative mx-auto max-w-7xl px-6 py-28">
         <Reveal>
-          <span className="section-badge">01 · Talento</span>
-        </Reveal>
-        <Reveal delay={100}>
-          <h2 className="mt-6 font-display text-5xl uppercase md:text-7xl">
-            Speakers destacados
-          </h2>
-        </Reveal>
-        <Reveal delay={200}>
-          <p className="mt-6 max-w-xl text-muted-foreground md:text-lg">
-            Una selección curada de las voces que mejor representan lo que
-            hacemos. Cada perfil incluye charlas, libros y agenda.
-          </p>
+          <div className="flex items-center gap-4">
+            <span className="section-badge">01 · Talento</span>
+            <div className="h-px flex-1 bg-foreground/15" />
+          </div>
         </Reveal>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <Reveal delay={100}>
+            <h2 className="font-display text-5xl uppercase leading-[0.85] md:text-7xl">
+              Speakers<br />destacados
+            </h2>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="max-w-sm text-muted-foreground md:text-lg">
+              Una selección curada de las voces que mejor representan lo que
+              hacemos. Cada perfil incluye charlas, libros y agenda.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-20 grid gap-10 md:grid-cols-3">
           {destacados.map((s, i) => (
             <Reveal key={s.slug} delay={i * 80}>
               <Link
                 to="/speakers/$slug"
                 params={{ slug: s.slug }}
-                className="group relative block aspect-[3/4] overflow-hidden rounded-3xl bg-foreground/5"
+                className={`group block ${i === 1 ? "md:mt-24" : ""}`}
               >
-                <img
-                  src={s.foto}
-                  alt={`Retrato de ${s.nombre}`}
-                  loading="lazy"
-                  width={768}
-                  height={1024}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-background">
-                  <div className="text-xs font-bold uppercase tracking-widest text-brand">
-                    {s.especialidad}
+                <div className="relative mb-6 aspect-[3/4] overflow-hidden bg-foreground/5">
+                  <img
+                    src={s.foto}
+                    alt={`Retrato de ${s.nombre}`}
+                    loading="lazy"
+                    width={768}
+                    height={1024}
+                    className="absolute inset-0 h-full w-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                  />
+                  <div className="absolute right-4 top-4 rounded-full bg-background/90 px-3 py-1 font-mono text-[10px] font-bold tracking-widest backdrop-blur">
+                    0{i + 1} / 0{destacados.length}
                   </div>
-                  <div className="mt-2 font-display text-3xl uppercase md:text-4xl">
-                    {s.nombre}
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand">
+                      {s.especialidad}
+                    </div>
+                    <div className="mt-2 font-display text-3xl uppercase leading-none md:text-4xl">
+                      {s.nombre}
+                    </div>
+                    <div className="mt-3 h-px w-0 bg-foreground transition-all duration-500 group-hover:w-full" />
                   </div>
-                  <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold opacity-0 transition-opacity group-hover:opacity-100">
-                    Ver perfil <ArrowUpRight className="h-4 w-4" />
-                  </div>
+                  <ArrowUpRight className="h-5 w-5 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                 </div>
               </Link>
             </Reveal>
@@ -181,7 +206,7 @@ function Home() {
         </div>
 
         <Reveal delay={400}>
-          <div className="mt-12 text-center">
+          <div className="mt-20 text-center">
             <Link to="/speakers" className="bubble bubble-outline">
               Ver todos los speakers →
             </Link>
