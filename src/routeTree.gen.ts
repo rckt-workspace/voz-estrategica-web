@@ -9,38 +9,220 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpeakersRouteImport } from './routes/speakers'
+import { Route as LibrosRouteImport } from './routes/libros'
+import { Route as EventosRouteImport } from './routes/eventos'
+import { Route as ContratarRouteImport } from './routes/contratar'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
+import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
+import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
+import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 
+const SpeakersRoute = SpeakersRouteImport.update({
+  id: '/speakers',
+  path: '/speakers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibrosRoute = LibrosRouteImport.update({
+  id: '/libros',
+  path: '/libros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContratarRoute = ContratarRouteImport.update({
+  id: '/contratar',
+  path: '/contratar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SpeakersRoute,
+} as any)
+const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
+  id: '/speakers',
+  path: '/speakers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLibrosRoute = AdminLibrosRouteImport.update({
+  id: '/libros',
+  path: '/libros',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEventosRoute = AdminEventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/contratar': typeof ContratarRoute
+  '/eventos': typeof EventosRoute
+  '/libros': typeof LibrosRoute
+  '/speakers': typeof SpeakersRouteWithChildren
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/libros': typeof AdminLibrosRoute
+  '/admin/speakers': typeof AdminSpeakersRoute
+  '/speakers/$slug': typeof SpeakersSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/contratar': typeof ContratarRoute
+  '/eventos': typeof EventosRoute
+  '/libros': typeof LibrosRoute
+  '/speakers': typeof SpeakersRouteWithChildren
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/libros': typeof AdminLibrosRoute
+  '/admin/speakers': typeof AdminSpeakersRoute
+  '/speakers/$slug': typeof SpeakersSlugRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/contratar': typeof ContratarRoute
+  '/eventos': typeof EventosRoute
+  '/libros': typeof LibrosRoute
+  '/speakers': typeof SpeakersRouteWithChildren
+  '/admin/eventos': typeof AdminEventosRoute
+  '/admin/libros': typeof AdminLibrosRoute
+  '/admin/speakers': typeof AdminSpeakersRoute
+  '/speakers/$slug': typeof SpeakersSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/contratar'
+    | '/eventos'
+    | '/libros'
+    | '/speakers'
+    | '/admin/eventos'
+    | '/admin/libros'
+    | '/admin/speakers'
+    | '/speakers/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/contratar'
+    | '/eventos'
+    | '/libros'
+    | '/speakers'
+    | '/admin/eventos'
+    | '/admin/libros'
+    | '/admin/speakers'
+    | '/speakers/$slug'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/contratar'
+    | '/eventos'
+    | '/libros'
+    | '/speakers'
+    | '/admin/eventos'
+    | '/admin/libros'
+    | '/admin/speakers'
+    | '/speakers/$slug'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ContratarRoute: typeof ContratarRoute
+  EventosRoute: typeof EventosRoute
+  LibrosRoute: typeof LibrosRoute
+  SpeakersRoute: typeof SpeakersRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/speakers': {
+      id: '/speakers'
+      path: '/speakers'
+      fullPath: '/speakers'
+      preLoaderRoute: typeof SpeakersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/libros': {
+      id: '/libros'
+      path: '/libros'
+      fullPath: '/libros'
+      preLoaderRoute: typeof LibrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contratar': {
+      id: '/contratar'
+      path: '/contratar'
+      fullPath: '/contratar'
+      preLoaderRoute: typeof ContratarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +230,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/speakers/$slug': {
+      id: '/speakers/$slug'
+      path: '/$slug'
+      fullPath: '/speakers/$slug'
+      preLoaderRoute: typeof SpeakersSlugRouteImport
+      parentRoute: typeof SpeakersRoute
+    }
+    '/admin/speakers': {
+      id: '/admin/speakers'
+      path: '/speakers'
+      fullPath: '/admin/speakers'
+      preLoaderRoute: typeof AdminSpeakersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/libros': {
+      id: '/admin/libros'
+      path: '/libros'
+      fullPath: '/admin/libros'
+      preLoaderRoute: typeof AdminLibrosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/eventos': {
+      id: '/admin/eventos'
+      path: '/eventos'
+      fullPath: '/admin/eventos'
+      preLoaderRoute: typeof AdminEventosRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminEventosRoute: typeof AdminEventosRoute
+  AdminLibrosRoute: typeof AdminLibrosRoute
+  AdminSpeakersRoute: typeof AdminSpeakersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminEventosRoute: AdminEventosRoute,
+  AdminLibrosRoute: AdminLibrosRoute,
+  AdminSpeakersRoute: AdminSpeakersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface SpeakersRouteChildren {
+  SpeakersSlugRoute: typeof SpeakersSlugRoute
+}
+
+const SpeakersRouteChildren: SpeakersRouteChildren = {
+  SpeakersSlugRoute: SpeakersSlugRoute,
+}
+
+const SpeakersRouteWithChildren = SpeakersRoute._addFileChildren(
+  SpeakersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ContratarRoute: ContratarRoute,
+  EventosRoute: EventosRoute,
+  LibrosRoute: LibrosRoute,
+  SpeakersRoute: SpeakersRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

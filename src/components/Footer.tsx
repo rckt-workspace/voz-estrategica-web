@@ -1,0 +1,57 @@
+import { Link } from "@tanstack/react-router";
+import { Logo } from "./Logo";
+
+export function Footer() {
+  return (
+    <footer className="relative mt-32 overflow-hidden bg-foreground text-background">
+      <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+        <div className="grid gap-12 md:grid-cols-3">
+          <div>
+            <Logo className="h-14 w-auto" variant="white" />
+            <p className="mt-6 max-w-xs text-sm text-background/70">
+              Agencia de speakers. Las voces que cambian la conversación.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-display text-xs uppercase tracking-widest text-brand">
+              Navegación
+            </h4>
+            <ul className="mt-4 space-y-2 text-base font-semibold">
+              {[
+                ["/speakers", "Speakers"],
+                ["/eventos", "Eventos"],
+                ["/libros", "Libros"],
+                ["/contratar", "Contratar"],
+              ].map(([to, label]) => (
+                <li key={to}>
+                  <Link to={to} className="transition-colors hover:text-brand">
+                    {label} →
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display text-xs uppercase tracking-widest text-brand">
+              Contacto
+            </h4>
+            <ul className="mt-4 space-y-2 text-base">
+              <li>hola@vozestrategica.com</li>
+              <li>+57 300 000 0000</li>
+              <li className="text-background/60">Bogotá · CDMX · Madrid</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-col justify-between gap-4 border-t border-background/15 pt-8 text-xs text-background/60 md:flex-row">
+          <p>© {new Date().getFullYear()} Voz Estratégica. Todos los derechos reservados.</p>
+          <Link to="/auth" className="hover:text-brand">
+            Acceso administrador
+          </Link>
+        </div>
+      </div>
+    </footer>
+  );
+}
