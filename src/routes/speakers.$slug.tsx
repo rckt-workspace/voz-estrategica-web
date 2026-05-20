@@ -96,7 +96,11 @@ function SpeakerDetail() {
                   “{speaker.quote}”
                 </blockquote>
               ) : null}
-              <p className="mt-8 text-lg text-muted-foreground">{speaker.bio}</p>
+              <div className="mt-8 space-y-5 text-lg text-muted-foreground">
+                {speaker.bio.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
               <Link
                 to="/contratar"
                 search={{ speaker: speaker.slug }}
@@ -107,6 +111,31 @@ function SpeakerDetail() {
               </Link>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Charlas / temáticas insignia */}
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="flex items-center gap-4">
+          <span className="section-badge">Charlas</span>
+          <div className="h-px flex-1 bg-foreground/15" />
+        </div>
+        <h2 className="mt-8 font-display text-4xl uppercase md:text-6xl">
+          Conferencias insignia
+        </h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {speaker.charlas.map((c, i) => (
+            <Reveal key={c} delay={i * 80}>
+              <div className="group h-full border-l-2 border-foreground/15 pl-6 transition-colors hover:border-brand">
+                <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                  Conferencia · 0{i + 1}
+                </div>
+                <div className="mt-3 font-display text-2xl uppercase leading-tight">
+                  {c}
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
