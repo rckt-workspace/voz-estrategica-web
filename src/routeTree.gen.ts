@@ -13,7 +13,10 @@ import { Route as SpeakersRouteImport } from './routes/speakers'
 import { Route as LibrosRouteImport } from './routes/libros'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ContratarRouteImport } from './routes/contratar'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 
 const SpeakersRoute = SpeakersRouteImport.update({
@@ -36,10 +39,25 @@ const ContratarRoute = ContratarRouteImport.update({
   path: '/contratar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
   id: '/$slug',
@@ -49,58 +67,76 @@ const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/speakers': typeof SpeakersRouteWithChildren
   '/speakers/$slug': typeof SpeakersSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/speakers': typeof SpeakersRouteWithChildren
   '/speakers/$slug': typeof SpeakersSlugRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/auth': typeof AuthRoute
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/speakers': typeof SpeakersRouteWithChildren
   '/speakers/$slug': typeof SpeakersSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
+    | '/auth'
     | '/contratar'
     | '/eventos'
     | '/libros'
     | '/speakers'
     | '/speakers/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/contratar'
     | '/eventos'
     | '/libros'
     | '/speakers'
     | '/speakers/$slug'
+    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin'
+    | '/auth'
     | '/contratar'
     | '/eventos'
     | '/libros'
     | '/speakers'
     | '/speakers/$slug'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AuthRoute: typeof AuthRoute
   ContratarRoute: typeof ContratarRoute
   EventosRoute: typeof EventosRoute
   LibrosRoute: typeof LibrosRoute
@@ -137,12 +173,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContratarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/speakers/$slug': {
       id: '/speakers/$slug'
@@ -153,6 +210,16 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface SpeakersRouteChildren {
   SpeakersSlugRoute: typeof SpeakersSlugRoute
@@ -168,6 +235,8 @@ const SpeakersRouteWithChildren = SpeakersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AuthRoute: AuthRoute,
   ContratarRoute: ContratarRoute,
   EventosRoute: EventosRoute,
   LibrosRoute: LibrosRoute,
