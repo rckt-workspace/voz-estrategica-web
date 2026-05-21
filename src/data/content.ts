@@ -142,6 +142,16 @@ export const speakers: Speaker[] = [
 
 export const events: EventItem[] = [
   {
+    id: "ev-0",
+    titulo: "Masterclass: De clientes a fans",
+    fecha: "2026-06-12",
+    ciudad: "Online en vivo",
+    descripcion: "Masterclass exclusiva con Carlos Laguna para construir lealtad real en la era del ruido.",
+    speakerSlug: "carlos-laguna",
+    landingUrl: "/masterclass-de-clientes-a-fans",
+    ctaLabel: "Reservar mi cupo",
+  },
+  {
     id: "ev-1",
     titulo: "Toolkit Talks 2026",
     fecha: "2026-08-14",
