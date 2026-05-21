@@ -21,7 +21,7 @@ import {
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 
 const FECHA = "Sábado 7 de junio";
-const CHECKOUT_URL = "#reservar";
+const CHECKOUT_URL = "https://checkout.bold.co/payment/LNK_34GGH7QEO0";
 const BURGUNDY = "#40ed51"; // brand green
 const BURGUNDY_LIGHT = "rgba(64, 237, 81, 0.12)"; // dim green tint for dark bg
 const CREAM = "rgba(64, 237, 81, 0.07)"; // very subtle highlight for dark bg
