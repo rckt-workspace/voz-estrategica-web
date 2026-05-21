@@ -21,7 +21,7 @@ import {
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 
 const FECHA = "Sábado 7 de junio";
-const CHECKOUT_URL = "#reservar";
+const CHECKOUT_URL = "https://checkout.bold.co/payment/LNK_34GGH7QEO0";
 const BURGUNDY = "#40ed51"; // brand green
 const BURGUNDY_LIGHT = "rgba(64, 237, 81, 0.12)"; // dim green tint for dark bg
 const CREAM = "rgba(64, 237, 81, 0.07)"; // very subtle highlight for dark bg
@@ -62,6 +62,8 @@ function CTA({
   return (
     <a
       href={CHECKOUT_URL}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
@@ -212,6 +214,8 @@ function MasterclassPage() {
           </span>
           <a
             href={CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
             style={{ backgroundColor: BURGUNDY }}
           >
@@ -650,6 +654,8 @@ function MasterclassPage() {
           <div className="mt-10 flex justify-center">
             <a
               href={CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
               style={{ backgroundColor: BURGUNDY }}
             >
