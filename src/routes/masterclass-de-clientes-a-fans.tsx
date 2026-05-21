@@ -82,11 +82,11 @@ function MasterclassPage() {
   }, []);
 
   const pageStyle = {
-    fontFamily: "Inter, sans-serif",
-    color: "#1a1a1a",
-    backgroundColor: "#fafafa",
+    fontFamily: "'Montserrat', sans-serif",
+    color: BLACK,
+    backgroundColor: "#ffffff",
   } as const;
-  const serif = { fontFamily: "'Playfair Display', Georgia, serif" } as const;
+  const serif = { fontFamily: "'Montserrat', sans-serif", letterSpacing: "-0.01em" } as const;
 
   const problemas = [
     { icon: TrendingDown, text: "Tienes un equipo comercial pero los resultados dependen del ánimo del día" },
