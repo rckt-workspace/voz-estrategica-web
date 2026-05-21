@@ -86,6 +86,16 @@ function EventosPage() {
                           Con {spk.nombre} →
                         </Link>
                       ) : null}
+                      {ev.landingUrl ? (
+                        <div className="mt-3">
+                          <a
+                            href={ev.landingUrl}
+                            className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-background hover:text-brand"
+                          >
+                            {ev.ctaLabel ?? "Ver detalles"} →
+                          </a>
+                        </div>
+                      ) : null}
                     </div>
                     <ArrowUpRight className="h-6 w-6 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                   </div>
