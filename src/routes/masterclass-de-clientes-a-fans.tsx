@@ -22,9 +22,9 @@ import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 
 const FECHA = "Sábado 7 de junio";
 const CHECKOUT_URL = "#reservar";
-const BURGUNDY = "#8b1538";
-const BURGUNDY_LIGHT = "#f5e6ea";
-const CREAM = "#fff8e1";
+const BURGUNDY = "#40ed51";
+const BURGUNDY_LIGHT = "#e8fde9";
+const CREAM = "#f4fff5";
 
 export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   head: () => ({
@@ -61,7 +61,7 @@ function CTA({
   return (
     <a
       href={CHECKOUT_URL}
-      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-semibold tracking-wide text-white shadow-[0_8px_24px_-12px_rgba(139,21,56,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(139,21,56,0.7)] active:translate-y-0 ${className}`}
+      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-semibold tracking-wide text-white shadow-[0_8px_24px_-12px_rgba(64,237,81,0.45)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.6)] active:translate-y-0 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "Inter, sans-serif" }}
     >
       {children}
@@ -455,7 +455,7 @@ function MasterclassPage() {
             {paraQuien.map((p) => (
               <div
                 key={p.rol}
-                className="rounded-[3px] border border-[#e0e0e0] bg-white p-6 transition-colors hover:border-[#8b1538]"
+                className="rounded-[3px] border border-[#e0e0e0] bg-white p-6 transition-colors hover:border-[#40ed51]"
               >
                 <h3 className="text-lg font-bold text-[#1a1a1a]">{p.rol}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#6b6b6b] md:text-base">{p.desc}</p>
