@@ -632,26 +632,26 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 12 · CIERRE ─────────── */}
-      <section style={{ backgroundColor: BURGUNDY }}>
+      <section style={{ backgroundColor: BLACK }}>
         <div className="mx-auto max-w-3xl px-5 py-20 text-center md:py-28">
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
             Te lo recuerdo en una sola frase
           </p>
-          <h2 style={serif} className="text-3xl font-bold leading-tight text-white md:text-5xl">
+          <h2 style={serif} className="text-3xl font-extrabold leading-tight text-white md:text-5xl">
             Dos horas en vivo con Carlos Laguna. El sistema que aplica con Mercedes Benz, Nespresso y
-            Bancolombia. <em className="italic">Por $20 USD.</em>
+            Bancolombia. <em className="not-italic" style={{ color: BURGUNDY }}>Por $20 USD.</em>
           </h2>
           <p className="mt-6 text-lg text-white/90">
             {FECHA} a las 10:00 AM hora Colombia.
           </p>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-sm text-white/60">
             Cupos limitados · garantía de devolución · grabación incluida.
           </p>
           <div className="mt-10 flex justify-center">
             <a
               href={CHECKOUT_URL}
-              className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] bg-white px-10 py-5 text-lg font-bold tracking-wide shadow-2xl transition-all hover:-translate-y-0.5"
-              style={{ color: BURGUNDY }}
+              className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
+              style={{ backgroundColor: BURGUNDY }}
             >
               Reservar mi cupo · $20 USD
             </a>
