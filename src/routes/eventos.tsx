@@ -88,12 +88,12 @@ function EventosPage() {
                       ) : null}
                       {ev.landingUrl ? (
                         <div className="mt-3">
-                          <Link
-                            to={ev.landingUrl}
+                          <a
+                            href={ev.landingUrl}
                             className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-background hover:text-brand"
                           >
                             {ev.ctaLabel ?? "Ver detalles"} →
-                          </Link>
+                          </a>
                         </div>
                       ) : null}
                     </div>
