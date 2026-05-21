@@ -19,6 +19,7 @@ import {
   Award,
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
+import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 
 const FECHA = "Sábado 7 de junio";
 const CHECKOUT_URL = "https://checkout.bold.co/payment/LNK_34GGH7QEO0";
@@ -209,9 +210,13 @@ function MasterclassPage() {
       {/* Minimal top bar — sin menú */}
       <div className="border-b border-white/15 bg-[#0e0f0c]/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:py-4">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
-            Voz Estratégica
-          </span>
+          <img
+            src={logoVozEstrategica}
+            alt="Voz Estratégica"
+            className="h-8 w-auto md:h-10"
+            loading="eager"
+            decoding="async"
+          />
           <a
             href={CHECKOUT_URL}
             target="_blank"
