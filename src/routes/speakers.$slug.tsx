@@ -101,14 +101,25 @@ function SpeakerDetail() {
                   <p key={i}>{p}</p>
                 ))}
               </div>
-              <Link
-                to="/contratar"
-                search={{ speaker: speaker.slug }}
-                className="bubble bubble-black mt-10 inline-flex items-center gap-2"
-              >
-                Contratar a {speaker.nombre.split(" ")[0]}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+              <div className="mt-10 flex flex-wrap gap-3">
+                <Link
+                  to="/contratar"
+                  search={{ speaker: speaker.slug }}
+                  className="bubble bubble-black inline-flex items-center gap-2"
+                >
+                  Contratar a {speaker.nombre.split(" ")[0]}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                {speaker.slug === "carlos-laguna" ? (
+                  <a
+                    href="/masterclass-de-clientes-a-fans"
+                    className="bubble bubble-yellow inline-flex items-center gap-2"
+                  >
+                    Masterclass: De clientes a fans
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                ) : null}
+              </div>
             </div>
           </Reveal>
         </div>
