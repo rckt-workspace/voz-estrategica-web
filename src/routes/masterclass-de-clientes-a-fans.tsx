@@ -131,7 +131,7 @@ function MasterclassPage() {
     {
       n: "05",
       titulo: "ADD On Factor + caso Mercedes Benz Colombia",
-      desc: "El sistema completo que Carlos aplicó con Cata Maldonado para convertir clientes que pelean precio en clientes que pagan más sin descuento.",
+      desc: "El sistema completo para convertir clientes que pelean precio en clientes que pagan más sin descuento.",
       destacado: true,
     },
   ];
