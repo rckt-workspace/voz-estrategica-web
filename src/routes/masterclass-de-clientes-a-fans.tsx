@@ -83,8 +83,8 @@ function MasterclassPage() {
 
   const pageStyle = {
     fontFamily: "'Montserrat', sans-serif",
-    color: BLACK,
-    backgroundColor: "#ffffff",
+    color: "#ffffff",
+    backgroundColor: BLACK,
   } as const;
   const serif = { fontFamily: "'Montserrat', sans-serif", letterSpacing: "-0.01em" } as const;
 
