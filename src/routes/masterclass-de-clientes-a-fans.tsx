@@ -214,6 +214,8 @@ function MasterclassPage() {
           </span>
           <a
             href={CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="hidden rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
             style={{ backgroundColor: BURGUNDY }}
           >
