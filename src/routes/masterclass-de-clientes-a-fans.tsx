@@ -22,9 +22,10 @@ import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 
 const FECHA = "Sábado 7 de junio";
 const CHECKOUT_URL = "#reservar";
-const BURGUNDY = "#8b1538";
-const BURGUNDY_LIGHT = "#f5e6ea";
-const CREAM = "#fff8e1";
+const BURGUNDY = "#40ed51"; // brand green (alias kept for code stability)
+const BURGUNDY_LIGHT = "#e8fde9";
+const CREAM = "#f4fff5";
+const BLACK = "#0e0f0c";
 
 export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   head: () => ({
@@ -44,7 +45,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
     links: [
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap",
       },
     ],
   }),
@@ -61,8 +62,8 @@ function CTA({
   return (
     <a
       href={CHECKOUT_URL}
-      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-semibold tracking-wide text-white shadow-[0_8px_24px_-12px_rgba(139,21,56,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(139,21,56,0.7)] active:translate-y-0 ${className}`}
-      style={{ backgroundColor: BURGUNDY, fontFamily: "Inter, sans-serif" }}
+      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
+      style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
       {children}
     </a>
@@ -81,11 +82,11 @@ function MasterclassPage() {
   }, []);
 
   const pageStyle = {
-    fontFamily: "Inter, sans-serif",
-    color: "#1a1a1a",
-    backgroundColor: "#fafafa",
+    fontFamily: "'Montserrat', sans-serif",
+    color: BLACK,
+    backgroundColor: "#ffffff",
   } as const;
-  const serif = { fontFamily: "'Playfair Display', Georgia, serif" } as const;
+  const serif = { fontFamily: "'Montserrat', sans-serif", letterSpacing: "-0.01em" } as const;
 
   const problemas = [
     { icon: TrendingDown, text: "Tienes un equipo comercial pero los resultados dependen del ánimo del día" },
@@ -211,7 +212,7 @@ function MasterclassPage() {
           </span>
           <a
             href={CHECKOUT_URL}
-            className="hidden rounded-[4px] px-4 py-2 text-sm font-semibold text-white sm:inline-flex"
+            className="hidden rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
             style={{ backgroundColor: BURGUNDY }}
           >
             Reservar · $20 USD
@@ -379,7 +380,7 @@ function MasterclassPage() {
                     {m.destacado && (
                       <span
                         className="mt-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
-                        style={{ backgroundColor: BURGUNDY, color: "white" }}
+                        style={{ backgroundColor: BLACK, color: BURGUNDY }}
                       >
                         <Award className="h-3 w-3" /> Clímax de la sesión
                       </span>
@@ -455,7 +456,7 @@ function MasterclassPage() {
             {paraQuien.map((p) => (
               <div
                 key={p.rol}
-                className="rounded-[3px] border border-[#e0e0e0] bg-white p-6 transition-colors hover:border-[#8b1538]"
+                className="rounded-[3px] border border-[#e0e0e0] bg-white p-6 transition-colors hover:border-[#40ed51]"
               >
                 <h3 className="text-lg font-bold text-[#1a1a1a]">{p.rol}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[#6b6b6b] md:text-base">{p.desc}</p>
@@ -631,26 +632,26 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 12 · CIERRE ─────────── */}
-      <section style={{ backgroundColor: BURGUNDY }}>
+      <section style={{ backgroundColor: BLACK }}>
         <div className="mx-auto max-w-3xl px-5 py-20 text-center md:py-28">
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
             Te lo recuerdo en una sola frase
           </p>
-          <h2 style={serif} className="text-3xl font-bold leading-tight text-white md:text-5xl">
+          <h2 style={serif} className="text-3xl font-extrabold leading-tight text-white md:text-5xl">
             Dos horas en vivo con Carlos Laguna. El sistema que aplica con Mercedes Benz, Nespresso y
-            Bancolombia. <em className="italic">Por $20 USD.</em>
+            Bancolombia. <em className="not-italic" style={{ color: BURGUNDY }}>Por $20 USD.</em>
           </h2>
           <p className="mt-6 text-lg text-white/90">
             {FECHA} a las 10:00 AM hora Colombia.
           </p>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-sm text-white/60">
             Cupos limitados · garantía de devolución · grabación incluida.
           </p>
           <div className="mt-10 flex justify-center">
             <a
               href={CHECKOUT_URL}
-              className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] bg-white px-10 py-5 text-lg font-bold tracking-wide shadow-2xl transition-all hover:-translate-y-0.5"
-              style={{ color: BURGUNDY }}
+              className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
+              style={{ backgroundColor: BURGUNDY }}
             >
               Reservar mi cupo · $20 USD
             </a>
