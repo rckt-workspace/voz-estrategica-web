@@ -29,6 +29,8 @@ export interface EventItem {
   ciudad: string;
   descripcion: string;
   speakerSlug?: string;
+  landingUrl?: string;
+  ctaLabel?: string;
 }
 
 export interface Book {
