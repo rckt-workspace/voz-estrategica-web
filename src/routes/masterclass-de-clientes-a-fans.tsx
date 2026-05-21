@@ -361,8 +361,8 @@ function MasterclassPage() {
                   m.destacado ? "md:col-span-2" : ""
                 }`}
                 style={{
-                  borderColor: m.destacado ? BURGUNDY : "#e0e0e0",
-                  backgroundColor: m.destacado ? CREAM : "white",
+                  borderColor: m.destacado ? BURGUNDY : "rgba(255,255,255,0.15)",
+                  backgroundColor: m.destacado ? CREAM : "#16181a",
                 }}
               >
                 <div className="flex items-start gap-5">
