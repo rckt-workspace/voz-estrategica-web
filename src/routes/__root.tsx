@@ -130,14 +130,16 @@ function Shell() {
   }, [router, queryClient]);
 
   const isAdmin = location.pathname.startsWith("/admin");
+  const isSalesLanding = location.pathname.startsWith("/masterclass");
+  const hideChrome = isAdmin || isSalesLanding;
 
   return (
     <>
-      <Header />
-      <main className={isAdmin ? "" : "pt-20"}>
+      {!hideChrome && <Header />}
+      <main className={hideChrome ? "" : "pt-20"}>
         <Outlet />
       </main>
-      <Footer />
+      {!hideChrome && <Footer />}
       <Toaster />
       {/* Editorial grain overlay */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[60] mix-blend-multiply opacity-[0.035]">

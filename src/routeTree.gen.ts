@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MasterclassDeClientesAFansRouteImport } from './routes/masterclass-de-clientes-a-fans'
 import { Route as LibrosRouteImport } from './routes/libros'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ContratarRouteImport } from './routes/contratar'
@@ -22,6 +23,12 @@ import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 
+const MasterclassDeClientesAFansRoute =
+  MasterclassDeClientesAFansRouteImport.update({
+    id: '/masterclass-de-clientes-a-fans',
+    path: '/masterclass-de-clientes-a-fans',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LibrosRoute = LibrosRouteImport.update({
   id: '/libros',
   path: '/libros',
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
+  '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -103,6 +111,7 @@ export interface FileRoutesByTo {
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
+  '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -118,6 +127,7 @@ export interface FileRoutesById {
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
+  '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -134,6 +144,7 @@ export interface FileRouteTypes {
     | '/contratar'
     | '/eventos'
     | '/libros'
+    | '/masterclass-de-clientes-a-fans'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -147,6 +158,7 @@ export interface FileRouteTypes {
     | '/contratar'
     | '/eventos'
     | '/libros'
+    | '/masterclass-de-clientes-a-fans'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -161,6 +173,7 @@ export interface FileRouteTypes {
     | '/contratar'
     | '/eventos'
     | '/libros'
+    | '/masterclass-de-clientes-a-fans'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -176,12 +189,20 @@ export interface RootRouteChildren {
   ContratarRoute: typeof ContratarRoute
   EventosRoute: typeof EventosRoute
   LibrosRoute: typeof LibrosRoute
+  MasterclassDeClientesAFansRoute: typeof MasterclassDeClientesAFansRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
   SpeakersIndexRoute: typeof SpeakersIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/masterclass-de-clientes-a-fans': {
+      id: '/masterclass-de-clientes-a-fans'
+      path: '/masterclass-de-clientes-a-fans'
+      fullPath: '/masterclass-de-clientes-a-fans'
+      preLoaderRoute: typeof MasterclassDeClientesAFansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/libros': {
       id: '/libros'
       path: '/libros'
@@ -292,6 +313,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContratarRoute: ContratarRoute,
   EventosRoute: EventosRoute,
   LibrosRoute: LibrosRoute,
+  MasterclassDeClientesAFansRoute: MasterclassDeClientesAFansRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
   SpeakersIndexRoute: SpeakersIndexRoute,
 }
