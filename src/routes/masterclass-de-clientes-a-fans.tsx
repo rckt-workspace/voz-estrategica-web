@@ -380,7 +380,7 @@ function MasterclassPage() {
                     {m.destacado && (
                       <span
                         className="mt-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
-                        style={{ backgroundColor: BURGUNDY, color: "white" }}
+                        style={{ backgroundColor: BLACK, color: BURGUNDY }}
                       >
                         <Award className="h-3 w-3" /> Clímax de la sesión
                       </span>
