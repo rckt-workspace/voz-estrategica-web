@@ -237,7 +237,10 @@ function MasterclassPage() {
               className="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
               style={{ borderColor: BURGUNDY, color: BURGUNDY }}
             >
-              <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: BURGUNDY }} />
+              <span
+                className="h-1.5 w-1.5 rounded-full animate-rec-led"
+                style={{ backgroundColor: "#ff1a1a", boxShadow: "0 0 6px rgba(255,26,26,0.9)" }}
+              />
               Masterclass en vivo · {FECHA}
             </span>
             <h1
