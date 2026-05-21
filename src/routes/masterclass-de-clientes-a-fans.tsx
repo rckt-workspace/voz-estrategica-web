@@ -22,9 +22,9 @@ import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 
 const FECHA = "Sábado 7 de junio";
 const CHECKOUT_URL = "#reservar";
-const BURGUNDY = "#40ed51"; // brand green (alias kept for code stability)
-const BURGUNDY_LIGHT = "#e8fde9";
-const CREAM = "#f4fff5";
+const BURGUNDY = "#40ed51"; // brand green
+const BURGUNDY_LIGHT = "rgba(64, 237, 81, 0.12)"; // dim green tint for dark bg
+const CREAM = "rgba(64, 237, 81, 0.07)"; // very subtle highlight for dark bg
 const BLACK = "#0e0f0c";
 
 export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
