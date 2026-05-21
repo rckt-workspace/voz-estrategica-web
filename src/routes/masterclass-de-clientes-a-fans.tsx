@@ -205,9 +205,9 @@ function MasterclassPage() {
   return (
     <div style={pageStyle} className="min-h-screen">
       {/* Minimal top bar — sin menú */}
-      <div className="border-b border-[#e0e0e0] bg-white/80 backdrop-blur">
+      <div className="border-b border-white/15 bg-[#0e0f0c]/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:py-4">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6b6b6b]">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
             Voz Estratégica
           </span>
           <a
@@ -221,7 +221,7 @@ function MasterclassPage() {
       </div>
 
       {/* ─────────── BLOQUE 01 · HERO ─────────── */}
-      <section className="relative overflow-hidden bg-[#fafafa]">
+      <section className="relative overflow-hidden bg-[#16181a]">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[1.1fr_1fr] md:gap-16 md:py-24">
           <div className="animate-fade-up">
             <span
@@ -233,7 +233,7 @@ function MasterclassPage() {
             </span>
             <h1
               style={serif}
-              className="text-[40px] font-bold leading-[1.05] tracking-tight text-[#1a1a1a] md:text-[64px] lg:text-[72px]"
+              className="text-[40px] font-bold leading-[1.05] tracking-tight text-white md:text-[64px] lg:text-[72px]"
             >
               Aprende a vender{" "}
               <em className="italic" style={{ color: BURGUNDY }}>
@@ -241,15 +241,15 @@ function MasterclassPage() {
               </em>{" "}
               clientes.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#3a3a3a] md:text-xl">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80 md:text-xl">
               En 2 horas. Con el sistema que aplica <strong>Carlos Laguna</strong> con Mercedes Benz, Nespresso y Bancolombia.
             </p>
-            <p className="mt-4 text-sm text-[#6b6b6b]">
+            <p className="mt-4 text-sm text-white/60">
               Masterclass virtual en vivo · {FECHA} · 10:00 AM hora Colombia · <strong>$20 USD</strong>
             </p>
             <div className="mt-8 flex flex-col items-start gap-3">
               <CTA />
-              <p className="text-xs text-[#6b6b6b]">Cupos limitados · garantía de devolución</p>
+              <p className="text-xs text-white/60">Cupos limitados · garantía de devolución</p>
             </div>
           </div>
           <div className="relative">
@@ -267,30 +267,30 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 02 · AUTORIDAD ─────────── */}
-      <section className="border-y border-[#e0e0e0] bg-white">
+      <section className="border-y border-white/15 bg-[#0e0f0c]">
         <div className="mx-auto max-w-6xl px-5 py-10 md:py-12">
-          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6b6b6b]">
+          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
             Carlos ha entrenado a los equipos comerciales de
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 md:gap-x-14">
             {logos.map((l) => (
               <span
                 key={l}
-                className="text-base font-semibold tracking-wide text-[#3a3a3a] opacity-70 md:text-lg"
+                className="text-base font-semibold tracking-wide text-white/80 opacity-70 md:text-lg"
                 style={serif}
               >
                 {l}
               </span>
             ))}
           </div>
-          <p className="mt-8 text-center text-sm italic text-[#6b6b6b]" style={serif}>
-            Su libro <em>De clientes a fans</em> fue reseñado por <strong className="not-italic text-[#1a1a1a]">Forbes Colombia</strong>.
+          <p className="mt-8 text-center text-sm italic text-white/60" style={serif}>
+            Su libro <em>De clientes a fans</em> fue reseñado por <strong className="not-italic text-white">Forbes Colombia</strong>.
           </p>
         </div>
       </section>
 
       {/* ─────────── BLOQUE 03 · PROBLEMA ─────────── */}
-      <section className="bg-[#fafafa]">
+      <section className="bg-[#16181a]">
         <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
           <h2 style={serif} className="text-3xl font-bold leading-tight md:text-5xl">
             Si te suena conocido alguno de estos,{" "}
@@ -305,7 +305,7 @@ function MasterclassPage() {
                 >
                   <Icon className="h-4 w-4" strokeWidth={1.75} />
                 </span>
-                <span className="text-lg leading-relaxed text-[#1a1a1a] md:text-xl">{text}</span>
+                <span className="text-lg leading-relaxed text-white md:text-xl">{text}</span>
               </li>
             ))}
           </ul>
@@ -320,14 +320,14 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 04 · PROMESA ─────────── */}
-      <section className="bg-white">
+      <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
           <h2 style={serif} className="text-4xl font-bold leading-tight md:text-6xl">
             En 2 horas vas a tener:
           </h2>
           <ul className="mt-10 space-y-5">
             {promesas.map((p, i) => (
-              <li key={i} className="flex items-start gap-4 border-b border-[#e0e0e0] pb-5">
+              <li key={i} className="flex items-start gap-4 border-b border-white/15 pb-5">
                 <CheckCircle2 className="mt-1 h-5 w-5 shrink-0" style={{ color: BURGUNDY }} strokeWidth={2} />
                 <span className="text-lg leading-relaxed md:text-xl">{p}</span>
               </li>
@@ -340,7 +340,7 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 05 · AGENDA ─────────── */}
-      <section className="bg-[#fafafa]">
+      <section className="bg-[#16181a]">
         <div className="mx-auto max-w-5xl px-5 py-20 md:py-28">
           <div className="mb-12 text-center">
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
@@ -349,7 +349,7 @@ function MasterclassPage() {
             <h2 style={serif} className="text-3xl font-bold leading-tight md:text-5xl">
               El programa de la masterclass
             </h2>
-            <p className="mt-4 text-base text-[#6b6b6b] md:text-lg">
+            <p className="mt-4 text-base text-white/60 md:text-lg">
               2 horas en vivo con Carlos · 5 módulos concentrados · una sola sesión
             </p>
           </div>
@@ -376,7 +376,7 @@ function MasterclassPage() {
                     <h3 style={serif} className="text-xl font-bold md:text-2xl">
                       {m.titulo}
                     </h3>
-                    <p className="mt-2 leading-relaxed text-[#3a3a3a]">{m.desc}</p>
+                    <p className="mt-2 leading-relaxed text-white/80">{m.desc}</p>
                     {m.destacado && (
                       <span
                         className="mt-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em]"
@@ -394,7 +394,7 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 06 · BIO ─────────── */}
-      <section className="bg-white">
+      <section className="bg-[#0e0f0c]">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-[1fr_1.3fr] md:items-center md:py-28">
           <div>
             <img
@@ -410,7 +410,7 @@ function MasterclassPage() {
             <h2 style={serif} className="text-3xl font-bold leading-tight md:text-5xl">
               Carlos Laguna
             </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-[#3a3a3a] md:text-lg">
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-white/80 md:text-lg">
               <p>
                 Carlos Laguna lleva 20 años entrenando equipos comerciales en algunas de las marcas más exigentes
                 de LATAM: Mercedes Benz, Nespresso, Bancolombia, Kimberly Clark Professional, Pepsi y Pernod
@@ -442,13 +442,13 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 07 · PARA QUIÉN ─────────── */}
-      <section className="bg-[#fafafa]">
+      <section className="bg-[#16181a]">
         <div className="mx-auto max-w-4xl px-5 py-20 md:py-28">
           <div className="text-center">
             <h2 style={serif} className="text-4xl font-bold md:text-6xl">
               ¿Es para ti?
             </h2>
-            <p className="mt-4 text-base text-[#6b6b6b] md:text-lg">
+            <p className="mt-4 text-base text-white/60 md:text-lg">
               Esta masterclass es para profesionales que vivan al menos una de estas situaciones:
             </p>
           </div>
@@ -456,14 +456,14 @@ function MasterclassPage() {
             {paraQuien.map((p) => (
               <div
                 key={p.rol}
-                className="rounded-[3px] border border-[#e0e0e0] bg-white p-6 transition-colors hover:border-[#40ed51]"
+                className="rounded-[3px] border border-white/15 bg-[#0e0f0c] p-6 transition-colors hover:border-[#40ed51]"
               >
-                <h3 className="text-lg font-bold text-[#1a1a1a]">{p.rol}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#6b6b6b] md:text-base">{p.desc}</p>
+                <h3 className="text-lg font-bold text-white">{p.rol}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/60 md:text-base">{p.desc}</p>
               </div>
             ))}
           </div>
-          <p style={serif} className="mt-12 text-center text-xl italic text-[#3a3a3a] md:text-2xl">
+          <p style={serif} className="mt-12 text-center text-xl italic text-white/80 md:text-2xl">
             Si vas a vender algo en los próximos 6 meses · y quieres hacerlo mejor · esta masterclass está
             diseñada para ti.
           </p>
@@ -471,14 +471,14 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 08 · LOGÍSTICA ─────────── */}
-      <section className="bg-white">
+      <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-4xl px-5 py-20 md:py-28">
           <h2 style={serif} className="text-center text-3xl font-bold md:text-5xl">
             Logística de la masterclass
           </h2>
           <div className="mt-12 grid gap-x-8 gap-y-5 md:grid-cols-2">
             {logistica.map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-start gap-4 border-b border-[#e0e0e0] pb-5">
+              <div key={label} className="flex items-start gap-4 border-b border-white/15 pb-5">
                 <span
                   className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
                   style={{ backgroundColor: BURGUNDY_LIGHT, color: BURGUNDY }}
@@ -486,10 +486,10 @@ function MasterclassPage() {
                   <Icon className="h-4 w-4" strokeWidth={1.75} />
                 </span>
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#6b6b6b]">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/60">
                     {label}
                   </p>
-                  <p className="mt-0.5 text-base font-medium text-[#1a1a1a]">{value}</p>
+                  <p className="mt-0.5 text-base font-medium text-white">{value}</p>
                 </div>
               </div>
             ))}
@@ -501,7 +501,7 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 09 · OFERTA ─────────── */}
-      <section id="reservar" className="bg-[#fafafa]">
+      <section id="reservar" className="bg-[#16181a]">
         <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
           <div
             className="rounded-[4px] border-2 p-8 md:p-12"
@@ -514,13 +514,13 @@ function MasterclassPage() {
               <span style={serif} className="text-7xl font-bold md:text-8xl" >
                 $20
               </span>
-              <span className="text-2xl font-bold text-[#6b6b6b]">USD</span>
+              <span className="text-2xl font-bold text-white/60">USD</span>
             </div>
-            <p className="text-sm text-[#6b6b6b]">Una sola entrega · acceso completo</p>
+            <p className="text-sm text-white/60">Una sola entrega · acceso completo</p>
 
-            <div className="my-8 h-px bg-[#e0e0e0]" />
+            <div className="my-8 h-px bg-white/15" />
 
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[#1a1a1a]">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-white">
               Qué incluye tu inversión
             </p>
             <ul className="space-y-3">
@@ -538,8 +538,8 @@ function MasterclassPage() {
             >
               <ShieldCheck className="h-10 w-10 shrink-0" style={{ color: BURGUNDY }} strokeWidth={1.5} />
               <div>
-                <p className="font-bold text-[#1a1a1a]">Garantía de devolución total</p>
-                <p className="mt-1 text-sm leading-relaxed text-[#3a3a3a]">
+                <p className="font-bold text-white">Garantía de devolución total</p>
+                <p className="mt-1 text-sm leading-relaxed text-white/80">
                   Si en los primeros 30 minutos consideras que la masterclass no te aporta valor real, te
                   devolvemos el dinero. Sin preguntas. Sin trámites.
                 </p>
@@ -548,7 +548,7 @@ function MasterclassPage() {
 
             <div className="mt-8">
               <CTA className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CTA>
-              <p className="mt-3 text-center text-xs text-[#6b6b6b]">
+              <p className="mt-3 text-center text-xs text-white/60">
                 Pago seguro · tarjeta internacional · PSE Colombia · 2 cuotas sin interés disponibles
               </p>
             </div>
@@ -557,7 +557,7 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 10 · TESTIMONIOS ─────────── */}
-      <section className="bg-white">
+      <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
           <h2 style={serif} className="text-center text-3xl font-bold leading-tight md:text-5xl">
             Lo que dicen quienes han trabajado con Carlos
@@ -566,7 +566,7 @@ function MasterclassPage() {
             {testimonios.map((t, i) => (
               <figure
                 key={i}
-                className="flex flex-col rounded-[3px] border border-[#e0e0e0] bg-[#fafafa] p-7"
+                className="flex flex-col rounded-[3px] border border-white/15 bg-[#16181a] p-7"
               >
                 <span
                   style={{ ...serif, color: BURGUNDY }}
@@ -574,10 +574,10 @@ function MasterclassPage() {
                 >
                   "
                 </span>
-                <blockquote style={serif} className="mt-2 flex-1 text-base italic leading-relaxed text-[#1a1a1a] md:text-lg">
+                <blockquote style={serif} className="mt-2 flex-1 text-base italic leading-relaxed text-white md:text-lg">
                   {t.cita}
                 </blockquote>
-                <figcaption className="mt-6 border-t border-[#e0e0e0] pt-4">
+                <figcaption className="mt-6 border-t border-white/15 pt-4">
                   <div className="flex items-center gap-3">
                     <span
                       className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold"
@@ -589,8 +589,8 @@ function MasterclassPage() {
                         .join("")}
                     </span>
                     <div>
-                      <p className="text-sm font-bold text-[#1a1a1a]">{t.nombre}</p>
-                      <p className="text-xs text-[#6b6b6b]">{t.cargo}</p>
+                      <p className="text-sm font-bold text-white">{t.nombre}</p>
+                      <p className="text-xs text-white/60">{t.cargo}</p>
                     </div>
                   </div>
                 </figcaption>
@@ -601,12 +601,12 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 11 · FAQ ─────────── */}
-      <section className="bg-[#fafafa]">
+      <section className="bg-[#16181a]">
         <div className="mx-auto max-w-3xl px-5 py-20 md:py-28">
           <h2 style={serif} className="text-center text-3xl font-bold md:text-5xl">
             Preguntas que recibimos seguido
           </h2>
-          <div className="mt-12 divide-y divide-[#e0e0e0] border-y border-[#e0e0e0]">
+          <div className="mt-12 divide-y divide-white/15 border-y border-white/15">
             {faqs.map((f, i) => {
               const open = openFaq === i;
               return (
@@ -615,14 +615,14 @@ function MasterclassPage() {
                     onClick={() => setOpenFaq(open ? null : i)}
                     className="flex w-full items-start justify-between gap-4 py-5 text-left"
                   >
-                    <span className="text-base font-bold text-[#1a1a1a] md:text-lg">{f.q}</span>
+                    <span className="text-base font-bold text-white md:text-lg">{f.q}</span>
                     <ChevronDown
                       className={`mt-1 h-5 w-5 shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
                       style={{ color: BURGUNDY }}
                     />
                   </button>
                   {open && (
-                    <p className="pb-5 pr-9 text-base leading-relaxed text-[#3a3a3a]">{f.a}</p>
+                    <p className="pb-5 pr-9 text-base leading-relaxed text-white/80">{f.a}</p>
                   )}
                 </div>
               );
@@ -660,7 +660,7 @@ function MasterclassPage() {
       </section>
 
       {/* ─────────── BLOQUE 13 · P.D. ─────────── */}
-      <section className="bg-white">
+      <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-2xl px-5 py-20 md:py-28">
           <div className="flex items-start gap-5">
             <img
@@ -672,10 +672,10 @@ function MasterclassPage() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
                 P.D. de Carlos
               </p>
-              <p className="mt-1 text-sm text-[#6b6b6b]">Un mensaje personal antes de cerrar</p>
+              <p className="mt-1 text-sm text-white/60">Un mensaje personal antes de cerrar</p>
             </div>
           </div>
-          <div className="mt-8 space-y-5 pl-0 text-lg leading-relaxed text-[#1a1a1a] md:pl-[84px] md:text-xl" style={serif}>
+          <div className="mt-8 space-y-5 pl-0 text-lg leading-relaxed text-white md:pl-[84px] md:text-xl" style={serif}>
             <p>Si llegaste hasta acá es porque algo te resonó.</p>
             <p>
               Voy a serte directo: estas dos horas no te van a convertir en otra persona. Pero te van a dar
@@ -692,7 +692,7 @@ function MasterclassPage() {
             <p style={{ ...serif, color: BURGUNDY }} className="text-3xl italic md:text-4xl">
               Carlos Laguna
             </p>
-            <p className="mt-1 text-sm text-[#6b6b6b]">Autor de <em>De clientes a fans</em></p>
+            <p className="mt-1 text-sm text-white/60">Autor de <em>De clientes a fans</em></p>
           </div>
         </div>
       </section>
