@@ -654,6 +654,8 @@ function MasterclassPage() {
           <div className="mt-10 flex justify-center">
             <a
               href={CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
               style={{ backgroundColor: BURGUNDY }}
             >
