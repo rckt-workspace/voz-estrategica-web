@@ -192,7 +192,7 @@ export const events: EventItem[] = [
   {
     id: "ev-1",
     titulo: "Toolkit Talks 2026",
-    fecha: "2026-08-14",
+    fecha: "2026-06-04",
     ciudad: "Bogotá",
     descripcion: "Encuentro de marketing y creatividad creado por Carlos Laguna.",
     speakerSlug: "carlos-laguna",
