@@ -27,7 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const destacados = speakers.filter((s) => s.destacado);
+  const destacados = speakers;
   const marqueeNames = [...speakers, ...speakers].map((s) => s.nombre);
 
   return (
