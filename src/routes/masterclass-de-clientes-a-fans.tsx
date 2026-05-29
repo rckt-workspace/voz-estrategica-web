@@ -145,7 +145,7 @@ function MasterclassPage() {
 
   const logistica = [
     { icon: Calendar, label: "Fecha", value: FECHA },
-    { icon: Clock, label: "Hora", value: "10:00 AM hora Colombia (UTC-5)" },
+    { icon: Clock, label: "Hora", value: "7:00 PM hora Colombia (UTC-5)" },
     { icon: Video, label: "Duración", value: "2 horas en vivo + 30 min de Q&A abierto" },
     { icon: Globe, label: "Modalidad", value: "100% virtual en Zoom · enlace tras compra" },
     { icon: Download, label: "Grabación", value: "Incluida · acceso por 48 horas posteriores" },
