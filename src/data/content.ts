@@ -182,7 +182,7 @@ export const events: EventItem[] = [
   {
     id: "ev-0",
     titulo: "Masterclass: De clientes a fans",
-    fecha: "2026-06-12",
+    fecha: "2026-06-18",
     ciudad: "Online en vivo",
     descripcion: "Masterclass exclusiva con Carlos Laguna para construir lealtad real en la era del ruido.",
     speakerSlug: "carlos-laguna",
