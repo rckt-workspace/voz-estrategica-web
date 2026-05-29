@@ -3,6 +3,8 @@ import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import elaineImg from "@/assets/speaker-elaine-miranda.png";
 import paolaImg from "@/assets/speaker-paola-aldaz.jpg";
 import williamImg from "@/assets/speaker-william-vinasco.webp";
+import diegoImg from "@/assets/speaker-diego-camacho.jpg";
+import elsaImg from "@/assets/speaker-elsa-maria-gonzalez.jpg";
 
 import bookMilagrosamente from "@/assets/book-milagrosamente.webp";
 import bookClientesFans from "@/assets/book-clientes-fans.webp";
@@ -137,6 +139,42 @@ export const speakers: Speaker[] = [
     destacado: false,
     quote: "La voz no se impone: se afina hasta que se vuelve verdad.",
     fuente: "https://vozestrategica.com/william_vinasco/",
+  },
+  {
+    slug: "diego-camacho",
+    nombre: "Diego Camacho",
+    especialidad: "Inteligencia artificial, ventas & marketing digital",
+    foto: diegoImg,
+    bio: [
+      "International Business Speaker experto en impulsar el crecimiento de empresas y startups con estrategias digitales. Actualmente lidera el equipo comercial de Nuevos Negocios de Google Ads para Hispanoamérica y se desempeña como StartUp Coach en Google Launchpad.",
+      "Mentor de la red Endeavor, Angel Investor y socio de varias startups, ha ocupado posiciones de liderazgo en la industria tecnológica y de consumo masivo en Latinoamérica, Sudeste Asiático y Australia. Sus conferencias han pasado por México, Panamá, Chile, Argentina, Colombia y más.",
+    ],
+    tematicas: ["Inteligencia artificial", "Ventas", "Marketing digital", "Liderazgo", "Transformación digital"],
+    charlas: [
+      "Inteligencia artificial: la nueva revolución en las ventas",
+      "Marketing digital con IA para generar oportunidades de negocio",
+      "Liderazgo inspirador: cómo conectar con tu equipo y generar resultados",
+    ],
+    destacado: false,
+    quote: "La IA no reemplaza a tu equipo comercial: lo libera para vender mejor.",
+  },
+  {
+    slug: "elsa-maria-gonzalez",
+    nombre: "Elsa María González",
+    especialidad: "Investigación de mercados, marketing & comportamiento humano",
+    foto: elsaImg,
+    bio: [
+      "CEO y fundadora de Cluster Research, consultora, docente y speaker internacional. Doctora en Administración con énfasis en Marketing y Comportamiento Humano (Summa Cum Laude) por Centrum Católica de Lima y Maastricht School of Management. Reconocida en 2025 como una de las 100 Gerentes del Año por Revista Gerente.",
+      "Con más de 18 años liderando áreas de investigación, mercadeo y ventas en compañías multilatinas, hoy impulsa CRTools by Cluster Research, la primera plataforma 100% digital de investigación de mercados creada en Colombia. Ha llevado sus conferencias y consultorías a México, Estados Unidos, España, Panamá, Colombia, Ecuador, Guatemala, Perú, República Dominicana y Bolivia.",
+    ],
+    tematicas: ["Investigación de mercados", "Marketing", "Comportamiento del consumidor", "Inteligencia artificial predictiva", "Branding"],
+    charlas: [
+      "El arte de la conquista en marketing",
+      "Inteligencia artificial predictiva",
+      "Human Centric Model: cultura centrada en las personas",
+    ],
+    destacado: false,
+    quote: "Cuando sé qué flores te gustan, me doy cuenta de que no siempre con las rosas conquisto tu corazón.",
   },
 ];
 
