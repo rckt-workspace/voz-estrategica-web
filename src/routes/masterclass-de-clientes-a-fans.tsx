@@ -654,7 +654,7 @@ function MasterclassPage() {
             Bancolombia. <em className="not-italic" style={{ color: BURGUNDY }}>Por $20 USD.</em>
           </h2>
           <p className="mt-6 text-lg text-white/90">
-            {FECHA} a las 10:00 AM hora Colombia.
+            {FECHA} a las 7:00 PM hora Colombia.
           </p>
           <p className="mt-2 text-sm text-white/60">
             Cupos limitados · garantía de devolución · grabación incluida.
