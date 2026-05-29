@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { speakers, tematicas } from "@/data/content";
+import { speakers, type Speaker } from "@/data/content";
 
 export const Route = createFileRoute("/speakers/")({
   head: () => ({
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/speakers/")({
       {
         name: "description",
         content:
-          "Conocé a los conferencistas, autores y pensadores que representamos. Filtrá por temática.",
+          "Conocé a los conferencistas, autores y pensadores que representamos. Filtrá por categoría.",
       },
       { property: "og:title", content: "Speakers — Voz Estratégica" },
       {
@@ -24,9 +24,59 @@ export const Route = createFileRoute("/speakers/")({
   component: SpeakersPage,
 });
 
+type CategoryId =
+  | "todas"
+  | "marketing"
+  | "liderazgo"
+  | "ventas"
+  | "finanzas"
+  | "ia"
+  | "comunicacion"
+  | "inspiracion";
+
+const CATEGORIES: { id: CategoryId; label: string; match: (s: Speaker) => boolean }[] = [
+  { id: "todas", label: "Todas", match: () => true },
+  {
+    id: "marketing",
+    label: "Marketing & marca",
+    match: (s) => s.tematicas.some((t) => /marketing|marca|brand|creatividad|investigaci/i.test(t)),
+  },
+  {
+    id: "liderazgo",
+    label: "Liderazgo",
+    match: (s) => s.tematicas.some((t) => /liderazgo/i.test(t)),
+  },
+  {
+    id: "ventas",
+    label: "Ventas & negocios",
+    match: (s) => s.tematicas.some((t) => /ventas|negocio|experiencia de cliente|comportamiento/i.test(t)),
+  },
+  {
+    id: "finanzas",
+    label: "Finanzas",
+    match: (s) => s.tematicas.some((t) => /finan/i.test(t)),
+  },
+  {
+    id: "ia",
+    label: "IA & transformación digital",
+    match: (s) => s.tematicas.some((t) => /inteligencia artificial|transformaci|innovaci|digital/i.test(t)),
+  },
+  {
+    id: "comunicacion",
+    label: "Comunicación",
+    match: (s) => s.tematicas.some((t) => /comunicaci|narraci|storytelling/i.test(t)),
+  },
+  {
+    id: "inspiracion",
+    label: "Inspiración & propósito",
+    match: (s) => s.tematicas.some((t) => /resiliencia|inclusi|prop[oó]sito|motivaci|transformaci[oó]n$/i.test(t)),
+  },
+];
+
 function SpeakersPage() {
-  const [filter, setFilter] = useState<string | null>(null);
-  const list = filter ? speakers.filter((s) => s.tematicas.includes(filter)) : speakers;
+  const [category, setCategory] = useState<CategoryId>("todas");
+  const activeCat = CATEGORIES.find((c) => c.id === category) ?? CATEGORIES[0];
+  const list = speakers.filter(activeCat.match);
 
   return (
     <>
@@ -46,23 +96,25 @@ function SpeakersPage() {
       />
 
       <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setFilter(null)}
-            className={`bubble ${filter === null ? "bubble-black" : "bubble-outline"}`}
-          >
-            Todas
-          </button>
-          {tematicas.map((t) => (
-            <button
-              key={t}
-              onClick={() => setFilter(t)}
-              className={`bubble ${filter === t ? "bubble-black" : "bubble-outline"}`}
-            >
-              {t}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center gap-2">
+          {CATEGORIES.map((c) => {
+            const count = c.id === "todas" ? speakers.length : speakers.filter(c.match).length;
+            const active = category === c.id;
+            return (
+              <button
+                key={c.id}
+                onClick={() => setCategory(c.id)}
+                className={`bubble ${active ? "bubble-black" : "bubble-outline"}`}
+              >
+                {c.label}
+                <span className={`ml-2 text-[10px] font-bold ${active ? "opacity-70" : "opacity-50"}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
+
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((s, i) => (
