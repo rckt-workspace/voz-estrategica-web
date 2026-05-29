@@ -55,7 +55,7 @@ function Home() {
           </Reveal>
 
           <Reveal delay={120}>
-            <h1 className="mt-10 font-display text-6xl uppercase leading-[0.85] md:text-8xl lg:text-[10rem]">
+            <h1 className="mt-10 font-display text-[3rem] uppercase leading-[0.9] [hyphens:auto] sm:text-6xl sm:leading-[0.85] md:text-8xl lg:text-[10rem]">
               Las voces que{" "}
               <span className="highlight-yellow">
                 <span>cambian</span>
