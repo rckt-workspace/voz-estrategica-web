@@ -145,7 +145,7 @@ function MasterclassPage() {
 
   const logistica = [
     { icon: Calendar, label: "Fecha", value: FECHA },
-    { icon: Clock, label: "Hora", value: "10:00 AM hora Colombia (UTC-5)" },
+    { icon: Clock, label: "Hora", value: "7:00 PM hora Colombia (UTC-5)" },
     { icon: Video, label: "Duración", value: "2 horas en vivo + 30 min de Q&A abierto" },
     { icon: Globe, label: "Modalidad", value: "100% virtual en Zoom · enlace tras compra" },
     { icon: Download, label: "Grabación", value: "Incluida · acceso por 48 horas posteriores" },
@@ -257,7 +257,7 @@ function MasterclassPage() {
               En 2 horas. Con el sistema que aplica <strong>Carlos Laguna</strong> con Mercedes Benz, Nespresso y Bancolombia.
             </p>
             <p className="mt-4 text-sm text-white/60">
-              Masterclass virtual en vivo · {FECHA} · 10:00 AM hora Colombia · <strong>$20 USD</strong>
+              Masterclass virtual en vivo · {FECHA} · 7:00 PM hora Colombia · <strong>$20 USD</strong>
             </p>
             <div className="mt-8 flex flex-col items-start gap-3">
               <CTA />
@@ -654,7 +654,7 @@ function MasterclassPage() {
             Bancolombia. <em className="not-italic" style={{ color: BURGUNDY }}>Por $20 USD.</em>
           </h2>
           <p className="mt-6 text-lg text-white/90">
-            {FECHA} a las 10:00 AM hora Colombia.
+            {FECHA} a las 7:00 PM hora Colombia.
           </p>
           <p className="mt-2 text-sm text-white/60">
             Cupos limitados · garantía de devolución · grabación incluida.
