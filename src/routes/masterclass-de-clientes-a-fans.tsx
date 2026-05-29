@@ -257,7 +257,7 @@ function MasterclassPage() {
               En 2 horas. Con el sistema que aplica <strong>Carlos Laguna</strong> con Mercedes Benz, Nespresso y Bancolombia.
             </p>
             <p className="mt-4 text-sm text-white/60">
-              Masterclass virtual en vivo · {FECHA} · 10:00 AM hora Colombia · <strong>$20 USD</strong>
+              Masterclass virtual en vivo · {FECHA} · 7:00 PM hora Colombia · <strong>$20 USD</strong>
             </p>
             <div className="mt-8 flex flex-col items-start gap-3">
               <CTA />
