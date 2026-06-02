@@ -144,7 +144,7 @@ function Shell() {
       {/* WhatsApp floating button — hidden on masterclass landing */}
       {!isSalesLanding && (
         <a
-          href="https://wa.me/573106598108?text=%C2%A1Hola!%20Estoy%20organizando%20un%20evento%20y%20quiero%20una%20propuesta%20de%20speaker.%20%5Butm_source%3Dsite%5D"
+          href="https://wa.me/573106598108?text=%C2%A1Hola!%20Estoy%20organizando%20un%20evento%20y%20quiero%20una%20propuesta%20de%20speaker."
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
