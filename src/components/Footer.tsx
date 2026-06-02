@@ -38,7 +38,11 @@ export function Footer() {
               Contacto
             </h4>
             <ul className="mt-4 space-y-2 text-base">
-              <li>hola@vozestrategica.com</li>
+              <li>
+                <a href="mailto:contacto@vozestrategica.com" className="transition-colors hover:text-brand">
+                  contacto@vozestrategica.com
+                </a>
+              </li>
               <li>
                 <a href="tel:+573156568617" className="transition-colors hover:text-brand">
                   +57 315 6568617
