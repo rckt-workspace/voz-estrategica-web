@@ -73,6 +73,7 @@ function CTA({
       href={CHECKOUT_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={trackMasterclassCheckout}
       className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
