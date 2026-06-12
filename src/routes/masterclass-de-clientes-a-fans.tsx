@@ -21,6 +21,7 @@ import {
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import { trackEvent } from "@/lib/meta-pixel";
+import { trackGA4Event } from "@/lib/ga4";
 
 const trackMasterclassCheckout = () =>
   trackEvent("InitiateCheckout", {
