@@ -119,6 +119,16 @@ function Shell() {
   const queryClient = useQueryClient();
   const location = useLocation();
 
+  // Init Meta Pixel once on mount
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
+
+  // Track PageView on route change (SPA)
+  useEffect(() => {
+    trackPageView();
+  }, [location.pathname]);
+
   // Cache invalidation on auth state change
   useEffect(() => {
     const {
