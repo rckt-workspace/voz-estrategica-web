@@ -15,6 +15,7 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
+import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
 
 import appCss from "../styles.css?url";
 
@@ -119,14 +120,16 @@ function Shell() {
   const queryClient = useQueryClient();
   const location = useLocation();
 
-  // Init Meta Pixel once on mount
+  // Init Meta Pixel and GA4 once on mount
   useEffect(() => {
     initMetaPixel();
+    initGA4();
   }, []);
 
   // Track PageView on route change (SPA)
   useEffect(() => {
     trackPageView();
+    trackGA4PageView();
   }, [location.pathname]);
 
   // Cache invalidation on auth state change
@@ -159,7 +162,10 @@ function Shell() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
-          onClick={() => trackEvent("Contact", { method: "whatsapp" })}
+          onClick={() => {
+            trackEvent("Contact", { method: "whatsapp" });
+            trackGA4Event("contact", { method: "whatsapp" });
+          }}
           className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7">
