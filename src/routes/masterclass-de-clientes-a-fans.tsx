@@ -20,6 +20,14 @@ import {
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
+import { trackEvent } from "@/lib/meta-pixel";
+
+const trackMasterclassCheckout = () =>
+  trackEvent("InitiateCheckout", {
+    content_name: "Masterclass: De clientes a fans",
+    value: 20,
+    currency: "USD",
+  });
 
 const FECHA = "Jueves 18 de junio";
 const CHECKOUT_URL = "https://checkout.bold.co/payment/LNK_34GGH7QEO0";
@@ -65,6 +73,7 @@ function CTA({
       href={CHECKOUT_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={trackMasterclassCheckout}
       className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
@@ -221,6 +230,7 @@ function MasterclassPage() {
             href={CHECKOUT_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackMasterclassCheckout}
             className="hidden rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
             style={{ backgroundColor: BURGUNDY }}
           >
@@ -664,6 +674,7 @@ function MasterclassPage() {
               href={CHECKOUT_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackMasterclassCheckout}
               className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
               style={{ backgroundColor: BURGUNDY }}
             >

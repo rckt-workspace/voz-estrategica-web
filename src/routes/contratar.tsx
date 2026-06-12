@@ -7,6 +7,7 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { supabase } from "@/integrations/supabase/client";
 import { speakers } from "@/data/content";
+import { trackEvent } from "@/lib/meta-pixel";
 
 const schema = z.object({
   organizacion: z.string().min(2, "Indica tu organización").max(200),
@@ -79,6 +80,10 @@ function ContratarPage() {
       toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
       return;
     }
+    trackEvent("Lead", {
+      content_name: "Solicitud de contratación",
+      speaker: spk?.nombre ?? null,
+    });
     toast.success(
       spk
         ? `¡Recibido! Te contactamos pronto sobre ${spk.nombre}.`

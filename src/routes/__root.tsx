@@ -14,6 +14,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
 
 import appCss from "../styles.css?url";
 
@@ -118,6 +119,16 @@ function Shell() {
   const queryClient = useQueryClient();
   const location = useLocation();
 
+  // Init Meta Pixel once on mount
+  useEffect(() => {
+    initMetaPixel();
+  }, []);
+
+  // Track PageView on route change (SPA)
+  useEffect(() => {
+    trackPageView();
+  }, [location.pathname]);
+
   // Cache invalidation on auth state change
   useEffect(() => {
     const {
@@ -148,6 +159,7 @@ function Shell() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
+          onClick={() => trackEvent("Contact", { method: "whatsapp" })}
           className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7">
@@ -155,6 +167,16 @@ function Shell() {
           </svg>
         </a>
       )}
+      {/* Meta Pixel noscript fallback */}
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style={{ display: "none" }}
+          src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+          alt=""
+        />
+      </noscript>
       {/* Editorial grain overlay */}
       <div aria-hidden className="pointer-events-none fixed inset-0 z-[60] mix-blend-multiply opacity-[0.035]">
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
