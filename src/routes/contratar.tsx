@@ -80,6 +80,10 @@ function ContratarPage() {
       toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
       return;
     }
+    trackEvent("Lead", {
+      content_name: "Solicitud de contratación",
+      speaker: spk?.nombre ?? null,
+    });
     toast.success(
       spk
         ? `¡Recibido! Te contactamos pronto sobre ${spk.nombre}.`
