@@ -20,6 +20,14 @@ import {
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
+import { trackEvent } from "@/lib/meta-pixel";
+
+const trackMasterclassCheckout = () =>
+  trackEvent("InitiateCheckout", {
+    content_name: "Masterclass: De clientes a fans",
+    value: 20,
+    currency: "USD",
+  });
 
 const FECHA = "Jueves 18 de junio";
 const CHECKOUT_URL = "https://checkout.bold.co/payment/LNK_34GGH7QEO0";
