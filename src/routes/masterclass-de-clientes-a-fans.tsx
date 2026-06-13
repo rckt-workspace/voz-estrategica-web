@@ -17,6 +17,7 @@ import {
   Smartphone,
   Languages,
   Award,
+  Loader2,
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
@@ -83,21 +84,39 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   component: MasterclassPage,
 });
 
-function CTA({
+function CheckoutButton({
   children = "Reservar mi cupo · $20 USD",
   className = "",
 }: {
   children?: React.ReactNode;
   className?: string;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <button
       type="button"
-      onClick={startBoldCheckout}
-      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
+      onClick={async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        try {
+          await startBoldCheckout();
+        } finally {
+          setIsLoading(false);
+        }
+      }}
+      disabled={isLoading}
+      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
-      {children}
+      {isLoading ? (
+        <>
+          <Loader2 className="h-5 w-5 animate-spin" />
+          Abriendo pago...
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 }
@@ -288,7 +307,7 @@ function MasterclassPage() {
               Masterclass virtual en vivo · {FECHA} · 7:00 PM hora Colombia · <strong>$20 USD</strong>
             </p>
             <div className="mt-8 flex flex-col items-start gap-3">
-              <CTA />
+              <CheckoutButton />
               <p className="text-xs text-white/60">Cupos limitados · garantía de devolución</p>
             </div>
           </div>
@@ -374,7 +393,7 @@ function MasterclassPage() {
             ))}
           </ul>
           <div className="mt-10 flex justify-center">
-            <CTA>Quiero esto · $20 USD</CTA>
+            <CheckoutButton>Quiero esto · $20 USD</CheckoutButton>
           </div>
         </div>
       </section>
@@ -535,7 +554,7 @@ function MasterclassPage() {
             ))}
           </div>
           <div className="mt-12 flex justify-center">
-            <CTA />
+            <CheckoutButton />
           </div>
         </div>
       </section>
@@ -587,7 +606,7 @@ function MasterclassPage() {
             </div>
 
             <div className="mt-8">
-              <CTA className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CTA>
+              <CheckoutButton className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CheckoutButton>
               <p className="mt-3 text-center text-xs text-white/60">
                 Pago seguro · tarjeta internacional · PSE Colombia · 2 cuotas sin interés disponibles
               </p>
