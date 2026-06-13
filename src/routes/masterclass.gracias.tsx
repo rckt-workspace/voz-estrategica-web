@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, XCircle, Clock, ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
+import { recordOrder } from "@/lib/orders.functions";
 
 type BoldStatus = "approved" | "rejected" | "pending" | "failed" | "unknown";
 
