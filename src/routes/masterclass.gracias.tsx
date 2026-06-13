@@ -47,6 +47,7 @@ function GraciasPage() {
   const orderId = search["bold-order-id"];
   const status = useMemo(() => normalizeStatus(search["bold-tx-status"]), [search]);
   const [order, setOrder] = useState<StoredOrder | null>(null);
+  const saveOrder = useServerFn(recordOrder);
 
   useEffect(() => {
     try {
@@ -56,6 +57,23 @@ function GraciasPage() {
       /* ignore */
     }
   }, []);
+
+  // Register order in our database (once per orderId+status)
+  useEffect(() => {
+    if (!orderId) return;
+    const key = `bold:order-recorded:${orderId}:${status}`;
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    saveOrder({
+      data: {
+        orderId,
+        status,
+        amount: order?.amount ? Number(order.amount) : undefined,
+        currency: order?.currency,
+        description: order?.description,
+      },
+    }).catch(() => sessionStorage.removeItem(key));
+  }, [orderId, status, order, saveOrder]);
 
   // Fire conversion events once on success
   useEffect(() => {
