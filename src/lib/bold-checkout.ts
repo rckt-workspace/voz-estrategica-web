@@ -32,18 +32,23 @@ export async function openBoldEmbeddedCheckout(opts: {
     /* ignore */
   }
 
-  // Bold's script tag replaces itself with a button. Mount hidden, then click it.
+  // Mount a visible container that Bold can render its button/modal into.
+  // We auto-click the injected button so the checkout opens immediately.
   const container = document.createElement("div");
+  container.setAttribute("data-bold-container", "");
+  // Keep it in the layout but visually hidden — Bold needs it attached to the DOM.
   container.style.position = "fixed";
-  container.style.left = "-9999px";
-  container.style.top = "-9999px";
+  container.style.bottom = "0";
+  container.style.right = "0";
+  container.style.width = "1px";
+  container.style.height = "1px";
+  container.style.overflow = "hidden";
   container.style.opacity = "0";
-  container.style.pointerEvents = "none";
   document.body.appendChild(container);
 
   const script = document.createElement("script");
   script.src = BOLD_SCRIPT_SRC;
-  script.async = true;
+  script.async = false;
   script.setAttribute("data-bold-button", "");
   script.setAttribute("data-api-key", order.apiKey);
   script.setAttribute("data-amount", order.amount);
@@ -51,16 +56,17 @@ export async function openBoldEmbeddedCheckout(opts: {
   script.setAttribute("data-order-id", order.orderId);
   script.setAttribute("data-integrity-signature", order.integritySignature);
   script.setAttribute("data-description", order.description);
-  script.setAttribute("data-render-mode", "embedded");
   script.setAttribute("data-redirection-url", opts.redirectionUrl);
   script.setAttribute("data-origin-url", window.location.href);
   container.appendChild(script);
 
-  // Poll for the injected Bold button and click it
+  // Poll for the injected Bold button and click it to open the hosted checkout.
   const start = Date.now();
   await new Promise<void>((resolve) => {
     const tick = () => {
-      const btn = container.querySelector("button");
+      const btn = container.querySelector<HTMLButtonElement>(
+        "#boldPaymentButton, button",
+      );
       if (btn) {
         btn.click();
         resolve();
@@ -74,9 +80,4 @@ export async function openBoldEmbeddedCheckout(opts: {
     };
     tick();
   });
-
-  // Clean up after the modal closes (delayed)
-  setTimeout(() => {
-    container.remove();
-  }, 60_000);
 }
