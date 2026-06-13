@@ -84,21 +84,39 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   component: MasterclassPage,
 });
 
-function CTA({
+function CheckoutButton({
   children = "Reservar mi cupo · $20 USD",
   className = "",
 }: {
   children?: React.ReactNode;
   className?: string;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <button
       type="button"
-      onClick={startBoldCheckout}
-      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
+      onClick={async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        try {
+          await startBoldCheckout();
+        } finally {
+          setIsLoading(false);
+        }
+      }}
+      disabled={isLoading}
+      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
-      {children}
+      {isLoading ? (
+        <>
+          <Loader2 className="h-5 w-5 animate-spin" />
+          Abriendo pago...
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 }
