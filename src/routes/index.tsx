@@ -98,7 +98,7 @@ function Home() {
                 ["+1.500", "Conferencias dictadas"],
                 ["14", "Países"],
                 ["+500K", "Vidas impactadas"],
-                ["5", "Voces curadas"],
+                ["8", "Voces curadas"],
               ].map(([n, l]) => (
                 <div key={l} className="bg-background px-2 py-6">
                   <div className="font-display text-4xl md:text-5xl">{n}</div>
