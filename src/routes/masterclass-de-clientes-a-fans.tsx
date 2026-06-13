@@ -28,7 +28,9 @@ import galleryPanel from "@/assets/carlos-gallery/panel.jpg.asset.json";
 import galleryRichbot from "@/assets/carlos-gallery/richbot.jpg.asset.json";
 import galleryEden from "@/assets/carlos-gallery/eden.jpg.asset.json";
 import galleryMercedes from "@/assets/carlos-gallery/mercedes.jpg.asset.json";
+import galleryMercedes2 from "@/assets/carlos-gallery/mercedes2.jpg.asset.json";
 import galleryColsanitas from "@/assets/carlos-gallery/colsanitas.jpg.asset.json";
+import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
@@ -497,9 +499,17 @@ function MasterclassPage() {
                 style={{ backgroundColor: BURGUNDY_LIGHT }}
               />
               <img
-                src={gallerySpeaker.url}
-                alt="Carlos Laguna en escenario frente a una audiencia masiva"
+                src={galleryCrehana.url}
+                alt="Carlos Laguna, retrato profesional como speaker oficial de Crehana"
                 className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
+                loading="lazy"
+              />
+              {/* Inset secundario */}
+              <img
+                src={galleryMercedes2.url}
+                alt="Carlos Laguna frente a concesionario Mercedes-Benz Autoland"
+                className="absolute -bottom-8 -right-6 hidden aspect-[3/4] w-40 rounded-[3px] border-4 object-cover shadow-2xl md:block lg:w-48"
+                style={{ borderColor: "#0e0f0c" }}
                 loading="lazy"
               />
             </div>
@@ -566,9 +576,11 @@ function MasterclassPage() {
               <img
                 src={gallerySpeaker.url}
                 alt="Carlos Laguna en conferencia frente a auditorio lleno"
-                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="aspect-square h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                style={{ objectPosition: "50% 35%" }}
                 loading="lazy"
               />
+
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0" />
               <figcaption className="absolute inset-x-0 bottom-0 p-5 md:p-6">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">Keynote</p>
@@ -680,6 +692,38 @@ function MasterclassPage() {
               <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Colsanitas</p>
                 <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Experiencia corporativa</p>
+              </figcaption>
+            </figure>
+          </div>
+
+          {/* Segunda fila · cierre con más escenarios */}
+          <div className="mt-3 grid grid-cols-2 gap-3 md:mt-4 md:grid-cols-3 md:gap-4">
+            <figure className="group relative col-span-2 overflow-hidden rounded-[3px] bg-black md:col-span-2">
+              <img
+                src={galleryMercedes2.url}
+                alt="Carlos Laguna frente al concesionario Mercedes-Benz Autoland en Bogotá"
+                className="aspect-[16/10] h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                style={{ objectPosition: "50% 30%" }}
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Mercedes-Benz Autoland</p>
+                <p className="mt-0.5 text-xs text-white/70 md:text-sm">Entrenamiento comercial · marca premium</p>
+              </figcaption>
+            </figure>
+
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryCrehana.url}
+                alt="Carlos Laguna como speaker oficial de Crehana"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Crehana</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Speaker oficial · formación digital</p>
               </figcaption>
             </figure>
           </div>
