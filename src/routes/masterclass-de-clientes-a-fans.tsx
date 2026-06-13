@@ -21,6 +21,14 @@ import {
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
+import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
+import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
+import galleryCreators from "@/assets/carlos-gallery/creators.jpg.asset.json";
+import galleryPanel from "@/assets/carlos-gallery/panel.jpg.asset.json";
+import galleryRichbot from "@/assets/carlos-gallery/richbot.jpg.asset.json";
+import galleryEden from "@/assets/carlos-gallery/eden.jpg.asset.json";
+import galleryMercedes from "@/assets/carlos-gallery/mercedes.jpg.asset.json";
+import galleryColsanitas from "@/assets/carlos-gallery/colsanitas.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
