@@ -491,26 +491,15 @@ function MasterclassPage() {
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-[1fr_1.3fr] md:items-center md:py-28">
           <div>
             <div className="relative">
-              <div
-                className="absolute -inset-4 -z-10 rounded-[3px]"
-                style={{ backgroundColor: BURGUNDY_LIGHT }}
-              />
-              <img
-                src={galleryCrehana.url}
-                alt="Carlos Laguna, retrato profesional como speaker oficial de Crehana"
-                className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
-                loading="lazy"
-              />
-              {/* Inset secundario */}
               <img
                 src={galleryMercedes2.url}
                 alt="Carlos Laguna frente a concesionario Mercedes-Benz Autoland"
-                className="absolute -bottom-8 -right-6 hidden aspect-[3/4] w-40 rounded-[3px] border-4 object-cover shadow-2xl md:block lg:w-48"
-                style={{ borderColor: "#0e0f0c" }}
+                className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
                 loading="lazy"
               />
             </div>
           </div>
+
           <div>
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
               Quién te va a enseñar
