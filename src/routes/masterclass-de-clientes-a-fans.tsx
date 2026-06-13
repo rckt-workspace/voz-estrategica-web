@@ -317,23 +317,13 @@ function MasterclassPage() {
             </div>
           </div>
           <div className="relative">
-            <div
-              className="absolute -inset-6 -z-10 rounded-[3px]"
-              style={{ backgroundColor: BURGUNDY_LIGHT }}
-            />
             <img
               src={galleryCrehana.url}
               alt="Carlos Laguna, autor de De clientes a fans"
               className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
             />
-            <img
-              src={galleryMercedes.url}
-              alt="Carlos Laguna en Mercedes-Benz Autoland"
-              className="absolute -bottom-8 -left-6 hidden aspect-[3/4] w-36 rounded-[3px] border-4 object-cover shadow-2xl md:block lg:w-44"
-              style={{ borderColor: BLACK }}
-              loading="lazy"
-            />
           </div>
+
         </div>
       </section>
 
@@ -704,12 +694,12 @@ function MasterclassPage() {
           </div>
 
           {/* Segunda fila · cierre con más escenarios */}
-          <div className="mt-3 grid grid-cols-2 gap-3 md:mt-4 md:grid-cols-3 md:gap-4">
-            <figure className="group relative col-span-2 overflow-hidden rounded-[3px] bg-black md:col-span-2">
+          <div className="mt-3 grid grid-cols-1 gap-3 md:mt-4 md:gap-4">
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
               <img
                 src={galleryCrehana.url}
                 alt="Carlos Laguna como speaker oficial de Crehana"
-                className="aspect-[16/10] h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="aspect-[16/7] h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
@@ -718,21 +708,8 @@ function MasterclassPage() {
                 <p className="mt-0.5 text-xs text-white/70 md:text-sm">Speaker oficial · formación digital</p>
               </figcaption>
             </figure>
-
-            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
-              <img
-                src={galleryMercedes.url}
-                alt="Carlos Laguna en evento Mercedes-Benz"
-                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Mercedes-Benz</p>
-                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Entrenamiento comercial · marca premium</p>
-              </figcaption>
-            </figure>
           </div>
+
 
           <p className="mt-10 text-center text-sm text-white/50 md:mt-12">
             Estos son algunos de los escenarios y marcas con los que Carlos ha trabajado en los últimos años.
