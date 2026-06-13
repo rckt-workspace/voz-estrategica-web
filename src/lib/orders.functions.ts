@@ -36,7 +36,7 @@ export const recordOrder = createServerFn({ method: "POST" })
             customer_email: data.customerEmail ?? null,
             customer_name: data.customerName ?? null,
             customer_phone: data.customerPhone ?? null,
-            raw_payload: data as unknown as Record<string, unknown>,
+            raw_payload: JSON.parse(JSON.stringify(data)),
           })
           .eq("id", existing.id);
         return { ok: true, id: existing.id, updated: true };
@@ -54,7 +54,7 @@ export const recordOrder = createServerFn({ method: "POST" })
         customer_name: data.customerName ?? null,
         customer_phone: data.customerPhone ?? null,
         product: data.description ?? "masterclass-de-clientes-a-fans",
-        raw_payload: data as unknown as Record<string, unknown>,
+        raw_payload: JSON.parse(JSON.stringify(data)),
       })
       .select("id")
       .single();
