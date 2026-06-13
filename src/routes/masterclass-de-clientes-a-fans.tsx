@@ -17,6 +17,7 @@ import {
   Smartphone,
   Languages,
   Award,
+  Loader2,
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
