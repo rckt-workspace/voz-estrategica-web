@@ -21,6 +21,14 @@ import {
 } from "lucide-react";
 import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
+import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
+import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
+import galleryCreators from "@/assets/carlos-gallery/creators.jpg.asset.json";
+import galleryPanel from "@/assets/carlos-gallery/panel.jpg.asset.json";
+import galleryRichbot from "@/assets/carlos-gallery/richbot.jpg.asset.json";
+import galleryEden from "@/assets/carlos-gallery/eden.jpg.asset.json";
+import galleryMercedes from "@/assets/carlos-gallery/mercedes.jpg.asset.json";
+import galleryColsanitas from "@/assets/carlos-gallery/colsanitas.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
@@ -483,11 +491,18 @@ function MasterclassPage() {
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-[1fr_1.3fr] md:items-center md:py-28">
           <div>
-            <img
-              src={carlosImg}
-              alt="Carlos Laguna"
-              className="aspect-[4/5] w-full rounded-[3px] object-cover grayscale"
-            />
+            <div className="relative">
+              <div
+                className="absolute -inset-4 -z-10 rounded-[3px]"
+                style={{ backgroundColor: BURGUNDY_LIGHT }}
+              />
+              <img
+                src={gallerySpeaker.url}
+                alt="Carlos Laguna en escenario frente a una audiencia masiva"
+                className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
+                loading="lazy"
+              />
+            </div>
           </div>
           <div>
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
@@ -524,6 +539,154 @@ function MasterclassPage() {
               </footer>
             </blockquote>
           </div>
+        </div>
+      </section>
+
+      {/* ─────────── BLOQUE 06.5 · CARLOS EN ACCIÓN ─────────── */}
+      <section className="bg-[#16181a]">
+        <div className="mx-auto max-w-7xl px-5 py-20 md:py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
+              Carlos en acción
+            </p>
+            <h2 style={serif} className="mt-3 text-3xl font-bold leading-tight md:text-5xl">
+              No es teoría de aula.<br className="hidden md:block" />
+              <em className="italic" style={{ color: BURGUNDY }}>Es escenario, marca y cliente real.</em>
+            </h2>
+            <p className="mt-5 text-base text-white/60 md:text-lg">
+              Conferencias internacionales, activaciones con marcas tier-1 y experiencias de cliente que hoy
+              se enseñan como caso de estudio.
+            </p>
+          </div>
+
+          {/* Bento grid editorial */}
+          <div className="mt-12 grid grid-cols-2 gap-3 md:mt-16 md:grid-cols-4 md:gap-4">
+            {/* Hero - speaker (2x2) */}
+            <figure className="group relative col-span-2 row-span-2 overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={gallerySpeaker.url}
+                alt="Carlos Laguna en conferencia frente a auditorio lleno"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70">Keynote</p>
+                <p style={serif} className="mt-1 text-lg font-bold text-white md:text-2xl">
+                  Auditorios llenos. Cero filtros.
+                </p>
+              </figcaption>
+            </figure>
+
+            {/* EXMA */}
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryExma.url}
+                alt="Carlos Laguna en EXMA explicando la curva de adopción de la innovación"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">EXMA</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Marketing & innovación</p>
+              </figcaption>
+            </figure>
+
+            {/* Creators */}
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryCreators.url}
+                alt="Carlos Laguna firmando su libro De clientes a fans con asistentes"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Creators Summit</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Firma de libros</p>
+              </figcaption>
+            </figure>
+
+            {/* Panel */}
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryPanel.url}
+                alt="Carlos Laguna como moderador en panel sobre comercio y experiencia"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Día del Comerciante</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Panel & conversación</p>
+              </figcaption>
+            </figure>
+
+            {/* Richbot */}
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryRichbot.url}
+                alt="Carlos Laguna con equipo presentando el proyecto Richbot"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Richbot · Apostar</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Caso de marca</p>
+              </figcaption>
+            </figure>
+
+            {/* Mercedes / wide */}
+            <figure className="group relative col-span-2 overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryMercedes.url}
+                alt="Activación de marca Mercedes Benz con clientes y equipo de CPC Group"
+                className="aspect-[16/10] h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Mercedes-Benz · Motorysa</p>
+                <p className="mt-0.5 text-xs text-white/70 md:text-sm">Activación premium · experiencia de cliente real</p>
+              </figcaption>
+            </figure>
+
+            {/* Edentainment */}
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryEden.url}
+                alt="Carlos Laguna en lanzamiento Edentainment con equipo de centro comercial El Edén"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Edentainment</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Lanzamiento de marca</p>
+              </figcaption>
+            </figure>
+
+            {/* Colsanitas */}
+            <figure className="group relative overflow-hidden rounded-[3px] bg-black">
+              <img
+                src={galleryColsanitas.url}
+                alt="Carlos Laguna con equipo de Colsanitas en experiencia el ingrediente perfecto"
+                className="aspect-square h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-3 md:p-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white">Colsanitas</p>
+                <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">Experiencia corporativa</p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <p className="mt-10 text-center text-sm text-white/50 md:mt-12">
+            Estos son algunos de los escenarios y marcas con los que Carlos ha trabajado en los últimos años.
+          </p>
         </div>
       </section>
 
