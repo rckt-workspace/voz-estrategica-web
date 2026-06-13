@@ -19,6 +19,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
+import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
@@ -74,6 +75,11 @@ const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
   path: '/speakers/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MasterclassGraciasRoute = MasterclassGraciasRouteImport.update({
+  id: '/masterclass/gracias',
+  path: '/masterclass/gracias',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
   id: '/speakers',
   path: '/speakers',
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
+  '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByTo {
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
+  '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin': typeof AdminIndexRoute
   '/speakers': typeof SpeakersIndexRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
+  '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
+    | '/masterclass/gracias'
     | '/speakers/$slug'
     | '/admin/'
     | '/speakers/'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
+    | '/masterclass/gracias'
     | '/speakers/$slug'
     | '/admin'
     | '/speakers'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
+    | '/masterclass/gracias'
     | '/speakers/$slug'
     | '/admin/'
     | '/speakers/'
@@ -190,6 +202,7 @@ export interface RootRouteChildren {
   EventosRoute: typeof EventosRoute
   LibrosRoute: typeof LibrosRoute
   MasterclassDeClientesAFansRoute: typeof MasterclassDeClientesAFansRoute
+  MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
   SpeakersIndexRoute: typeof SpeakersIndexRoute
 }
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeakersSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/masterclass/gracias': {
+      id: '/masterclass/gracias'
+      path: '/masterclass/gracias'
+      fullPath: '/masterclass/gracias'
+      preLoaderRoute: typeof MasterclassGraciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/speakers': {
       id: '/admin/speakers'
       path: '/speakers'
@@ -314,19 +334,10 @@ const rootRouteChildren: RootRouteChildren = {
   EventosRoute: EventosRoute,
   LibrosRoute: LibrosRoute,
   MasterclassDeClientesAFansRoute: MasterclassDeClientesAFansRoute,
+  MasterclassGraciasRoute: MasterclassGraciasRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
   SpeakersIndexRoute: SpeakersIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
