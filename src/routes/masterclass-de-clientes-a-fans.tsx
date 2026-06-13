@@ -265,7 +265,7 @@ function MasterclassPage() {
             loading="eager"
             decoding="async"
           />
-          <CheckoutButton className="!min-h-0 !px-4 !py-2 !text-sm !shadow-none hover:!shadow-none">
+          <CheckoutButton className="hidden !min-h-0 !px-4 !py-2 !text-sm !shadow-none hover:!shadow-none sm:inline-flex">
             Reservar · $20 USD
           </CheckoutButton>
         </div>
