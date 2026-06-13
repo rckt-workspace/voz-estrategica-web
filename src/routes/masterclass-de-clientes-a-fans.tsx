@@ -491,11 +491,18 @@ function MasterclassPage() {
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-[1fr_1.3fr] md:items-center md:py-28">
           <div>
-            <img
-              src={carlosImg}
-              alt="Carlos Laguna"
-              className="aspect-[4/5] w-full rounded-[3px] object-cover grayscale"
-            />
+            <div className="relative">
+              <div
+                className="absolute -inset-4 -z-10 rounded-[3px]"
+                style={{ backgroundColor: BURGUNDY_LIGHT }}
+              />
+              <img
+                src={gallerySpeaker.url}
+                alt="Carlos Laguna en escenario frente a una audiencia masiva"
+                className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
+                loading="lazy"
+              />
+            </div>
           </div>
           <div>
             <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
