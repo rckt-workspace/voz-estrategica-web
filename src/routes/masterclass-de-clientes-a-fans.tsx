@@ -22,22 +22,37 @@ import carlosImg from "@/assets/speaker-carlos-laguna.jpg";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
+import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
+import { toast } from "sonner";
 
-const trackMasterclassCheckout = () => {
+const MASTERCLASS_AMOUNT_USD = 20;
+const MASTERCLASS_DESCRIPTION = "Masterclass: De clientes a fans";
+
+const startBoldCheckout = async () => {
   trackEvent("InitiateCheckout", {
-    content_name: "Masterclass: De clientes a fans",
-    value: 20,
+    content_name: MASTERCLASS_DESCRIPTION,
+    value: MASTERCLASS_AMOUNT_USD,
     currency: "USD",
   });
   trackGA4Event("begin_checkout", {
-    content_name: "Masterclass: De clientes a fans",
-    value: 20,
+    content_name: MASTERCLASS_DESCRIPTION,
+    value: MASTERCLASS_AMOUNT_USD,
     currency: "USD",
   });
+  try {
+    await openBoldEmbeddedCheckout({
+      amount: MASTERCLASS_AMOUNT_USD,
+      currency: "USD",
+      description: MASTERCLASS_DESCRIPTION,
+      redirectionUrl: `${window.location.origin}/masterclass/gracias`,
+    });
+  } catch (err) {
+    console.error(err);
+    toast.error("No pudimos abrir el pago. Intenta de nuevo en unos segundos.");
+  }
 };
 
 const FECHA = "Jueves 18 de junio";
-const CHECKOUT_URL = "https://checkout.bold.co/payment/LNK_34GGH7QEO0";
 const BURGUNDY = "#40ed51"; // brand green
 const BURGUNDY_LIGHT = "rgba(64, 237, 81, 0.12)"; // dim green tint for dark bg
 const CREAM = "rgba(64, 237, 81, 0.07)"; // very subtle highlight for dark bg
@@ -76,16 +91,14 @@ function CTA({
   className?: string;
 }) {
   return (
-    <a
-      href={CHECKOUT_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={trackMasterclassCheckout}
-      className={`inline-flex min-h-[56px] items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
+    <button
+      type="button"
+      onClick={startBoldCheckout}
+      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
       {children}
-    </a>
+    </button>
   );
 }
 
@@ -233,16 +246,14 @@ function MasterclassPage() {
             loading="eager"
             decoding="async"
           />
-          <a
-            href={CHECKOUT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackMasterclassCheckout}
-            className="hidden rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
+          <button
+            type="button"
+            onClick={startBoldCheckout}
+            className="hidden cursor-pointer rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
             style={{ backgroundColor: BURGUNDY }}
           >
             Reservar · $20 USD
-          </a>
+          </button>
         </div>
       </div>
 
@@ -677,16 +688,14 @@ function MasterclassPage() {
             Cupos limitados · garantía de devolución · grabación incluida.
           </p>
           <div className="mt-10 flex justify-center">
-            <a
-              href={CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={trackMasterclassCheckout}
-              className="inline-flex min-h-[64px] items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
+            <button
+              type="button"
+              onClick={startBoldCheckout}
+              className="inline-flex min-h-[64px] cursor-pointer items-center justify-center rounded-[6px] px-10 py-5 text-lg font-bold uppercase tracking-wide text-[#0e0f0c] shadow-2xl transition-all hover:-translate-y-0.5"
               style={{ backgroundColor: BURGUNDY }}
             >
               Reservar mi cupo · $20 USD
-            </a>
+            </button>
           </div>
         </div>
       </section>
