@@ -337,9 +337,41 @@ function MasterclassPage() {
               </span>
             ))}
           </div>
-          <p className="mt-8 text-center text-sm italic text-white/60" style={serif}>
-            Su libro <em>De clientes a fans</em> fue reseñado por <strong className="not-italic text-white">Forbes Colombia</strong> y publicado en <a href="https://www.semana.com/cultura/articulo/fragmento-del-libro-de-clientes-a-fans-de-carlos-laguna/202623/" target="_blank" rel="noopener noreferrer" className="not-italic text-white underline underline-offset-2 hover:text-white/80">Semana</a>.
-          </p>
+          <div className="mt-10 border-t border-white/10 pt-8">
+            <p className="text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+              Su libro <em className="not-italic">De clientes a fans</em> ha sido destacado en
+            </p>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 md:gap-x-12">
+              <span
+                className="text-xl font-bold tracking-tight text-white md:text-2xl"
+                style={serif}
+              >
+                Forbes Colombia
+              </span>
+              <span className="h-5 w-px bg-white/20" aria-hidden />
+              <a
+                href="https://www.semana.com/cultura/articulo/fragmento-del-libro-de-clientes-a-fans-de-carlos-laguna/202623/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xl font-bold tracking-tight text-white underline-offset-4 transition hover:underline md:text-2xl"
+                style={serif}
+              >
+                Semana ↗
+              </a>
+            </div>
+            <p className="mt-4 text-center text-xs text-white/50">
+              Lee el fragmento publicado en{" "}
+              <a
+                href="https://www.semana.com/cultura/articulo/fragmento-del-libro-de-clientes-a-fans-de-carlos-laguna/202623/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 underline underline-offset-2 hover:text-white"
+              >
+                Revista Semana
+              </a>
+              .
+            </p>
+          </div>
         </div>
       </section>
 
