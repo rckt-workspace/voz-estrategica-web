@@ -5,6 +5,7 @@ import paolaImg from "@/assets/speaker-paola-aldaz.jpg";
 import williamImg from "@/assets/speaker-william-vinasco.webp";
 import diegoImg from "@/assets/speaker-diego-camacho.jpg";
 import elsaImg from "@/assets/speaker-elsa-maria-gonzalez.jpg";
+import martanImg from "@/assets/speaker-martan.png";
 
 import bookMilagrosamente from "@/assets/book-milagrosamente.webp";
 import bookClientesFans from "@/assets/book-clientes-fans.webp";
