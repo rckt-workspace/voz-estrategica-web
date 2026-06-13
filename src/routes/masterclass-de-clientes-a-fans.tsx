@@ -106,7 +106,7 @@ function CheckoutButton({
         }
       }}
       disabled={isLoading}
-      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
+      className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 active:scale-[0.96] active:brightness-110 active:shadow-[inset_0_3px_10px_rgba(0,0,0,0.25)] disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
       {isLoading ? (
@@ -265,14 +265,9 @@ function MasterclassPage() {
             loading="eager"
             decoding="async"
           />
-          <button
-            type="button"
-            onClick={startBoldCheckout}
-            className="hidden cursor-pointer rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
-            style={{ backgroundColor: BURGUNDY }}
-          >
+          <CheckoutButton className="hidden !min-h-0 !px-4 !py-2 !text-sm !shadow-none hover:!shadow-none sm:inline-flex">
             Reservar · $20 USD
-          </button>
+          </CheckoutButton>
         </div>
       </div>
 
