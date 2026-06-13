@@ -338,7 +338,7 @@ function MasterclassPage() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm italic text-white/60" style={serif}>
-            Su libro <em>De clientes a fans</em> fue reseñado por <strong className="not-italic text-white">Forbes Colombia</strong>.
+            Su libro <em>De clientes a fans</em> fue reseñado por <strong className="not-italic text-white">Forbes Colombia</strong> y publicado en <a href="https://www.semana.com/cultura/articulo/fragmento-del-libro-de-clientes-a-fans-de-carlos-laguna/202623/" target="_blank" rel="noopener noreferrer" className="not-italic text-white underline underline-offset-2 hover:text-white/80">Semana</a>.
           </p>
         </div>
       </section>
