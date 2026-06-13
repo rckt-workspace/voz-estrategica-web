@@ -307,7 +307,7 @@ function MasterclassPage() {
               Masterclass virtual en vivo · {FECHA} · 7:00 PM hora Colombia · <strong>$20 USD</strong>
             </p>
             <div className="mt-8 flex flex-col items-start gap-3">
-              <CTA />
+              <CheckoutButton />
               <p className="text-xs text-white/60">Cupos limitados · garantía de devolución</p>
             </div>
           </div>
@@ -393,7 +393,7 @@ function MasterclassPage() {
             ))}
           </ul>
           <div className="mt-10 flex justify-center">
-            <CTA>Quiero esto · $20 USD</CTA>
+            <CheckoutButton>Quiero esto · $20 USD</CheckoutButton>
           </div>
         </div>
       </section>
@@ -554,7 +554,7 @@ function MasterclassPage() {
             ))}
           </div>
           <div className="mt-12 flex justify-center">
-            <CTA />
+            <CheckoutButton />
           </div>
         </div>
       </section>
@@ -606,7 +606,7 @@ function MasterclassPage() {
             </div>
 
             <div className="mt-8">
-              <CTA className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CTA>
+              <CheckoutButton className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CheckoutButton>
               <p className="mt-3 text-center text-xs text-white/60">
                 Pago seguro · tarjeta internacional · PSE Colombia · 2 cuotas sin interés disponibles
               </p>
