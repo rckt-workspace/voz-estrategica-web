@@ -265,14 +265,9 @@ function MasterclassPage() {
             loading="eager"
             decoding="async"
           />
-          <button
-            type="button"
-            onClick={startBoldCheckout}
-            className="hidden cursor-pointer rounded-[4px] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#0e0f0c] sm:inline-flex"
-            style={{ backgroundColor: BURGUNDY }}
-          >
+          <CheckoutButton className="!min-h-0 !px-4 !py-2 !text-sm !shadow-none hover:!shadow-none">
             Reservar · $20 USD
-          </button>
+          </CheckoutButton>
         </div>
       </div>
 
