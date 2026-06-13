@@ -327,7 +327,7 @@ function MasterclassPage() {
               className="aspect-[4/5] w-full rounded-[3px] object-cover shadow-2xl"
             />
             <img
-              src={galleryMercedes2.url}
+              src={galleryMercedes.url}
               alt="Carlos Laguna en Mercedes-Benz Autoland"
               className="absolute -bottom-8 -left-6 hidden aspect-[3/4] w-36 rounded-[3px] border-4 object-cover shadow-2xl md:block lg:w-44"
               style={{ borderColor: BLACK }}
