@@ -177,6 +177,24 @@ export const speakers: Speaker[] = [
     destacado: false,
     quote: "Cuando sé qué flores te gustan, me doy cuenta de que no siempre con las rosas conquisto tu corazón.",
   },
+  {
+    slug: "martan",
+    nombre: "Martan",
+    especialidad: "IA, automatización & transformación digital",
+    foto: martanImg,
+    bio: [
+      "Oscar Martan es fundador de ConverxIA, xIA e Incdustry. Con más de 20 años en el sector tech, ha liderado más de 5,000 proyectos en 12 países, ayudando a marcas como Netflix, Coca-Cola, Rappi y Ford a transformar sus procesos con inteligencia artificial y automatización.",
+      "Ganador de 2 Cannes Lions y 2 Guinness World Records, es referente en IA conversacional y WhatsApp Business. Su misión: ayudar a empresas y profesionales a ahorrar tiempo, generar ingresos y enfocarse en lo que realmente importa.",
+    ],
+    tematicas: ["Inteligencia artificial", "Automatización", "Transformación digital", "Ventas", "Productividad"],
+    charlas: [
+      "Chatear para vender: estrategias de WhatsApp con IA",
+      "Money automation: sistemas que generan ingresos solos",
+      "Ultra productividad: agiliza tu día con herramientas tecnológicas",
+    ],
+    destacado: false,
+    quote: "La IA no reemplaza a tu equipo: lo libera para vender mejor.",
+  },
 ];
 
 export const events: EventItem[] = [
