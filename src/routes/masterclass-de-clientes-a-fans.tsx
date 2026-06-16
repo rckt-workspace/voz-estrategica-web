@@ -547,6 +547,7 @@ function MasterclassPage() {
 
   return (
     <div style={pageStyle} className="min-h-screen">
+      <PreCheckoutDialog />
       {/* Minimal top bar — sin menú */}
       <div className="border-b border-white/15 bg-[#0e0f0c]/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 md:py-4">
