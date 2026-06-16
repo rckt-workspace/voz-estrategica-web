@@ -324,7 +324,7 @@ function PreCheckoutDialog() {
 // ─────────── Promo sticky banner ───────────
 // Real countdown anclado a una fecha fija UTC (no se reinicia por usuario).
 // Promoción activa por 72h desde PROMO_START_UTC.
-const PROMO_START_UTC = Date.UTC(2026, 5, 16, 14, 0, 0); // 16 jun 2026, 14:00 UTC
+const PROMO_START_UTC = Date.UTC(2026, 5, 16, 0, 0, 0); // 16 jun 2026, 00:00 UTC
 const PROMO_DURATION_MS = 72 * 60 * 60 * 1000;
 const PROMO_DEADLINE = PROMO_START_UTC + PROMO_DURATION_MS;
 const CUPOS_INICIALES = 100;
