@@ -117,6 +117,12 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   component: MasterclassPage,
 });
 
+// Module-level state to open the pre-checkout dialog.
+let openDialog: (() => void) | null = null;
+function requestOpenCheckoutDialog() {
+  if (openDialog) openDialog();
+}
+
 function CheckoutButton({
   children,
   className = "",
@@ -124,35 +130,194 @@ function CheckoutButton({
   children?: React.ReactNode;
   className?: string;
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const discount = useActiveDiscount();
   const label = children ?? (discount ? "Reservar mi cupo · $10 USD" : "Reservar mi cupo · $20 USD");
 
   return (
     <button
       type="button"
-      onClick={async () => {
-        if (isLoading) return;
-        setIsLoading(true);
-        try {
-          await startBoldCheckout();
-        } finally {
-          setIsLoading(false);
-        }
-      }}
-      disabled={isLoading}
+      onClick={() => requestOpenCheckoutDialog()}
       className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 active:scale-[0.96] active:brightness-110 active:shadow-[inset_0_3px_10px_rgba(0,0,0,0.25)] disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
     >
-      {isLoading ? (
-        <>
-          <Loader2 className="h-5 w-5 animate-spin" />
-          Abriendo pago...
-        </>
-      ) : (
-        label
-      )}
+      {label}
     </button>
+  );
+}
+
+function PreCheckoutDialog() {
+  const [open, setOpen] = useState(false);
+  const [code, setCode] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [paying, setPaying] = useState(false);
+  const active = useActiveDiscount();
+
+  useEffect(() => {
+    openDialog = () => {
+      setOpen(true);
+      setCode("");
+    };
+    return () => {
+      openDialog = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const applyCode = async () => {
+    const trimmed = code.trim();
+    if (!trimmed) {
+      toast.error("Escribe un código.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await validateDiscountCode({ data: { code: trimmed } });
+      if (res.valid) {
+        setActiveDiscountCode(trimmed);
+        toast.success(`Código aplicado · ${res.percentOff}% de descuento`);
+        setCode("");
+      } else {
+        setActiveDiscountCode(null);
+        toast.error("Código no válido.");
+      }
+    } catch {
+      toast.error("No pudimos validar el código. Intenta de nuevo.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const proceed = async () => {
+    if (paying) return;
+    setPaying(true);
+    try {
+      await startBoldCheckout();
+      setOpen(false);
+    } finally {
+      setPaying(false);
+    }
+  };
+
+  if (!open) return null;
+
+  const finalPrice = active ? 10 : 20;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      onClick={() => !paying && setOpen(false)}
+    >
+      <div
+        className="w-full max-w-md rounded-[6px] border border-white/15 bg-[#16181a] p-6 md:p-8 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+        style={{ fontFamily: "'Montserrat', sans-serif" }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ color: BURGUNDY }}>
+              Reservar mi cupo
+            </p>
+            <p className="mt-1 text-lg font-bold text-white">Masterclass · De clientes a fans</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => !paying && setOpen(false)}
+            className="text-white/50 hover:text-white"
+            aria-label="Cerrar"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="mt-5 flex items-baseline gap-2">
+          {active && (
+            <span className="text-2xl font-bold text-white/40 line-through">$20</span>
+          )}
+          <span className="text-5xl font-bold text-white">${finalPrice}</span>
+          <span className="text-base font-bold text-white/60">USD</span>
+        </div>
+
+        {active ? (
+          <div
+            className="mt-4 flex items-center justify-between gap-3 rounded-[4px] border-2 border-dashed px-3 py-2"
+            style={{ borderColor: BURGUNDY }}
+          >
+            <div className="flex items-center gap-2 text-sm">
+              <CheckCircle2 className="h-4 w-4" style={{ color: BURGUNDY }} />
+              <span className="text-white">
+                Código <span style={{ color: BURGUNDY }}>{active.toUpperCase()}</span> · 50% OFF
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActiveDiscountCode(null)}
+              className="text-xs uppercase tracking-wider text-white/60 hover:text-white"
+            >
+              Quitar
+            </button>
+          </div>
+        ) : (
+          <div className="mt-5">
+            <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+              ¿Tienes un código de descuento?
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    applyCode();
+                  }
+                }}
+                placeholder="XXX-XXX"
+                autoFocus
+                className="min-w-0 flex-1 rounded-[4px] border border-white/20 bg-black/40 px-4 py-3 text-base uppercase tracking-wider text-white placeholder:text-white/30 focus:border-white/50 focus:outline-none"
+                autoComplete="off"
+              />
+              <button
+                type="button"
+                onClick={applyCode}
+                disabled={submitting}
+                className="rounded-[4px] border border-white/30 bg-transparent px-4 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-white hover:text-black disabled:opacity-60"
+              >
+                {submitting ? "..." : "Aplicar"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={proceed}
+          disabled={paying}
+          className="mt-6 inline-flex w-full min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+          style={{ backgroundColor: BURGUNDY }}
+        >
+          {paying ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Abriendo pago...
+            </>
+          ) : (
+            `Continuar al pago · $${finalPrice} USD`
+          )}
+        </button>
+        <p className="mt-3 text-center text-[11px] text-white/50">
+          Pago seguro vía Bold · tarjeta internacional · PSE
+        </p>
+      </div>
+    </div>
   );
 }
 
