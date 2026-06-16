@@ -42,6 +42,7 @@ export async function openBoldEmbeddedCheckout(opts: {
   currency: "USD" | "COP";
   description: string;
   redirectionUrl: string;
+  discountCode?: string;
 }) {
   await loadBoldLibrary();
 
@@ -50,8 +51,10 @@ export async function openBoldEmbeddedCheckout(opts: {
       amount: opts.amount,
       currency: opts.currency,
       description: opts.description,
+      discountCode: opts.discountCode,
     },
   });
+
 
   // Persist for the thank-you page
   try {

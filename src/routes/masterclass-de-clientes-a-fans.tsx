@@ -34,20 +34,42 @@ import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
+import { validateDiscountCode } from "@/lib/bold.functions";
 import { toast } from "sonner";
 
 const MASTERCLASS_AMOUNT_USD = 20;
 const MASTERCLASS_DESCRIPTION = "Masterclass: De clientes a fans";
 
+// Module-level discount state shared by all CheckoutButton instances on the page.
+let activeDiscountCode: string | null = null;
+const discountListeners = new Set<() => void>();
+function setActiveDiscountCode(code: string | null) {
+  activeDiscountCode = code;
+  discountListeners.forEach((l) => l());
+}
+function useActiveDiscount() {
+  const [, force] = useState(0);
+  useEffect(() => {
+    const l = () => force((n) => n + 1);
+    discountListeners.add(l);
+    return () => {
+      discountListeners.delete(l);
+    };
+  }, []);
+  return activeDiscountCode;
+}
+
 const startBoldCheckout = async () => {
+  const discountCode = activeDiscountCode ?? undefined;
+  const displayAmount = discountCode ? MASTERCLASS_AMOUNT_USD / 2 : MASTERCLASS_AMOUNT_USD;
   trackEvent("InitiateCheckout", {
     content_name: MASTERCLASS_DESCRIPTION,
-    value: MASTERCLASS_AMOUNT_USD,
+    value: displayAmount,
     currency: "USD",
   });
   trackGA4Event("begin_checkout", {
     content_name: MASTERCLASS_DESCRIPTION,
-    value: MASTERCLASS_AMOUNT_USD,
+    value: displayAmount,
     currency: "USD",
   });
   try {
@@ -56,6 +78,7 @@ const startBoldCheckout = async () => {
       currency: "USD",
       description: MASTERCLASS_DESCRIPTION,
       redirectionUrl: `${window.location.origin}/masterclass/gracias`,
+      discountCode,
     });
   } catch (err) {
     console.error(err);
@@ -95,13 +118,15 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
 });
 
 function CheckoutButton({
-  children = "Reservar mi cupo · $20 USD",
+  children,
   className = "",
 }: {
   children?: React.ReactNode;
   className?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const discount = useActiveDiscount();
+  const label = children ?? (discount ? "Reservar mi cupo · $10 USD" : "Reservar mi cupo · $20 USD");
 
   return (
     <button
@@ -125,14 +150,106 @@ function CheckoutButton({
           Abriendo pago...
         </>
       ) : (
-        children
+        label
       )}
     </button>
   );
 }
 
+function DiscountCodeField() {
+  const [code, setCode] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const active = useActiveDiscount();
+
+  const onApply = async () => {
+    const trimmed = code.trim();
+    if (!trimmed) {
+      toast.error("Escribe un código.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await validateDiscountCode({ data: { code: trimmed } });
+      if (res.valid) {
+        setActiveDiscountCode(trimmed);
+        toast.success(`Código aplicado · ${res.percentOff}% de descuento`);
+      } else {
+        setActiveDiscountCode(null);
+        toast.error("Código no válido.");
+      }
+    } catch {
+      toast.error("No pudimos validar el código. Intenta de nuevo.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const onRemove = () => {
+    setActiveDiscountCode(null);
+    setCode("");
+  };
+
+  return (
+    <div className="mt-6">
+      {active ? (
+        <div
+          className="flex items-center justify-between gap-3 rounded-[3px] border-2 border-dashed px-4 py-3"
+          style={{ borderColor: BURGUNDY }}
+        >
+          <div className="flex items-center gap-2 text-sm">
+            <CheckCircle2 className="h-5 w-5" style={{ color: BURGUNDY }} />
+            <span className="font-semibold text-white">
+              Código <span style={{ color: BURGUNDY }}>{active.toUpperCase()}</span> aplicado · 50% OFF
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="text-xs uppercase tracking-wider text-white/60 underline-offset-2 hover:text-white hover:underline"
+          >
+            Quitar
+          </button>
+        </div>
+      ) : (
+        <div>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+            ¿Tienes un código de descuento?
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onApply();
+                }
+              }}
+              placeholder="XXX-XXX"
+              className="min-w-0 flex-1 rounded-[4px] border border-white/20 bg-black/40 px-4 py-3 text-base uppercase tracking-wider text-white placeholder:text-white/30 focus:border-white/50 focus:outline-none"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              autoComplete="off"
+            />
+            <button
+              type="button"
+              onClick={onApply}
+              disabled={submitting}
+              className="rounded-[4px] border border-white/30 bg-transparent px-5 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black disabled:opacity-60"
+            >
+              {submitting ? "..." : "Aplicar"}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MasterclassPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const activeDiscount = useActiveDiscount();
+
 
   // Smooth fade on mount
   useEffect(() => {
@@ -776,12 +893,33 @@ function MasterclassPage() {
               La inversión
             </p>
             <div className="flex items-baseline gap-3">
-              <span style={serif} className="text-7xl font-bold md:text-8xl" >
-                $20
-              </span>
+              {activeDiscount ? (
+                <>
+                  <span
+                    style={serif}
+                    className="text-4xl font-bold text-white/40 line-through md:text-5xl"
+                  >
+                    $20
+                  </span>
+                  <span style={serif} className="text-7xl font-bold md:text-8xl" >
+                    $10
+                  </span>
+                </>
+              ) : (
+                <span style={serif} className="text-7xl font-bold md:text-8xl" >
+                  $20
+                </span>
+              )}
               <span className="text-2xl font-bold text-white/60">USD</span>
             </div>
-            <p className="text-sm text-white/60">Una sola entrega · acceso completo</p>
+            <p className="text-sm text-white/60">
+              {activeDiscount
+                ? `50% de descuento aplicado con el código ${activeDiscount.toUpperCase()}`
+                : "Una sola entrega · acceso completo"}
+            </p>
+
+            <DiscountCodeField />
+
 
             <div className="my-8 h-px bg-white/15" />
 
@@ -812,7 +950,7 @@ function MasterclassPage() {
             </div>
 
             <div className="mt-8">
-              <CheckoutButton className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CheckoutButton>
+              <CheckoutButton className="w-full !min-h-[64px] !text-lg" />
               <p className="mt-3 text-center text-xs text-white/60">
                 Pago seguro · tarjeta internacional · PSE Colombia · 2 cuotas sin interés disponibles
               </p>
