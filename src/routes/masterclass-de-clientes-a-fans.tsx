@@ -138,6 +138,29 @@ function CheckoutButton({
           setIsLoading(false);
         }
       }}
+function CheckoutButton({
+  children,
+  className = "",
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+  const discount = useActiveDiscount();
+  const label = children ?? (discount ? "Reservar mi cupo · $10 USD" : "Reservar mi cupo · $20 USD");
+
+  return (
+    <button
+      type="button"
+      onClick={async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        try {
+          await startBoldCheckout();
+        } finally {
+          setIsLoading(false);
+        }
+      }}
       disabled={isLoading}
       className={`inline-flex min-h-[56px] cursor-pointer items-center justify-center gap-2 rounded-[6px] px-8 py-4 text-base font-bold uppercase tracking-wide text-[#0e0f0c] shadow-[0_8px_24px_-12px_rgba(64,237,81,0.55)] transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-10px_rgba(64,237,81,0.85)] active:translate-y-0 active:scale-[0.96] active:brightness-110 active:shadow-[inset_0_3px_10px_rgba(0,0,0,0.25)] disabled:cursor-not-allowed disabled:opacity-70 ${className}`}
       style={{ backgroundColor: BURGUNDY, fontFamily: "'Montserrat', sans-serif" }}
@@ -148,14 +171,106 @@ function CheckoutButton({
           Abriendo pago...
         </>
       ) : (
-        children
+        label
       )}
     </button>
   );
 }
 
+function DiscountCodeField() {
+  const [code, setCode] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const active = useActiveDiscount();
+
+  const onApply = async () => {
+    const trimmed = code.trim();
+    if (!trimmed) {
+      toast.error("Escribe un código.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await validateDiscountCode({ data: { code: trimmed } });
+      if (res.valid) {
+        setActiveDiscountCode(trimmed);
+        toast.success(`Código aplicado · ${res.percentOff}% de descuento`);
+      } else {
+        setActiveDiscountCode(null);
+        toast.error("Código no válido.");
+      }
+    } catch {
+      toast.error("No pudimos validar el código. Intenta de nuevo.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const onRemove = () => {
+    setActiveDiscountCode(null);
+    setCode("");
+  };
+
+  return (
+    <div className="mt-6">
+      {active ? (
+        <div
+          className="flex items-center justify-between gap-3 rounded-[3px] border-2 border-dashed px-4 py-3"
+          style={{ borderColor: BURGUNDY }}
+        >
+          <div className="flex items-center gap-2 text-sm">
+            <CheckCircle2 className="h-5 w-5" style={{ color: BURGUNDY }} />
+            <span className="font-semibold text-white">
+              Código <span style={{ color: BURGUNDY }}>{active.toUpperCase()}</span> aplicado · 50% OFF
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            className="text-xs uppercase tracking-wider text-white/60 underline-offset-2 hover:text-white hover:underline"
+          >
+            Quitar
+          </button>
+        </div>
+      ) : (
+        <div>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+            ¿Tienes un código de descuento?
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  onApply();
+                }
+              }}
+              placeholder="XXX-XXX"
+              className="min-w-0 flex-1 rounded-[4px] border border-white/20 bg-black/40 px-4 py-3 text-base uppercase tracking-wider text-white placeholder:text-white/30 focus:border-white/50 focus:outline-none"
+              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              autoComplete="off"
+            />
+            <button
+              type="button"
+              onClick={onApply}
+              disabled={submitting}
+              className="rounded-[4px] border border-white/30 bg-transparent px-5 py-3 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-white hover:text-black disabled:opacity-60"
+            >
+              {submitting ? "..." : "Aplicar"}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function MasterclassPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const activeDiscount = useActiveDiscount();
+
 
   // Smooth fade on mount
   useEffect(() => {
