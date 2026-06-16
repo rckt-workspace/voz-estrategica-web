@@ -893,12 +893,33 @@ function MasterclassPage() {
               La inversión
             </p>
             <div className="flex items-baseline gap-3">
-              <span style={serif} className="text-7xl font-bold md:text-8xl" >
-                $20
-              </span>
+              {activeDiscount ? (
+                <>
+                  <span
+                    style={serif}
+                    className="text-4xl font-bold text-white/40 line-through md:text-5xl"
+                  >
+                    $20
+                  </span>
+                  <span style={serif} className="text-7xl font-bold md:text-8xl" >
+                    $10
+                  </span>
+                </>
+              ) : (
+                <span style={serif} className="text-7xl font-bold md:text-8xl" >
+                  $20
+                </span>
+              )}
               <span className="text-2xl font-bold text-white/60">USD</span>
             </div>
-            <p className="text-sm text-white/60">Una sola entrega · acceso completo</p>
+            <p className="text-sm text-white/60">
+              {activeDiscount
+                ? `50% de descuento aplicado con el código ${activeDiscount.toUpperCase()}`
+                : "Una sola entrega · acceso completo"}
+            </p>
+
+            <DiscountCodeField />
+
 
             <div className="my-8 h-px bg-white/15" />
 
