@@ -950,7 +950,7 @@ function MasterclassPage() {
             </div>
 
             <div className="mt-8">
-              <CheckoutButton className="w-full !min-h-[64px] !text-lg">Reservar mi cupo ahora · $20 USD</CheckoutButton>
+              <CheckoutButton className="w-full !min-h-[64px] !text-lg" />
               <p className="mt-3 text-center text-xs text-white/60">
                 Pago seguro · tarjeta internacional · PSE Colombia · 2 cuotas sin interés disponibles
               </p>
