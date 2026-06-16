@@ -118,27 +118,6 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
 });
 
 function CheckoutButton({
-  children = "Reservar mi cupo · $20 USD",
-  className = "",
-}: {
-  children?: React.ReactNode;
-  className?: string;
-}) {
-  const [isLoading, setIsLoading] = useState(false);
-
-  return (
-    <button
-      type="button"
-      onClick={async () => {
-        if (isLoading) return;
-        setIsLoading(true);
-        try {
-          await startBoldCheckout();
-        } finally {
-          setIsLoading(false);
-        }
-      }}
-function CheckoutButton({
   children,
   className = "",
 }: {
