@@ -321,6 +321,120 @@ function PreCheckoutDialog() {
   );
 }
 
+// ─────────── Promo sticky banner ───────────
+// Real countdown anclado a una fecha fija UTC (no se reinicia por usuario).
+// Promoción activa por 72h desde PROMO_START_UTC.
+const PROMO_START_UTC = Date.UTC(2026, 5, 16, 14, 0, 0); // 16 jun 2026, 14:00 UTC
+const PROMO_DURATION_MS = 72 * 60 * 60 * 1000;
+const PROMO_DEADLINE = PROMO_START_UTC + PROMO_DURATION_MS;
+const CUPOS_INICIALES = 100;
+const CUPOS_MINIMOS = 17;
+
+function computeCuposLeft(now: number) {
+  if (now <= PROMO_START_UTC) return CUPOS_INICIALES;
+  if (now >= PROMO_DEADLINE) return CUPOS_MINIMOS;
+  const elapsed = now - PROMO_START_UTC;
+  // Decrecimiento lineal hasta el mínimo a lo largo de las 72h.
+  const consumed = Math.floor(((CUPOS_INICIALES - CUPOS_MINIMOS) * elapsed) / PROMO_DURATION_MS);
+  return Math.max(CUPOS_MINIMOS, CUPOS_INICIALES - consumed);
+}
+
+function formatTimeLeft(ms: number) {
+  const total = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  return {
+    hh: String(h).padStart(2, "0"),
+    mm: String(m).padStart(2, "0"),
+    ss: String(s).padStart(2, "0"),
+  };
+}
+
+function PromoBanner() {
+  const [now, setNow] = useState(() => Date.now());
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const msLeft = PROMO_DEADLINE - now;
+  const cupos = computeCuposLeft(now);
+  const expired = msLeft <= 0 || cupos <= CUPOS_MINIMOS;
+
+  if (dismissed || expired) return null;
+
+  const { hh, mm, ss } = formatTimeLeft(msLeft);
+
+  return (
+    <div
+      className="sticky top-0 z-[60] w-full border-b border-white/10 text-[#0e0f0c]"
+      style={{
+        background: "linear-gradient(90deg, #40ed51 0%, #5cf76c 50%, #40ed51 100%)",
+        fontFamily: "'Montserrat', sans-serif",
+      }}
+      role="region"
+      aria-label="Promoción por tiempo limitado"
+    >
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 md:py-2.5">
+        <div className="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold uppercase leading-tight tracking-wide md:text-[13px]">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="relative inline-flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0e0f0c] opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0e0f0c]" />
+            </span>
+            100 cupos · 50% OFF
+          </span>
+          <span className="opacity-70">·</span>
+          <span>
+            Usa código{" "}
+            <span className="rounded bg-[#0e0f0c] px-1.5 py-0.5 font-mono text-[11px] text-[#40ed51] md:text-[12px]">
+              VOZ-50
+            </span>
+          </span>
+          <span className="opacity-70">·</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="opacity-80">Termina en</span>
+            <span className="inline-flex items-center gap-0.5 font-mono tabular-nums">
+              <span className="rounded bg-[#0e0f0c] px-1.5 py-0.5 text-[#40ed51]">{hh}</span>
+              <span>:</span>
+              <span className="rounded bg-[#0e0f0c] px-1.5 py-0.5 text-[#40ed51]">{mm}</span>
+              <span>:</span>
+              <span className="rounded bg-[#0e0f0c] px-1.5 py-0.5 text-[#40ed51]">{ss}</span>
+            </span>
+          </span>
+          <span className="opacity-70">·</span>
+          <span className="inline-flex items-center gap-1 tabular-nums">
+            <span className="font-extrabold">{cupos}</span>
+            <span className="opacity-80">cupos disponibles</span>
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => requestOpenCheckoutDialog()}
+            className="inline-flex cursor-pointer items-center justify-center rounded-[6px] bg-[#0e0f0c] px-4 py-2 text-[12px] font-extrabold uppercase tracking-wide text-[#40ed51] shadow-[0_4px_14px_-6px_rgba(0,0,0,0.5)] transition-all duration-150 hover:-translate-y-0.5 hover:bg-black active:translate-y-0 active:scale-[0.97] md:text-[13px]"
+          >
+            Reservar con 50% OFF
+          </button>
+          <button
+            type="button"
+            onClick={() => setDismissed(true)}
+            aria-label="Cerrar promoción"
+            className="hidden h-7 w-7 cursor-pointer items-center justify-center rounded-full text-[#0e0f0c]/70 transition hover:bg-[#0e0f0c]/10 hover:text-[#0e0f0c] md:inline-flex"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
 function DiscountCodeField() {
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
