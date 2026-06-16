@@ -34,20 +34,42 @@ import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
+import { validateDiscountCode } from "@/lib/bold.functions";
 import { toast } from "sonner";
 
 const MASTERCLASS_AMOUNT_USD = 20;
 const MASTERCLASS_DESCRIPTION = "Masterclass: De clientes a fans";
 
+// Module-level discount state shared by all CheckoutButton instances on the page.
+let activeDiscountCode: string | null = null;
+const discountListeners = new Set<() => void>();
+function setActiveDiscountCode(code: string | null) {
+  activeDiscountCode = code;
+  discountListeners.forEach((l) => l());
+}
+function useActiveDiscount() {
+  const [, force] = useState(0);
+  useEffect(() => {
+    const l = () => force((n) => n + 1);
+    discountListeners.add(l);
+    return () => {
+      discountListeners.delete(l);
+    };
+  }, []);
+  return activeDiscountCode;
+}
+
 const startBoldCheckout = async () => {
+  const discountCode = activeDiscountCode ?? undefined;
+  const displayAmount = discountCode ? MASTERCLASS_AMOUNT_USD / 2 : MASTERCLASS_AMOUNT_USD;
   trackEvent("InitiateCheckout", {
     content_name: MASTERCLASS_DESCRIPTION,
-    value: MASTERCLASS_AMOUNT_USD,
+    value: displayAmount,
     currency: "USD",
   });
   trackGA4Event("begin_checkout", {
     content_name: MASTERCLASS_DESCRIPTION,
-    value: MASTERCLASS_AMOUNT_USD,
+    value: displayAmount,
     currency: "USD",
   });
   try {
@@ -56,6 +78,7 @@ const startBoldCheckout = async () => {
       currency: "USD",
       description: MASTERCLASS_DESCRIPTION,
       redirectionUrl: `${window.location.origin}/masterclass/gracias`,
+      discountCode,
     });
   } catch (err) {
     console.error(err);
