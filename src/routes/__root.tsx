@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
-  Link,
   createRootRouteWithContext,
   useRouter,
   HeadContent,
@@ -20,20 +19,10 @@ import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <span className="bubble bubble-yellow mb-6">404</span>
-        <h1 className="font-display text-6xl uppercase">Página no encontrada</h1>
-        <p className="mt-4 text-muted-foreground">
-          Lo que buscas se mudó o nunca existió. Vuelve al inicio y seguimos.
-        </p>
-        <Link to="/" className="bubble bubble-black mt-8 inline-flex">
-          Volver al inicio →
-        </Link>
-      </div>
-    </div>
-  );
+  if (typeof window !== "undefined") {
+    window.location.replace("/masterclass-de-clientes-a-fans");
+  }
+  return null;
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
