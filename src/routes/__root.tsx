@@ -25,6 +25,11 @@ function NotFoundComponent() {
   return null;
 }
 
+// Note: a splat route at src/routes/$.tsx handles unmatched URLs with a
+// proper server-side redirect via beforeLoad. NotFoundComponent above is a
+// fallback for any not-found case the splat doesn't cover (e.g. notFound()
+// thrown from a loader).
+
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
