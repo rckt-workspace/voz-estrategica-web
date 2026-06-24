@@ -10,19 +10,25 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Agencia de speakers que representa conferencistas, autores y pensadores. Encontrá la voz perfecta para tu evento.",
+          "Agencia de speakers en Colombia y Latinoamérica. Representamos conferencistas, autores y pensadores para eventos corporativos memorables.",
       },
-      {
-        property: "og:title",
-        content: "Voz Estratégica — Las voces que cambian la conversación",
-      },
+      { property: "og:title", content: "Voz Estratégica — Las voces que cambian la conversación" },
       {
         property: "og:description",
         content:
-          "Agencia de speakers que representa conferencistas, autores y pensadores.",
+          "Agencia de speakers que representa conferencistas, autores y pensadores en Colombia y Latinoamérica.",
+      },
+      { property: "og:url", content: "https://vozestrategica.com/" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Voz Estratégica — Las voces que cambian la conversación" },
+      {
+        name: "twitter:description",
+        content: "Agencia de speakers en Colombia y Latinoamérica.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://vozestrategica.com/" }],
   }),
+
   component: Home,
 });
 

@@ -5,12 +5,19 @@ import { LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin")({
+  head: () => ({
+    meta: [
+      { title: "Admin — Voz Estratégica" },
+      { name: "robots", content: "noindex,nofollow" },
+    ],
+  }),
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
     if (!data.session) throw redirect({ to: "/auth" });
   },
   component: AdminLayout,
 });
+
 
 function AdminLayout() {
   const navigate = useNavigate();

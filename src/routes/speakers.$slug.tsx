@@ -14,33 +14,70 @@ export const Route = createFileRoute("/speakers/$slug")({
     if (!speaker) throw notFound();
     return { speaker };
   },
-  head: ({ loaderData }) => {
+  head: ({ params, loaderData }) => {
     const s = loaderData?.speaker;
     if (!s) return { meta: [] };
     const bioText = s.bio.join(" ");
+    const canonical = `https://vozestrategica.com/speakers/${params.slug}`;
+    const isDiego = params.slug === "diego-camacho";
     return {
       meta: [
-        { title: `${s.nombre} — Voz Estratégica` },
+        { title: `${s.nombre} — ${s.especialidad} | Voz Estratégica` },
         { name: "description", content: `${s.nombre}, ${s.especialidad}. ${bioText.slice(0, 130)}` },
         { property: "og:title", content: `${s.nombre} — ${s.especialidad}` },
         { property: "og:description", content: bioText.slice(0, 160) },
         { property: "og:image", content: s.foto },
+        { property: "og:url", content: canonical },
+        { property: "og:type", content: "profile" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: `${s.nombre} — ${s.especialidad}` },
+        { name: "twitter:description", content: bioText.slice(0, 160) },
+        { name: "twitter:image", content: s.foto },
+      ],
+      links: [
+        { rel: "canonical", href: canonical },
+        ...(isDiego
+          ? [
+              { rel: "alternate", hrefLang: "es-CO", href: canonical },
+              {
+                rel: "alternate",
+                hrefLang: "es-MX",
+                href: "https://vozestrategica.com/speakers/diego-camacho/mexico",
+              },
+              { rel: "alternate", hrefLang: "x-default", href: canonical },
+            ]
+          : []),
       ],
       scripts: [
         {
           type: "application/ld+json",
           children: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Person",
-            name: s.nombre,
-            jobTitle: s.especialidad,
-            description: bioText,
-            image: s.foto,
+            "@graph": [
+              {
+                "@type": "Person",
+                "@id": `${canonical}#person`,
+                name: s.nombre,
+                jobTitle: s.especialidad,
+                description: bioText,
+                image: s.foto,
+                url: canonical,
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Inicio", item: "https://vozestrategica.com/" },
+                  { "@type": "ListItem", position: 2, name: "Speakers", item: "https://vozestrategica.com/speakers" },
+                  { "@type": "ListItem", position: 3, name: s.nombre, item: canonical },
+                ],
+              },
+            ],
           }),
         },
       ],
     };
   },
+
   notFoundComponent: () => (
     <div className="mx-auto max-w-3xl px-6 py-32 text-center">
       <h1 className="font-display text-5xl uppercase">Speaker no encontrado</h1>
