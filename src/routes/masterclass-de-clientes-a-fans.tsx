@@ -93,6 +93,8 @@ const BURGUNDY_LIGHT = "rgba(64, 237, 81, 0.12)"; // dim green tint for dark bg
 const CREAM = "rgba(64, 237, 81, 0.07)"; // very subtle highlight for dark bg
 const BLACK = "#0e0f0c";
 
+const MASTERCLASS_URL = "https://vozestrategica.com/masterclass-de-clientes-a-fans";
+
 export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   head: () => ({
     meta: [
@@ -107,16 +109,57 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
         property: "og:description",
         content: "Aprende a vender sin perseguir clientes. 2 horas en vivo. $20 USD.",
       },
+      { property: "og:url", content: MASTERCLASS_URL },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "es_CO" },
+      { name: "twitter:title", content: "Masterclass: De Clientes a Fans · Carlos Laguna" },
+      { name: "twitter:description", content: "Vender sin perseguir clientes. 2 horas en vivo. $20 USD." },
     ],
     links: [
+      { rel: "canonical", href: MASTERCLASS_URL },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: "Masterclass: De Clientes a Fans",
+          description:
+            "2 horas en vivo con Carlos Laguna. Sistema para vender sin perseguir clientes, aplicado en Mercedes Benz, Nespresso y Bancolombia.",
+          startDate: "2026-07-25T10:00:00-05:00",
+          endDate: "2026-07-25T12:00:00-05:00",
+          eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+          eventStatus: "https://schema.org/EventScheduled",
+          location: {
+            "@type": "VirtualLocation",
+            url: MASTERCLASS_URL,
+          },
+          organizer: {
+            "@type": "Organization",
+            name: "Voz Estratégica",
+            url: "https://vozestrategica.com",
+          },
+          performer: { "@type": "Person", name: "Carlos Laguna" },
+          offers: {
+            "@type": "Offer",
+            price: "20",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
+            url: MASTERCLASS_URL,
+          },
+        }),
+      },
+    ],
   }),
   component: MasterclassPage,
 });
+
+
 
 // Module-level state to open the pre-checkout dialog.
 let openDialog: (() => void) | null = null;
