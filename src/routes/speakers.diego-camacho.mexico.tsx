@@ -252,17 +252,59 @@ function DiegoMexicoLanding() {
         </div>
       </section>
 
-      {/* PRUEBA SOCIAL */}
-      <section className="border-y border-foreground/10 bg-card/40 py-8">
+      {/* PRUEBA SOCIAL · LOGOS DE RESPALDO */}
+      <section className="border-y border-foreground/10 bg-card/40 py-10">
         <div className="mx-auto max-w-6xl px-6 text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-            Sus conferencias han pasado por
+            Respaldado por
           </p>
-          <p className="mt-3 text-lg font-medium text-foreground/90">
-            México · Panamá · Chile · Argentina · Colombia · Sudeste Asiático · Australia
+
+          <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 md:gap-x-14">
+            <li
+              aria-label="Google"
+              className="font-display text-2xl tracking-tight text-foreground/80 transition-colors hover:text-foreground md:text-3xl"
+              style={{ fontFamily: "'Product Sans', 'Google Sans', system-ui, sans-serif", letterSpacing: "-0.02em" }}
+            >
+              <span style={{ color: "#4285F4" }}>G</span>
+              <span style={{ color: "#EA4335" }}>o</span>
+              <span style={{ color: "#FBBC04" }}>o</span>
+              <span style={{ color: "#4285F4" }}>g</span>
+              <span style={{ color: "#34A853" }}>l</span>
+              <span style={{ color: "#EA4335" }}>e</span>
+            </li>
+            <li
+              aria-label="Google Ads"
+              className="inline-flex items-center gap-2 text-base font-semibold text-foreground/80 transition-colors hover:text-foreground md:text-lg"
+            >
+              <span
+                aria-hidden="true"
+                className="inline-block h-5 w-5 rotate-45 rounded-[3px]"
+                style={{ background: "linear-gradient(135deg,#FBBC04 0%,#FBBC04 50%,#34A853 50%,#34A853 100%)" }}
+              />
+              Google Ads
+            </li>
+            <li
+              aria-label="Google Launchpad"
+              className="inline-flex items-center gap-2 text-base font-semibold text-foreground/80 transition-colors hover:text-foreground md:text-lg"
+            >
+              <span aria-hidden="true" className="inline-block h-5 w-5 rounded-full border-2 border-[#4285F4]" />
+              Google Launchpad
+            </li>
+            <li
+              aria-label="Endeavor"
+              className="text-xl font-black uppercase tracking-[0.18em] text-foreground/80 transition-colors hover:text-foreground md:text-2xl"
+              style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
+            >
+              Endeavor
+            </li>
+          </ul>
+
+          <p className="mt-8 text-xs uppercase tracking-widest text-muted-foreground/70">
+            Conferencias en México · Panamá · Chile · Argentina · Colombia · Sudeste Asiático · Australia
           </p>
         </div>
       </section>
+
 
       {/* CONFERENCIAS / TEMAS */}
       <section className="mx-auto max-w-6xl px-6 py-20">
