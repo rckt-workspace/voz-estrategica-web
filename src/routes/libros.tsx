@@ -6,17 +6,23 @@ import { books, speakers } from "@/data/content";
 export const Route = createFileRoute("/libros")({
   head: () => ({
     meta: [
-      { title: "Libros — Voz Estratégica" },
+      { title: "Libros de nuestros speakers — Voz Estratégica" },
       {
         name: "description",
-        content: "Libros publicados por los speakers de Voz Estratégica.",
+        content:
+          "Libros publicados por los conferencistas y autores de Voz Estratégica. Ideas que extienden sus charlas en papel.",
       },
-      { property: "og:title", content: "Libros — Voz Estratégica" },
+      { property: "og:title", content: "Libros de nuestros speakers — Voz Estratégica" },
       {
         property: "og:description",
         content: "Catálogo editorial de nuestros autores.",
       },
+      { property: "og:url", content: "https://vozestrategica.com/libros" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Libros de nuestros speakers — Voz Estratégica" },
+      { name: "twitter:description", content: "Catálogo editorial de nuestros autores." },
     ],
+    links: [{ rel: "canonical", href: "https://vozestrategica.com/libros" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -33,6 +39,7 @@ export const Route = createFileRoute("/libros")({
       },
     ],
   }),
+
   component: LibrosPage,
 });
 
