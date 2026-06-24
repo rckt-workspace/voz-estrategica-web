@@ -7,17 +7,23 @@ import { events, speakers } from "@/data/content";
 export const Route = createFileRoute("/eventos")({
   head: () => ({
     meta: [
-      { title: "Eventos — Voz Estratégica" },
+      { title: "Eventos y conferencias 2026 — Voz Estratégica" },
       {
         name: "description",
-        content: "Próximos eventos y conferencias con speakers de Voz Estratégica.",
+        content:
+          "Agenda 2026 de conferencias y eventos con los speakers de Voz Estratégica en Colombia y Latinoamérica.",
       },
-      { property: "og:title", content: "Eventos — Voz Estratégica" },
+      { property: "og:title", content: "Eventos y conferencias 2026 — Voz Estratégica" },
       {
         property: "og:description",
-        content: "Agenda 2026 de nuestros speakers.",
+        content: "Próximos eventos con nuestros speakers en Colombia y Latinoamérica.",
       },
+      { property: "og:url", content: "https://vozestrategica.com/eventos" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Eventos y conferencias 2026 — Voz Estratégica" },
+      { name: "twitter:description", content: "Agenda 2026 de nuestros speakers." },
     ],
+    links: [{ rel: "canonical", href: "https://vozestrategica.com/eventos" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -34,6 +40,7 @@ export const Route = createFileRoute("/eventos")({
       },
     ],
   }),
+
   component: EventosPage,
 });
 
