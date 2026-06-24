@@ -259,43 +259,38 @@ function DiegoMexicoLanding() {
             Respaldado por
           </p>
 
-          <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 md:gap-x-14">
-            <li
-              aria-label="Google"
-              className="font-display text-2xl tracking-tight text-foreground/80 transition-colors hover:text-foreground md:text-3xl"
-              style={{ fontFamily: "'Product Sans', 'Google Sans', system-ui, sans-serif", letterSpacing: "-0.02em" }}
-            >
-              <span style={{ color: "#4285F4" }}>G</span>
-              <span style={{ color: "#EA4335" }}>o</span>
-              <span style={{ color: "#FBBC04" }}>o</span>
-              <span style={{ color: "#4285F4" }}>g</span>
-              <span style={{ color: "#34A853" }}>l</span>
-              <span style={{ color: "#EA4335" }}>e</span>
-            </li>
-            <li
-              aria-label="Google Ads"
-              className="inline-flex items-center gap-2 text-base font-semibold text-foreground/80 transition-colors hover:text-foreground md:text-lg"
-            >
-              <span
-                aria-hidden="true"
-                className="inline-block h-5 w-5 rotate-45 rounded-[3px]"
-                style={{ background: "linear-gradient(135deg,#FBBC04 0%,#FBBC04 50%,#34A853 50%,#34A853 100%)" }}
+          <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 md:gap-x-16">
+            <li>
+              <img
+                src={new URL("@/assets/logos/google.svg", import.meta.url).href}
+                alt="Google"
+                loading="lazy"
+                className="h-7 w-auto opacity-80 transition-opacity hover:opacity-100 md:h-8"
               />
-              Google Ads
             </li>
-            <li
-              aria-label="Google Launchpad"
-              className="inline-flex items-center gap-2 text-base font-semibold text-foreground/80 transition-colors hover:text-foreground md:text-lg"
-            >
-              <span aria-hidden="true" className="inline-block h-5 w-5 rounded-full border-2 border-[#4285F4]" />
-              Google Launchpad
+            <li>
+              <img
+                src={new URL("@/assets/logos/google-ads.svg", import.meta.url).href}
+                alt="Google Ads"
+                loading="lazy"
+                className="h-7 w-auto opacity-80 transition-opacity hover:opacity-100 md:h-8"
+              />
             </li>
-            <li
-              aria-label="Endeavor"
-              className="text-xl font-black uppercase tracking-[0.18em] text-foreground/80 transition-colors hover:text-foreground md:text-2xl"
-              style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif" }}
-            >
-              Endeavor
+            <li>
+              <img
+                src={new URL("@/assets/logos/google-for-startups.svg", import.meta.url).href}
+                alt="Google for Startups (Launchpad)"
+                loading="lazy"
+                className="h-7 w-auto opacity-80 transition-opacity hover:opacity-100 md:h-8"
+              />
+            </li>
+            <li>
+              <img
+                src={new URL("@/assets/logos/endeavor.png", import.meta.url).href}
+                alt="Endeavor"
+                loading="lazy"
+                className="h-7 w-auto opacity-80 transition-opacity hover:opacity-100 md:h-8"
+              />
             </li>
           </ul>
 
@@ -304,6 +299,7 @@ function DiegoMexicoLanding() {
           </p>
         </div>
       </section>
+
 
 
       {/* CONFERENCIAS / TEMAS */}
