@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MasterclassDeClientesAFansRouteImport } from './routes/masterclass-de-clientes-a-fans'
 import { Route as LibrosRouteImport } from './routes/libros'
 import { Route as EventosRouteImport } from './routes/eventos'
@@ -26,6 +27,11 @@ import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MasterclassDeClientesAFansRoute =
   MasterclassDeClientesAFansRouteImport.update({
     id: '/masterclass-de-clientes-a-fans',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
+    | '/sitemap.xml'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -191,6 +201,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
+    | '/sitemap.xml'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
+    | '/sitemap.xml'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -228,6 +240,7 @@ export interface RootRouteChildren {
   EventosRoute: typeof EventosRoute
   LibrosRoute: typeof LibrosRoute
   MasterclassDeClientesAFansRoute: typeof MasterclassDeClientesAFansRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
   SpeakersIndexRoute: typeof SpeakersIndexRoute
@@ -236,6 +249,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/masterclass-de-clientes-a-fans': {
       id: '/masterclass-de-clientes-a-fans'
       path: '/masterclass-de-clientes-a-fans'
@@ -376,6 +396,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosRoute: EventosRoute,
   LibrosRoute: LibrosRoute,
   MasterclassDeClientesAFansRoute: MasterclassDeClientesAFansRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   MasterclassGraciasRoute: MasterclassGraciasRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
   SpeakersIndexRoute: SpeakersIndexRoute,
