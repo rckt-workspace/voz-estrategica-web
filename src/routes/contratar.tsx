@@ -41,8 +41,13 @@ export const Route = createFileRoute("/contratar")({
         property: "og:description",
         content: "Propuestas a medida para eventos memorables.",
       },
+      { property: "og:url", content: "https://vozestrategica.com/contratar" },
+      { property: "og:type", content: "website" },
+      { name: "robots", content: "noindex, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://vozestrategica.com/contratar" }],
   }),
+
   component: ContratarPage,
 });
 
