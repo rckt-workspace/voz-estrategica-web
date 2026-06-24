@@ -8,19 +8,25 @@ import { speakers, type Speaker } from "@/data/content";
 export const Route = createFileRoute("/speakers/")({
   head: () => ({
     meta: [
-      { title: "Speakers — Voz Estratégica" },
+      { title: "Speakers y conferencistas — Voz Estratégica" },
       {
         name: "description",
         content:
-          "Conocé a los conferencistas, autores y pensadores que representamos. Filtrá por categoría.",
+          "Conocé a los conferencistas, autores y pensadores que representamos. Marketing, liderazgo, ventas, IA, finanzas y más.",
       },
-      { property: "og:title", content: "Speakers — Voz Estratégica" },
+      { property: "og:title", content: "Speakers y conferencistas — Voz Estratégica" },
       {
         property: "og:description",
-        content: "Catálogo curado de speakers de Voz Estratégica.",
+        content: "Catálogo curado de speakers para eventos en Colombia y Latinoamérica.",
       },
+      { property: "og:url", content: "https://vozestrategica.com/speakers" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Speakers y conferencistas — Voz Estratégica" },
+      { name: "twitter:description", content: "Catálogo curado de speakers." },
     ],
+    links: [{ rel: "canonical", href: "https://vozestrategica.com/speakers" }],
   }),
+
   component: SpeakersPage,
 });
 
