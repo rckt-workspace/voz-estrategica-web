@@ -61,25 +61,45 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Voz Estratégica representa a las voces que cambian la conversación. Speakers, autores y pensadores para eventos memorables.",
+          "Voz Estratégica representa a las voces que cambian la conversación. Speakers, autores y pensadores para eventos memorables en Latinoamérica.",
       },
       { name: "author", content: "Voz Estratégica" },
+      { property: "og:site_name", content: "Voz Estratégica" },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "es_CO" },
       { property: "og:title", content: "Voz Estratégica — Agencia de Speakers" },
       {
         property: "og:description",
-        content: "Las voces que cambian la conversación.",
+        content: "Las voces que cambian la conversación. Conferencistas, autores y pensadores para tu próximo evento.",
       },
-      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Voz Estratégica — Agencia de Speakers" },
-      { name: "description", content: "Builds custom websites from provided documents and user specifications." },
-      { property: "og:description", content: "Builds custom websites from provided documents and user specifications." },
-      { name: "twitter:description", content: "Builds custom websites from provided documents and user specifications." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e68159af-e2d5-44ba-bec4-b63780d2c172/id-preview-45c8318d--ddd88a09-a827-4674-9d07-9b436ebe02b4.lovable.app-1779297343150.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e68159af-e2d5-44ba-bec4-b63780d2c172/id-preview-45c8318d--ddd88a09-a827-4674-9d07-9b436ebe02b4.lovable.app-1779297343150.png" },
+      {
+        name: "twitter:description",
+        content: "Las voces que cambian la conversación.",
+      },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Voz Estratégica",
+          url: "https://vozestrategica.com",
+          description:
+            "Agencia de speakers que representa conferencistas, autores y pensadores para eventos corporativos en Latinoamérica.",
+          areaServed: [
+            { "@type": "Country", name: "Colombia" },
+            { "@type": "Country", name: "México" },
+            { "@type": "Place", name: "Latinoamérica" },
+          ],
+        }),
+      },
+    ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
