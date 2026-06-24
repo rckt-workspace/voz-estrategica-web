@@ -24,6 +24,7 @@ import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gra
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
+import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
 const MasterclassDeClientesAFansRoute =
   MasterclassDeClientesAFansRouteImport.update({
@@ -101,6 +102,12 @@ const AdminEventosRoute = AdminEventosRouteImport.update({
   path: '/eventos',
   getParentRoute: () => AdminRoute,
 } as any)
+const SpeakersDiegoCamachoMexicoRoute =
+  SpeakersDiegoCamachoMexicoRouteImport.update({
+    id: '/speakers/diego-camacho/mexico',
+    path: '/speakers/diego-camacho/mexico',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
+  '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -134,6 +142,7 @@ export interface FileRoutesByTo {
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin': typeof AdminIndexRoute
   '/speakers': typeof SpeakersIndexRoute
+  '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -152,6 +161,7 @@ export interface FileRoutesById {
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
+  '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/speakers/$slug'
     | '/admin/'
     | '/speakers/'
+    | '/speakers/diego-camacho/mexico'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/speakers/$slug'
     | '/admin'
     | '/speakers'
+    | '/speakers/diego-camacho/mexico'
   id:
     | '__root__'
     | '/'
@@ -204,6 +216,7 @@ export interface FileRouteTypes {
     | '/speakers/$slug'
     | '/admin/'
     | '/speakers/'
+    | '/speakers/diego-camacho/mexico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -218,6 +231,7 @@ export interface RootRouteChildren {
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
   SpeakersIndexRoute: typeof SpeakersIndexRoute
+  SpeakersDiegoCamachoMexicoRoute: typeof SpeakersDiegoCamachoMexicoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -327,6 +341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/speakers/diego-camacho/mexico': {
+      id: '/speakers/diego-camacho/mexico'
+      path: '/speakers/diego-camacho/mexico'
+      fullPath: '/speakers/diego-camacho/mexico'
+      preLoaderRoute: typeof SpeakersDiegoCamachoMexicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -358,6 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   MasterclassGraciasRoute: MasterclassGraciasRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
   SpeakersIndexRoute: SpeakersIndexRoute,
+  SpeakersDiegoCamachoMexicoRoute: SpeakersDiegoCamachoMexicoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
