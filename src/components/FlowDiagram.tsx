@@ -42,15 +42,16 @@ const HUB = { x: 500, y: 360 };
 
 // Left paths drawn from card → hub so particles flow INTO the hub
 const leftPaths = [
-  `M 120 220 C 280 260, 380 ${HUB.y - 40}, ${HUB.x} ${HUB.y}`,
-  `M 120 500 C 280 460, 380 ${HUB.y + 40}, ${HUB.x} ${HUB.y}`,
+  `M -40 220 L 80 220 C 280 220, 360 ${HUB.y - 40}, ${HUB.x} ${HUB.y}`,
+  `M -40 500 L 80 500 C 280 500, 360 ${HUB.y + 40}, ${HUB.x} ${HUB.y}`,
 ];
 
 const rightPaths = [
-  `M ${HUB.x} ${HUB.y} C 620 ${HUB.y - 60}, 720 200, 880 160`,
-  `M ${HUB.x} ${HUB.y} C 660 ${HUB.y}, 740 360, 880 360`,
-  `M ${HUB.x} ${HUB.y} C 620 ${HUB.y + 60}, 720 520, 880 560`,
+  `M ${HUB.x} ${HUB.y} C 640 ${HUB.y - 40}, 720 160, 920 160 L 1040 160`,
+  `M ${HUB.x} ${HUB.y} C 660 ${HUB.y}, 760 360, 920 360 L 1040 360`,
+  `M ${HUB.x} ${HUB.y} C 640 ${HUB.y + 40}, 720 560, 920 560 L 1040 560`,
 ];
+
 
 
 function Card({ item, align, index = 0 }: { item: Item; align: "left" | "right"; index?: number }) {
