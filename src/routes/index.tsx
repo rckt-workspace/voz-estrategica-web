@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { FlowDiagram } from "@/components/FlowDiagram";
 
 import { speakers, events, books } from "@/data/content";
 
