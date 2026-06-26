@@ -128,6 +128,8 @@ export function FlowDiagram() {
               viewBox="0 0 1000 720"
               className="absolute inset-0 hidden h-full w-full md:block"
               preserveAspectRatio="xMidYMid meet"
+              overflow="visible"
+              style={{ overflow: "visible" }}
               aria-hidden
             >
               <defs>
