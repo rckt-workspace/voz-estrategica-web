@@ -129,18 +129,48 @@ export function FlowDiagram() {
               preserveAspectRatio="none"
               aria-hidden
             >
-              {/* Static left dotted paths */}
+              {/* Left animated paths — faint guide */}
               {leftPaths.map((d, i) => (
                 <path
-                  key={`l-${i}`}
+                  key={`l-guide-${i}`}
                   d={d}
                   fill="none"
                   stroke="#9a9a9a"
+                  strokeOpacity="0.35"
                   strokeWidth="2"
                   strokeDasharray="3 10"
-                  opacity="0.5"
                 />
               ))}
+
+              {/* Particles flowing along left paths into hub */}
+              {leftPaths.map((_, i) =>
+                Array.from({ length: 8 }).map((_, j) => {
+                  const colors = ["#0A0A0A", "#9a9a9a", "#FFD400"];
+                  const color = colors[(i + j) % colors.length];
+                  const r = 2.5 + ((i + j) % 2);
+                  const dur = 4.5 + ((i * 0.6 + j * 0.5) % 2.5);
+                  const begin = -(j * (dur / 8));
+                  return (
+                    <circle key={`lp-${i}-${j}`} r={r} fill={color}>
+                      <animateMotion
+                        dur={`${dur}s`}
+                        repeatCount="indefinite"
+                        begin={`${begin}s`}
+                        path={_}
+                        rotate="auto"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0;1;1;0"
+                        keyTimes="0;0.1;0.85;1"
+                        dur={`${dur}s`}
+                        begin={`${begin}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  );
+                }),
+              )}
 
               {/* Right animated paths — faint guide */}
               {rightPaths.map((d, i) => (
