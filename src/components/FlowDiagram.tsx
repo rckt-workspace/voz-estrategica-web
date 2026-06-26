@@ -38,15 +38,10 @@ const right: Item[] = [
   },
 ];
 
-// SVG coordinate system 1000 x 720
-// Hub center at (500, 360)
-// Left endpoints x=120, y = 220, 500
-// Right endpoints x=880, y = 160, 360, 560
-const HUB = { x: 500, y: 360 };
-
+// Left paths drawn from card → hub so particles flow INTO the hub
 const leftPaths = [
-  `M ${HUB.x} ${HUB.y} C 380 ${HUB.y - 40}, 280 260, 120 220`,
-  `M ${HUB.x} ${HUB.y} C 380 ${HUB.y + 40}, 280 460, 120 500`,
+  `M 120 220 C 280 260, 380 ${HUB.y - 40}, ${HUB.x} ${HUB.y}`,
+  `M 120 500 C 280 460, 380 ${HUB.y + 40}, ${HUB.x} ${HUB.y}`,
 ];
 
 const rightPaths = [
@@ -54,6 +49,7 @@ const rightPaths = [
   `M ${HUB.x} ${HUB.y} C 660 ${HUB.y}, 740 360, 880 360`,
   `M ${HUB.x} ${HUB.y} C 620 ${HUB.y + 60}, 720 520, 880 560`,
 ];
+
 
 function Card({ item, align }: { item: Item; align: "left" | "right" }) {
   return (
