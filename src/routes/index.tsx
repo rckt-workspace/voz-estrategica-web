@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { HeroFlow } from "@/components/HeroFlow";
+
 import { speakers, events, books } from "@/data/content";
 
 export const Route = createFileRoute("/")({
@@ -121,26 +121,7 @@ function Home() {
         </div>
       </section>
 
-      {/* 1.5 FLOW ANIMATION — voces que convergen */}
-      <section className="relative overflow-hidden border-y border-foreground/15 bg-background">
-        <div className="mx-auto max-w-7xl px-6 py-10 md:py-16">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                Cómo trabajamos
-              </span>
-              <h2 className="mt-3 font-display text-3xl uppercase leading-[0.95] md:text-5xl">
-                Del ruido<br />
-                <span className="text-muted-foreground">a la conversación.</span>
-              </h2>
-            </div>
-          </div>
-          <div className="relative mt-10 w-full">
-            <HeroFlow />
-          </div>
 
-        </div>
-      </section>
 
 
       {/* 2. MARQUEE — multi-treatment editorial */}
