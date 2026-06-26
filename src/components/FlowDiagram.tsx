@@ -232,9 +232,9 @@ export function FlowDiagram() {
 
           {/* Right column */}
           <div className="flex flex-col justify-around gap-6 md:h-[520px]">
-            {right.map((it) => (
+            {right.map((it, i) => (
               <Reveal key={it.title}>
-                <Card item={it} align="right" />
+                <Card item={it} align="right" index={i} />
               </Reveal>
             ))}
           </div>
