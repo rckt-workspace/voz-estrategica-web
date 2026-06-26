@@ -38,6 +38,8 @@ const right: Item[] = [
   },
 ];
 
+const HUB = { x: 500, y: 360 };
+
 // Left paths drawn from card → hub so particles flow INTO the hub
 const leftPaths = [
   `M 120 220 C 280 260, 380 ${HUB.y - 40}, ${HUB.x} ${HUB.y}`,
