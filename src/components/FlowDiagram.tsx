@@ -38,15 +38,12 @@ const right: Item[] = [
   },
 ];
 
-// SVG coordinate system 1000 x 720
-// Hub center at (500, 360)
-// Left endpoints x=120, y = 220, 500
-// Right endpoints x=880, y = 160, 360, 560
 const HUB = { x: 500, y: 360 };
 
+// Left paths drawn from card → hub so particles flow INTO the hub
 const leftPaths = [
-  `M ${HUB.x} ${HUB.y} C 380 ${HUB.y - 40}, 280 260, 120 220`,
-  `M ${HUB.x} ${HUB.y} C 380 ${HUB.y + 40}, 280 460, 120 500`,
+  `M 120 220 C 280 260, 380 ${HUB.y - 40}, ${HUB.x} ${HUB.y}`,
+  `M 120 500 C 280 460, 380 ${HUB.y + 40}, ${HUB.x} ${HUB.y}`,
 ];
 
 const rightPaths = [
@@ -55,15 +52,22 @@ const rightPaths = [
   `M ${HUB.x} ${HUB.y} C 620 ${HUB.y + 60}, 720 520, 880 560`,
 ];
 
-function Card({ item, align }: { item: Item; align: "left" | "right" }) {
+
+function Card({ item, align, index = 0 }: { item: Item; align: "left" | "right"; index?: number }) {
+  const animate = align === "right";
+  const iconAnims = ["animate-pulse-soft", "animate-bob", "animate-spin-slow"];
+  const iconAnim = animate ? iconAnims[index % iconAnims.length] : "";
   return (
     <div
-      className={`flex items-start gap-4 rounded-3xl border border-foreground/10 bg-background p-5 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] ${
+      className={`group flex items-start gap-4 rounded-3xl border border-foreground/10 bg-background p-5 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] ${
         align === "right" ? "md:flex-row-reverse md:text-right" : ""
       }`}
     >
-      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-foreground text-brand">
-        {item.icon}
+      <div className={`relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-foreground text-brand`}>
+        {animate && (
+          <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-brand/30 to-transparent animate-shimmer" />
+        )}
+        <span className={iconAnim}>{item.icon}</span>
       </div>
       <div>
         <div className="font-display text-lg uppercase leading-tight md:text-xl">{item.title}</div>
@@ -72,6 +76,7 @@ function Card({ item, align }: { item: Item; align: "left" | "right" }) {
     </div>
   );
 }
+
 
 export function FlowDiagram() {
   return (
@@ -124,18 +129,48 @@ export function FlowDiagram() {
               preserveAspectRatio="none"
               aria-hidden
             >
-              {/* Static left dotted paths */}
+              {/* Left animated paths — faint guide */}
               {leftPaths.map((d, i) => (
                 <path
-                  key={`l-${i}`}
+                  key={`l-guide-${i}`}
                   d={d}
                   fill="none"
                   stroke="#9a9a9a"
+                  strokeOpacity="0.35"
                   strokeWidth="2"
                   strokeDasharray="3 10"
-                  opacity="0.5"
                 />
               ))}
+
+              {/* Particles flowing along left paths into hub */}
+              {leftPaths.map((path, i) =>
+                Array.from({ length: 8 }).map((_, j) => {
+                  const colors = ["#0A0A0A", "#9a9a9a", "#FFD400"];
+                  const color = colors[(i + j) % colors.length];
+                  const r = 2.5 + ((i + j) % 2);
+                  const dur = 4.5 + ((i * 0.6 + j * 0.5) % 2.5);
+                  const begin = -(j * (dur / 8));
+                  return (
+                    <circle key={`lp-${i}-${j}`} r={r} fill={color}>
+                      <animateMotion
+                        dur={`${dur}s`}
+                        repeatCount="indefinite"
+                        begin={`${begin}s`}
+                        path={path}
+                        rotate="auto"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0;1;1;0"
+                        keyTimes="0;0.1;0.85;1"
+                        dur={`${dur}s`}
+                        begin={`${begin}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  );
+                }),
+              )}
 
               {/* Right animated paths — faint guide */}
               {rightPaths.map((d, i) => (
@@ -197,9 +232,9 @@ export function FlowDiagram() {
 
           {/* Right column */}
           <div className="flex flex-col justify-around gap-6 md:h-[520px]">
-            {right.map((it) => (
+            {right.map((it, i) => (
               <Reveal key={it.title}>
-                <Card item={it} align="right" />
+                <Card item={it} align="right" index={i} />
               </Reveal>
             ))}
           </div>
