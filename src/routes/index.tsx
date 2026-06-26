@@ -130,14 +130,15 @@ function Home() {
                 Cómo trabajamos
               </span>
               <h2 className="mt-3 font-display text-3xl uppercase leading-[0.95] md:text-5xl">
-                Voces que convergen,<br />
-                <span className="text-muted-foreground">audiencias que se activan.</span>
+                Del ruido<br />
+                <span className="text-muted-foreground">a la conversación.</span>
               </h2>
             </div>
           </div>
-          <div className="relative mt-8 h-[320px] w-full md:h-[420px]">
+          <div className="relative mt-10 w-full">
             <HeroFlow />
           </div>
+
         </div>
       </section>
 
