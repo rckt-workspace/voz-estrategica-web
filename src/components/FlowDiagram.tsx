@@ -143,7 +143,7 @@ export function FlowDiagram() {
               ))}
 
               {/* Particles flowing along left paths into hub */}
-              {leftPaths.map((_, i) =>
+              {leftPaths.map((path, i) =>
                 Array.from({ length: 8 }).map((_, j) => {
                   const colors = ["#0A0A0A", "#9a9a9a", "#FFD400"];
                   const color = colors[(i + j) % colors.length];
@@ -156,7 +156,7 @@ export function FlowDiagram() {
                         dur={`${dur}s`}
                         repeatCount="indefinite"
                         begin={`${begin}s`}
-                        path={_}
+                        path={path}
                         rotate="auto"
                       />
                       <animate
