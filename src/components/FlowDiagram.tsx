@@ -126,28 +126,50 @@ export function FlowDiagram() {
             <svg
               viewBox="0 0 1000 720"
               className="absolute inset-0 hidden h-full w-full md:block"
-              preserveAspectRatio="none"
+              preserveAspectRatio="xMidYMid meet"
               aria-hidden
             >
-              {/* Left animated paths — faint guide */}
-              {leftPaths.map((d, i) => (
-                <path
-                  key={`l-guide-${i}`}
-                  d={d}
-                  fill="none"
-                  stroke="#9a9a9a"
-                  strokeOpacity="0.35"
-                  strokeWidth="2"
-                  strokeDasharray="3 10"
-                />
-              ))}
+              <defs>
+                <filter id="tube-shadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+                  <feOffset dy="1" result="off" />
+                  <feComponentTransfer><feFuncA type="linear" slope="0.18" /></feComponentTransfer>
+                  <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+              </defs>
+
+              {/* Tubes — outer subtle stroke + inner white fill */}
+              <g filter="url(#tube-shadow)">
+                {[...leftPaths, ...rightPaths].map((d, i) => (
+                  <path
+                    key={`tube-outer-${i}`}
+                    d={d}
+                    fill="none"
+                    stroke="#e9e3d2"
+                    strokeWidth="42"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                ))}
+                {[...leftPaths, ...rightPaths].map((d, i) => (
+                  <path
+                    key={`tube-inner-${i}`}
+                    d={d}
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="38"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                ))}
+              </g>
 
               {/* Particles flowing along left paths into hub */}
               {leftPaths.map((path, i) =>
                 Array.from({ length: 8 }).map((_, j) => {
-                  const colors = ["#0A0A0A", "#9a9a9a", "#FFD400"];
+                  const colors = ["#0A0A0A", "#9a9a9a", "#E63946", "#F08A4B"];
                   const color = colors[(i + j) % colors.length];
-                  const r = 2.5 + ((i + j) % 2);
+                  const r = 3 + ((i + j) % 2);
                   const dur = 4.5 + ((i * 0.6 + j * 0.5) % 2.5);
                   const begin = -(j * (dur / 8));
                   return (
@@ -172,18 +194,6 @@ export function FlowDiagram() {
                 }),
               )}
 
-              {/* Right animated paths — faint guide */}
-              {rightPaths.map((d, i) => (
-                <path
-                  key={`r-guide-${i}`}
-                  id={`right-path-${i}`}
-                  d={d}
-                  fill="none"
-                  stroke="#FFD400"
-                  strokeOpacity="0.18"
-                  strokeWidth="2"
-                />
-              ))}
 
               {/* Particles flowing along right paths */}
               {rightPaths.map((_, i) =>
