@@ -53,15 +53,21 @@ const rightPaths = [
 ];
 
 
-function Card({ item, align }: { item: Item; align: "left" | "right" }) {
+function Card({ item, align, index = 0 }: { item: Item; align: "left" | "right"; index?: number }) {
+  const animate = align === "right";
+  const iconAnims = ["animate-pulse-soft", "animate-bob", "animate-spin-slow"];
+  const iconAnim = animate ? iconAnims[index % iconAnims.length] : "";
   return (
     <div
-      className={`flex items-start gap-4 rounded-3xl border border-foreground/10 bg-background p-5 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] ${
+      className={`group flex items-start gap-4 rounded-3xl border border-foreground/10 bg-background p-5 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] ${
         align === "right" ? "md:flex-row-reverse md:text-right" : ""
       }`}
     >
-      <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-foreground text-brand">
-        {item.icon}
+      <div className={`relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-foreground text-brand`}>
+        {animate && (
+          <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-brand/30 to-transparent animate-shimmer" />
+        )}
+        <span className={iconAnim}>{item.icon}</span>
       </div>
       <div>
         <div className="font-display text-lg uppercase leading-tight md:text-xl">{item.title}</div>
@@ -70,6 +76,7 @@ function Card({ item, align }: { item: Item; align: "left" | "right" }) {
     </div>
   );
 }
+
 
 export function FlowDiagram() {
   return (
