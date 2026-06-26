@@ -124,8 +124,10 @@ function Home() {
 
 
 
+      {/* 2. FLOW DIAGRAM */}
+      <FlowDiagram />
 
-      {/* 2. MARQUEE — multi-treatment editorial */}
+      {/* 3. MARQUEE — multi-treatment editorial */}
       <section className="relative -mt-4 overflow-hidden border-y border-foreground/15 bg-background py-10">
         <div className="flex w-[200%] animate-marquee items-center whitespace-nowrap">
           {marqueeNames.map((name, i) => {
