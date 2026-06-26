@@ -41,7 +41,15 @@ function Home() {
     <>
       {/* 1. HERO */}
       <section className="relative overflow-hidden">
-        <HeroFlow className="opacity-70" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-10 h-[36rem] w-[36rem] rounded-full bg-brand/45 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-foreground/10 blur-3xl"
+        />
+
 
 
         <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-28 md:pt-28 md:pb-36">
@@ -112,6 +120,27 @@ function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* 1.5 FLOW ANIMATION — voces que convergen */}
+      <section className="relative overflow-hidden border-y border-foreground/15 bg-background">
+        <div className="mx-auto max-w-7xl px-6 py-10 md:py-16">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                Cómo trabajamos
+              </span>
+              <h2 className="mt-3 font-display text-3xl uppercase leading-[0.95] md:text-5xl">
+                Voces que convergen,<br />
+                <span className="text-muted-foreground">audiencias que se activan.</span>
+              </h2>
+            </div>
+          </div>
+          <div className="relative mt-8 h-[320px] w-full md:h-[420px]">
+            <HeroFlow />
+          </div>
+        </div>
+      </section>
+
 
       {/* 2. MARQUEE — multi-treatment editorial */}
       <section className="relative -mt-4 overflow-hidden border-y border-foreground/15 bg-background py-10">
