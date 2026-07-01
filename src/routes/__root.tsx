@@ -165,11 +165,16 @@ function Shell() {
 
   return (
     <>
+      <TopBar />
       {!hideChrome && <Header />}
-      <main className={hideChrome ? "" : "pt-20"}>
+      <main
+        className={hideChrome ? "" : "pt-20"}
+        style={{ paddingTop: hideChrome ? "var(--topbar-h, 0px)" : undefined }}
+      >
         <Outlet />
       </main>
       {!hideChrome && <Footer />}
+      <BottomBar />
       <Toaster />
       {/* WhatsApp floating button — hidden on masterclass landing */}
       {!isSalesLanding && (
