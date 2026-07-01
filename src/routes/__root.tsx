@@ -168,8 +168,12 @@ function Shell() {
       <TopBar />
       {!hideChrome && <Header />}
       <main
-        className={hideChrome ? "" : "pt-20"}
-        style={{ paddingTop: hideChrome ? "var(--topbar-h, 0px)" : undefined }}
+        style={{
+          paddingTop: hideChrome
+            ? "var(--topbar-h, 0px)"
+            : "calc(5rem + var(--topbar-h, 0px))",
+          paddingBottom: "var(--bottombar-h, 0px)",
+        }}
       >
         <Outlet />
       </main>
