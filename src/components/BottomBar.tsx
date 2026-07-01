@@ -14,13 +14,10 @@ export function BottomBar() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-[65] flex items-center gap-3 bg-black px-3 py-2 text-white sm:gap-4 sm:px-6"
+      className="fixed inset-x-0 bottom-0 z-[65] flex items-center gap-4 bg-black px-3 py-2 text-white sm:px-6"
       style={{ minHeight: HEIGHT }}
     >
-      <span className="inline-flex items-center rounded-full bg-[#EAC945] px-3.5 py-1.5 font-display text-base font-black uppercase text-black">
-        VOZ
-      </span>
-      <span className="flex-1 truncate text-sm font-medium sm:text-base">
+      <span className="flex flex-1 items-center justify-center truncate text-center text-sm font-medium sm:text-base">
         Masterclass · 25 jul · $20 USD
       </span>
       <a
