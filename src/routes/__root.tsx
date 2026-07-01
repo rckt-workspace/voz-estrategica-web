@@ -135,6 +135,7 @@ function Shell() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const location = useLocation();
+  const normalizedPathname = (location.pathname.replace(/\/+$/, "") || "/").toLowerCase();
 
   // Init Meta Pixel and GA4 once on mount
   useEffect(() => {
@@ -159,11 +160,11 @@ function Shell() {
     return () => subscription.unsubscribe();
   }, [router, queryClient]);
 
-  const isAdmin = location.pathname.startsWith("/admin");
-  const isSalesLanding = location.pathname.startsWith("/masterclass");
+  const isAdmin = normalizedPathname.startsWith("/admin");
+  const isSalesLanding = normalizedPathname.startsWith("/masterclass");
   const hideChrome = isAdmin || isSalesLanding;
 
-  const isMasterclassLanding = location.pathname === "/masterclass-de-clientes-a-fans";
+  const isMasterclassLanding = normalizedPathname === "/masterclass-de-clientes-a-fans";
 
   return (
     <>
