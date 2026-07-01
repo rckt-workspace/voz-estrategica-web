@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 
 const KEY = "ve_topbar_dismissed";
 const URL = "https://vozestrategica.com/masterclass-de-clientes-a-fans";
+const HEIGHT = 52;
 
 export function TopBar() {
   const [visible, setVisible] = useState(false);
@@ -14,7 +15,7 @@ export function TopBar() {
 
   useEffect(() => {
     const root = document.documentElement;
-    root.style.setProperty("--topbar-h", visible ? "44px" : "0px");
+    root.style.setProperty("--topbar-h", visible ? `${HEIGHT}px` : "0px");
     return () => {
       root.style.setProperty("--topbar-h", "0px");
     };
@@ -34,20 +35,20 @@ export function TopBar() {
   return (
     <div
       className="fixed inset-x-0 top-0 z-[70] flex items-center justify-center bg-[#EAC945] text-black"
-      style={{ minHeight: 44 }}
+      style={{ minHeight: HEIGHT }}
     >
       <a
         href={URL}
-        className="flex-1 px-4 py-2 text-center text-xs font-bold leading-tight sm:text-sm"
+        className="flex-1 px-4 py-2 text-center text-sm font-bold leading-tight sm:text-base"
       >
         Masterclass en vivo con Carlos Laguna · 25 de julio · Reserva tu cupo →
       </a>
       <button
         onClick={close}
         aria-label="Cerrar aviso"
-        className="mr-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-black hover:bg-black/10"
+        className="mr-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-black hover:bg-black/10"
       >
-        <X className="h-4 w-4" />
+        <X className="h-5 w-5" />
       </button>
     </div>
   );
