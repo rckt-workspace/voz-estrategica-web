@@ -11,6 +11,8 @@ import { useEffect } from "react";
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { TopBar } from "@/components/TopBar";
+import { BottomBar } from "@/components/BottomBar";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
