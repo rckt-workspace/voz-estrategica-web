@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const URL = "https://vozestrategica.com/masterclass-de-clientes-a-fans";
+const URL = "/masterclass-de-clientes-a-fans";
 const HEIGHT = 76;
 
 export function BottomBar() {
