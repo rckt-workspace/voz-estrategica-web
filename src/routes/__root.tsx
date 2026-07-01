@@ -163,9 +163,11 @@ function Shell() {
   const isSalesLanding = location.pathname.startsWith("/masterclass");
   const hideChrome = isAdmin || isSalesLanding;
 
+  const isMasterclassLanding = location.pathname === "/masterclass-de-clientes-a-fans";
+
   return (
     <>
-      <TopBar />
+      {!isMasterclassLanding && <TopBar />}
       {!hideChrome && <Header />}
       <main
         style={{
@@ -178,7 +180,7 @@ function Shell() {
         <Outlet />
       </main>
       {!hideChrome && <Footer />}
-      <BottomBar />
+      {!isMasterclassLanding && <BottomBar />}
       <Toaster />
       {/* WhatsApp floating button — hidden on masterclass landing */}
       {!isSalesLanding && (
