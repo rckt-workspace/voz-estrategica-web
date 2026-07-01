@@ -249,27 +249,56 @@ function Home() {
           </Reveal>
 
           <ul className="mt-16 divide-y divide-background/15">
-            {events.map((ev, i) => (
-              <Reveal as="li" key={ev.id} delay={i * 80}>
-                <Link
-                  to="/eventos"
-                  className="group flex flex-col gap-4 py-8 transition-all duration-500 hover:bg-background/5 hover:px-6 md:flex-row md:items-center md:gap-10"
-                >
-                  <div className="font-mono text-sm font-bold uppercase tracking-widest text-brand md:w-40">
-                    {formatDate(ev.fecha)}
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-display text-2xl uppercase md:text-3xl">
-                      {ev.titulo}
+            {events.map((ev, i) => {
+              const isMasterclass = ev.id === "ev-0";
+              if (isMasterclass) {
+                return (
+                  <Reveal as="li" key={ev.id} delay={i * 80}>
+                    <a
+                      href="https://vozestrategica.com/masterclass-de-clientes-a-fans"
+                      className="group flex flex-col gap-4 bg-[#16A34A] py-8 transition-all duration-500 hover:bg-[#15803D] hover:px-6 md:flex-row md:items-center md:gap-10"
+                    >
+                      <div className="font-mono text-sm font-bold uppercase tracking-widest text-white md:w-40 md:pl-6">
+                        {formatDate(ev.fecha)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-display text-2xl uppercase text-white md:text-3xl">
+                          {ev.titulo}
+                        </div>
+                        <div className="mt-2 text-sm text-white/80">
+                          {ev.ciudad} · {ev.descripcion}
+                        </div>
+                      </div>
+                      <span className="inline-flex shrink-0 items-center rounded-full bg-white px-3 py-1 text-xs font-bold text-[#16A34A] md:mr-6">
+                        Cupos abiertos
+                      </span>
+                      <ArrowUpRight className="h-6 w-6 text-white transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 md:mr-6" />
+                    </a>
+                  </Reveal>
+                );
+              }
+              return (
+                <Reveal as="li" key={ev.id} delay={i * 80}>
+                  <Link
+                    to="/eventos"
+                    className="group flex flex-col gap-4 py-8 transition-all duration-500 hover:bg-background/5 hover:px-6 md:flex-row md:items-center md:gap-10"
+                  >
+                    <div className="font-mono text-sm font-bold uppercase tracking-widest text-brand md:w-40">
+                      {formatDate(ev.fecha)}
                     </div>
-                    <div className="mt-2 text-sm text-background/60">
-                      {ev.ciudad} · {ev.descripcion}
+                    <div className="flex-1">
+                      <div className="font-display text-2xl uppercase md:text-3xl">
+                        {ev.titulo}
+                      </div>
+                      <div className="mt-2 text-sm text-background/60">
+                        {ev.ciudad} · {ev.descripcion}
+                      </div>
                     </div>
-                  </div>
-                  <ArrowUpRight className="h-6 w-6 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-                </Link>
-              </Reveal>
-            ))}
+                    <ArrowUpRight className="h-6 w-6 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+                  </Link>
+                </Reveal>
+              );
+            })}
           </ul>
         </div>
       </section>
