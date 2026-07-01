@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 const KEY = "ve_topbar_dismissed";
-const URL = "https://vozestrategica.com/masterclass-de-clientes-a-fans";
+const URL = "/masterclass-de-clientes-a-fans";
 const HEIGHT = 52;
 
 export function TopBar() {
