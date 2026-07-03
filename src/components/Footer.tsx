@@ -9,7 +9,7 @@ export function Footer() {
           <div>
             <Logo className="h-14 w-auto" />
             <p className="mt-6 max-w-xs text-sm text-background/70">
-              Agencia de speakers. Las voces que cambian la conversación.
+              Firma de aprendizaje corporativo, liderazgo y transformación. Las voces que cambian la conversación.
             </p>
           </div>
 
@@ -19,10 +19,13 @@ export function Footer() {
             </h4>
             <ul className="mt-4 space-y-2 text-base font-semibold">
               {[
-                ["/speakers", "Speakers"],
-                ["/eventos", "Eventos"],
-                ["/libros", "Libros"],
-                ["/contratar", "Contratar"],
+                ["/soluciones", "Soluciones"],
+                ["/programas", "Programas"],
+                ["/speakers", "Conferencistas"],
+                ["/casos", "Casos"],
+                ["/recursos", "Recursos"],
+                ["/nosotros", "Nosotros"],
+                ["/contratar", "Solicitar propuesta"],
               ].map(([to, label]) => (
                 <li key={to}>
                   <Link to={to} className="transition-colors hover:text-brand">
