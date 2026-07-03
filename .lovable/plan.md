@@ -1,85 +1,57 @@
 
-# SEO sitewide — Voz Estratégica
+# Reposicionamiento Voz Estratégica
 
-Objetivo: dejar el sitio listo para Google (Colombia priorizado, México vía landing de Diego). Sin tocar diseño ni contenido visible — solo metadatos, JSON-LD, sitemap y robots.
+**Regla de oro:** mantengo el diseño actual (crema #F4F1E3, amarillo #EAC945, negro #141310, tipografías, componentes, logo). Solo cambio **estructura y contenido**.
 
-## 1. Limpiar el root (`src/routes/__root.tsx`)
-
-Hoy el root tiene basura que se filtra a TODAS las páginas:
-
-- **Eliminar 3 líneas con texto placeholder** `"Builds custom websites from provided documents and user specifications."` (description, og:description, twitter:description duplicadas).
-- **Quitar `og:image` y `twitter:image` del root** — apuntan a un screenshot del preview de Lovable y, según la doc de TanStack, el `og:image` del root **sobrescribe** el de toda ruta hija. Por eso la landing de Diego no muestra su foto en WhatsApp/LinkedIn.
-- **Agregar JSON-LD `Organization`** con nombre, logo, URL, sameAs (redes si las tienes).
-- Dejar el `<html lang="es">` como está.
-
-## 2. Metadatos por ruta
-
-Cada ruta tendrá: `title`, `description`, `og:title`, `og:description`, `og:url`, `og:type`, `twitter:*`, `canonical` y `og:image` propios. Hoy la mayoría solo tiene title/description básicos.
-
-| Ruta | Tipo | Acción |
-|---|---|---|
-| `/` | website | Añadir og:url, canonical, og:image (hero) |
-| `/speakers` | website | Añadir og:url, canonical, og:image (grid speakers) |
-| `/speakers/$slug` | profile | Añadir Person JSON-LD, canonical dinámico, og:image = foto speaker. Para `diego-camacho` añadir `hreflang` apuntando a `/mexico` |
-| `/speakers/diego-camacho/mexico` | ya OK | Sin cambios (ya tiene todo) |
-| `/eventos` | website | Añadir canonical, og:url, og:image |
-| `/libros` | website | Añadir canonical, og:url, og:image |
-| `/contratar` | website | Añadir canonical, og:url, og:image, `robots: noindex` (página de formulario, no aporta SEO) |
-| `/masterclass-de-clientes-a-fans` | website | Revisar y completar; añadir Event JSON-LD (ya hay datos: fecha, ciudad) |
-| `/masterclass/gracias` | — | `robots: noindex` |
-| `/admin/*`, `/auth` | — | `robots: noindex` |
-
-## 3. Sitemap dinámico
-
-Crear `src/routes/sitemap[.]xml.ts` (server route) que liste:
-
-- Rutas estáticas: `/`, `/speakers`, `/eventos`, `/libros`, `/contratar`, `/masterclass-de-clientes-a-fans`
-- Una entrada por cada speaker en `src/data/content.ts` → `/speakers/{slug}`
-- Entrada extra para `/speakers/diego-camacho/mexico`
-
-Base URL: `https://vozestrategica.com`.
-
-## 4. Robots
-
-Crear `public/robots.txt`:
-
-```
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /auth
-Disallow: /masterclass/gracias
-
-Sitemap: https://vozestrategica.com/sitemap.xml
-```
-
-## 5. Imágenes Open Graph
-
-Hoy ninguna ruta (salvo el root con un placeholder roto) tiene imagen propia. Para que los shares en WhatsApp/LinkedIn/Twitter se vean bien:
-
-- `/` → reusar imagen del hero o generar una OG 1200×630 con título + logo.
-- `/speakers/$slug` → la `foto` del speaker (ya existe en `content.ts`).
-- `/speakers/diego-camacho/mexico` → la foto de Diego.
-- `/eventos`, `/libros`, `/contratar`, `/masterclass-...` → 1 imagen genérica de marca por ruta (o reusar hero existente si tiene).
-
-**Decisión a tomar:** ¿generamos imágenes OG nuevas con AI para `/`, `/eventos`, `/libros`, `/contratar`? ¿O reusamos lo que haya (foto de algún speaker / hero existente)? Por defecto **reuso**, sin generar nada nuevo (más rápido, menos riesgo, igual válido para SEO).
-
-## 6. Lo que NO se hace en esta iteración
-
-- Versión `es-MX` del sitio entero (sólo Diego MX tiene landing dedicada — la estrategia acordada).
-- Blog / contenido nuevo para SEO orgánico.
-- Investigación de keywords con Semrush (lo dejamos para una iteración aparte, mejor con datos en mano una vez publicado y crawleado).
-- Lighthouse / Core Web Vitals — la doc del dev server reporta build verde; auditoría de performance va aparte.
-
-## 7. Verificación
-
-Después de implementar:
-
-1. Build local para confirmar que TanStack no rompe por meta dupes o sitemap.
-2. Probar `/sitemap.xml` y `/robots.txt` en el preview.
-3. Validar 1–2 rutas en https://search.google.com/test/rich-results (Person, Event, Organization).
-4. Tras publicar, te dejo el checklist para Google Search Console (verificación por meta tag y envío del sitemap).
+Ejecuto todo en un flujo continuo, por bloques, para no romper el sitio.
 
 ---
 
-**¿Avanzo así, reusando imágenes existentes para OG?** Si prefieres que genere imágenes OG nuevas para `/`, `/eventos`, `/libros`, `/contratar`, dime y las creo en el mismo paso.
+## Bloque 1 — Navegación y Footer
+- Header: nuevo menú **Inicio · Soluciones · Programas · Conferencistas · Casos · Recursos · Nosotros** + botón "Solicitar propuesta".
+- Rename `Speakers → Conferencistas` (mantengo ruta `/speakers` y añado alias `/conferencistas`).
+- Footer: nueva descripción + links al nuevo menú.
+- Eventos y Libros salen del menú pero mantienen sus rutas.
+
+## Bloque 2 — Home (top-down)
+1. **Hero**: eyebrow, subcopy y botones nuevos ("Explorar soluciones" / "Solicitar propuesta").
+2. **Cifras**: sin cambios.
+3. **Nueva sección "5 Territorios"** debajo de cifras (Liderazgo · Comunicación · Cultura · Transformación · Ventas y cliente).
+4. **Diagrama actual (FlowDiagram)**: ajusto solo el texto de la 3ª salida a "Una capacidad instalada".
+5. **Nueva sección "Soluciones"**: 4 unidades + escalera de 6 pasos.
+6. **Nueva sección destacada "Escuela Voz Estratégica"** (fondo negro, método de 5 pasos).
+7. **Conferencistas** (antes "Speakers destacados"): rótulos e intro nuevos.
+8. **Agenda**: sin cambios.
+9. **Nueva sección "Casos"**: logos + testimonios con placeholders.
+10. **Libros → Recursos**: rótulo `03 · Recursos`, CTA a `/recursos`.
+11. **CTA final**: "¿Listo para desarrollar a tu equipo?".
+
+## Bloque 3 — Páginas nuevas
+Creo con estilo del sitio:
+- `/soluciones` — 4 unidades + escalera + 5 territorios.
+- `/programas` — Escuela Voz Estratégica (hero oscuro, método, programas, para quién).
+- `/conferencistas` — alias/redirect a `/speakers` con intro nuevo.
+- `/casos` — hero + 3 casos placeholder + logos.
+- `/recursos` — hero + newsletter (guarda en tabla `subscribers` de Lovable Cloud) + libros + estudios.
+- `/nosotros` — misión, visión, territorios, Tatiana, presencia.
+
+## Bloque 4 — Globales, SEO, integraciones
+- **WhatsApp**: nuevo mensaje "propuesta de aprendizaje (conferencia, taller o programa)".
+- **SEO** (`__root.tsx`): título + description + OG/Twitter con el nuevo posicionamiento. Cada página nueva con su propio `head()`.
+- **Formulario `/contratar`**: campos nuevos "¿Qué te interesa?" (obligatorio) y "¿Dónde nos conociste?" (opcional).
+- **Newsletter**: tabla `subscribers` en Lovable Cloud + server function para insert desde `/recursos`.
+
+## Lo que NO toco
+- Banner masterclass, TopBar, BottomBar, landing masterclass y pago Bold.
+- Sistema de speakers individuales, admin, orders.
+- Diseño visual, colores, tipografías, layout de componentes.
+
+## Notas técnicas
+- Datos centralizados en `src/data/content.ts` — muchos textos del Home se editan ahí.
+- Rutas nuevas en `src/routes/` (`soluciones.tsx`, `programas.tsx`, etc.).
+- Uso `PageHero` existente para consistencia visual.
+- Casos y logos quedan con placeholders (no invento métricas ni clientes).
+
+---
+
+¿Ejecuto los 4 bloques de corrido, o prefieres que pare y revisemos entre bloque y bloque?

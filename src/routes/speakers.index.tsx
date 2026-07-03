@@ -87,7 +87,7 @@ function SpeakersPage() {
   return (
     <>
       <PageHero
-        badge="Catálogo · Speakers"
+        badge="Catálogo · Conferencistas"
         titulo={
           <>
             Voces que{" "}
@@ -98,7 +98,7 @@ function SpeakersPage() {
             .
           </>
         }
-        descripcion="Cada speaker es seleccionado por su trayectoria, su capacidad de comunicar y su impacto medible en eventos corporativos y públicos."
+        descripcion="Nuestras voces son la puerta de entrada al aprendizaje. Cada conferencista conecta negocio y factor humano, y puede extender su charla en talleres y programas a medida."
       />
 
       <section className="mx-auto max-w-7xl px-6 py-16">

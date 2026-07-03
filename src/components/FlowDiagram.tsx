@@ -33,8 +33,8 @@ const right: Item[] = [
   },
   {
     icon: <RotateCcw className="h-6 w-6" />,
-    title: "Una conversación que perdura",
-    body: "Libro, programa y comunidad tras el aplauso.",
+    title: "Una capacidad instalada",
+    body: "Programas y escuelas que convierten la charla en desarrollo continuo.",
   },
 ];
 
