@@ -22,7 +22,7 @@ export function Footer() {
                 ["/soluciones", "Soluciones"],
                 ["/programas", "Programas"],
                 ["/speakers", "Conferencistas"],
-                ["/casos", "Casos"],
+                
                 ["/recursos", "Recursos"],
                 ["/nosotros", "Nosotros"],
                 ["/contratar", "Solicitar propuesta"],
