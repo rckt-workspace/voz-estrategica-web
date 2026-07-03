@@ -125,80 +125,48 @@ function ContratarPage() {
   return (
     <>
       <PageHero
-        badge="Contratación"
+        badge="Solicitar propuesta"
         titulo={
           <>
-            Cuéntanos tu{" "}
+            Diseñemos el aprendizaje de tu{" "}
             <span className="highlight-yellow">
-              <span>evento</span>
+              <span>equipo</span>
               <span />
             </span>
             .
           </>
         }
-        descripcion="Respondemos en menos de 48 horas con una propuesta a medida: speaker, formato y disponibilidad."
+        descripcion="Conferencias, talleres, programas y consultoría a medida para líderes y organizaciones. Respondemos en menos de 48 horas con una propuesta a la medida de tu reto."
       />
 
       <section className="mx-auto max-w-3xl px-6 py-16">
         <Reveal>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <Field label="Organización" error={errors.organizacion?.message}>
-              <input className={input} {...register("organizacion")} />
-            </Field>
-
             <div className="grid gap-6 md:grid-cols-2">
+              <Field label="Organización" error={errors.organizacion?.message}>
+                <input className={input} {...register("organizacion")} />
+              </Field>
               <Field label="Persona de contacto" error={errors.contacto?.message}>
                 <input className={input} {...register("contacto")} />
               </Field>
-              <Field label="Email" error={errors.email?.message}>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <Field label="Cargo (opcional)" error={errors.cargo?.message}>
+                <input
+                  className={input}
+                  placeholder="Head of L&D, CHRO, Dir. Comunicaciones..."
+                  {...register("cargo")}
+                />
+              </Field>
+              <Field label="Email corporativo" error={errors.email?.message}>
                 <input type="email" className={input} {...register("email")} />
               </Field>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <Field label="Teléfono (opcional)" error={errors.telefono?.message}>
-                <input className={input} {...register("telefono")} />
-              </Field>
-              <Field label="Fecha del evento" error={errors.fecha_evento?.message}>
-                <input type="date" className={input} {...register("fecha_evento")} />
-              </Field>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              <Field label="Speaker preferido" error={errors.speaker?.message}>
-                <div className="relative">
-                  <select
-                    className={`${input} appearance-none pr-12 cursor-pointer`}
-                    {...register("speaker")}
-                    defaultValue={prefSpeaker ?? ""}
-                  >
-                    <option value="">Sin preferencia</option>
-                    {speakers.map((s) => (
-                      <option key={s.slug} value={s.slug}>
-                        {s.nombre}
-                      </option>
-                    ))}
-                  </select>
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 20 20"
-                    className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 8l5 5 5-5" />
-                  </svg>
-                </div>
-              </Field>
-              <Field label="Tipo de evento" error={errors.tipo_evento?.message}>
-                <input
-                  className={input}
-                  placeholder="Convención, keynote, foro..."
-                  {...register("tipo_evento")}
-                />
-              </Field>
-            </div>
+            <Field label="Teléfono (opcional)" error={errors.telefono?.message}>
+              <input className={input} {...register("telefono")} />
+            </Field>
 
             <Field label="¿Qué te interesa?" error={errors.interes?.message}>
               <div className="relative">
@@ -208,10 +176,78 @@ function ContratarPage() {
                   {...register("interes")}
                 >
                   <option value="" disabled>Selecciona una opción</option>
-                  <option value="Conferencia">Conferencia</option>
+                  <option value="Conferencia">Conferencia (keynote / charla)</option>
                   <option value="Taller o workshop">Taller o workshop</option>
-                  <option value="Programa o Escuela">Programa o Escuela</option>
-                  <option value="Consultoría">Consultoría</option>
+                  <option value="Programa o Escuela">Programa o Escuela (multisesión)</option>
+                  <option value="Consultoría">Consultoría a medida</option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 20 20"
+                  className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 8l5 5 5-5" />
+                </svg>
+              </div>
+            </Field>
+
+            <Field label="Territorio de aprendizaje" error={errors.territorio?.message}>
+              <div className="relative">
+                <select
+                  className={`${input} appearance-none pr-12 cursor-pointer`}
+                  defaultValue=""
+                  {...register("territorio")}
+                >
+                  <option value="" disabled>Selecciona un territorio</option>
+                  <option value="Liderazgo">Liderazgo</option>
+                  <option value="Comunicación">Comunicación</option>
+                  <option value="Cultura">Cultura</option>
+                  <option value="Transformación">Transformación</option>
+                  <option value="Ventas y cliente">Ventas y cliente</option>
+                  <option value="Aún no lo tengo claro">Aún no lo tengo claro</option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 20 20"
+                  className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 8l5 5 5-5" />
+                </svg>
+              </div>
+            </Field>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <Field label="Audiencia (opcional)" error={errors.audiencia?.message}>
+                <input
+                  className={input}
+                  placeholder="Comité directivo, líderes, fuerza comercial..."
+                  {...register("audiencia")}
+                />
+              </Field>
+              <Field label="Fecha tentativa (opcional)" error={errors.fecha_evento?.message}>
+                <input type="date" className={input} {...register("fecha_evento")} />
+              </Field>
+            </div>
+
+            <Field label="Conferencista de interés (opcional)" error={errors.speaker?.message}>
+              <div className="relative">
+                <select
+                  className={`${input} appearance-none pr-12 cursor-pointer`}
+                  {...register("speaker")}
+                  defaultValue={prefSpeaker ?? ""}
+                >
+                  <option value="">Sin preferencia — recomiéndennos</option>
+                  {speakers.map((s) => (
+                    <option key={s.slug} value={s.slug}>
+                      {s.nombre}
+                    </option>
+                  ))}
                 </select>
                 <svg
                   aria-hidden="true"
@@ -243,8 +279,13 @@ function ContratarPage() {
               </Field>
             </div>
 
-            <Field label="Cuéntanos sobre el evento" error={errors.mensaje?.message}>
-              <textarea rows={6} className={input} {...register("mensaje")} />
+            <Field label="Cuéntanos el reto o contexto" error={errors.mensaje?.message}>
+              <textarea
+                rows={6}
+                className={input}
+                placeholder="¿Qué quieres que tu equipo aprenda, transforme o logre?"
+                {...register("mensaje")}
+              />
             </Field>
 
             <button
@@ -252,7 +293,7 @@ function ContratarPage() {
               disabled={isSubmitting}
               className="bubble bubble-yellow w-full justify-center py-4 text-base disabled:opacity-60"
             >
-              {isSubmitting ? "Enviando..." : "Enviar solicitud →"}
+              {isSubmitting ? "Enviando..." : "Solicitar propuesta →"}
             </button>
           </form>
         </Reveal>
@@ -260,6 +301,7 @@ function ContratarPage() {
     </>
   );
 }
+
 
 const input =
   "w-full rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-base text-foreground outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30";
