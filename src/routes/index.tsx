@@ -452,56 +452,7 @@ function Home() {
         </div>
       </section>
 
-      {/* 9. CASOS */}
-      <section className="mx-auto max-w-7xl px-6 py-28">
-        <Reveal>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="section-badge">02 · Casos</span>
-              <h2 className="mt-6 font-display text-5xl uppercase md:text-6xl">
-                Casos de impacto
-              </h2>
-              <p className="mt-4 max-w-xl text-muted-foreground md:text-lg">
-                Organizaciones que ya trabajan su desarrollo con nosotros.
-              </p>
-            </div>
-            <Link to="/casos" className="bubble bubble-outline w-fit">
-              Ver casos →
-            </Link>
-          </div>
-        </Reveal>
-
-        {/* Logos placeholder */}
-        <Reveal delay={100}>
-          <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/10 sm:grid-cols-3 md:grid-cols-6">
-            {["Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5", "Cliente 6"].map((c) => (
-              <div key={c} className="grid h-24 place-items-center bg-background px-4 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                {c}
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        {/* Testimonios placeholder */}
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {[1, 2, 3].map((n) => (
-            <Reveal key={n} delay={n * 80}>
-              <div className="h-full rounded-3xl border border-foreground/10 bg-card p-6">
-                <div className="font-display text-4xl text-brand">"</div>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Espacio para testimonio real — nombre, cargo, empresa. Se completará con clientes que autoricen su cita.
-                </p>
-                <div className="mt-6 border-t border-foreground/10 pt-4">
-                  <div className="font-display text-sm uppercase">Nombre cliente</div>
-                  <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                    Cargo · Empresa
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      {/* 9. CASOS — oculto temporalmente hasta contar con clientes/testimonios reales */}
 
       {/* 10. RECURSOS / LIBROS */}
       <section className="mx-auto max-w-7xl px-6 py-28">
