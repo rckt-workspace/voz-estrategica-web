@@ -82,6 +82,9 @@ function ContratarPage() {
 
     const mensajeCompleto =
       `¿Qué te interesa?: ${values.interes}` +
+      `\nTerritorio: ${values.territorio}` +
+      (values.cargo ? `\nCargo: ${values.cargo}` : "") +
+      (values.audiencia ? `\nAudiencia: ${values.audiencia}` : "") +
       (values.origen ? `\n¿Dónde nos conociste?: ${values.origen}` : "") +
       `\n\n${values.mensaje}`;
 
@@ -91,12 +94,13 @@ function ContratarPage() {
       email: values.email,
       telefono: values.telefono || null,
       fecha_evento: values.fecha_evento || null,
-      tipo_evento: values.tipo_evento || values.interes,
+      tipo_evento: values.interes,
       presupuesto: values.presupuesto || null,
       mensaje: mensajeCompleto,
       speaker_id: null,
       estado: "nuevo",
     });
+
 
     if (error) {
       toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
