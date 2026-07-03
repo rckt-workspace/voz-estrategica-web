@@ -189,13 +189,48 @@ function ContratarPage() {
               </Field>
             </div>
 
-            <Field label="Presupuesto estimado (opcional)" error={errors.presupuesto?.message}>
-              <input
-                className={input}
-                placeholder="Rango USD / EUR"
-                {...register("presupuesto")}
-              />
+            <Field label="¿Qué te interesa?" error={errors.interes?.message}>
+              <div className="relative">
+                <select
+                  className={`${input} appearance-none pr-12 cursor-pointer`}
+                  defaultValue=""
+                  {...register("interes")}
+                >
+                  <option value="" disabled>Selecciona una opción</option>
+                  <option value="Conferencia">Conferencia</option>
+                  <option value="Taller o workshop">Taller o workshop</option>
+                  <option value="Programa o Escuela">Programa o Escuela</option>
+                  <option value="Consultoría">Consultoría</option>
+                </select>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 20 20"
+                  className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/60"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 8l5 5 5-5" />
+                </svg>
+              </div>
             </Field>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <Field label="¿Dónde nos conociste? (opcional)" error={errors.origen?.message}>
+                <input
+                  className={input}
+                  placeholder="Google, LinkedIn, referido..."
+                  {...register("origen")}
+                />
+              </Field>
+              <Field label="Presupuesto estimado (opcional)" error={errors.presupuesto?.message}>
+                <input
+                  className={input}
+                  placeholder="Rango USD / EUR"
+                  {...register("presupuesto")}
+                />
+              </Field>
+            </div>
 
             <Field label="Cuéntanos sobre el evento" error={errors.mensaje?.message}>
               <textarea rows={6} className={input} {...register("mensaje")} />
