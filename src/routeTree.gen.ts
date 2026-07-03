@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SolucionesRouteImport } from './routes/soluciones'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RecursosRouteImport } from './routes/recursos'
+import { Route as ProgramasRouteImport } from './routes/programas'
+import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as MasterclassDeClientesAFansRouteImport } from './routes/masterclass-de-clientes-a-fans'
 import { Route as LibrosRouteImport } from './routes/libros'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as ContratarRouteImport } from './routes/contratar'
+import { Route as ConferencistasRouteImport } from './routes/conferencistas'
+import { Route as CasosRouteImport } from './routes/casos'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SplatRouteImport } from './routes/$'
@@ -27,9 +33,29 @@ import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
+const SolucionesRoute = SolucionesRouteImport.update({
+  id: '/soluciones',
+  path: '/soluciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecursosRoute = RecursosRouteImport.update({
+  id: '/recursos',
+  path: '/recursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramasRoute = ProgramasRouteImport.update({
+  id: '/programas',
+  path: '/programas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NosotrosRoute = NosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MasterclassDeClientesAFansRoute =
@@ -51,6 +77,16 @@ const EventosRoute = EventosRouteImport.update({
 const ContratarRoute = ContratarRouteImport.update({
   id: '/contratar',
   path: '/contratar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConferencistasRoute = ConferencistasRouteImport.update({
+  id: '/conferencistas',
+  path: '/conferencistas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasosRoute = CasosRouteImport.update({
+  id: '/casos',
+  path: '/casos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -120,11 +156,17 @@ export interface FileRoutesByFullPath {
   '/$': typeof SplatRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/casos': typeof CasosRoute
+  '/conferencistas': typeof ConferencistasRoute
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
+  '/nosotros': typeof NosotrosRoute
+  '/programas': typeof ProgramasRoute
+  '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/soluciones': typeof SolucionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -138,11 +180,17 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
   '/auth': typeof AuthRoute
+  '/casos': typeof CasosRoute
+  '/conferencistas': typeof ConferencistasRoute
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
+  '/nosotros': typeof NosotrosRoute
+  '/programas': typeof ProgramasRoute
+  '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/soluciones': typeof SolucionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -158,11 +206,17 @@ export interface FileRoutesById {
   '/$': typeof SplatRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
+  '/casos': typeof CasosRoute
+  '/conferencistas': typeof ConferencistasRoute
   '/contratar': typeof ContratarRoute
   '/eventos': typeof EventosRoute
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
+  '/nosotros': typeof NosotrosRoute
+  '/programas': typeof ProgramasRoute
+  '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/soluciones': typeof SolucionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
@@ -179,11 +233,17 @@ export interface FileRouteTypes {
     | '/$'
     | '/admin'
     | '/auth'
+    | '/casos'
+    | '/conferencistas'
     | '/contratar'
     | '/eventos'
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
+    | '/nosotros'
+    | '/programas'
+    | '/recursos'
     | '/sitemap.xml'
+    | '/soluciones'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -197,11 +257,17 @@ export interface FileRouteTypes {
     | '/'
     | '/$'
     | '/auth'
+    | '/casos'
+    | '/conferencistas'
     | '/contratar'
     | '/eventos'
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
+    | '/nosotros'
+    | '/programas'
+    | '/recursos'
     | '/sitemap.xml'
+    | '/soluciones'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -216,11 +282,17 @@ export interface FileRouteTypes {
     | '/$'
     | '/admin'
     | '/auth'
+    | '/casos'
+    | '/conferencistas'
     | '/contratar'
     | '/eventos'
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
+    | '/nosotros'
+    | '/programas'
+    | '/recursos'
     | '/sitemap.xml'
+    | '/soluciones'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
@@ -236,11 +308,17 @@ export interface RootRouteChildren {
   SplatRoute: typeof SplatRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CasosRoute: typeof CasosRoute
+  ConferencistasRoute: typeof ConferencistasRoute
   ContratarRoute: typeof ContratarRoute
   EventosRoute: typeof EventosRoute
   LibrosRoute: typeof LibrosRoute
   MasterclassDeClientesAFansRoute: typeof MasterclassDeClientesAFansRoute
+  NosotrosRoute: typeof NosotrosRoute
+  ProgramasRoute: typeof ProgramasRoute
+  RecursosRoute: typeof RecursosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SolucionesRoute: typeof SolucionesRoute
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
   SpeakersIndexRoute: typeof SpeakersIndexRoute
@@ -249,11 +327,39 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/soluciones': {
+      id: '/soluciones'
+      path: '/soluciones'
+      fullPath: '/soluciones'
+      preLoaderRoute: typeof SolucionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recursos': {
+      id: '/recursos'
+      path: '/recursos'
+      fullPath: '/recursos'
+      preLoaderRoute: typeof RecursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programas': {
+      id: '/programas'
+      path: '/programas'
+      fullPath: '/programas'
+      preLoaderRoute: typeof ProgramasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nosotros': {
+      id: '/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof NosotrosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/masterclass-de-clientes-a-fans': {
@@ -282,6 +388,20 @@ declare module '@tanstack/react-router' {
       path: '/contratar'
       fullPath: '/contratar'
       preLoaderRoute: typeof ContratarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conferencistas': {
+      id: '/conferencistas'
+      path: '/conferencistas'
+      fullPath: '/conferencistas'
+      preLoaderRoute: typeof ConferencistasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casos': {
+      id: '/casos'
+      path: '/casos'
+      fullPath: '/casos'
+      preLoaderRoute: typeof CasosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -392,11 +512,17 @@ const rootRouteChildren: RootRouteChildren = {
   SplatRoute: SplatRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
+  CasosRoute: CasosRoute,
+  ConferencistasRoute: ConferencistasRoute,
   ContratarRoute: ContratarRoute,
   EventosRoute: EventosRoute,
   LibrosRoute: LibrosRoute,
   MasterclassDeClientesAFansRoute: MasterclassDeClientesAFansRoute,
+  NosotrosRoute: NosotrosRoute,
+  ProgramasRoute: ProgramasRoute,
+  RecursosRoute: RecursosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SolucionesRoute: SolucionesRoute,
   MasterclassGraciasRoute: MasterclassGraciasRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
   SpeakersIndexRoute: SpeakersIndexRoute,
