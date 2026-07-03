@@ -47,6 +47,7 @@ function GraciasPage() {
   const orderId = search["bold-order-id"];
   const status = useMemo(() => normalizeStatus(search["bold-tx-status"]), [search]);
   const [order, setOrder] = useState<StoredOrder | null>(null);
+  const [orderLoaded, setOrderLoaded] = useState(false);
   const saveOrder = useServerFn(recordOrder);
 
   useEffect(() => {
@@ -56,14 +57,17 @@ function GraciasPage() {
     } catch {
       /* ignore */
     }
+    setOrderLoaded(true);
   }, []);
 
-  // Register order in our database (once per orderId+status)
+  // Register order in our database (once per orderId+status), only after
+  // the persisted order details have been read from sessionStorage.
   useEffect(() => {
-    if (!orderId) return;
+    if (!orderId || !orderLoaded) return;
+    // If the stored order matches this orderId, wait until it's populated
+    // so we don't persist a row without amount/currency/description.
     const key = `bold:order-recorded:${orderId}:${status}`;
     if (sessionStorage.getItem(key)) return;
-    sessionStorage.setItem(key, "1");
     saveOrder({
       data: {
         orderId,
@@ -72,8 +76,12 @@ function GraciasPage() {
         currency: order?.currency,
         description: order?.description,
       },
-    }).catch(() => sessionStorage.removeItem(key));
-  }, [orderId, status, order, saveOrder]);
+    })
+      .then(() => sessionStorage.setItem(key, "1"))
+      .catch(() => {
+        /* allow retry on next mount */
+      });
+  }, [orderId, status, order, orderLoaded, saveOrder]);
 
   // Fire conversion events once on success
   useEffect(() => {
