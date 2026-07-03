@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Users, Mic2, GraduationCap, BookOpen } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { FlowDiagram } from "@/components/FlowDiagram";
 
@@ -8,24 +8,24 @@ import { speakers, events, books } from "@/data/content";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Voz Estratégica — Las voces que cambian la conversación" },
+      { title: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
       {
         name: "description",
         content:
-          "Agencia de speakers en Colombia y Latinoamérica. Representamos conferencistas, autores y pensadores para eventos corporativos memorables.",
+          "Firma de aprendizaje corporativo en Colombia, México y España. Conferencias, talleres, programas y escuelas que desarrollan personas, fortalecen equipos y generan resultados de negocio.",
       },
-      { property: "og:title", content: "Voz Estratégica — Las voces que cambian la conversación" },
+      { property: "og:title", content: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
       {
         property: "og:description",
         content:
-          "Agencia de speakers que representa conferencistas, autores y pensadores en Colombia y Latinoamérica.",
+          "Diseñamos experiencias de aprendizaje —conferencias, talleres, programas y escuelas— que generan resultados de negocio.",
       },
       { property: "og:url", content: "https://vozestrategica.com/" },
       { property: "og:type", content: "website" },
-      { name: "twitter:title", content: "Voz Estratégica — Las voces que cambian la conversación" },
+      { name: "twitter:title", content: "Voz Estratégica — Aprendizaje corporativo" },
       {
         name: "twitter:description",
-        content: "Agencia de speakers en Colombia y Latinoamérica.",
+        content: "Conferencias, talleres, programas y escuelas que transforman organizaciones.",
       },
     ],
     links: [{ rel: "canonical", href: "https://vozestrategica.com/" }],
@@ -33,6 +33,32 @@ export const Route = createFileRoute("/")({
 
   component: Home,
 });
+
+const TERRITORIOS = [
+  { titulo: "Liderazgo", desc: "Liderazgo humano, adaptativo y comercial." },
+  { titulo: "Comunicación", desc: "Conversaciones difíciles y presentaciones de alto impacto." },
+  { titulo: "Cultura", desc: "Bienestar, propósito y trabajo intergeneracional." },
+  { titulo: "Transformación", desc: "IA, innovación, cambio y adaptación." },
+  { titulo: "Ventas y cliente", desc: "Experiencia, servicio y mentalidad comercial." },
+];
+
+const SOLUCIONES = [
+  { icon: Mic2, titulo: "Conferencias", desc: "La chispa. 60–90 min con una de nuestras 8 voces." },
+  { icon: GraduationCap, titulo: "Formación", desc: "Talleres, workshops y programas que instalan capacidades." },
+  { icon: Users, titulo: "Consultoría", desc: "Acompañamiento a medida en cultura, comunicación y liderazgo." },
+  { icon: BookOpen, titulo: "Contenido", desc: "Libros, newsletter y recursos que extienden el aprendizaje." },
+];
+
+const ESCALERA = [
+  ["Conferencia", "60–90 min"],
+  ["Taller", "2–4 h"],
+  ["Workshop", "4–8 h"],
+  ["Programa", "4–12 semanas"],
+  ["Escuela", "6–12 meses"],
+  ["Consultoría", "Por proyecto"],
+];
+
+const METODO = ["Diagnóstico", "Conferencia", "Talleres", "Seguimiento", "Medición"];
 
 function Home() {
   const destacados = speakers;
@@ -42,16 +68,8 @@ function Home() {
     <>
       {/* 1. HERO */}
       <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-32 top-10 h-[36rem] w-[36rem] rounded-full bg-brand/45 blur-3xl"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -left-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-foreground/10 blur-3xl"
-        />
-
-
+        <div aria-hidden className="pointer-events-none absolute -right-32 top-10 h-[36rem] w-[36rem] rounded-full bg-brand/45 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-foreground/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-28 md:pt-28 md:pb-36">
           <Reveal>
@@ -60,7 +78,7 @@ function Home() {
                 <span className="absolute inline-flex h-full w-full animate-pulse-dot rounded-full bg-brand" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
               </span>
-              Agencia de Speakers · 2026
+              Aprendizaje corporativo · Liderazgo · Transformación
             </span>
           </Reveal>
 
@@ -77,26 +95,24 @@ function Home() {
 
           <Reveal delay={260}>
             <p className="mt-10 max-w-2xl text-lg text-muted-foreground md:text-xl">
-              Representamos a los conferencistas, autores y pensadores que dejan
-              marca. Curamos cada propuesta para que tu evento se recuerde mucho
-              después del aplauso final.
+              Diseñamos experiencias de aprendizaje —conferencias, talleres, programas y escuelas— que desarrollan personas, fortalecen equipos y generan resultados de negocio.
             </p>
           </Reveal>
 
           <Reveal delay={400}>
             <div className="mt-12 flex flex-wrap items-center gap-4">
               <Link
-                to="/speakers"
+                to="/soluciones"
                 className="bubble bubble-black group inline-flex items-center gap-2 px-6 py-3 text-base transition-transform hover:scale-105"
               >
-                Ver catálogo
+                Explorar soluciones
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 to="/contratar"
                 className="bubble bubble-yellow group inline-flex items-center gap-2 px-6 py-3 text-base transition-transform hover:scale-105"
               >
-                Contratar speaker
+                Solicitar propuesta
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -122,13 +138,150 @@ function Home() {
         </div>
       </section>
 
+      {/* 2. TERRITORIOS */}
+      <section className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+        <Reveal>
+          <div className="max-w-3xl">
+            <span className="section-badge">Propuesta de valor</span>
+            <h2 className="mt-6 font-display text-4xl uppercase leading-[0.95] md:text-6xl">
+              Desarrollamos capacidades que transforman organizaciones
+            </h2>
+            <p className="mt-6 text-lg text-muted-foreground">
+              No vendemos un evento: diseñamos procesos de aprendizaje que se aplican y se miden. Trabajamos cinco territorios donde el negocio se cruza con el factor humano.
+            </p>
+          </div>
+        </Reveal>
 
+        <div className="mt-12 grid gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {TERRITORIOS.map((t, i) => (
+            <Reveal key={t.titulo} delay={i * 60}>
+              <div className="h-full rounded-3xl border border-foreground/10 bg-card p-6 transition-colors hover:border-foreground/30">
+                <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                  0{i + 1}
+                </div>
+                <div className="mt-3 font-display text-2xl uppercase leading-tight">{t.titulo}</div>
+                <p className="mt-3 text-sm text-muted-foreground">{t.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-      {/* 2. FLOW DIAGRAM */}
+      {/* 3. FLOW DIAGRAM */}
       <FlowDiagram />
 
-      {/* 3. MARQUEE — multi-treatment editorial */}
-      <section className="relative -mt-4 overflow-hidden border-y border-foreground/15 bg-background py-10">
+      {/* 4. SOLUCIONES */}
+      <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
+        <Reveal>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="section-badge">Soluciones</span>
+              <h2 className="mt-6 font-display text-4xl uppercase leading-[0.95] md:text-6xl">
+                Del descubrimiento a<br />la transformación
+              </h2>
+            </div>
+            <Link to="/soluciones" className="bubble bubble-outline w-fit">
+              Ver soluciones →
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {SOLUCIONES.map((s, i) => (
+            <Reveal key={s.titulo} delay={i * 80}>
+              <div className="h-full rounded-3xl border border-foreground/10 bg-background p-6">
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-foreground text-brand">
+                  <s.icon className="h-6 w-6" />
+                </div>
+                <div className="mt-5 font-display text-2xl uppercase leading-tight">{s.titulo}</div>
+                <p className="mt-3 text-sm text-muted-foreground">{s.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Escalera */}
+        <Reveal delay={200}>
+          <div className="mt-12 overflow-x-auto">
+            <div className="flex min-w-max items-stretch gap-2 rounded-3xl border border-foreground/10 bg-card p-3">
+              {ESCALERA.map(([label, dur], i) => (
+                <div key={label} className="flex items-center gap-2">
+                  <div className="rounded-2xl bg-background px-4 py-3 text-center">
+                    <div className="font-display text-sm uppercase">{label}</div>
+                    <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                      {dur}
+                    </div>
+                  </div>
+                  {i < ESCALERA.length - 1 ? (
+                    <ArrowRight className="h-4 w-4 text-foreground/40" />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* 5. ESCUELA VOZ ESTRATÉGICA */}
+      <section className="relative overflow-hidden bg-foreground py-24 text-background md:py-32">
+        <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -left-40 bottom-0 h-[24rem] w-[24rem] rounded-full bg-brand/10 blur-3xl" />
+
+        <div className="relative mx-auto max-w-6xl px-6">
+          <Reveal>
+            <span className="section-badge section-badge-dark">Producto estrella</span>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="mt-6 font-display text-5xl uppercase leading-[0.9] md:text-7xl lg:text-8xl">
+              Escuela<br />
+              <span className="text-brand">Voz Estratégica</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-8 max-w-2xl text-lg text-background/75 md:text-xl">
+              Nuestros programas de liderazgo, comunicación, cultura, ventas e innovación. Un método que garantiza que el aprendizaje se aplique y se mida —no que se olvide al salir del auditorio.
+            </p>
+          </Reveal>
+
+          {/* Método 5 pasos */}
+          <Reveal delay={300}>
+            <div className="mt-14 overflow-x-auto">
+              <div className="flex min-w-max items-center gap-3">
+                {METODO.map((paso, i) => (
+                  <div key={paso} className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 rounded-2xl border border-background/20 bg-background/5 px-5 py-4">
+                      <div className="grid h-8 w-8 place-items-center rounded-full bg-brand font-display text-sm text-foreground">
+                        {i + 1}
+                      </div>
+                      <div className="font-display text-lg uppercase">{paso}</div>
+                    </div>
+                    {i < METODO.length - 1 ? (
+                      <ArrowRight className="h-5 w-5 text-brand" />
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={400}>
+            <div className="mt-12 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+              <p className="font-mono text-sm uppercase tracking-widest text-background/60">
+                Programas de 3, 6 y 12 meses
+              </p>
+              <Link
+                to="/programas"
+                className="bubble bubble-yellow inline-flex items-center gap-2 hover:scale-105 transition-transform"
+              >
+                Conocer la Escuela <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 6. MARQUEE */}
+      <section className="relative overflow-hidden border-y border-foreground/15 bg-background py-10">
         <div className="flex w-[200%] animate-marquee items-center whitespace-nowrap">
           {marqueeNames.map((name, i) => {
             const treatment = i % 4;
@@ -159,11 +312,11 @@ function Home() {
         </div>
       </section>
 
-      {/* 3. SPEAKERS DESTACADOS — editorial offset grid */}
+      {/* 7. CONFERENCISTAS */}
       <section className="relative mx-auto max-w-7xl px-6 py-28">
         <Reveal>
           <div className="flex items-center gap-4">
-            <span className="section-badge">01 · Talento</span>
+            <span className="section-badge">01 · Conferencistas</span>
             <div className="h-px flex-1 bg-foreground/15" />
           </div>
         </Reveal>
@@ -171,13 +324,12 @@ function Home() {
         <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <Reveal delay={100}>
             <h2 className="font-display text-5xl uppercase leading-[0.85] md:text-7xl">
-              Speakers<br />destacados
+              Nuestras<br />voces
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className="max-w-sm text-muted-foreground md:text-lg">
-              Una selección curada de las voces que mejor representan lo que
-              hacemos. Cada perfil incluye charlas, libros y agenda.
+            <p className="max-w-md text-muted-foreground md:text-lg">
+              Nuestras 8 voces son la puerta de entrada. Cada una conecta negocio y factor humano —y abre la conversación que después se convierte en un programa a medida.
             </p>
           </Reveal>
         </div>
@@ -223,18 +375,15 @@ function Home() {
         <Reveal delay={400}>
           <div className="mt-20 text-center">
             <Link to="/speakers" className="bubble bubble-outline">
-              Ver todos los speakers →
+              Ver todos los conferencistas →
             </Link>
           </div>
         </Reveal>
       </section>
 
-      {/* 4. PRÓXIMOS EVENTOS (dark) */}
+      {/* 8. AGENDA */}
       <section className="relative overflow-hidden bg-foreground py-28 text-background">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl"
-        />
+        <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl" />
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="flex items-center gap-4">
@@ -244,7 +393,7 @@ function Home() {
           </Reveal>
           <Reveal delay={100}>
             <h2 className="mt-8 font-display text-5xl uppercase md:text-8xl">
-              Próximos eventos
+              Conferencias y webinars
             </h2>
           </Reveal>
 
@@ -303,13 +452,64 @@ function Home() {
         </div>
       </section>
 
-      {/* 5. LIBROS + VOZ EDITORIAL */}
+      {/* 9. CASOS */}
+      <section className="mx-auto max-w-7xl px-6 py-28">
+        <Reveal>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="section-badge">02 · Casos</span>
+              <h2 className="mt-6 font-display text-5xl uppercase md:text-6xl">
+                Casos de impacto
+              </h2>
+              <p className="mt-4 max-w-xl text-muted-foreground md:text-lg">
+                Organizaciones que ya trabajan su desarrollo con nosotros.
+              </p>
+            </div>
+            <Link to="/casos" className="bubble bubble-outline w-fit">
+              Ver casos →
+            </Link>
+          </div>
+        </Reveal>
+
+        {/* Logos placeholder */}
+        <Reveal delay={100}>
+          <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/10 sm:grid-cols-3 md:grid-cols-6">
+            {["Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5", "Cliente 6"].map((c) => (
+              <div key={c} className="grid h-24 place-items-center bg-background px-4 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                {c}
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Testimonios placeholder */}
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {[1, 2, 3].map((n) => (
+            <Reveal key={n} delay={n * 80}>
+              <div className="h-full rounded-3xl border border-foreground/10 bg-card p-6">
+                <div className="font-display text-4xl text-brand">"</div>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Espacio para testimonio real — nombre, cargo, empresa. Se completará con clientes que autoricen su cita.
+                </p>
+                <div className="mt-6 border-t border-foreground/10 pt-4">
+                  <div className="font-display text-sm uppercase">Nombre cliente</div>
+                  <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    Cargo · Empresa
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* 10. RECURSOS / LIBROS */}
       <section className="mx-auto max-w-7xl px-6 py-28">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <Reveal>
               <div className="flex items-center gap-4">
-                <span className="section-badge">03 · Publicaciones</span>
+                <span className="section-badge">03 · Recursos</span>
                 <div className="h-px flex-1 bg-foreground/15" />
               </div>
             </Reveal>
@@ -322,7 +522,7 @@ function Home() {
               {books.map((b, i) => (
                 <Reveal key={b.id} delay={i * 80}>
                   <Link
-                    to="/libros"
+                    to="/recursos"
                     className="group block overflow-hidden rounded-2xl bg-foreground/5"
                   >
                     <img
@@ -347,15 +547,13 @@ function Home() {
                   Escribir el futuro hoy.
                 </h3>
                 <p className="mt-6 max-w-md text-foreground/80 md:text-lg">
-                  Acompañamos a nuestros speakers a convertir sus ideas en
-                  libros, ensayos y manifiestos que extienden la conversación
-                  más allá del escenario.
+                  Acompañamos a nuestros conferencistas a convertir sus ideas en libros, ensayos y manifiestos que extienden la conversación más allá del escenario.
                 </p>
                 <Link
-                  to="/libros"
+                  to="/recursos"
                   className="mt-8 inline-flex items-center gap-2 font-bold underline underline-offset-4 hover:gap-3 transition-all"
                 >
-                  Conocer el catálogo <ArrowRight className="h-4 w-4" />
+                  Ver recursos <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>
@@ -363,20 +561,16 @@ function Home() {
         </div>
       </section>
 
-      {/* 6. CTA FINAL */}
+      {/* 11. CTA FINAL */}
       <section className="mx-auto max-w-7xl px-6 pb-28">
         <Reveal>
           <div className="relative overflow-hidden rounded-[60px] bg-brand px-8 py-24 text-center md:px-16 md:py-32">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-foreground/10 blur-3xl"
-            />
+            <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-foreground/10 blur-3xl" />
             <h2 className="relative font-display text-4xl uppercase leading-tight md:text-7xl">
-              ¿Tu evento necesita una voz que se recuerde?
+              ¿Listo para desarrollar<br />a tu equipo?
             </h2>
-            <p className="relative mx-auto mt-6 max-w-xl text-foreground/80 md:text-lg">
-              Cuéntanos el contexto y te armamos una propuesta a medida en menos
-              de 48 horas.
+            <p className="relative mx-auto mt-6 max-w-2xl text-foreground/80 md:text-lg">
+              Cuéntanos el reto de tu organización y te armamos una propuesta a medida —conferencia, programa o escuela— en menos de 48 horas.
             </p>
             <Link
               to="/contratar"
