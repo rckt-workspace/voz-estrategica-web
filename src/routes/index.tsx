@@ -465,9 +465,6 @@ function Home() {
                 Organizaciones que ya trabajan su desarrollo con nosotros.
               </p>
             </div>
-            <Link to="/casos" className="bubble bubble-outline w-fit">
-              Ver casos →
-            </Link>
           </div>
         </Reveal>
 
