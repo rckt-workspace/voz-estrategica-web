@@ -5,10 +5,12 @@ import { Logo } from "./Logo";
 
 const NAV = [
   { to: "/", label: "Inicio" },
-  { to: "/speakers", label: "Speakers" },
-  { to: "/eventos", label: "Eventos" },
-  { to: "/libros", label: "Libros" },
-  { to: "/contratar", label: "Contratar" },
+  { to: "/soluciones", label: "Soluciones" },
+  { to: "/programas", label: "Programas" },
+  { to: "/speakers", label: "Conferencistas" },
+  { to: "/casos", label: "Casos" },
+  { to: "/recursos", label: "Recursos" },
+  { to: "/nosotros", label: "Nosotros" },
 ] as const;
 
 export function Header() {
@@ -34,13 +36,13 @@ export function Header() {
           <Logo className="h-11 w-auto" />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className="rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
-              activeProps={{ className: "rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider bg-black text-white" }}
+              className="rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
+              activeProps={{ className: "rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider bg-black text-white" }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
@@ -50,14 +52,14 @@ export function Header() {
 
         <Link
           to="/contratar"
-          className="hidden md:inline-flex bubble bubble-yellow ml-2 hover:scale-105 transition-transform"
+          className="hidden lg:inline-flex bubble bubble-yellow ml-2 hover:scale-105 transition-transform"
         >
           Solicitar propuesta →
         </Link>
 
         <button
           onClick={() => setOpen((o) => !o)}
-          className="rounded-full border border-foreground/20 p-2 md:hidden"
+          className="rounded-full border border-foreground/20 p-2 lg:hidden"
           aria-label="Abrir menú"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -65,7 +67,7 @@ export function Header() {
       </div>
 
       {open ? (
-        <div className="border-t border-foreground/10 bg-background md:hidden">
+        <div className="border-t border-foreground/10 bg-background lg:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {NAV.map((n) => (
               <Link
@@ -79,6 +81,13 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <Link
+              to="/contratar"
+              onClick={() => setOpen(false)}
+              className="bubble bubble-yellow mt-2 justify-center"
+            >
+              Solicitar propuesta →
+            </Link>
           </nav>
         </div>
       ) : null}
