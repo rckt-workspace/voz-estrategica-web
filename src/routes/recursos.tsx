@@ -120,7 +120,7 @@ function RecursosPage() {
                 <div className="p-4">
                   <div className="font-display text-lg uppercase leading-tight">{b.titulo}</div>
                   <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                    {b.autor}
+                    {b.anio}
                   </div>
                 </div>
               </div>
