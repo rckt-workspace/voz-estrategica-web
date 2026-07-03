@@ -18,6 +18,10 @@ const schema = z.object({
   fecha_evento: z.string().optional().or(z.literal("")),
   speaker: z.string().optional().or(z.literal("")),
   tipo_evento: z.string().max(120).optional().or(z.literal("")),
+  interes: z.enum(["Conferencia", "Taller o workshop", "Programa o Escuela", "Consultoría"], {
+    message: "Cuéntanos qué te interesa",
+  }),
+  origen: z.string().max(120).optional().or(z.literal("")),
   presupuesto: z.string().max(120).optional().or(z.literal("")),
   mensaje: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)").max(2000),
 });
