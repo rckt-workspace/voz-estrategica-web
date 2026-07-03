@@ -59,26 +59,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Voz Estratégica — Agencia de Speakers" },
+      { title: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
       {
         name: "description",
         content:
-          "Voz Estratégica representa a las voces que cambian la conversación. Speakers, autores y pensadores para eventos memorables en Latinoamérica.",
+          "Firma de aprendizaje corporativo en Colombia, México y España. Conferencias, talleres, programas y escuelas que desarrollan personas, fortalecen equipos y generan resultados de negocio.",
       },
       { name: "author", content: "Voz Estratégica" },
       { property: "og:site_name", content: "Voz Estratégica" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "es_CO" },
-      { property: "og:title", content: "Voz Estratégica — Agencia de Speakers" },
+      { property: "og:title", content: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
       {
         property: "og:description",
-        content: "Las voces que cambian la conversación. Conferencistas, autores y pensadores para tu próximo evento.",
+        content:
+          "Conferencias, talleres, programas y escuelas que transforman organizaciones. Colombia · México · España.",
       },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Voz Estratégica — Agencia de Speakers" },
+      { name: "twitter:title", content: "Voz Estratégica — Aprendizaje corporativo" },
       {
         name: "twitter:description",
-        content: "Las voces que cambian la conversación.",
+        content: "Desarrollamos capacidades que transforman organizaciones.",
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -91,7 +92,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "Voz Estratégica",
           url: "https://vozestrategica.com",
           description:
-            "Agencia de speakers que representa conferencistas, autores y pensadores para eventos corporativos en Latinoamérica.",
+            "Firma de aprendizaje corporativo, liderazgo y transformación. Conferencias, talleres, programas y escuelas en Colombia, México y España.",
           areaServed: [
             { "@type": "Country", name: "Colombia" },
             { "@type": "Country", name: "México" },
