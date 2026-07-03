@@ -13,14 +13,20 @@ import { trackGA4Event } from "@/lib/ga4";
 const schema = z.object({
   organizacion: z.string().min(2, "Indica tu organización").max(200),
   contacto: z.string().min(2, "Tu nombre, por favor").max(120),
+  cargo: z.string().max(120).optional().or(z.literal("")),
   email: z.string().email("Email inválido").max(200),
   telefono: z.string().max(40).optional().or(z.literal("")),
+  interes: z.enum(
+    ["Conferencia", "Taller o workshop", "Programa o Escuela", "Consultoría"],
+    { message: "Cuéntanos qué te interesa" },
+  ),
+  territorio: z.enum(
+    ["Liderazgo", "Comunicación", "Cultura", "Transformación", "Ventas y cliente", "Aún no lo tengo claro"],
+    { message: "Selecciona un territorio" },
+  ),
+  audiencia: z.string().max(120).optional().or(z.literal("")),
   fecha_evento: z.string().optional().or(z.literal("")),
   speaker: z.string().optional().or(z.literal("")),
-  tipo_evento: z.string().max(120).optional().or(z.literal("")),
-  interes: z.enum(["Conferencia", "Taller o workshop", "Programa o Escuela", "Consultoría"], {
-    message: "Cuéntanos qué te interesa",
-  }),
   origen: z.string().max(120).optional().or(z.literal("")),
   presupuesto: z.string().max(120).optional().or(z.literal("")),
   mensaje: z.string().min(10, "Cuéntanos un poco más (mín. 10 caracteres)").max(2000),
@@ -34,16 +40,17 @@ export const Route = createFileRoute("/contratar")({
   }),
   head: () => ({
     meta: [
-      { title: "Contratar Speaker — Voz Estratégica" },
+      { title: "Solicitar propuesta — Voz Estratégica" },
       {
         name: "description",
         content:
-          "Solicita una propuesta a medida en menos de 48 horas. Cuéntanos el contexto de tu evento.",
+          "Diseñamos conferencias, talleres y programas de aprendizaje corporativo a medida. Recibe una propuesta en menos de 48 horas.",
       },
-      { property: "og:title", content: "Contratar Speaker — Voz Estratégica" },
+      { property: "og:title", content: "Solicitar propuesta — Voz Estratégica" },
       {
         property: "og:description",
-        content: "Propuestas a medida para eventos memorables.",
+        content:
+          "Firma de aprendizaje corporativo: conferencias, talleres, programas y consultoría a medida.",
       },
       { property: "og:url", content: "https://vozestrategica.com/contratar" },
       { property: "og:type", content: "website" },
