@@ -73,16 +73,21 @@ function ContratarPage() {
       ? speakers.find((s) => s.slug === values.speaker)
       : null;
 
+    const mensajeCompleto =
+      `¿Qué te interesa?: ${values.interes}` +
+      (values.origen ? `\n¿Dónde nos conociste?: ${values.origen}` : "") +
+      `\n\n${values.mensaje}`;
+
     const { error } = await supabase.from("booking_requests").insert({
       organizacion: values.organizacion,
       contacto: values.contacto,
       email: values.email,
       telefono: values.telefono || null,
       fecha_evento: values.fecha_evento || null,
-      tipo_evento: values.tipo_evento || null,
+      tipo_evento: values.tipo_evento || values.interes,
       presupuesto: values.presupuesto || null,
-      mensaje: values.mensaje,
-      speaker_id: null, // ids reales solo desde admin; guardamos referencia en mensaje
+      mensaje: mensajeCompleto,
+      speaker_id: null,
       estado: "nuevo",
     });
 
