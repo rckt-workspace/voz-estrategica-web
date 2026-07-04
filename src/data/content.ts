@@ -179,7 +179,7 @@ export const speakers: Speaker[] = [
   },
   {
     slug: "martan",
-    nombre: "Martan",
+    nombre: "Oscar Martan",
     especialidad: "IA, automatización & transformación digital",
     foto: martanImg,
     bio: [
@@ -249,7 +249,7 @@ export const books: Book[] = [
     autorSlug: "carlos-laguna",
     portada: bookClientesFans,
     descripcion: "El método para construir lealtad real en la era del ruido.",
-    anio: 2023,
+    anio: 2026,
   },
   {
     id: "b-2",
@@ -273,7 +273,7 @@ export const books: Book[] = [
     autorSlug: "julian-giraldo",
     portada: bookMilagrosamente,
     descripcion: "Un manifiesto sobre la resiliencia desde la gratitud y el propósito.",
-    anio: 2024,
+    anio: 2025,
   },
 ];
 
