@@ -273,7 +273,7 @@ export const books: Book[] = [
     autorSlug: "julian-giraldo",
     portada: bookMilagrosamente,
     descripcion: "Un manifiesto sobre la resiliencia desde la gratitud y el propósito.",
-    anio: 2024,
+    anio: 2025,
   },
 ];
 
