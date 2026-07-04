@@ -28,6 +28,7 @@ import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
+import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
@@ -129,6 +130,11 @@ const MasterclassGraciasRoute = MasterclassGraciasRouteImport.update({
   path: '/masterclass/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
+  id: '/suscriptores',
+  path: '/suscriptores',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
   id: '/speakers',
   path: '/speakers',
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
+  '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -194,6 +201,7 @@ export interface FileRoutesByTo {
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
+  '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin': typeof AdminIndexRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
+  '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
@@ -247,6 +256,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
+    | '/admin/suscriptores'
     | '/masterclass/gracias'
     | '/speakers/$slug'
     | '/admin/'
@@ -271,6 +281,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
+    | '/admin/suscriptores'
     | '/masterclass/gracias'
     | '/speakers/$slug'
     | '/admin'
@@ -296,6 +307,7 @@ export interface FileRouteTypes {
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/speakers'
+    | '/admin/suscriptores'
     | '/masterclass/gracias'
     | '/speakers/$slug'
     | '/admin/'
@@ -460,6 +472,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MasterclassGraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/suscriptores': {
+      id: '/admin/suscriptores'
+      path: '/suscriptores'
+      fullPath: '/admin/suscriptores'
+      preLoaderRoute: typeof AdminSuscriptoresRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/speakers': {
       id: '/admin/speakers'
       path: '/speakers'
@@ -495,6 +514,7 @@ interface AdminRouteChildren {
   AdminEventosRoute: typeof AdminEventosRoute
   AdminLibrosRoute: typeof AdminLibrosRoute
   AdminSpeakersRoute: typeof AdminSpeakersRoute
+  AdminSuscriptoresRoute: typeof AdminSuscriptoresRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -502,6 +522,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminEventosRoute: AdminEventosRoute,
   AdminLibrosRoute: AdminLibrosRoute,
   AdminSpeakersRoute: AdminSpeakersRoute,
+  AdminSuscriptoresRoute: AdminSuscriptoresRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
