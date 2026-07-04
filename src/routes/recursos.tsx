@@ -38,8 +38,12 @@ function RecursosPage() {
     if (!email.trim()) return;
     setLoading(true);
     try {
-      await subscribe({ data: { email, source: "recursos" } });
-      toast.success("¡Listo! Te sumamos a la conversación.");
+      const res = await subscribe({ data: { email, source: "recursos" } });
+      if (res.duplicate) {
+        toast.info("Ese correo ya estaba suscrito.");
+      } else {
+        toast.success("¡Gracias por suscribirte!");
+      }
       setEmail("");
     } catch {
       toast.error("No pudimos registrarte. Inténtalo de nuevo.");

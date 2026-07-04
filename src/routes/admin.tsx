@@ -89,6 +89,7 @@ function AdminLayout() {
         <nav className="mb-8 flex flex-wrap gap-2">
           {[
             ["/admin", "Solicitudes"],
+            ["/admin/suscriptores", "Suscriptores"],
             ["/admin/speakers", "Speakers"],
             ["/admin/eventos", "Eventos"],
             ["/admin/libros", "Libros"],
