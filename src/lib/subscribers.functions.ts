@@ -20,8 +20,11 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
       email: data.email.toLowerCase().trim(),
       source: data.source ?? "recursos",
     });
-    if (error && !/duplicate|unique/i.test(error.message)) {
+    if (error) {
+      if (/duplicate|unique/i.test(error.message)) {
+        return { ok: true, duplicate: true } as const;
+      }
       throw new Error("No pudimos registrar tu suscripción");
     }
-    return { ok: true };
+    return { ok: true, duplicate: false } as const;
   });
