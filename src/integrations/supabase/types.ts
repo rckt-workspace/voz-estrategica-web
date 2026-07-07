@@ -111,6 +111,27 @@ export type Database = {
           },
         ]
       }
+      configuracion: {
+        Row: {
+          created_at: string
+          flete_nacional: number
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          flete_nacional?: number
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          flete_nacional?: number
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           ciudad: string
@@ -202,6 +223,69 @@ export type Database = {
           product?: string | null
           raw_payload?: Json | null
           status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pedidos_libros: {
+        Row: {
+          bold_order_id: string | null
+          cantidad: number
+          ciudad: string | null
+          departamento: string | null
+          direccion: string | null
+          email: string
+          estado_pago: string
+          fecha_creacion: string
+          flete: number
+          formato: string
+          id: string
+          libro: string
+          nombre_completo: string
+          precio_unitario: number
+          subtotal: number
+          telefono: string
+          total: number
+          updated_at: string
+        }
+        Insert: {
+          bold_order_id?: string | null
+          cantidad?: number
+          ciudad?: string | null
+          departamento?: string | null
+          direccion?: string | null
+          email: string
+          estado_pago?: string
+          fecha_creacion?: string
+          flete?: number
+          formato: string
+          id?: string
+          libro: string
+          nombre_completo: string
+          precio_unitario: number
+          subtotal: number
+          telefono: string
+          total: number
+          updated_at?: string
+        }
+        Update: {
+          bold_order_id?: string | null
+          cantidad?: number
+          ciudad?: string | null
+          departamento?: string | null
+          direccion?: string | null
+          email?: string
+          estado_pago?: string
+          fecha_creacion?: string
+          flete?: number
+          formato?: string
+          id?: string
+          libro?: string
+          nombre_completo?: string
+          precio_unitario?: number
+          subtotal?: number
+          telefono?: string
+          total?: number
           updated_at?: string
         }
         Relationships: []
