@@ -184,8 +184,8 @@ function Shell() {
       >
         <Outlet />
       </main>
-      {!hideChrome && <Footer />}
-      {!isMasterclassLanding && <BottomBar />}
+      {(!hideChrome || isCampaignLanding) && <Footer />}
+      {!hidePromoBars && <BottomBar />}
       <Toaster />
       {/* WhatsApp floating button — hidden on masterclass landing */}
       {!isSalesLanding && (
