@@ -108,7 +108,7 @@ function Page() {
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
       {/* Header minimal — solo logo + anclas de esta landing */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 md:py-5">
+        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between gap-4 px-6 xl:px-12 py-4 md:py-5">
           <div className="flex items-center">
             <Logo className="h-12 w-auto md:h-14" />
           </div>
