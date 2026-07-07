@@ -147,8 +147,8 @@ function Page() {
           </svg>
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-20 lg:pt-24 lg:pb-28">
-          <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+        <div className="relative mx-auto max-w-7xl px-6 pt-8 pb-10 lg:pt-10 lg:pb-14">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
               <Reveal>
                 <div className="section-badge section-badge-dark inline-flex">
@@ -157,64 +157,60 @@ function Page() {
                 </div>
               </Reveal>
               <Reveal delay={0.05}>
-                <h1 className="mt-6 font-display text-5xl uppercase leading-[0.95] tracking-tight md:text-6xl lg:text-7xl">
+                <h1 className="mt-4 font-display text-4xl uppercase leading-[0.95] tracking-tight md:text-5xl lg:text-[3.25rem]">
                   La IA no reemplaza a tu equipo.{" "}
                   <span className="text-[#EAC945]">Lo libera para vender más.</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 max-w-xl text-lg text-white/75">
+                <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem]">
                   Lleva a <strong className="text-white">Diego Camacho</strong> —Head of New
-                  Business Sales en Google y referente en inteligencia artificial aplicada a
-                  ventas— al escenario de tu próxima convención en CDMX. Una conferencia que tu
-                  equipo comercial entiende y aplica el lunes siguiente.
+                  Business Sales en Google y referente en IA aplicada a ventas— al escenario de
+                  tu próxima convención en CDMX. Una conferencia que tu equipo comercial entiende
+                  y aplica el lunes siguiente.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-5 flex flex-wrap gap-3">
                   <a
                     href="#cotizar"
-                    className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-6 py-3 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-5 py-2.5 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110"
                   >
                     Solicita disponibilidad y tarifa
                   </a>
                   <a
                     href="#temas"
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-white/50"
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-5 py-2.5 text-sm font-bold text-white transition hover:border-white/50"
                   >
-                    Ver temas de conferencia
+                    Ver temas
                   </a>
                 </div>
               </Reveal>
               <Reveal delay={0.2}>
-                <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs text-white/60">
+                <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/60">
                   <li className="inline-flex items-center gap-2">
                     <Award className="h-3.5 w-3.5 text-[#EAC945]" /> Trayectoria en Google
                   </li>
                   <li className="inline-flex items-center gap-2">
-                    <Mic2 className="h-3.5 w-3.5 text-[#EAC945]" /> +150 conferencias en 4
-                    continentes
+                    <Mic2 className="h-3.5 w-3.5 text-[#EAC945]" /> +150 conferencias · 4 continentes
                   </li>
                   <li className="inline-flex items-center gap-2">
                     <Sparkles className="h-3.5 w-3.5 text-[#EAC945]" /> Curaduría Voz Estratégica
-                  </li>
-                  <li className="inline-flex items-center gap-2">
-                    <MessageSquare className="h-3.5 w-3.5 text-[#EAC945]" /> Respuesta por WhatsApp
                   </li>
                 </ul>
               </Reveal>
             </div>
 
-            {/* Slot visual: cifras grandes + iconografía. Flexible para insertar foto luego. */}
+            {/* Slot visual: cifras grandes + iconografía. */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm lg:p-8">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm lg:p-6">
+                <div className="grid grid-cols-2 gap-3">
                   <StatCard num="+150" label="conferencias" />
                   <StatCard num="+2000" label="clientes" />
                   <StatCard num="4" label="continentes" />
                   <StatCard num="+20" label="países" />
                 </div>
-                <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs uppercase tracking-widest text-white/50">
+                <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/10 pt-4 text-xs uppercase tracking-widest text-white/50">
                   <span className="inline-flex items-center gap-2">
                     <Bot className="h-4 w-4 text-[#EAC945]" /> IA
                   </span>
