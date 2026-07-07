@@ -224,8 +224,8 @@ ${p.formato === "fisico" ? `<h3>Envío</h3><p>${p.direccion}<br>${p.ciudad}, ${p
 export const listPedidosLibros = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { estado?: string } | undefined) => ({
-    estado: data?.estado && ["pendiente", "aprobado", "rechazado"].includes(data.estado)
-      ? (data.estado as "pendiente" | "aprobado" | "rechazado")
+    estado: data?.estado && ["pendiente", "aprobado", "rechazado", "cancelado"].includes(data.estado)
+      ? (data.estado as "pendiente" | "aprobado" | "rechazado" | "cancelado")
       : undefined,
   }))
   .handler(async ({ data, context }) => {
@@ -244,4 +244,39 @@ export const listPedidosLibros = createServerFn({ method: "GET" })
     const { data: rows, error } = await query;
     if (error) throw new Error(error.message);
     return { pedidos: rows ?? [] };
+  });
+
+export const cancelBookOrder = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: { id?: string }) => {
+    const id = typeof data?.id === "string" ? data.id.trim() : "";
+    if (!/^[0-9a-f-]{36}$/i.test(id)) throw new Error("id inválido");
+    return { id };
+  })
+  .handler(async ({ data, context }) => {
+    const { data: isAdmin } = await context.supabase.rpc("has_role", {
+      _user_id: context.userId,
+      _role: "admin",
+    });
+    if (!isAdmin) throw new Error("Forbidden");
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: existing, error: readErr } = await supabaseAdmin
+      .from("pedidos_libros")
+      .select("id, estado_pago")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (readErr) throw new Error(readErr.message);
+    if (!existing) throw new Error("Pedido no encontrado");
+    if (existing.estado_pago === "aprobado") {
+      throw new Error("No se puede cancelar un pedido aprobado");
+    }
+    if (existing.estado_pago === "cancelado") return { ok: true };
+
+    const { error } = await supabaseAdmin
+      .from("pedidos_libros")
+      .update({ estado_pago: "cancelado" })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
   });
