@@ -96,17 +96,32 @@ function Page() {
 
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
-      {/* Header minimal — solo logo, sin navegación */}
-      <header className="border-b border-white/10 bg-[#0F0F0F]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      {/* Header minimal — solo logo + anclas de esta landing */}
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
           <div className="flex items-center">
-            <Logo className="h-10 w-auto brightness-0 invert" />
+            <Logo className="h-9 w-auto brightness-0 invert" />
           </div>
+          <nav className="hidden items-center gap-1 md:flex">
+            {[
+              ["#temas", "Temas"],
+              ["#formatos", "Formatos"],
+              ["#cotizar", "Cotizar"],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className="rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-white/70 transition hover:text-white"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
           <a
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
+            className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
           >
             WhatsApp →
           </a>
