@@ -154,6 +154,19 @@ function AdminPedidosPage() {
                     )}
                   </Td>
                   <Td className="font-mono text-[10px]">{p.bold_order_id}</Td>
+                  <Td>
+                    {(p.estado_pago === "pendiente" || p.estado_pago === "rechazado") && (
+                      <button
+                        onClick={() => handleCancel(p.id)}
+                        disabled={cancellingId === p.id}
+                        title="Cancelar pedido"
+                        className="inline-flex items-center gap-1 rounded-md border border-foreground/15 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:bg-foreground/5 hover:text-foreground disabled:opacity-50"
+                      >
+                        {cancellingId === p.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "×"}
+                        Cancelar
+                      </button>
+                    )}
+                  </Td>
                 </tr>
               ))}
             </tbody>
