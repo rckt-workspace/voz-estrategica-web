@@ -21,7 +21,7 @@ type Pedido = {
   bold_order_id: string | null;
 };
 
-export const Route = createFileRoute("/_authenticated/admin/pedidos-libros")({
+export const Route = createFileRoute("/admin/pedidos-libros")({
   head: () => ({
     meta: [
       { title: "Admin — Pedidos de libros" },
