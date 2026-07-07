@@ -556,21 +556,7 @@ function Page() {
               </figcaption>
             </figure>
           </Reveal>
-          {/* Slot para logos de clientes (placeholders discretos) */}
-          <div className="mt-14">
-            <div className="text-xs uppercase tracking-widest text-white/40">
-              Empresas y organizaciones
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-14 rounded-lg border border-dashed border-white/10 bg-white/[0.02]"
-                  aria-hidden
-                />
-              ))}
-            </div>
-          </div>
+          {/* Logos de clientes: se activan cuando estén disponibles */}
         </div>
       </section>
 
