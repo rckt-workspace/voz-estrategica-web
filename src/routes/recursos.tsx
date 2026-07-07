@@ -114,7 +114,7 @@ function RecursosPage() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {books.map((b, i) => (
             <Reveal key={b.id} delay={i * 60}>
-              <div className="group overflow-hidden rounded-2xl bg-foreground/5">
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-foreground/5">
                 <img
                   src={b.portada}
                   alt={`Portada de ${b.titulo}`}
@@ -123,11 +123,23 @@ function RecursosPage() {
                   height={1024}
                   className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="p-4">
+                <div className="flex flex-1 flex-col p-4">
                   <div className="font-display text-lg uppercase leading-tight">{b.titulo}</div>
                   <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                     {b.anio}
                   </div>
+                  {b.sku && b.precio ? (
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <div className="text-base font-bold">${b.precio.toLocaleString("es-CO")}</div>
+                      <button
+                        type="button"
+                        onClick={() => setOpenBook(b)}
+                        className="rounded-full bg-foreground px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+                      >
+                        Comprar →
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </Reveal>
