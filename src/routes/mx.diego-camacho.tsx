@@ -96,17 +96,32 @@ function Page() {
 
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
-      {/* Header minimal — solo logo, sin navegación */}
-      <header className="border-b border-white/10 bg-[#0F0F0F]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      {/* Header minimal — solo logo + anclas de esta landing */}
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
           <div className="flex items-center">
-            <Logo className="h-10 w-auto brightness-0 invert" />
+            <Logo className="h-9 w-auto brightness-0 invert" />
           </div>
+          <nav className="hidden items-center gap-1 md:flex">
+            {[
+              ["#temas", "Temas"],
+              ["#formatos", "Formatos"],
+              ["#cotizar", "Cotizar"],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className="rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-white/70 transition hover:text-white"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
           <a
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
+            className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
           >
             WhatsApp →
           </a>
@@ -132,8 +147,8 @@ function Page() {
           </svg>
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-20 lg:pt-24 lg:pb-28">
-          <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:items-center">
+        <div className="relative mx-auto max-w-7xl px-6 pt-8 pb-10 lg:pt-10 lg:pb-14">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
               <Reveal>
                 <div className="section-badge section-badge-dark inline-flex">
@@ -142,64 +157,60 @@ function Page() {
                 </div>
               </Reveal>
               <Reveal delay={0.05}>
-                <h1 className="mt-6 font-display text-5xl uppercase leading-[0.95] tracking-tight md:text-6xl lg:text-7xl">
+                <h1 className="mt-4 font-display text-4xl uppercase leading-[0.95] tracking-tight md:text-5xl lg:text-[3.25rem]">
                   La IA no reemplaza a tu equipo.{" "}
                   <span className="text-[#EAC945]">Lo libera para vender más.</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 max-w-xl text-lg text-white/75">
+                <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem]">
                   Lleva a <strong className="text-white">Diego Camacho</strong> —Head of New
-                  Business Sales en Google y referente en inteligencia artificial aplicada a
-                  ventas— al escenario de tu próxima convención en CDMX. Una conferencia que tu
-                  equipo comercial entiende y aplica el lunes siguiente.
+                  Business Sales en Google y referente en IA aplicada a ventas— al escenario de
+                  tu próxima convención en CDMX. Una conferencia que tu equipo comercial entiende
+                  y aplica el lunes siguiente.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-5 flex flex-wrap gap-3">
                   <a
                     href="#cotizar"
-                    className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-6 py-3 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-5 py-2.5 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110"
                   >
                     Solicita disponibilidad y tarifa
                   </a>
                   <a
                     href="#temas"
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-6 py-3 text-sm font-bold text-white transition hover:border-white/50"
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-5 py-2.5 text-sm font-bold text-white transition hover:border-white/50"
                   >
-                    Ver temas de conferencia
+                    Ver temas
                   </a>
                 </div>
               </Reveal>
               <Reveal delay={0.2}>
-                <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs text-white/60">
+                <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/60">
                   <li className="inline-flex items-center gap-2">
                     <Award className="h-3.5 w-3.5 text-[#EAC945]" /> Trayectoria en Google
                   </li>
                   <li className="inline-flex items-center gap-2">
-                    <Mic2 className="h-3.5 w-3.5 text-[#EAC945]" /> +150 conferencias en 4
-                    continentes
+                    <Mic2 className="h-3.5 w-3.5 text-[#EAC945]" /> +150 conferencias · 4 continentes
                   </li>
                   <li className="inline-flex items-center gap-2">
                     <Sparkles className="h-3.5 w-3.5 text-[#EAC945]" /> Curaduría Voz Estratégica
-                  </li>
-                  <li className="inline-flex items-center gap-2">
-                    <MessageSquare className="h-3.5 w-3.5 text-[#EAC945]" /> Respuesta por WhatsApp
                   </li>
                 </ul>
               </Reveal>
             </div>
 
-            {/* Slot visual: cifras grandes + iconografía. Flexible para insertar foto luego. */}
+            {/* Slot visual: cifras grandes + iconografía. */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm lg:p-8">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm lg:p-6">
+                <div className="grid grid-cols-2 gap-3">
                   <StatCard num="+150" label="conferencias" />
                   <StatCard num="+2000" label="clientes" />
                   <StatCard num="4" label="continentes" />
                   <StatCard num="+20" label="países" />
                 </div>
-                <div className="mt-6 flex items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs uppercase tracking-widest text-white/50">
+                <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/10 pt-4 text-xs uppercase tracking-widest text-white/50">
                   <span className="inline-flex items-center gap-2">
                     <Bot className="h-4 w-4 text-[#EAC945]" /> IA
                   </span>
@@ -455,7 +466,7 @@ function Page() {
       </section>
 
       {/* ============ BLOQUE 6 — FORMATOS ============ */}
-      <section className="bg-[#F5F2E3] text-[#0F0F0F]">
+      <section id="formatos" className="bg-[#F5F2E3] text-[#0F0F0F]">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">05 · Formatos disponibles</span>
@@ -734,6 +745,32 @@ function Page() {
           </div>
         </div>
       </section>
+
+      {/* Footer minimal de campaña — sin nav a otras páginas */}
+      <footer className="bg-[#0F0F0F] text-white/70 border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            <Logo className="h-9 w-auto brightness-0 invert" />
+            <span className="text-xs text-white/50">
+              © {new Date().getFullYear()} Voz Estratégica
+            </span>
+          </div>
+          <div className="flex flex-col gap-2 text-sm md:flex-row md:items-center md:gap-6">
+            <a href="mailto:contacto@vozestrategica.com" className="hover:text-white transition">
+              contacto@vozestrategica.com
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-xs font-bold text-white transition hover:brightness-110"
+            >
+              WhatsApp +57 310 6598108
+            </a>
+          </div>
+        </div>
+      </footer>
+
 
       <style>{`
         .input-base {
