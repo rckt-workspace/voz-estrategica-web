@@ -41,18 +41,38 @@ export const Route = createFileRoute("/admin/pedidos-libros")({
 
 function AdminPedidosPage() {
   const list = useServerFn(listPedidosLibros);
+  const cancel = useServerFn(cancelBookOrder);
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [estado, setEstado] = useState<string>("todos");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
     list({ data: { estado: estado === "todos" ? undefined : estado } })
       .then((r) => setPedidos(r.pedidos as Pedido[]))
       .catch((e) => setError(e instanceof Error ? e.message : "Error"))
       .finally(() => setLoading(false));
-  }, [estado, list]);
+  };
+
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado]);
+
+  const handleCancel = async (id: string) => {
+    if (!confirm("¿Seguro que quieres cancelar este pedido?")) return;
+    setCancellingId(id);
+    try {
+      await cancel({ data: { id } });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Error al cancelar");
+    } finally {
+      setCancellingId(null);
+    }
+  };
 
   return (
     <div>
