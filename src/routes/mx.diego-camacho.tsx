@@ -231,7 +231,7 @@ function Page() {
 
       {/* ============ BLOQUE 2 — PROBLEMA ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">01 · El problema</span>
           </Reveal>
@@ -292,7 +292,7 @@ function Page() {
 
       {/* ============ BLOQUE 3 — PROPUESTA DE VALOR ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">02 · Propuesta de valor</span>
           </Reveal>
@@ -399,7 +399,7 @@ function Page() {
 
       {/* ============ BLOQUE 4 — AUTORIDAD ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
@@ -436,7 +436,7 @@ function Page() {
 
       {/* ============ BLOQUE 5 — TEMAS ============ */}
       <section id="temas" className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">04 · Temas de conferencia</span>
           </Reveal>
@@ -498,7 +498,7 @@ function Page() {
 
       {/* ============ BLOQUE 6 — FORMATOS ============ */}
       <section id="formatos" className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">05 · Formatos disponibles</span>
           </Reveal>
@@ -531,7 +531,7 @@ function Page() {
 
       {/* ============ BLOQUE 7 — PÚBLICO OBJETIVO ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">06 · Ideal para</span>
           </Reveal>
@@ -563,7 +563,7 @@ function Page() {
 
       {/* ============ BLOQUE 8 — RESPALDO ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">07 · Respaldo Voz Estratégica</span>
           </Reveal>
@@ -594,7 +594,7 @@ function Page() {
 
       {/* ============ BLOQUE 9 — PRUEBA SOCIAL ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
           <Reveal>
             <span className="section-badge section-badge-dark">08 · Prueba social</span>
           </Reveal>
@@ -622,7 +622,7 @@ function Page() {
 
       {/* ============ BLOQUE 10 — CTA FINAL / FORMULARIO ============ */}
       <section id="cotizar" className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
             <div>
               <Reveal>
