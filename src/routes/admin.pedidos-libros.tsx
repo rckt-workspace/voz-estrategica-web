@@ -121,6 +121,7 @@ function AdminPedidosPage() {
                 <Th>Contacto</Th>
                 <Th>Envío</Th>
                 <Th>Referencia</Th>
+                <Th>Acciones</Th>
               </tr>
             </thead>
             <tbody>
