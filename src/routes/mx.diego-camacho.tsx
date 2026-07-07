@@ -729,7 +729,7 @@ function Page() {
 
       {/* ============ BLOQUE 11 — FAQ ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-4xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">10 · Preguntas frecuentes</span>
           </Reveal>
