@@ -746,6 +746,32 @@ function Page() {
         </div>
       </section>
 
+      {/* Footer minimal de campaña — sin nav a otras páginas */}
+      <footer className="bg-[#0F0F0F] text-white/70 border-t border-white/10">
+        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            <Logo className="h-9 w-auto brightness-0 invert" />
+            <span className="text-xs text-white/50">
+              © {new Date().getFullYear()} Voz Estratégica
+            </span>
+          </div>
+          <div className="flex flex-col gap-2 text-sm md:flex-row md:items-center md:gap-6">
+            <a href="mailto:contacto@vozestrategica.com" className="hover:text-white transition">
+              contacto@vozestrategica.com
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-xs font-bold text-white transition hover:brightness-110"
+            >
+              WhatsApp +57 310 6598108
+            </a>
+          </div>
+        </div>
+      </footer>
+
+
       <style>{`
         .input-base {
           width: 100%;
