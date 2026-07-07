@@ -100,7 +100,8 @@ function Page() {
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
           <div className="flex items-center">
-            <Logo className="h-9 w-auto brightness-0 invert" />
+            <Logo className="h-9 w-auto invert" />
+
           </div>
           <nav className="hidden items-center gap-1 md:flex">
             {[
