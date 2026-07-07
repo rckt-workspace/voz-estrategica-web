@@ -164,13 +164,15 @@ function Shell() {
 
   const isAdmin = normalizedPathname.startsWith("/admin");
   const isSalesLanding = normalizedPathname.startsWith("/masterclass");
-  const hideChrome = isAdmin || isSalesLanding;
+  const isCampaignLanding = normalizedPathname.startsWith("/mx/");
+  const hideChrome = isAdmin || isSalesLanding || isCampaignLanding;
 
   const isMasterclassLanding = normalizedPathname === "/masterclass-de-clientes-a-fans";
+  const hidePromoBars = isMasterclassLanding || isCampaignLanding;
 
   return (
     <>
-      {!isMasterclassLanding && <TopBar />}
+      {!hidePromoBars && <TopBar />}
       {!hideChrome && <Header />}
       <main
         style={{
