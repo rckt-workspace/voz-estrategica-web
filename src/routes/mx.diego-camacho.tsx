@@ -96,6 +96,23 @@ function Page() {
 
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
+      {/* Header minimal — solo logo, sin navegación */}
+      <header className="border-b border-white/10 bg-[#0F0F0F]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <div className="flex items-center">
+            <Logo className="h-10 w-auto brightness-0 invert" />
+          </div>
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
+          >
+            WhatsApp →
+          </a>
+        </div>
+      </header>
+
       {/* ============ BLOQUE 1 — HERO ============ */}
       <section className="relative overflow-hidden border-b border-white/10">
         {/* fondo decorativo */}
