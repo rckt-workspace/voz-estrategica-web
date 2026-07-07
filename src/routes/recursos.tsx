@@ -166,6 +166,17 @@ function RecursosPage() {
           ))}
         </div>
       </section>
+
+      {openBook && openBook.sku && openBook.precio && openBook.formato && (
+        <BookPurchaseModal
+          open={!!openBook}
+          onClose={() => setOpenBook(null)}
+          sku={openBook.sku}
+          titulo={openBook.titulo}
+          precio={openBook.precio}
+          formato={openBook.formato}
+        />
+      )}
     </>
   );
 }
