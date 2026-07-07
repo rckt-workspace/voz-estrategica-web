@@ -70,6 +70,7 @@ export const Route = createFileRoute("/mx/diego-camacho")({
         content:
           "Head of New Business Sales en Google. IA aplicada a ventas y marketing. Disponible para tu convención en CDMX.",
       },
+    ],
     links: [{ rel: "canonical", href: CANONICAL }],
   }),
   component: Page,
