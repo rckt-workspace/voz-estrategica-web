@@ -100,7 +100,7 @@ function Page() {
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
           <div className="flex items-center">
-            <Logo className="h-9 w-auto invert" />
+            <Logo className="h-9 w-auto" />
 
           </div>
           <nav className="hidden items-center gap-1 md:flex">
@@ -752,7 +752,7 @@ function Page() {
       <footer className="bg-[#0F0F0F] text-white/70 border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
-            <Logo className="h-9 w-auto brightness-0 invert" />
+            <Logo className="h-9 w-auto" />
             <span className="text-xs text-white/50">
               © {new Date().getFullYear()} Voz Estratégica
             </span>
