@@ -12,6 +12,9 @@ import bookClientesFans from "@/assets/book-clientes-fans.webp";
 import bookMujeresFinanzas from "@/assets/book-mujeres-finanzas-new.jpg";
 import bookBrandExponential from "@/assets/book-brand-exponential-new.jpg";
 
+export type BookSku = "clientes-fans" | "milagrosamente-bien" | "ebook-paola";
+export type BookFormato = "fisico" | "digital";
+
 export interface Speaker {
   slug: string;
   nombre: string;
@@ -43,6 +46,10 @@ export interface Book {
   portada: string;
   descripcion: string;
   anio: number;
+  /** Si se define, se muestra botón "Comprar" en /recursos con este SKU. */
+  sku?: BookSku;
+  precio?: number;
+  formato?: BookFormato;
 }
 
 export const speakers: Speaker[] = [
@@ -250,6 +257,9 @@ export const books: Book[] = [
     portada: bookClientesFans,
     descripcion: "El método para construir lealtad real en la era del ruido.",
     anio: 2026,
+    sku: "clientes-fans",
+    precio: 65000,
+    formato: "fisico",
   },
   {
     id: "b-2",
@@ -261,19 +271,25 @@ export const books: Book[] = [
   },
   {
     id: "b-3",
-    titulo: "Brand Exponential",
+    titulo: "Ebook Paola Aldaz",
     autorSlug: "paola-aldaz",
     portada: bookBrandExponential,
-    descripcion: "Marketing exponencial para marcas que quieren crecer sin pedir permiso.",
+    descripcion: "Ebook de Paola Aldaz — descarga digital inmediata.",
     anio: 2024,
+    sku: "ebook-paola",
+    precio: 30000,
+    formato: "digital",
   },
   {
     id: "b-4",
-    titulo: "Milagrosa mente bien",
+    titulo: "MilagrosaMENTE bien",
     autorSlug: "julian-giraldo",
     portada: bookMilagrosamente,
     descripcion: "Un manifiesto sobre la resiliencia desde la gratitud y el propósito.",
     anio: 2025,
+    sku: "milagrosamente-bien",
+    precio: 62000,
+    formato: "fisico",
   },
 ];
 
