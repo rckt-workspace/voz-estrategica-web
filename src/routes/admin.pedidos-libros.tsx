@@ -21,7 +21,7 @@ type Pedido = {
   bold_order_id: string | null;
 };
 
-export const Route = createFileRoute("/_authenticated/admin/pedidos-libros")({
+export const Route = createFileRoute("/admin/pedidos-libros")({
   head: () => ({
     meta: [
       { title: "Admin — Pedidos de libros" },
@@ -55,11 +55,11 @@ function AdminPedidosPage() {
   }, [estado, list]);
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-16">
+    <div>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Admin</div>
-          <h1 className="mt-1 font-display text-3xl uppercase leading-tight md:text-4xl">Pedidos de libros</h1>
+          <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Sección</div>
+          <h2 className="mt-1 font-display text-2xl uppercase leading-tight md:text-3xl">Pedidos de libros</h2>
         </div>
         <div className="flex gap-2">
           {["todos", "pendiente", "aprobado", "rechazado"].map((e) => (

@@ -24,7 +24,6 @@ import { Route as CasosRouteImport } from './routes/casos'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SplatRouteImport } from './routes/$'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -33,10 +32,10 @@ import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
 import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
 import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
+import { Route as AdminPedidosLibrosRouteImport } from './routes/admin.pedidos-libros'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
-import { Route as AuthenticatedAdminPedidosLibrosRouteImport } from './routes/_authenticated/admin.pedidos-libros'
 
 const SolucionesRoute = SolucionesRouteImport.update({
   id: '/soluciones',
@@ -114,10 +113,6 @@ const SplatRoute = SplatRouteImport.update({
   path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -158,6 +153,11 @@ const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
   path: '/speakers',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminPedidosLibrosRoute = AdminPedidosLibrosRouteImport.update({
+  id: '/pedidos-libros',
+  path: '/pedidos-libros',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLibrosRoute = AdminLibrosRouteImport.update({
   id: '/libros',
   path: '/libros',
@@ -173,12 +173,6 @@ const SpeakersDiegoCamachoMexicoRoute =
     id: '/speakers/diego-camacho/mexico',
     path: '/speakers/diego-camacho/mexico',
     getParentRoute: () => rootRouteImport,
-  } as any)
-const AuthenticatedAdminPedidosLibrosRoute =
-  AuthenticatedAdminPedidosLibrosRouteImport.update({
-    id: '/admin/pedidos-libros',
-    path: '/admin/pedidos-libros',
-    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -200,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/soluciones': typeof SolucionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
+  '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
@@ -207,7 +202,6 @@ export interface FileRoutesByFullPath {
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
-  '/admin/pedidos-libros': typeof AuthenticatedAdminPedidosLibrosRoute
   '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
 export interface FileRoutesByTo {
@@ -228,6 +222,7 @@ export interface FileRoutesByTo {
   '/soluciones': typeof SolucionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
+  '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
@@ -235,13 +230,11 @@ export interface FileRoutesByTo {
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin': typeof AdminIndexRoute
   '/speakers': typeof SpeakersIndexRoute
-  '/admin/pedidos-libros': typeof AuthenticatedAdminPedidosLibrosRoute
   '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/$': typeof SplatRoute
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
@@ -259,6 +252,7 @@ export interface FileRoutesById {
   '/soluciones': typeof SolucionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
+  '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
@@ -266,7 +260,6 @@ export interface FileRoutesById {
   '/speakers/$slug': typeof SpeakersSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
-  '/_authenticated/admin/pedidos-libros': typeof AuthenticatedAdminPedidosLibrosRoute
   '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
 export interface FileRouteTypes {
@@ -290,6 +283,7 @@ export interface FileRouteTypes {
     | '/soluciones'
     | '/admin/eventos'
     | '/admin/libros'
+    | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
     | '/masterclass/gracias'
@@ -297,7 +291,6 @@ export interface FileRouteTypes {
     | '/speakers/$slug'
     | '/admin/'
     | '/speakers/'
-    | '/admin/pedidos-libros'
     | '/speakers/diego-camacho/mexico'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -318,6 +311,7 @@ export interface FileRouteTypes {
     | '/soluciones'
     | '/admin/eventos'
     | '/admin/libros'
+    | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
     | '/masterclass/gracias'
@@ -325,12 +319,10 @@ export interface FileRouteTypes {
     | '/speakers/$slug'
     | '/admin'
     | '/speakers'
-    | '/admin/pedidos-libros'
     | '/speakers/diego-camacho/mexico'
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
     | '/$'
     | '/admin'
     | '/auth'
@@ -348,6 +340,7 @@ export interface FileRouteTypes {
     | '/soluciones'
     | '/admin/eventos'
     | '/admin/libros'
+    | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
     | '/masterclass/gracias'
@@ -355,13 +348,11 @@ export interface FileRouteTypes {
     | '/speakers/$slug'
     | '/admin/'
     | '/speakers/'
-    | '/_authenticated/admin/pedidos-libros'
     | '/speakers/diego-camacho/mexico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   SplatRoute: typeof SplatRoute
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
@@ -491,13 +482,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -554,6 +538,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSpeakersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/pedidos-libros': {
+      id: '/admin/pedidos-libros'
+      path: '/pedidos-libros'
+      fullPath: '/admin/pedidos-libros'
+      preLoaderRoute: typeof AdminPedidosLibrosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/libros': {
       id: '/admin/libros'
       path: '/libros'
@@ -575,30 +566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeakersDiegoCamachoMexicoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/pedidos-libros': {
-      id: '/_authenticated/admin/pedidos-libros'
-      path: '/admin/pedidos-libros'
-      fullPath: '/admin/pedidos-libros'
-      preLoaderRoute: typeof AuthenticatedAdminPedidosLibrosRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
   }
 }
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminPedidosLibrosRoute: typeof AuthenticatedAdminPedidosLibrosRoute
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminPedidosLibrosRoute: AuthenticatedAdminPedidosLibrosRoute,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface AdminRouteChildren {
   AdminEventosRoute: typeof AdminEventosRoute
   AdminLibrosRoute: typeof AdminLibrosRoute
+  AdminPedidosLibrosRoute: typeof AdminPedidosLibrosRoute
   AdminSpeakersRoute: typeof AdminSpeakersRoute
   AdminSuscriptoresRoute: typeof AdminSuscriptoresRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -607,6 +581,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminEventosRoute: AdminEventosRoute,
   AdminLibrosRoute: AdminLibrosRoute,
+  AdminPedidosLibrosRoute: AdminPedidosLibrosRoute,
   AdminSpeakersRoute: AdminSpeakersRoute,
   AdminSuscriptoresRoute: AdminSuscriptoresRoute,
   AdminIndexRoute: AdminIndexRoute,
@@ -616,7 +591,6 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   SplatRoute: SplatRoute,
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
