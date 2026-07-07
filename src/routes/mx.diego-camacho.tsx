@@ -21,6 +21,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 
@@ -65,6 +66,11 @@ export const Route = createFileRoute("/mx/diego-camacho")({
       { property: "og:site_name", content: "Voz Estratégica" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Diego Camacho · Conferencista IA y Ventas · CDMX" },
+      {
+        name: "twitter:description",
+        content:
+          "Head of New Business Sales en Google. IA aplicada a ventas y marketing. Disponible para tu convención en CDMX.",
+      },
     ],
     links: [{ rel: "canonical", href: CANONICAL }],
   }),
@@ -90,6 +96,23 @@ function Page() {
 
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
+      {/* Header minimal — solo logo, sin navegación */}
+      <header className="border-b border-white/10 bg-[#0F0F0F]">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <div className="flex items-center">
+            <Logo className="h-10 w-auto brightness-0 invert" />
+          </div>
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
+          >
+            WhatsApp →
+          </a>
+        </div>
+      </header>
+
       {/* ============ BLOQUE 1 — HERO ============ */}
       <section className="relative overflow-hidden border-b border-white/10">
         {/* fondo decorativo */}
@@ -551,21 +574,7 @@ function Page() {
               </figcaption>
             </figure>
           </Reveal>
-          {/* Slot para logos de clientes (placeholders discretos) */}
-          <div className="mt-14">
-            <div className="text-xs uppercase tracking-widest text-white/40">
-              Empresas y organizaciones
-            </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-14 rounded-lg border border-dashed border-white/10 bg-white/[0.02]"
-                  aria-hidden
-                />
-              ))}
-            </div>
-          </div>
+          {/* Logos de clientes: se activan cuando estén disponibles */}
         </div>
       </section>
 
