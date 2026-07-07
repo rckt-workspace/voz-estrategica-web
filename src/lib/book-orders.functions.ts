@@ -177,7 +177,7 @@ export const recordBookOrderStatus = createServerFn({ method: "POST" })
       if (data.estado === "aprobado") {
         // Envío de correo (opcional; no rompe el flujo si falla)
         try {
-          await sendNotificationEmail({ ...existing, estado_pago: "aprobado" });
+          await sendNotificationEmail(existing);
         } catch (e) {
           console.error("[book-order] email fail:", e);
         }
