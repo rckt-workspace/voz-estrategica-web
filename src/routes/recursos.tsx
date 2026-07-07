@@ -4,8 +4,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
+import { BookPurchaseModal } from "@/components/BookPurchaseModal";
 import { subscribeToNewsletter } from "@/lib/subscribers.functions";
-import { books } from "@/data/content";
+import { books, type Book } from "@/data/content";
 
 export const Route = createFileRoute("/recursos")({
   head: () => ({
