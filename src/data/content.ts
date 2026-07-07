@@ -46,6 +46,10 @@ export interface Book {
   portada: string;
   descripcion: string;
   anio: number;
+  /** Si se define, se muestra botón "Comprar" en /recursos con este SKU. */
+  sku?: BookSku;
+  precio?: number;
+  formato?: BookFormato;
 }
 
 export const speakers: Speaker[] = [
