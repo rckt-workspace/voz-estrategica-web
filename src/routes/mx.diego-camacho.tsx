@@ -466,7 +466,7 @@ function Page() {
       </section>
 
       {/* ============ BLOQUE 6 — FORMATOS ============ */}
-      <section className="bg-[#F5F2E3] text-[#0F0F0F]">
+      <section id="formatos" className="bg-[#F5F2E3] text-[#0F0F0F]">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">05 · Formatos disponibles</span>
