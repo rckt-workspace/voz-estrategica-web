@@ -33,6 +33,7 @@ function RecursosPage() {
   const subscribe = useServerFn(subscribeToNewsletter);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [openBook, setOpenBook] = useState<Book | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
