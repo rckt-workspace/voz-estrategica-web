@@ -85,6 +85,16 @@ function Page() {
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
+  // En esta landing de campaña ocultamos TopBar y BottomBar (ver Shell en __root),
+  // pero sus efectos pueden dejar --topbar-h / --bottombar-h con valores viejos si
+  // el usuario llega vía navegación SPA desde otra ruta. Los forzamos a 0 aquí
+  // para evitar franjas del color de fondo asomando arriba o abajo del contenido.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--topbar-h", "0px");
+    root.style.setProperty("--bottombar-h", "0px");
+  }, []);
+
   const onSubmit = (data: FormData) => {
     const msg = `Hola, soy ${data.nombre} de ${data.empresa}. Quiero información sobre la conferencia de Diego Camacho para un ${data.tipo_evento} en ${data.ciudad_fecha}. Mi WhatsApp: ${data.whatsapp}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
