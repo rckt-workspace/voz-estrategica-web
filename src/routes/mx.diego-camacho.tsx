@@ -158,7 +158,7 @@ function Page() {
           </svg>
         </div>
 
-        <div className="relative mx-auto w-full max-w-7xl px-6 pt-14 pb-16 lg:pt-16 lg:pb-20">
+        <div className="relative mx-auto w-full max-w-[1600px] px-6 xl:px-12 pt-14 pb-16 lg:pt-16 lg:pb-20">
 
           <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
@@ -241,7 +241,7 @@ function Page() {
 
       {/* ============ BLOQUE 2 — PROBLEMA ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">01 · El problema</span>
           </Reveal>
@@ -302,7 +302,7 @@ function Page() {
 
       {/* ============ BLOQUE 3 — PROPUESTA DE VALOR ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">02 · Propuesta de valor</span>
           </Reveal>
@@ -409,7 +409,7 @@ function Page() {
 
       {/* ============ BLOQUE 4 — AUTORIDAD ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
@@ -446,7 +446,7 @@ function Page() {
 
       {/* ============ BLOQUE 5 — TEMAS ============ */}
       <section id="temas" className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">04 · Temas de conferencia</span>
           </Reveal>
@@ -508,7 +508,7 @@ function Page() {
 
       {/* ============ BLOQUE 6 — FORMATOS ============ */}
       <section id="formatos" className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">05 · Formatos disponibles</span>
           </Reveal>
@@ -541,7 +541,7 @@ function Page() {
 
       {/* ============ BLOQUE 7 — PÚBLICO OBJETIVO ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">06 · Ideal para</span>
           </Reveal>
@@ -573,7 +573,7 @@ function Page() {
 
       {/* ============ BLOQUE 8 — RESPALDO ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">07 · Respaldo Voz Estratégica</span>
           </Reveal>
@@ -604,7 +604,7 @@ function Page() {
 
       {/* ============ BLOQUE 9 — PRUEBA SOCIAL ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-24">
           <Reveal>
             <span className="section-badge section-badge-dark">08 · Prueba social</span>
           </Reveal>
@@ -632,7 +632,7 @@ function Page() {
 
       {/* ============ BLOQUE 10 — CTA FINAL / FORMULARIO ============ */}
       <section id="cotizar" className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
             <div>
               <Reveal>
@@ -729,7 +729,7 @@ function Page() {
 
       {/* ============ BLOQUE 11 — FAQ ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">10 · Preguntas frecuentes</span>
           </Reveal>
@@ -789,7 +789,7 @@ function Page() {
 
       {/* Footer minimal de campaña — sin nav a otras páginas */}
       <footer className="bg-[#0F0F0F] text-white/70 border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="mx-auto w-full max-w-[1600px] px-6 xl:px-12 py-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <Logo className="h-9 w-auto" />
             <span className="text-xs text-white/50">
