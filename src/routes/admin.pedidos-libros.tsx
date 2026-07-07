@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { listPedidosLibros } from "@/lib/book-orders.functions";
+import { listPedidosLibros, cancelBookOrder } from "@/lib/book-orders.functions";
 import { Loader2 } from "lucide-react";
 
 type Pedido = {
