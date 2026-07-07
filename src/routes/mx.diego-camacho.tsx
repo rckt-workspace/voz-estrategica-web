@@ -65,7 +65,11 @@ export const Route = createFileRoute("/mx/diego-camacho")({
       { property: "og:site_name", content: "Voz Estratégica" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Diego Camacho · Conferencista IA y Ventas · CDMX" },
-    ],
+      {
+        name: "twitter:description",
+        content:
+          "Head of New Business Sales en Google. IA aplicada a ventas y marketing. Disponible para tu convención en CDMX.",
+      },
     links: [{ rel: "canonical", href: CANONICAL }],
   }),
   component: Page,
