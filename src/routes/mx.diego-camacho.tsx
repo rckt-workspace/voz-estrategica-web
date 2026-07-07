@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -84,6 +84,16 @@ function Page() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  // En esta landing de campaña ocultamos TopBar y BottomBar (ver Shell en __root),
+  // pero sus efectos pueden dejar --topbar-h / --bottombar-h con valores viejos si
+  // el usuario llega vía navegación SPA desde otra ruta. Los forzamos a 0 aquí
+  // para evitar franjas del color de fondo asomando arriba o abajo del contenido.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--topbar-h", "0px");
+    root.style.setProperty("--bottombar-h", "0px");
+  }, []);
 
   const onSubmit = (data: FormData) => {
     const msg = `Hola, soy ${data.nombre} de ${data.empresa}. Quiero información sobre la conferencia de Diego Camacho para un ${data.tipo_evento} en ${data.ciudad_fecha}. Mi WhatsApp: ${data.whatsapp}`;
@@ -231,7 +241,7 @@ function Page() {
 
       {/* ============ BLOQUE 2 — PROBLEMA ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">01 · El problema</span>
           </Reveal>
@@ -292,7 +302,7 @@ function Page() {
 
       {/* ============ BLOQUE 3 — PROPUESTA DE VALOR ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">02 · Propuesta de valor</span>
           </Reveal>
@@ -399,7 +409,7 @@ function Page() {
 
       {/* ============ BLOQUE 4 — AUTORIDAD ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
@@ -436,7 +446,7 @@ function Page() {
 
       {/* ============ BLOQUE 5 — TEMAS ============ */}
       <section id="temas" className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">04 · Temas de conferencia</span>
           </Reveal>
@@ -498,7 +508,7 @@ function Page() {
 
       {/* ============ BLOQUE 6 — FORMATOS ============ */}
       <section id="formatos" className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">05 · Formatos disponibles</span>
           </Reveal>
@@ -531,7 +541,7 @@ function Page() {
 
       {/* ============ BLOQUE 7 — PÚBLICO OBJETIVO ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge section-badge-dark">06 · Ideal para</span>
           </Reveal>
@@ -563,7 +573,7 @@ function Page() {
 
       {/* ============ BLOQUE 8 — RESPALDO ============ */}
       <section className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <Reveal>
             <span className="section-badge">07 · Respaldo Voz Estratégica</span>
           </Reveal>
@@ -594,7 +604,7 @@ function Page() {
 
       {/* ============ BLOQUE 9 — PRUEBA SOCIAL ============ */}
       <section className="bg-[#0F0F0F] text-[#F5F2E3]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
           <Reveal>
             <span className="section-badge section-badge-dark">08 · Prueba social</span>
           </Reveal>
@@ -622,7 +632,7 @@ function Page() {
 
       {/* ============ BLOQUE 10 — CTA FINAL / FORMULARIO ============ */}
       <section id="cotizar" className="bg-[#F5F2E3] text-[#0F0F0F]">
-        <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:py-28">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
             <div>
               <Reveal>
