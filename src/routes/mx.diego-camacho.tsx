@@ -98,12 +98,11 @@ function Page() {
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
       {/* Header minimal — solo logo + anclas de esta landing */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0F0F0F]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 md:py-5">
           <div className="flex items-center">
-            <Logo className="h-9 w-auto" />
-
+            <Logo className="h-12 w-auto md:h-14" />
           </div>
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-2 md:flex">
             {[
               ["#temas", "Temas"],
               ["#formatos", "Formatos"],
@@ -112,7 +111,7 @@ function Page() {
               <a
                 key={href}
                 href={href}
-                className="rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-white/70 transition hover:text-white"
+                className="rounded-full px-4 py-2 text-sm font-semibold uppercase tracking-wider text-white/75 transition hover:text-white"
               >
                 {label}
               </a>
@@ -122,12 +121,13 @@ function Page() {
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-4 py-2 text-xs font-bold text-[#0F0F0F] transition hover:brightness-110"
+            className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-5 py-2.5 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110 md:text-base"
           >
             WhatsApp →
           </a>
         </div>
       </header>
+
 
       {/* ============ BLOQUE 1 — HERO ============ */}
       <section className="relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden border-b border-white/10">
