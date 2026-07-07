@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { listPedidosLibros } from "@/lib/book-orders.functions";
+import { listPedidosLibros, cancelBookOrder } from "@/lib/book-orders.functions";
 import { Loader2 } from "lucide-react";
 
 type Pedido = {
@@ -41,18 +41,38 @@ export const Route = createFileRoute("/admin/pedidos-libros")({
 
 function AdminPedidosPage() {
   const list = useServerFn(listPedidosLibros);
+  const cancel = useServerFn(cancelBookOrder);
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [estado, setEstado] = useState<string>("todos");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
     setLoading(true);
     list({ data: { estado: estado === "todos" ? undefined : estado } })
       .then((r) => setPedidos(r.pedidos as Pedido[]))
       .catch((e) => setError(e instanceof Error ? e.message : "Error"))
       .finally(() => setLoading(false));
-  }, [estado, list]);
+  };
+
+  useEffect(() => {
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [estado]);
+
+  const handleCancel = async (id: string) => {
+    if (!confirm("¿Seguro que quieres cancelar este pedido?")) return;
+    setCancellingId(id);
+    try {
+      await cancel({ data: { id } });
+      load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Error al cancelar");
+    } finally {
+      setCancellingId(null);
+    }
+  };
 
   return (
     <div>
@@ -62,7 +82,7 @@ function AdminPedidosPage() {
           <h2 className="mt-1 font-display text-2xl uppercase leading-tight md:text-3xl">Pedidos de libros</h2>
         </div>
         <div className="flex gap-2">
-          {["todos", "pendiente", "aprobado", "rechazado"].map((e) => (
+          {["todos", "pendiente", "aprobado", "rechazado", "cancelado"].map((e) => (
             <button
               key={e}
               onClick={() => setEstado(e)}
@@ -101,6 +121,7 @@ function AdminPedidosPage() {
                 <Th>Contacto</Th>
                 <Th>Envío</Th>
                 <Th>Referencia</Th>
+                <Th>Acciones</Th>
               </tr>
             </thead>
             <tbody>
@@ -111,6 +132,7 @@ function AdminPedidosPage() {
                     <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${
                       p.estado_pago === "aprobado" ? "bg-green-100 text-green-800" :
                       p.estado_pago === "rechazado" ? "bg-red-100 text-red-800" :
+                      p.estado_pago === "cancelado" ? "bg-gray-200 text-gray-700" :
                       "bg-yellow-100 text-yellow-800"
                     }`}>{p.estado_pago}</span>
                   </Td>
@@ -132,6 +154,19 @@ function AdminPedidosPage() {
                     )}
                   </Td>
                   <Td className="font-mono text-[10px]">{p.bold_order_id}</Td>
+                  <Td>
+                    {(p.estado_pago === "pendiente" || p.estado_pago === "rechazado") && (
+                      <button
+                        onClick={() => handleCancel(p.id)}
+                        disabled={cancellingId === p.id}
+                        title="Cancelar pedido"
+                        className="inline-flex items-center gap-1 rounded-md border border-foreground/15 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:bg-foreground/5 hover:text-foreground disabled:opacity-50"
+                      >
+                        {cancellingId === p.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "×"}
+                        Cancelar
+                      </button>
+                    )}
+                  </Td>
                 </tr>
               ))}
             </tbody>
