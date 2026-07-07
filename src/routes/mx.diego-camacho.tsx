@@ -790,14 +790,8 @@ function Page() {
             <a href="mailto:contacto@vozestrategica.com" className="hover:text-white transition">
               contacto@vozestrategica.com
             </a>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-xs font-bold text-white transition hover:brightness-110"
-            >
-              WhatsApp +57 310 6598108
-            </a>
+
+
           </div>
         </div>
       </footer>
