@@ -82,7 +82,7 @@ function AdminPedidosPage() {
           <h2 className="mt-1 font-display text-2xl uppercase leading-tight md:text-3xl">Pedidos de libros</h2>
         </div>
         <div className="flex gap-2">
-          {["todos", "pendiente", "aprobado", "rechazado"].map((e) => (
+          {["todos", "pendiente", "aprobado", "rechazado", "cancelado"].map((e) => (
             <button
               key={e}
               onClick={() => setEstado(e)}
