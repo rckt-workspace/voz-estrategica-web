@@ -132,6 +132,7 @@ function AdminPedidosPage() {
                     <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${
                       p.estado_pago === "aprobado" ? "bg-green-100 text-green-800" :
                       p.estado_pago === "rechazado" ? "bg-red-100 text-red-800" :
+                      p.estado_pago === "cancelado" ? "bg-gray-200 text-gray-700" :
                       "bg-yellow-100 text-yellow-800"
                     }`}>{p.estado_pago}</span>
                   </Td>
