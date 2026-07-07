@@ -13,6 +13,7 @@ import { Route as SolucionesRouteImport } from './routes/soluciones'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecursosRouteImport } from './routes/recursos'
 import { Route as ProgramasRouteImport } from './routes/programas'
+import { Route as PagoConfirmadoRouteImport } from './routes/pago-confirmado'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as MasterclassDeClientesAFansRouteImport } from './routes/masterclass-de-clientes-a-fans'
 import { Route as LibrosRouteImport } from './routes/libros'
@@ -53,6 +54,11 @@ const RecursosRoute = RecursosRouteImport.update({
 const ProgramasRoute = ProgramasRouteImport.update({
   id: '/programas',
   path: '/programas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PagoConfirmadoRoute = PagoConfirmadoRouteImport.update({
+  id: '/pago-confirmado',
+  path: '/pago-confirmado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NosotrosRoute = NosotrosRouteImport.update({
@@ -175,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
   '/nosotros': typeof NosotrosRoute
+  '/pago-confirmado': typeof PagoConfirmadoRoute
   '/programas': typeof ProgramasRoute
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
   '/nosotros': typeof NosotrosRoute
+  '/pago-confirmado': typeof PagoConfirmadoRoute
   '/programas': typeof ProgramasRoute
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/libros': typeof LibrosRoute
   '/masterclass-de-clientes-a-fans': typeof MasterclassDeClientesAFansRoute
   '/nosotros': typeof NosotrosRoute
+  '/pago-confirmado': typeof PagoConfirmadoRoute
   '/programas': typeof ProgramasRoute
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
     | '/nosotros'
+    | '/pago-confirmado'
     | '/programas'
     | '/recursos'
     | '/sitemap.xml'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
     | '/nosotros'
+    | '/pago-confirmado'
     | '/programas'
     | '/recursos'
     | '/sitemap.xml'
@@ -311,6 +322,7 @@ export interface FileRouteTypes {
     | '/libros'
     | '/masterclass-de-clientes-a-fans'
     | '/nosotros'
+    | '/pago-confirmado'
     | '/programas'
     | '/recursos'
     | '/sitemap.xml'
@@ -339,6 +351,7 @@ export interface RootRouteChildren {
   LibrosRoute: typeof LibrosRoute
   MasterclassDeClientesAFansRoute: typeof MasterclassDeClientesAFansRoute
   NosotrosRoute: typeof NosotrosRoute
+  PagoConfirmadoRoute: typeof PagoConfirmadoRoute
   ProgramasRoute: typeof ProgramasRoute
   RecursosRoute: typeof RecursosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -378,6 +391,13 @@ declare module '@tanstack/react-router' {
       path: '/programas'
       fullPath: '/programas'
       preLoaderRoute: typeof ProgramasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pago-confirmado': {
+      id: '/pago-confirmado'
+      path: '/pago-confirmado'
+      fullPath: '/pago-confirmado'
+      preLoaderRoute: typeof PagoConfirmadoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nosotros': {
@@ -560,6 +580,7 @@ const rootRouteChildren: RootRouteChildren = {
   LibrosRoute: LibrosRoute,
   MasterclassDeClientesAFansRoute: MasterclassDeClientesAFansRoute,
   NosotrosRoute: NosotrosRoute,
+  PagoConfirmadoRoute: PagoConfirmadoRoute,
   ProgramasRoute: ProgramasRoute,
   RecursosRoute: RecursosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
