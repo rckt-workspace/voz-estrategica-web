@@ -460,16 +460,40 @@ function Page() {
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
-          <Reveal delay={0.05}>
-            <p className="mt-5 max-w-4xl text-xl leading-relaxed text-black/80 md:text-2xl xl:text-[1.9rem] 2xl:text-4xl xl:leading-relaxed">
-              Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
-              inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
-              impartidas, ha liderado equipos comerciales en 4 continentes y más de 20 países,
-              gestionando el éxito de más de 2000 clientes en mercados como Latinoamérica, el
-              Sudeste Asiático, Estados Unidos y Australia. Su trayectoria incluye roles
-              directivos en <strong>Microsoft y Google</strong>.
-            </p>
-          </Reveal>
+          <div className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1.4fr] lg:items-start">
+            <Reveal delay={0.05}>
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
+                <img
+                  src={diegoPortraitAsset.url}
+                  alt="Retrato en blanco y negro de Diego Camacho, brazos cruzados, sonriendo"
+                  loading="lazy"
+                  width={800}
+                  height={800}
+                  className="block h-auto w-full object-cover"
+                />
+                <div className="border-t border-black/10 p-5">
+                  <div className="text-xs font-bold uppercase tracking-widest text-black/50">
+                    Diego Camacho
+                  </div>
+                  <div className="mt-1 font-display text-lg uppercase">
+                    Head of New Business Sales · Google LATAM
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div>
+                <p className="max-w-3xl text-xl leading-relaxed text-black/80 md:text-2xl xl:text-[1.9rem] 2xl:text-4xl xl:leading-relaxed">
+                  Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
+                  inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
+                  impartidas, ha liderado equipos comerciales en 4 continentes y más de 20 países,
+                  gestionando el éxito de más de 2000 clientes en mercados como Latinoamérica, el
+                  Sudeste Asiático, Estados Unidos y Australia. Su trayectoria incluye roles
+                  directivos en <strong>Microsoft y Google</strong>.
+                </p>
+              </div>
+            </Reveal>
+          </div>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { icon: Award, t: "Respaldo", d: "Google" },
