@@ -172,13 +172,13 @@ function Page() {
                 </div>
               </Reveal>
               <Reveal delay={0.05}>
-                <h1 className="mt-4 font-display text-4xl uppercase leading-[0.95] tracking-tight md:text-5xl lg:text-[3.25rem] xl:text-[4.5rem] 2xl:text-[5.75rem] xl:leading-[1.05]">
+                <h1 className="mt-4 font-display text-4xl uppercase leading-[0.95] tracking-tight md:text-5xl lg:text-[3.25rem] 2xl:text-[5.75rem] 2xl:leading-[1.05]">
                   La IA no reemplaza a tu equipo.{" "}
                   <span className="text-[#EAC945]">Lo libera para vender más.</span>
                 </h1>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem] xl:max-w-2xl xl:text-2xl xl:leading-snug 2xl:text-3xl xl:leading-snug xl:leading-relaxed">
+                <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem] xl:max-w-2xl 2xl:leading-snug 2xl:text-3xl">
                   Lleva a <strong className="text-white">Diego Camacho</strong> —Head of New
                   Business Sales en Google y referente en IA aplicada a ventas— al escenario de
                   tu próxima convención en CDMX. Una conferencia que tu equipo comercial entiende
@@ -259,7 +259,7 @@ function Page() {
             <span className="section-badge">01 · El problema</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
               Tu empresa ya invirtió en inteligencia artificial.{" "}
               <span className="highlight-yellow">
                 <span>¿Tu equipo ya vende más con ella?</span>
@@ -303,7 +303,7 @@ function Page() {
                     <b.icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg uppercase xl:text-2xl xl:leading-snug">{b.t}</h3>
+                    <h3 className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{b.t}</h3>
                     <p className="mt-1 text-sm text-black/65">{b.d}</p>
                   </div>
                 </div>
@@ -320,7 +320,7 @@ function Page() {
             <span className="section-badge section-badge-dark">02 · Propuesta de valor</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <p className="mt-5 max-w-3xl text-xl leading-relaxed text-white/85 md:text-2xl xl:text-[1.9rem] 2xl:text-4xl xl:leading-relaxed">
+            <p className="mt-5 max-w-3xl text-xl leading-relaxed text-white/85 md:text-2xl 2xl:text-4xl 2xl:leading-relaxed">
               Diego Camacho traduce la inteligencia artificial a un idioma que el área comercial y
               de marketing <span className="text-[#EAC945]">entiende y aplica</span>: menos tareas
               repetitivas, más tiempo frente al cliente y mejores conversiones. No es teoría ni
@@ -403,11 +403,11 @@ function Page() {
                   <span className="section-badge section-badge-dark inline-flex w-fit border-[#EAC945]/40 text-[#EAC945]">
                     Caso real · Booking.com
                   </span>
-                  <p className="font-display text-2xl uppercase leading-tight md:text-3xl xl:text-4xl">
+                  <p className="font-display text-2xl uppercase leading-tight md:text-3xl 2xl:text-4xl">
                     Booking.com implementó IA de Google para personalizar anuncios,{" "}
                     <span className="text-[#EAC945]">con un aumento del 15% en el valor promedio de transacción</span>.
                   </p>
-                  <p className="text-sm text-white/65 xl:text-base">
+                  <p className="text-sm text-white/65 2xl:text-base">
                     Uno de los casos con los que Diego demuestra, en escenario, cómo la IA se
                     traduce en resultados de negocio medibles para marcas globales.
                   </p>
@@ -421,7 +421,7 @@ function Page() {
             <div className="section-badge section-badge-dark inline-flex border-[#EAC945]/40 text-[#EAC945]">
               Metodología propia
             </div>
-            <h3 className="mt-4 max-w-3xl font-display text-3xl uppercase md:text-4xl xl:text-6xl 2xl:text-7xl xl:leading-[1.05]">
+            <h3 className="mt-4 max-w-3xl font-display text-3xl uppercase md:text-4xl 2xl:text-7xl 2xl:leading-[1.05]">
               Las 6 P&apos;s: así se implementa la IA{" "}
               <span className="text-[#EAC945]">en cada etapa de la venta</span>.
             </h3>
@@ -441,7 +441,7 @@ function Page() {
                       </span>
                       <span className="text-xs uppercase tracking-widest text-white/50">P{i + 1}</span>
                     </div>
-                    <div className="mt-3 font-display text-lg uppercase xl:text-2xl xl:leading-snug">{p}</div>
+                    <div className="mt-3 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{p}</div>
                   </li>
                 ),
               )}
@@ -479,7 +479,7 @@ function Page() {
             </Reveal>
             <Reveal delay={0.1}>
               <div>
-                <p className="max-w-3xl text-xl leading-relaxed text-black/80 md:text-2xl xl:text-[1.9rem] 2xl:text-4xl xl:leading-relaxed">
+                <p className="max-w-3xl text-xl leading-relaxed text-black/80 md:text-2xl 2xl:text-4xl 2xl:leading-relaxed">
                   Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
                   inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
                   impartidas, ha liderado equipos comerciales en 4 continentes y más de 20 países,
@@ -503,7 +503,7 @@ function Page() {
                   <div className="mt-4 text-xs font-bold uppercase tracking-widest text-black/50">
                     {c.t}
                   </div>
-                  <div className="mt-1 font-display text-lg uppercase xl:text-2xl xl:leading-snug">{c.d}</div>
+                  <div className="mt-1 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{c.d}</div>
                 </div>
               </Reveal>
             ))}
@@ -518,7 +518,7 @@ function Page() {
             <span className="section-badge section-badge-dark">04 · Temas de conferencia</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
               Cuatro conferencias, un mismo hilo: <span className="text-[#EAC945]">IA que vende</span>.
             </h2>
           </Reveal>
@@ -559,7 +559,7 @@ function Page() {
                       <div className="text-xs font-bold uppercase tracking-widest text-white/45">
                         Tema 0{i + 1}
                       </div>
-                      <h3 className="mt-1 font-display text-2xl uppercase leading-tight xl:text-4xl 2xl:text-5xl xl:leading-tight">{c.t}</h3>
+                      <h3 className="mt-1 font-display text-2xl uppercase leading-tight 2xl:text-5xl 2xl:leading-tight">{c.t}</h3>
                     </div>
                   </div>
                   <p className="mt-4 text-white/70">{c.d}</p>
@@ -580,7 +580,7 @@ function Page() {
             <span className="section-badge">05 · Formatos disponibles</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
               Elige el formato que mejor le sirve a tu equipo.
             </h2>
           </Reveal>
@@ -597,7 +597,7 @@ function Page() {
                   <div className="mt-4 text-xs font-bold uppercase tracking-widest text-black/50">
                     {f.meta}
                   </div>
-                  <h3 className="mt-1 font-display text-xl uppercase xl:text-3xl xl:leading-snug">{f.t}</h3>
+                  <h3 className="mt-1 font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">{f.t}</h3>
                   <p className="mt-2 text-sm text-black/65">{f.d}</p>
                 </div>
               </Reveal>
@@ -613,7 +613,7 @@ function Page() {
             <span className="section-badge section-badge-dark">06 · Ideal para</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
               ¿Para quién funciona esta conferencia?
             </h2>
           </Reveal>
@@ -645,7 +645,7 @@ function Page() {
             <span className="section-badge">07 · Respaldo Voz Estratégica</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+            <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
               Diego no llega solo:{" "}
               <span className="highlight-yellow">
                 <span>llega respaldado por una curaduría.</span>
@@ -661,7 +661,7 @@ function Page() {
               { t: "Un evento completo", d: "Si tu agenda necesita más de una voz, armamos el lineup entero." },
             ].map((b) => (
               <div key={b.t} className="rounded-2xl border border-black/10 bg-white p-6">
-                <h3 className="font-display text-xl uppercase xl:text-3xl xl:leading-snug">{b.t}</h3>
+                <h3 className="font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">{b.t}</h3>
                 <p className="mt-2 text-black/65">{b.d}</p>
               </div>
             ))}
@@ -685,7 +685,7 @@ function Page() {
           </Reveal>
           <Reveal delay={0.1}>
             <figure className="mt-14 border-l-4 border-[#EAC945] pl-6">
-              <blockquote className="font-display text-3xl uppercase leading-tight md:text-4xl xl:text-6xl 2xl:text-7xl xl:leading-[1.05]">
+              <blockquote className="font-display text-3xl uppercase leading-tight md:text-4xl 2xl:text-7xl 2xl:leading-[1.05]">
                 &ldquo;Vender es ayudar a las personas a progresar.&rdquo;
               </blockquote>
               <figcaption className="mt-3 text-sm uppercase tracking-widest text-white/60">
@@ -706,7 +706,7 @@ function Page() {
                 <span className="section-badge">09 · Cotiza tu evento</span>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+                <h2 className="mt-5 font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
                   Cotiza a Diego Camacho{" "}
                   <span className="highlight-yellow">
                     <span>para tu evento en CDMX.</span>
@@ -801,7 +801,7 @@ function Page() {
             <span className="section-badge section-badge-dark">10 · Preguntas frecuentes</span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 font-display text-4xl uppercase md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">
+            <h2 className="mt-5 font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
               Lo que suelen preguntarnos.
             </h2>
           </Reveal>
@@ -831,7 +831,7 @@ function Page() {
             ].map((f) => (
               <details key={f.q} className="group px-6 py-5">
                 <summary className="flex cursor-pointer items-center justify-between gap-4 list-none">
-                  <span className="font-display text-lg uppercase xl:text-2xl xl:leading-snug">{f.q}</span>
+                  <span className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{f.q}</span>
                   <ChevronDown className="h-5 w-5 shrink-0 text-[#EAC945] transition group-open:rotate-180" />
                 </summary>
                 <p className="mt-3 text-white/70">{f.a}</p>
@@ -841,7 +841,7 @@ function Page() {
 
           {/* Closing CTA */}
           <div className="mt-14 rounded-3xl border border-[#EAC945]/30 bg-[#EAC945]/[0.06] p-8 text-center lg:p-10">
-            <h3 className="font-display text-3xl uppercase md:text-4xl xl:text-6xl 2xl:text-7xl xl:leading-[1.05]">
+            <h3 className="font-display text-3xl uppercase md:text-4xl 2xl:text-7xl 2xl:leading-[1.05]">
               ¿Listo para llevar a Diego a tu convención?
             </h3>
             <a
@@ -896,14 +896,14 @@ function StatCard({ num, label, compact = false }: { num: string; label: string;
   if (compact) {
     return (
       <div className="rounded-xl border border-white/10 bg-[#0F0F0F]/60 p-2.5 text-center">
-        <div className="font-display text-xl text-[#EAC945] md:text-2xl xl:text-3xl leading-none">{num}</div>
+        <div className="font-display text-xl text-[#EAC945] md:text-2xl 2xl:text-3xl leading-none">{num}</div>
         <div className="mt-1 text-[9px] uppercase tracking-widest text-white/55 md:text-[10px]">{label}</div>
       </div>
     );
   }
   return (
     <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
-      <div className="font-display text-4xl text-[#EAC945] md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">{num}</div>
+      <div className="font-display text-4xl text-[#EAC945] md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">{num}</div>
       <div className="mt-1 text-xs uppercase tracking-widest text-white/60">{label}</div>
     </div>
   );
