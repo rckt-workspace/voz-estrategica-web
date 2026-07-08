@@ -842,7 +842,15 @@ function Page() {
   );
 }
 
-function StatCard({ num, label }: { num: string; label: string }) {
+function StatCard({ num, label, compact = false }: { num: string; label: string; compact?: boolean }) {
+  if (compact) {
+    return (
+      <div className="rounded-xl border border-white/10 bg-[#0F0F0F]/60 p-2.5 text-center">
+        <div className="font-display text-xl text-[#EAC945] md:text-2xl xl:text-3xl leading-none">{num}</div>
+        <div className="mt-1 text-[9px] uppercase tracking-widest text-white/55 md:text-[10px]">{label}</div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
       <div className="font-display text-4xl text-[#EAC945] md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">{num}</div>
