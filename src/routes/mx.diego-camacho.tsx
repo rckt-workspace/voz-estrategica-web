@@ -456,22 +456,22 @@ function Page() {
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
-          <div className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1.4fr] lg:items-start">
+          <div className="mt-8 grid gap-10 lg:grid-cols-[280px_1fr] lg:items-start xl:grid-cols-[320px_1fr]">
             <Reveal delay={0.05}>
-              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
+              <div className="relative mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm lg:sticky lg:top-24 xl:max-w-[320px]">
                 <img
                   src={diegoPortraitAsset.url}
                   alt="Retrato de Diego Camacho en traje negro"
                   loading="lazy"
                   width={800}
                   height={1000}
-                  className="block h-auto w-full object-contain"
+                  className="block h-auto w-full object-contain [clip-path:inset(0_0_14%_0)]"
                 />
-                <div className="border-t border-black/10 p-5">
-                  <div className="text-xs font-bold uppercase tracking-widest text-black/50">
+                <div className="border-t border-black/10 bg-white p-4">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
                     Diego Camacho
                   </div>
-                  <div className="mt-1 font-display text-lg uppercase">
+                  <div className="mt-1 font-display text-sm uppercase leading-tight">
                     Head of New Business Sales · Google LATAM
                   </div>
                 </div>
