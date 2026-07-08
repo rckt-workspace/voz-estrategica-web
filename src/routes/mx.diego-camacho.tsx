@@ -161,7 +161,7 @@ function Page() {
           </svg>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[1600px] px-6 xl:px-12 pt-14 pb-16 lg:pt-16 lg:pb-20">
+        <div className="relative mx-auto w-full max-w-[1600px] px-6 xl:px-12 pt-4 pb-16 lg:pt-6 lg:pb-20">
 
           <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
