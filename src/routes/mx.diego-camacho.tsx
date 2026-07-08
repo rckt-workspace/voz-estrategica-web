@@ -24,6 +24,9 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
+import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.png.asset.json";
+import diegoPortraitAsset from "@/assets/diego-mx/diego-portrait.png.asset.json";
+import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 const WHATSAPP_NUMBER = "573106598108";
@@ -213,25 +216,39 @@ function Page() {
               </Reveal>
             </div>
 
-            {/* Slot visual: cifras grandes + iconografía. */}
+            {/* Slot visual: foto real de Diego en escenario (IA) + cifras compactas */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm lg:p-6">
-                <div className="grid grid-cols-2 gap-3">
-                  <StatCard num="+150" label="conferencias" />
-                  <StatCard num="+2000" label="clientes" />
-                  <StatCard num="4" label="continentes" />
-                  <StatCard num="+20" label="países" />
+              <div className="relative">
+                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl">
+                  <img
+                    src={diegoHeroAsset.url}
+                    alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
+                    width={1080}
+                    height={1080}
+                    loading="eager"
+                    className="block h-auto w-full object-cover"
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/70 via-transparent to-transparent"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-4 py-3 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/10 pt-4 text-xs uppercase tracking-widest text-white/50">
-                  <span className="inline-flex items-center gap-2">
-                    <Bot className="h-4 w-4 text-[#EAC945]" /> IA
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-[#EAC945]" /> Ventas
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <Globe2 className="h-4 w-4 text-[#EAC945]" /> Global
-                  </span>
+                <div className="mt-4 grid grid-cols-4 gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-sm">
+                  <StatCard num="+150" label="conferencias" compact />
+                  <StatCard num="+2000" label="clientes" compact />
+                  <StatCard num="4" label="continentes" compact />
+                  <StatCard num="+20" label="países" compact />
                 </div>
               </div>
             </Reveal>
@@ -372,6 +389,36 @@ function Page() {
             );
           })()}
 
+          {/* Evidencia visual real: caso Booking.com */}
+          <Reveal delay={0.05}>
+            <figure className="mt-16 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
+              <div className="grid gap-0 lg:grid-cols-[1.2fr_1fr]">
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-black lg:aspect-auto">
+                  <img
+                    src={diegoBookingAsset.url}
+                    alt="Diego Camacho en escenario presentando el caso real de Booking.com sobre implementación de IA de Google y aumento del 15% en valor promedio de transacción"
+                    loading="lazy"
+                    width={1080}
+                    height={1080}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption className="flex flex-col justify-center gap-3 p-6 lg:p-10">
+                  <span className="section-badge section-badge-dark inline-flex w-fit border-[#EAC945]/40 text-[#EAC945]">
+                    Caso real · Booking.com
+                  </span>
+                  <p className="font-display text-2xl uppercase leading-tight md:text-3xl xl:text-4xl">
+                    Booking.com implementó IA de Google para personalizar anuncios,{" "}
+                    <span className="text-[#EAC945]">con un aumento del 15% en el valor promedio de transacción</span>.
+                  </p>
+                  <p className="text-sm text-white/65 xl:text-base">
+                    Uno de los casos con los que Diego demuestra, en escenario, cómo la IA se
+                    traduce en resultados de negocio medibles para marcas globales.
+                  </p>
+                </figcaption>
+              </div>
+            </figure>
+          </Reveal>
 
           {/* Metodología 6 P's */}
           <div className="mt-16 rounded-3xl border border-[#EAC945]/30 bg-[#EAC945]/[0.06] p-8 lg:p-10">
@@ -413,16 +460,40 @@ function Page() {
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
-          <Reveal delay={0.05}>
-            <p className="mt-5 max-w-4xl text-xl leading-relaxed text-black/80 md:text-2xl xl:text-[1.9rem] 2xl:text-4xl xl:leading-relaxed">
-              Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
-              inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
-              impartidas, ha liderado equipos comerciales en 4 continentes y más de 20 países,
-              gestionando el éxito de más de 2000 clientes en mercados como Latinoamérica, el
-              Sudeste Asiático, Estados Unidos y Australia. Su trayectoria incluye roles
-              directivos en <strong>Microsoft y Google</strong>.
-            </p>
-          </Reveal>
+          <div className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1.4fr] lg:items-start">
+            <Reveal delay={0.05}>
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
+                <img
+                  src={diegoPortraitAsset.url}
+                  alt="Retrato en blanco y negro de Diego Camacho, brazos cruzados, sonriendo"
+                  loading="lazy"
+                  width={800}
+                  height={800}
+                  className="block h-auto w-full object-cover"
+                />
+                <div className="border-t border-black/10 p-5">
+                  <div className="text-xs font-bold uppercase tracking-widest text-black/50">
+                    Diego Camacho
+                  </div>
+                  <div className="mt-1 font-display text-lg uppercase">
+                    Head of New Business Sales · Google LATAM
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div>
+                <p className="max-w-3xl text-xl leading-relaxed text-black/80 md:text-2xl xl:text-[1.9rem] 2xl:text-4xl xl:leading-relaxed">
+                  Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
+                  inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
+                  impartidas, ha liderado equipos comerciales en 4 continentes y más de 20 países,
+                  gestionando el éxito de más de 2000 clientes en mercados como Latinoamérica, el
+                  Sudeste Asiático, Estados Unidos y Australia. Su trayectoria incluye roles
+                  directivos en <strong>Microsoft y Google</strong>.
+                </p>
+              </div>
+            </Reveal>
+          </div>
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { icon: Award, t: "Respaldo", d: "Google" },
@@ -825,7 +896,15 @@ function Page() {
   );
 }
 
-function StatCard({ num, label }: { num: string; label: string }) {
+function StatCard({ num, label, compact = false }: { num: string; label: string; compact?: boolean }) {
+  if (compact) {
+    return (
+      <div className="rounded-xl border border-white/10 bg-[#0F0F0F]/60 p-2.5 text-center">
+        <div className="font-display text-xl text-[#EAC945] md:text-2xl xl:text-3xl leading-none">{num}</div>
+        <div className="mt-1 text-[9px] uppercase tracking-widest text-white/55 md:text-[10px]">{label}</div>
+      </div>
+    );
+  }
   return (
     <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
       <div className="font-display text-4xl text-[#EAC945] md:text-5xl xl:text-7xl 2xl:text-8xl xl:leading-[1.05]">{num}</div>
