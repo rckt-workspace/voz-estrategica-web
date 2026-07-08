@@ -219,30 +219,26 @@ function Page() {
             {/* Slot visual: foto real de Diego en escenario (IA) + cifras compactas */}
             <Reveal delay={0.2}>
               <div className="relative">
-                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl">
+                <div className="relative flex items-center justify-center">
                   <img
                     src={diegoHeroAsset.url}
                     alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
                     width={1080}
                     height={1080}
                     loading="eager"
-                    className="block h-auto w-full object-cover"
+                    className="block h-auto w-full max-w-[520px] object-contain"
                   />
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/70 via-transparent to-transparent"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-4 py-3 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
-                    </span>
-                  </div>
+                </div>
+                <div className="mt-6 flex items-center justify-between gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
+                  </span>
                 </div>
                 <div className="mt-4 grid grid-cols-4 gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-sm">
                   <StatCard num="+150" label="conferencias" compact />
