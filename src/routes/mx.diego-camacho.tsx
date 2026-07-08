@@ -216,25 +216,39 @@ function Page() {
               </Reveal>
             </div>
 
-            {/* Slot visual: cifras grandes + iconografía. */}
+            {/* Slot visual: foto real de Diego en escenario (IA) + cifras compactas */}
             <Reveal delay={0.2}>
-              <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm lg:p-6">
-                <div className="grid grid-cols-2 gap-3">
-                  <StatCard num="+150" label="conferencias" />
-                  <StatCard num="+2000" label="clientes" />
-                  <StatCard num="4" label="continentes" />
-                  <StatCard num="+20" label="países" />
+              <div className="relative">
+                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl">
+                  <img
+                    src={diegoHeroAsset.url}
+                    alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
+                    width={1080}
+                    height={1080}
+                    loading="eager"
+                    className="block h-auto w-full object-cover"
+                  />
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/70 via-transparent to-transparent"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-4 py-3 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-4 flex items-center justify-between gap-4 border-t border-white/10 pt-4 text-xs uppercase tracking-widest text-white/50">
-                  <span className="inline-flex items-center gap-2">
-                    <Bot className="h-4 w-4 text-[#EAC945]" /> IA
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-[#EAC945]" /> Ventas
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <Globe2 className="h-4 w-4 text-[#EAC945]" /> Global
-                  </span>
+                <div className="mt-4 grid grid-cols-4 gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-sm">
+                  <StatCard num="+150" label="conferencias" compact />
+                  <StatCard num="+2000" label="clientes" compact />
+                  <StatCard num="4" label="continentes" compact />
+                  <StatCard num="+20" label="países" compact />
                 </div>
               </div>
             </Reveal>
