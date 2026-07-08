@@ -389,6 +389,36 @@ function Page() {
             );
           })()}
 
+          {/* Evidencia visual real: caso Booking.com */}
+          <Reveal delay={0.05}>
+            <figure className="mt-16 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
+              <div className="grid gap-0 lg:grid-cols-[1.2fr_1fr]">
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-black lg:aspect-auto">
+                  <img
+                    src={diegoBookingAsset.url}
+                    alt="Diego Camacho en escenario presentando el caso real de Booking.com sobre implementación de IA de Google y aumento del 15% en valor promedio de transacción"
+                    loading="lazy"
+                    width={1080}
+                    height={1080}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption className="flex flex-col justify-center gap-3 p-6 lg:p-10">
+                  <span className="section-badge section-badge-dark inline-flex w-fit border-[#EAC945]/40 text-[#EAC945]">
+                    Caso real · Booking.com
+                  </span>
+                  <p className="font-display text-2xl uppercase leading-tight md:text-3xl xl:text-4xl">
+                    Booking.com implementó IA de Google para personalizar anuncios,{" "}
+                    <span className="text-[#EAC945]">con un aumento del 15% en el valor promedio de transacción</span>.
+                  </p>
+                  <p className="text-sm text-white/65 xl:text-base">
+                    Uno de los casos con los que Diego demuestra, en escenario, cómo la IA se
+                    traduce en resultados de negocio medibles para marcas globales.
+                  </p>
+                </figcaption>
+              </div>
+            </figure>
+          </Reveal>
 
           {/* Metodología 6 P's */}
           <div className="mt-16 rounded-3xl border border-[#EAC945]/30 bg-[#EAC945]/[0.06] p-8 lg:p-10">
