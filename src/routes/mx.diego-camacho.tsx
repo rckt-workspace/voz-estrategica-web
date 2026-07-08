@@ -226,7 +226,7 @@ function Page() {
                     width={1080}
                     height={1080}
                     loading="eager"
-                    className="block h-auto w-full max-w-[520px] object-contain [mask-image:radial-gradient(circle_at_center,black_49.5%,transparent_50%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_49.5%,transparent_50%)]"
+                    className="block h-auto w-full max-w-[520px] object-contain"
                   />
                 </div>
                 <div className="mt-6 flex items-center justify-between gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
