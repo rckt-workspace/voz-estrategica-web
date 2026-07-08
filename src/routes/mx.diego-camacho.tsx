@@ -25,7 +25,7 @@ import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.png.asset.json";
-import diegoPortraitAsset from "@/assets/diego-mx/diego-portrait.png.asset.json";
+import diegoPortraitAsset from "@/assets/diego-mx/diego-portrait-suit.png.asset.json";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
@@ -219,30 +219,26 @@ function Page() {
             {/* Slot visual: foto real de Diego en escenario (IA) + cifras compactas */}
             <Reveal delay={0.2}>
               <div className="relative">
-                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] shadow-2xl">
+                <div className="relative flex items-center justify-center">
                   <img
                     src={diegoHeroAsset.url}
                     alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
                     width={1080}
                     height={1080}
                     loading="eager"
-                    className="block h-auto w-full object-cover"
+                    className="block h-auto w-full max-w-[520px] object-contain"
                   />
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/70 via-transparent to-transparent"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 px-4 py-3 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
-                    </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
-                    </span>
-                  </div>
+                </div>
+                <div className="mt-6 flex items-center justify-between gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
+                  </span>
                 </div>
                 <div className="mt-4 grid grid-cols-4 gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur-sm">
                   <StatCard num="+150" label="conferencias" compact />
@@ -391,16 +387,16 @@ function Page() {
 
           {/* Evidencia visual real: caso Booking.com */}
           <Reveal delay={0.05}>
-            <figure className="mt-16 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
-              <div className="grid gap-0 lg:grid-cols-[1.2fr_1fr]">
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-black lg:aspect-auto">
+            <figure className="mt-16 rounded-3xl border border-white/10 bg-white/[0.03] lg:mr-24 xl:mr-32">
+              <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
+                <div className="flex items-center justify-center p-4 lg:p-6">
                   <img
                     src={diegoBookingAsset.url}
                     alt="Diego Camacho en escenario presentando el caso real de Booking.com sobre implementación de IA de Google y aumento del 15% en valor promedio de transacción"
                     loading="lazy"
                     width={1080}
                     height={1080}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="block h-auto w-full max-w-[460px] object-contain"
                   />
                 </div>
                 <figcaption className="flex flex-col justify-center gap-3 p-6 lg:p-10">
@@ -462,14 +458,14 @@ function Page() {
           </Reveal>
           <div className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1.4fr] lg:items-start">
             <Reveal delay={0.05}>
-              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
                 <img
                   src={diegoPortraitAsset.url}
-                  alt="Retrato en blanco y negro de Diego Camacho, brazos cruzados, sonriendo"
+                  alt="Retrato de Diego Camacho en traje negro"
                   loading="lazy"
                   width={800}
-                  height={800}
-                  className="block h-auto w-full object-cover"
+                  height={1000}
+                  className="block h-auto w-full object-contain"
                 />
                 <div className="border-t border-black/10 p-5">
                   <div className="text-xs font-bold uppercase tracking-widest text-black/50">
