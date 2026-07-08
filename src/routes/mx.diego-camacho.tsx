@@ -143,7 +143,7 @@ function Page() {
 
 
       {/* ============ BLOQUE 1 — HERO ============ */}
-      <section className="relative flex min-h-[calc(100vh-64px)] items-center overflow-hidden border-b border-white/10">
+      <section className="relative flex items-start overflow-hidden border-b border-white/10">
         {/* fondo decorativo */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -top-32 -right-24 h-[520px] w-[520px] rounded-full bg-[#EAC945]/10 blur-3xl" />
@@ -161,7 +161,7 @@ function Page() {
           </svg>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[1600px] px-6 xl:px-12 pt-14 pb-16 lg:pt-16 lg:pb-20">
+        <div className="relative mx-auto w-full max-w-[1600px] px-6 xl:px-12 pt-4 pb-16 lg:pt-6 lg:pb-20">
 
           <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
