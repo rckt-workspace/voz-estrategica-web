@@ -25,7 +25,7 @@ import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.png.asset.json";
-import diegoPortraitAsset from "@/assets/diego-mx/diego-portrait.png.asset.json";
+import diegoPortraitAsset from "@/assets/diego-mx/diego-portrait-suit.png.asset.json";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
