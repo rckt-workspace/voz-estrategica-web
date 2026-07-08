@@ -387,16 +387,16 @@ function Page() {
 
           {/* Evidencia visual real: caso Booking.com */}
           <Reveal delay={0.05}>
-            <figure className="mt-16 rounded-3xl border border-white/10 bg-white/[0.03] lg:mr-24 xl:mr-32">
-              <div className="grid gap-0 lg:grid-cols-[1fr_1fr]">
-                <div className="flex items-center justify-center p-4 lg:p-6">
+            <figure className="mt-16 lg:mr-24 xl:mr-32">
+              <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-center">
+                <div className="flex items-center justify-center">
                   <img
                     src={diegoBookingAsset.url}
                     alt="Diego Camacho en escenario presentando el caso real de Booking.com sobre implementación de IA de Google y aumento del 15% en valor promedio de transacción"
                     loading="lazy"
                     width={1080}
                     height={1080}
-                    className="block h-auto w-full max-w-[460px] object-contain"
+                    className="block h-auto w-full max-w-[420px] object-contain [mask-image:radial-gradient(circle_at_center,black_49.5%,transparent_50%)] [-webkit-mask-image:radial-gradient(circle_at_center,black_49.5%,transparent_50%)]"
                   />
                 </div>
                 <figcaption className="flex flex-col justify-center gap-3 p-6 lg:p-10">
