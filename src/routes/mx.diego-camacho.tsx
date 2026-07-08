@@ -458,14 +458,14 @@ function Page() {
           </Reveal>
           <div className="mt-8 grid gap-10 lg:grid-cols-[0.9fr_1.4fr] lg:items-start">
             <Reveal delay={0.05}>
-              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-3xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-xl border border-black/10 bg-white shadow-sm lg:sticky lg:top-24">
                 <img
                   src={diegoPortraitAsset.url}
-                  alt="Retrato en blanco y negro de Diego Camacho, brazos cruzados, sonriendo"
+                  alt="Retrato de Diego Camacho en traje negro"
                   loading="lazy"
                   width={800}
-                  height={800}
-                  className="block h-auto w-full object-cover"
+                  height={1000}
+                  className="block h-auto w-full object-contain"
                 />
                 <div className="border-t border-black/10 p-5">
                   <div className="text-xs font-bold uppercase tracking-widest text-black/50">
