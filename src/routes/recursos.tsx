@@ -131,13 +131,24 @@ function RecursosPage() {
                   {b.sku && b.precio ? (
                     <div className="mt-3 flex items-center justify-between gap-3">
                       <div className="text-base font-bold">${b.precio.toLocaleString("es-CO")}</div>
-                      <button
-                        type="button"
-                        onClick={() => setOpenBook(b)}
-                        className="rounded-full bg-foreground px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
-                      >
-                        Comprar →
-                      </button>
+                      {b.sku === "ebook-paola" ? (
+                        <a
+                          href="https://pay.hotmart.com/U99654992V?sck=HOTMART_SITE&off=vi04neq9&hotfeature=32&bid=1775133064192"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-full bg-foreground px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+                        >
+                          Comprar →
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setOpenBook(b)}
+                          className="rounded-full bg-foreground px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+                        >
+                          Comprar →
+                        </button>
+                      )}
                     </div>
                   ) : null}
                 </div>
