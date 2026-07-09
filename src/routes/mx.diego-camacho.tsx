@@ -458,9 +458,9 @@ function Page() {
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
-          <div className="mt-8 grid gap-10 lg:grid-cols-[420px_1fr] lg:items-stretch xl:grid-cols-[480px_1fr]">
+          <div className="mt-8 grid gap-10 lg:grid-cols-[340px_1fr] lg:items-stretch xl:grid-cols-[380px_1fr]">
             <Reveal delay={0.05} className="flex h-full">
-              <div className="relative mx-auto flex h-full w-full max-w-[420px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[480px]">
+              <div className="relative mx-auto flex h-full w-full max-w-[340px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[380px]">
                 <div className="relative min-h-0 flex-1 overflow-hidden">
                   <img
                     src={diegoPortraitCleanUrl}
