@@ -461,14 +461,14 @@ function Page() {
           <div className="mt-8 grid gap-10 lg:grid-cols-[280px_1fr] lg:items-stretch xl:grid-cols-[320px_1fr]">
             <Reveal delay={0.05} className="flex h-full">
               <div className="relative mx-auto flex h-full w-full max-w-[280px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[320px]">
-                <div className="min-h-0 flex-1 overflow-hidden">
+                <div className="relative min-h-0 flex-1 overflow-hidden">
                   <img
                     src={diegoPortraitAsset.url}
                     alt="Retrato de Diego Camacho en traje negro"
                     loading="lazy"
                     width={800}
                     height={1000}
-                    className="block h-full w-full object-cover object-top"
+                    className="absolute inset-0 h-full w-full object-cover object-top"
                   />
                 </div>
 
