@@ -481,8 +481,8 @@ function Page() {
               </div>
             </Reveal>
             <Reveal delay={0.1} className="flex">
-              <div className="flex w-full flex-col">
-                <p className="text-xl leading-relaxed text-black/80 md:text-2xl 2xl:text-4xl 2xl:leading-relaxed">
+              <div className="flex w-full flex-col justify-between gap-8">
+                <p className="text-lg leading-loose text-black/80 md:text-xl md:leading-loose 2xl:text-3xl 2xl:leading-loose">
                   Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
                   inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
                   impartidas, ha liderado equipos comerciales en 4 continentes y más de 20 países,
@@ -490,22 +490,23 @@ function Page() {
                   Sudeste Asiático, Estados Unidos y Australia. Su trayectoria incluye roles
                   directivos en <strong>Microsoft y Google</strong>.
                 </p>
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-5 sm:grid-cols-2">
                   {[
                     { icon: Award, t: "Respaldo", d: "Google" },
                     { icon: Bot, t: "Especialidad", d: "IA + Ventas + Marketing" },
                     { icon: Mic2, t: "Trayectoria", d: "+150 conferencias · +2000 clientes" },
                     { icon: Globe2, t: "Alcance", d: "4 continentes · +20 países" },
                   ].map((c) => (
-                    <div key={c.t} className="rounded-2xl border border-black/10 bg-white p-6">
-                      <c.icon className="h-6 w-6 text-[#0F0F0F]" />
-                      <div className="mt-4 text-xs font-bold uppercase tracking-widest text-black/50">
+                    <div key={c.t} className="rounded-2xl border border-black/10 bg-white p-7">
+                      <c.icon className="h-5 w-5 text-[#0F0F0F]" />
+                      <div className="mt-5 text-[11px] font-bold uppercase tracking-widest text-black/50">
                         {c.t}
                       </div>
-                      <div className="mt-1 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{c.d}</div>
+                      <div className="mt-2 font-display text-base uppercase leading-snug 2xl:text-xl 2xl:leading-snug">{c.d}</div>
                     </div>
                   ))}
                 </div>
+
               </div>
             </Reveal>
           </div>
