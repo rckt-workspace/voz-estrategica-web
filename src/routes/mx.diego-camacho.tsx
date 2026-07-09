@@ -458,16 +458,16 @@ function Page() {
           <Reveal>
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
-          <div className="mt-8 grid gap-10 lg:grid-cols-[280px_1fr] lg:items-stretch xl:grid-cols-[320px_1fr]">
+          <div className="mt-8 grid gap-10 lg:grid-cols-[420px_1fr] lg:items-stretch xl:grid-cols-[480px_1fr]">
             <Reveal delay={0.05} className="flex h-full">
-              <div className="relative mx-auto flex h-full w-full max-w-[280px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[320px]">
+              <div className="relative mx-auto flex h-full w-full max-w-[420px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[480px]">
                 <div className="relative min-h-0 flex-1 overflow-hidden">
                   <img
-                    src={diegoPortraitAsset.url}
+                    src={diegoPortraitCleanUrl}
                     alt="Retrato de Diego Camacho en traje negro"
                     loading="lazy"
                     width={800}
-                    height={1000}
+                    height={820}
                     className="absolute inset-0 h-full w-full object-cover object-top"
                   />
                 </div>
@@ -483,7 +483,7 @@ function Page() {
               </div>
             </Reveal>
             <Reveal delay={0.1} className="flex">
-              <div className="flex w-full flex-col justify-between gap-8">
+              <div className="flex w-full flex-col justify-between gap-6">
                 <p className="text-lg leading-loose text-black/80 md:text-xl md:leading-loose 2xl:text-3xl 2xl:leading-loose">
                   Head of New Business Sales para <strong>LATAM en Google</strong> y especialista en
                   inteligencia artificial aplicada a ventas y marketing. Con más de 150 conferencias
@@ -492,19 +492,19 @@ function Page() {
                   Sudeste Asiático, Estados Unidos y Australia. Su trayectoria incluye roles
                   directivos en <strong>Microsoft y Google</strong>.
                 </p>
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-3 sm:grid-cols-2">
                   {[
                     { icon: Award, t: "Respaldo", d: "Google" },
                     { icon: Bot, t: "Especialidad", d: "IA + Ventas + Marketing" },
                     { icon: Mic2, t: "Trayectoria", d: "+150 conferencias · +2000 clientes" },
                     { icon: Globe2, t: "Alcance", d: "4 continentes · +20 países" },
                   ].map((c) => (
-                    <div key={c.t} className="rounded-2xl border border-black/10 bg-white p-7">
-                      <c.icon className="h-5 w-5 text-[#0F0F0F]" />
-                      <div className="mt-5 text-[11px] font-bold uppercase tracking-widest text-black/50">
+                    <div key={c.t} className="rounded-xl border border-black/10 bg-white p-4">
+                      <c.icon className="h-4 w-4 text-[#0F0F0F]" />
+                      <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
                         {c.t}
                       </div>
-                      <div className="mt-2 font-display text-base uppercase leading-snug 2xl:text-xl 2xl:leading-snug">{c.d}</div>
+                      <div className="mt-1 font-display text-sm uppercase leading-snug 2xl:text-base 2xl:leading-snug">{c.d}</div>
                     </div>
                   ))}
                 </div>
@@ -512,6 +512,7 @@ function Page() {
               </div>
             </Reveal>
           </div>
+
 
         </div>
       </section>
