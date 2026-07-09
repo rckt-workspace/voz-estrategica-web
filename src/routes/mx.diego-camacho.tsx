@@ -459,16 +459,18 @@ function Page() {
             <span className="section-badge">03 · Quién es Diego Camacho</span>
           </Reveal>
           <div className="mt-8 grid gap-10 lg:grid-cols-[280px_1fr] lg:items-stretch xl:grid-cols-[320px_1fr]">
-            <Reveal delay={0.05} className="flex">
-              <div className="relative mx-auto flex w-full max-w-[280px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[320px]">
-                <img
-                  src={diegoPortraitAsset.url}
-                  alt="Retrato de Diego Camacho en traje negro"
-                  loading="lazy"
-                  width={800}
-                  height={1000}
-                  className="block h-auto w-full flex-1 object-cover object-top [clip-path:inset(0_0_22%_0)]"
-                />
+            <Reveal delay={0.05} className="flex h-full">
+              <div className="relative mx-auto flex h-full w-full max-w-[280px] flex-col overflow-hidden rounded-xl border border-black/10 bg-[#0F0F0F] shadow-sm xl:max-w-[320px]">
+                <div className="relative min-h-0 flex-1 overflow-hidden">
+                  <img
+                    src={diegoPortraitAsset.url}
+                    alt="Retrato de Diego Camacho en traje negro"
+                    loading="lazy"
+                    width={800}
+                    height={1000}
+                    className="absolute inset-0 h-full w-full object-cover object-top"
+                  />
+                </div>
 
                 <div className="mt-auto border-t border-black/10 bg-white p-4">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
