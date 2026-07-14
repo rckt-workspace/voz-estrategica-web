@@ -7,7 +7,7 @@ Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 });
 
   const secret = Deno.env.get("NOTIFY_WEBHOOK_TOKEN");
-  if (!secret || req.headers.get("x-webhook-secret") !== secret) {
+  if (!secret || req.headers.get("x-webhook-token") !== secret) {
     return new Response("Unauthorized", { status: 401 });
   }
 
