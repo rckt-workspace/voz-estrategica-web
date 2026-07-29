@@ -157,15 +157,16 @@ function StickyBuyBar({ showAfter }: { showAfter: React.RefObject<HTMLDivElement
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const el = showAfter.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setVisible(entry.boundingClientRect.top < 0),
-      { threshold: 0 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
+    const onScroll = () => {
+      const el = showAfter.current;
+      if (!el) return;
+      setVisible(el.getBoundingClientRect().top < 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [showAfter]);
+
 
   return (
     <div
