@@ -274,7 +274,7 @@ export const books: Book[] = [
     id: "b-3",
     titulo: "Ebook Paola Aldaz",
     autorSlug: "paola-aldaz",
-    portada: bookBrandExponential,
+    portada: bookEbookPaola,
     descripcion: "Ebook de Paola Aldaz — descarga digital inmediata.",
     anio: 2024,
     sku: "ebook-paola",
