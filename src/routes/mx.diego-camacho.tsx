@@ -24,23 +24,89 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
-import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.png.asset.json";
+import { supabase } from "@/integrations/supabase/client";
+import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
-const WHATSAPP_NUMBER = "573106598108";
+// TODO: reemplazar por el número real de México (formato internacional sin signos)
+const WHATSAPP_NUMBER = "52XXXXXXXXXX";
+const WHATSAPP_DISPLAY = "+52 XXX XXX XXXX";
+const WA_DEFAULT_MSG =
+  "Hola, quiero disponibilidad y tarifa de Diego Camacho para un evento en CDMX.";
+
+function waLink(msg: string = WA_DEFAULT_MSG) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+function trackWhatsAppClick(placement: string) {
+  trackEvent("Contact", { method: "whatsapp", placement });
+  trackGA4Event("contact_whatsapp", { placement, landing: "mx-diego-camacho" });
+  if (typeof window !== "undefined") {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "contact_whatsapp", placement });
+  }
+}
 
 const schema = z.object({
   nombre: z.string().trim().min(2, "Tu nombre y apellido"),
   empresa: z.string().trim().min(2, "Nombre de la empresa"),
+  cargo: z.string().trim().min(2, "Tu cargo o área"),
   tipo_evento: z.enum(["Convención", "Congreso", "In-company", "Otro"], {
     errorMap: () => ({ message: "Selecciona un tipo de evento" }),
+  }),
+  presupuesto: z.enum(
+    ["Hasta $150,000 MXN", "$150,000 – $300,000 MXN", "Más de $300,000 MXN", "Aún por definir"],
+    { errorMap: () => ({ message: "Selecciona un rango de presupuesto" }) },
+  ),
+  asistentes: z.enum(["Menos de 100", "100 – 300", "300 – 800", "Más de 800"], {
+    errorMap: () => ({ message: "Selecciona el número de asistentes" }),
   }),
   ciudad_fecha: z.string().trim().min(2, "Ciudad y fecha tentativa"),
   whatsapp: z.string().trim().min(6, "Tu WhatsApp"),
 });
 type FormData = z.infer<typeof schema>;
+
+const PERSON_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Diego Camacho",
+  jobTitle: "Head of New Business Sales en Google · Conferencista de IA y Ventas",
+  url: CANONICAL,
+  image: "https://vozestrategica.com/og-diego-camacho.jpg",
+  nationality: "CO",
+  knowsAbout: [
+    "Inteligencia artificial aplicada a ventas",
+    "Marketing digital",
+    "Transformación comercial",
+  ],
+  worksFor: { "@type": "Organization", name: "Google" },
+  affiliation: {
+    "@type": "Organization",
+    name: "Voz Estratégica",
+    url: "https://vozestrategica.com",
+  },
+};
+
+const SERVICE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Conferencia de inteligencia artificial y ventas",
+  name: "Conferencia de IA y ventas con Diego Camacho",
+  description:
+    "Conferencia magistral sobre inteligencia artificial aplicada a ventas y marketing para convenciones, congresos y eventos in-company en Ciudad de México.",
+  provider: { "@type": "Organization", name: "Voz Estratégica", url: "https://vozestrategica.com" },
+  areaServed: { "@type": "Country", name: "México" },
+  audience: { "@type": "BusinessAudience", audienceType: "Empresas y equipos comerciales" },
+  offers: {
+    "@type": "Offer",
+    url: CANONICAL,
+    priceCurrency: "MXN",
+    availability: "https://schema.org/InStock",
+    category: "Conferencia corporativa",
+  },
+};
 
 export const Route = createFileRoute("/mx/diego-camacho")({
   head: () => ({
@@ -50,11 +116,6 @@ export const Route = createFileRoute("/mx/diego-camacho")({
         name: "description",
         content:
           "Lleva a Diego Camacho, Head of New Business Sales en Google y referente en IA aplicada a ventas, a tu convención en CDMX. Escríbenos por WhatsApp y recibe disponibilidad y tarifa.",
-      },
-      {
-        name: "keywords",
-        content:
-          "conferencista de inteligencia artificial CDMX, speaker de ventas México, conferencista IA para empresas, ponente inteligencia artificial evento",
       },
       { name: "robots", content: "index, follow" },
       { property: "og:type", content: "profile" },
@@ -75,13 +136,21 @@ export const Route = createFileRoute("/mx/diego-camacho")({
           "Head of New Business Sales en Google. IA aplicada a ventas y marketing. Disponible para tu convención en CDMX.",
       },
     ],
-    links: [{ rel: "canonical", href: CANONICAL }],
+    links: [
+      { rel: "canonical", href: CANONICAL },
+      { rel: "preload", as: "image", href: diegoHeroAsset.url, fetchPriority: "high" },
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
+      { type: "application/ld+json", children: JSON.stringify(SERVICE_JSONLD) },
+    ],
   }),
   component: Page,
 });
 
 function Page() {
   const [submitted, setSubmitted] = useState(false);
+  const [campaign, setCampaign] = useState({ gclid: "", utm_source: "", utm_campaign: "" });
   const {
     register,
     handleSubmit,
@@ -98,14 +167,62 @@ function Page() {
     root.style.setProperty("--bottombar-h", "0px");
   }, []);
 
-  const onSubmit = (data: FormData) => {
-    const msg = `Hola, soy ${data.nombre} de ${data.empresa}. Quiero información sobre la conferencia de Diego Camacho para un ${data.tipo_evento} en ${data.ciudad_fecha}. Mi WhatsApp: ${data.whatsapp}`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  // Captura de parámetros de campaña desde la URL (campos ocultos del formulario)
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    setCampaign({
+      gclid: p.get("gclid") ?? "",
+      utm_source: p.get("utm_source") ?? "",
+      utm_campaign: p.get("utm_campaign") ?? "",
+    });
+  }, []);
+
+  const onSubmit = async (data: FormData) => {
+    // 1. Guardar el lead antes de abrir WhatsApp
+    await supabase.from("leads_mx").insert({
+      nombre: data.nombre,
+      empresa: data.empresa,
+      cargo: data.cargo,
+      tipo_evento: data.tipo_evento,
+      ciudad_fecha: data.ciudad_fecha,
+      whatsapp: data.whatsapp,
+      presupuesto: data.presupuesto,
+      asistentes: data.asistentes,
+      gclid: campaign.gclid || null,
+      utm_source: campaign.utm_source || null,
+      utm_campaign: campaign.utm_campaign || null,
+      landing: "/mx/diego-camacho",
+    });
+
+    // 2. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
-    trackGA4Event("generate_lead", { source: "diego-camacho-mx" });
-    window.open(url, "_blank", "noopener,noreferrer");
+    trackGA4Event("generate_lead", {
+      source: "diego-camacho-mx",
+      presupuesto: data.presupuesto,
+      asistentes: data.asistentes,
+      utm_source: campaign.utm_source || undefined,
+      utm_campaign: campaign.utm_campaign || undefined,
+      gclid: campaign.gclid || undefined,
+    });
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "generate_lead",
+        landing: "mx-diego-camacho",
+        presupuesto: data.presupuesto,
+        asistentes: data.asistentes,
+      });
+    }
+
+    // 3. Confirmación visual (independiente de WhatsApp)
     setSubmitted(true);
+
+    // 4. Abrir WhatsApp con el mensaje prellenado
+    const msg = `Hola, soy ${data.nombre} de ${data.empresa} (${data.cargo}). Quiero información sobre la conferencia de Diego Camacho para un ${data.tipo_evento} en ${data.ciudad_fecha}. Asistentes: ${data.asistentes}. Presupuesto: ${data.presupuesto}. Mi WhatsApp: ${data.whatsapp}`;
+    trackWhatsAppClick("form-cta");
+    window.open(waLink(msg), "_blank", "noopener,noreferrer");
   };
+
 
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
@@ -131,9 +248,10 @@ function Page() {
             ))}
           </nav>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
+            href={waLink()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("header")}
             className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-5 py-2.5 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110 md:text-base"
           >
             WhatsApp →
@@ -177,6 +295,11 @@ function Page() {
                   <span className="text-[#EAC945]">Lo libera para vender más.</span>
                 </h1>
               </Reveal>
+              <Reveal delay={0.08}>
+                <h2 className="mt-4 max-w-2xl text-lg font-semibold text-white/85 md:text-xl 2xl:text-3xl">
+                  Conferencista de inteligencia artificial y ventas en Ciudad de México.
+                </h2>
+              </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem] xl:max-w-2xl 2xl:leading-snug 2xl:text-3xl">
                   Lleva a <strong className="text-white">Diego Camacho</strong> —Head of New
@@ -215,15 +338,15 @@ function Page() {
                 </ul>
               </Reveal>
               <Reveal delay={0.25}>
-                <div className="mt-6 flex items-center justify-between gap-3 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Bot className="h-3.5 w-3.5 text-[#EAC945]" /> IA
+                <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[10px] uppercase tracking-widest text-white/80 md:text-xs">
+                  <span className="inline-flex items-center justify-center gap-2">
+                    <Bot className="h-4 w-4 shrink-0 text-[#EAC945]" /> IA
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <TrendingUp className="h-3.5 w-3.5 text-[#EAC945]" /> Ventas
+                  <span className="inline-flex items-center justify-center gap-2 border-x border-white/10">
+                    <TrendingUp className="h-4 w-4 shrink-0 text-[#EAC945]" /> Ventas
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Globe2 className="h-3.5 w-3.5 text-[#EAC945]" /> Global
+                  <span className="inline-flex items-center justify-center gap-2">
+                    <Globe2 className="h-4 w-4 shrink-0 text-[#EAC945]" /> Global
                   </span>
                 </div>
               </Reveal>
@@ -245,7 +368,7 @@ function Page() {
                   alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
                   width={1080}
                   height={1080}
-                  loading="eager"
+                  loading="eager" fetchPriority="high" decoding="async"
                   className="block h-auto w-full max-w-[520px] object-contain"
                 />
               </div>
@@ -331,7 +454,7 @@ function Page() {
             </p>
           </Reveal>
 
-          {/* Comparativa: cards apiladas en móvil, tabla en desktop */}
+          {/* Comparativa: una sola versión responsive */}
           {(() => {
             const rows: [string, string][] = [
               ["Miedo a que la IA reemplace", "Un equipo que usa la IA para liberar tiempo y vender mejor"],
@@ -339,51 +462,27 @@ function Page() {
               ["Un discurso que se olvida", "Una acción concreta para implementar esa misma semana"],
             ];
             return (
-              <>
-                {/* Móvil: tarjetas apiladas */}
-                <div className="mt-12 space-y-4 md:hidden">
-                  {rows.map(([a, b]) => (
-                    <div key={a} className="overflow-hidden rounded-2xl border border-white/10">
-                      <div className="bg-white/[0.03] p-5">
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/50">
-                          En vez de...
-                        </div>
-                        <div className="mt-2 text-white/80">{a}</div>
-                      </div>
-                      <div className="bg-[#EAC945] p-5 text-[#0F0F0F]">
-                        <div className="text-[10px] font-bold uppercase tracking-widest">
-                          Tu equipo se lleva...
-                        </div>
-                        <div className="mt-2 font-medium">{b}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Desktop: tabla 2 columnas */}
-                <div className="mt-12 hidden overflow-hidden rounded-3xl border border-white/10 md:block">
-                  <div className="grid grid-cols-2">
-                    <div className="border-b border-white/10 bg-white/[0.03] p-6 border-r">
-                      <div className="text-xs font-bold uppercase tracking-widest text-white/50">
+              <div className="mt-12 space-y-4 md:space-y-0 md:overflow-hidden md:rounded-3xl md:border md:border-white/10">
+                {rows.map(([a, b]) => (
+                  <div
+                    key={a}
+                    className="grid overflow-hidden rounded-2xl border border-white/10 md:grid-cols-2 md:rounded-none md:border-0 md:border-t md:border-white/10 md:first:border-t-0"
+                  >
+                    <div className="bg-white/[0.03] p-5 md:border-r md:border-white/10 md:p-6">
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-white/50 md:text-xs">
                         En vez de...
                       </div>
+                      <div className="mt-2 text-white/80">{a}</div>
                     </div>
-                    <div className="bg-[#EAC945] p-6 text-[#0F0F0F]">
-                      <div className="text-xs font-bold uppercase tracking-widest">
+                    <div className="bg-[#EAC945] p-5 text-[#0F0F0F] md:bg-white/[0.02] md:p-6 md:text-white">
+                      <div className="text-[10px] font-bold uppercase tracking-widest md:text-xs md:text-[#EAC945]">
                         Tu equipo se lleva...
                       </div>
+                      <div className="mt-2 font-medium">{b}</div>
                     </div>
-                    {rows.map(([a, b]) => (
-                      <div key={a} className="contents">
-                        <div className="border-t border-white/10 p-6 text-white/70 border-r">{a}</div>
-                        <div className="border-t border-white/10 bg-white/[0.02] p-6 font-medium text-white">
-                          {b}
-                        </div>
-                      </div>
-                    ))}
                   </div>
-                </div>
-              </>
+                ))}
+              </div>
             );
           })()}
 
@@ -430,18 +529,17 @@ function Page() {
             <p className="mt-3 max-w-2xl text-white/70">
               Una estructura simple que el equipo comercial puede aplicar desde el primer día.
             </p>
-            <ol className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+            <ol className="mt-8 grid list-none grid-cols-2 gap-4 p-0 md:grid-cols-3 lg:grid-cols-6">
               {["Planear", "Prospectar", "Preparar", "Ponerse en contacto", "Propuesta", "Progreso"].map(
                 (p, i) => (
                   <li
                     key={p}
-                    className="group rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
+                    className="group list-none rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
                   >
                     <div className="flex items-center gap-2">
                       <span className="grid h-7 w-7 place-items-center rounded-full bg-[#EAC945] text-xs font-bold text-[#0F0F0F]">
                         {i + 1}
                       </span>
-                      <span className="text-xs uppercase tracking-widest text-white/50">P{i + 1}</span>
                     </div>
                     <div className="mt-3 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{p}</div>
                   </li>
@@ -662,9 +760,9 @@ function Page() {
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {[
               { t: "No es un directorio, es curaduría", d: "Ocho voces que conectan negocio y factor humano." },
-              { t: "Nivel global", d: "Presencia conjunta en más de 12 países y respaldo de CPC · The Glocal Agency." },
+              { t: "Nivel global", d: "Presencia en Colombia, México y España, con voces que han estado en escenarios de más de 12 países." },
               { t: "Respuesta rápida", d: "Disponibilidad, tarifa y recomendación a medida." },
-              { t: "Un evento completo", d: "Si tu agenda necesita más de una voz, armamos el lineup entero." },
+              { t: "Más allá de la conferencia", d: "Si el reto necesita continuidad, extendemos la charla en talleres y programas." },
             ].map((b) => (
               <div key={b.t} className="rounded-2xl border border-black/10 bg-white p-6">
                 <h3 className="font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">{b.t}</h3>
@@ -737,9 +835,9 @@ function Page() {
             <Reveal delay={0.1}>
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm lg:p-8"
+                className="rounded-3xl border border-black/10 bg-white p-5 shadow-sm lg:p-8"
               >
-                <div className="grid gap-4">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <Field label="Nombre y apellido" error={errors.nombre?.message}>
                     <input
                       {...register("nombre")}
@@ -750,6 +848,13 @@ function Page() {
                   <Field label="Empresa" error={errors.empresa?.message}>
                     <input {...register("empresa")} className="input-base" placeholder="Nombre de tu empresa" />
                   </Field>
+                  <Field label="Cargo / área" error={errors.cargo?.message}>
+                    <input
+                      {...register("cargo")}
+                      className="input-base"
+                      placeholder="Ej: Dir. Comercial, RR.HH."
+                    />
+                  </Field>
                   <Field label="Tipo de evento" error={errors.tipo_evento?.message}>
                     <select {...register("tipo_evento")} className="input-base" defaultValue="">
                       <option value="" disabled>
@@ -759,6 +864,28 @@ function Page() {
                       <option>Congreso</option>
                       <option>In-company</option>
                       <option>Otro</option>
+                    </select>
+                  </Field>
+                  <Field label="Rango de presupuesto" error={errors.presupuesto?.message}>
+                    <select {...register("presupuesto")} className="input-base" defaultValue="">
+                      <option value="" disabled>
+                        Selecciona un rango
+                      </option>
+                      <option>Hasta $150,000 MXN</option>
+                      <option>$150,000 – $300,000 MXN</option>
+                      <option>Más de $300,000 MXN</option>
+                      <option>Aún por definir</option>
+                    </select>
+                  </Field>
+                  <Field label="Asistentes aproximados" error={errors.asistentes?.message}>
+                    <select {...register("asistentes")} className="input-base" defaultValue="">
+                      <option value="" disabled>
+                        Selecciona una opción
+                      </option>
+                      <option>Menos de 100</option>
+                      <option>100 – 300</option>
+                      <option>300 – 800</option>
+                      <option>Más de 800</option>
                     </select>
                   </Field>
                   <Field label="Ciudad y fecha tentativa" error={errors.ciudad_fecha?.message}>
@@ -773,26 +900,35 @@ function Page() {
                       {...register("whatsapp")}
                       type="tel"
                       className="input-base"
-                      placeholder="+52 55 ..."
+                      placeholder={WHATSAPP_DISPLAY}
                     />
                   </Field>
                 </div>
+
+                {/* Campos ocultos de campaña */}
+                <input type="hidden" name="gclid" value={campaign.gclid} readOnly />
+                <input type="hidden" name="utm_source" value={campaign.utm_source} readOnly />
+                <input type="hidden" name="utm_campaign" value={campaign.utm_campaign} readOnly />
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F0F0F] px-6 py-4 text-sm font-bold text-[#F5F2E3] transition hover:bg-black disabled:opacity-60"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F0F0F] px-6 py-4 text-sm font-bold text-[#F5F2E3] transition hover:bg-black disabled:opacity-60"
                 >
                   <MessageSquare className="h-4 w-4" />
-                  {isSubmitting ? "Abriendo WhatsApp..." : "Escríbenos por WhatsApp"}
+                  {isSubmitting ? "Enviando..." : "Escríbenos por WhatsApp"}
                 </button>
                 {submitted && (
-                  <p className="mt-3 text-center text-xs text-black/60">
-                    Abrimos WhatsApp en otra pestaña. Si no se abrió, revisa el bloqueador de
-                    ventanas emergentes.
+                  <p className="mt-3 rounded-xl bg-[#EAC945]/25 px-4 py-3 text-center text-sm font-semibold text-[#0F0F0F]">
+                    ¡Listo! Te escribimos por WhatsApp en breve.
                   </p>
                 )}
-                <p className="mt-4 text-center text-xs text-black/50">
-                  Al enviar aceptas ser contactado por WhatsApp por el equipo de Voz Estratégica.
+                <p className="mt-3 text-center text-xs text-black/50">
+                  Al enviar, aceptas nuestro{" "}
+                  <a href="/aviso-de-privacidad" className="underline hover:text-black">
+                    Aviso de Privacidad
+                  </a>
+                  .
                 </p>
               </form>
             </Reveal>
