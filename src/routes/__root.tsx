@@ -192,7 +192,7 @@ function Shell() {
         <a
           href={
             isCampaignLanding
-              ? `https://wa.me/52XXXXXXXXXX?text=${encodeURIComponent("Hola, quiero disponibilidad y tarifa de Diego Camacho para un evento en CDMX.")}`
+              ? `https://wa.me/573106598108?text=${encodeURIComponent("Hola, quiero disponibilidad y tarifa de Diego Camacho para un evento en CDMX.")}`
               : "https://wa.me/573106598108?text=%C2%A1Hola!%20Quiero%20una%20propuesta%20de%20aprendizaje%20para%20mi%20equipo%20%28conferencia%2C%20taller%20o%20programa%29."
           }
           target="_blank"
