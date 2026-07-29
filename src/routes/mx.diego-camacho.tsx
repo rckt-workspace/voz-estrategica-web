@@ -529,18 +529,17 @@ function Page() {
             <p className="mt-3 max-w-2xl text-white/70">
               Una estructura simple que el equipo comercial puede aplicar desde el primer día.
             </p>
-            <ol className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+            <ol className="mt-8 grid list-none grid-cols-2 gap-4 p-0 md:grid-cols-3 lg:grid-cols-6">
               {["Planear", "Prospectar", "Preparar", "Ponerse en contacto", "Propuesta", "Progreso"].map(
                 (p, i) => (
                   <li
                     key={p}
-                    className="group rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
+                    className="group list-none rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
                   >
                     <div className="flex items-center gap-2">
                       <span className="grid h-7 w-7 place-items-center rounded-full bg-[#EAC945] text-xs font-bold text-[#0F0F0F]">
                         {i + 1}
                       </span>
-                      <span className="text-xs uppercase tracking-widest text-white/50">P{i + 1}</span>
                     </div>
                     <div className="mt-3 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{p}</div>
                   </li>
