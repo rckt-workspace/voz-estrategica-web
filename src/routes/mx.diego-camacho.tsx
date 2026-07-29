@@ -28,10 +28,12 @@ import { supabase } from "@/integrations/supabase/client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
+import googleLogoUrl from "@/assets/logos/google.svg";
+import microsoftLogoUrl from "@/assets/logos/microsoft.svg";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 // TODO: reemplazar por el número real de México (formato internacional sin signos)
-const WHATSAPP_NUMBER = "52XXXXXXXXXX";
+const WHATSAPP_NUMBER = "573106598108";
 const WHATSAPP_DISPLAY = "+52 XXX XXX XXXX";
 const WA_DEFAULT_MSG =
   "Hola, quiero disponibilidad y tarifa de Diego Camacho para un evento en CDMX.";
@@ -607,6 +609,25 @@ function Page() {
                   ))}
                 </div>
 
+                <div className="rounded-xl border border-black/10 bg-white p-4">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+                    Ha trabajado con
+                  </div>
+                  <div className="mt-3 flex flex-wrap items-center gap-x-8 gap-y-4">
+                    <img
+                      src={googleLogoUrl}
+                      alt="Google"
+                      loading="lazy"
+                      className="h-6 w-auto opacity-60 grayscale 2xl:h-8"
+                    />
+                    <img
+                      src={microsoftLogoUrl}
+                      alt="Microsoft"
+                      loading="lazy"
+                      className="h-6 w-auto opacity-60 grayscale 2xl:h-8"
+                    />
+                  </div>
+                </div>
               </div>
             </Reveal>
           </div>
