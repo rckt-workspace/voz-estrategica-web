@@ -615,18 +615,9 @@ function Page() {
                     Ha trabajado con
                   </div>
                   <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
-                    <img
-                      src={googleLogoUrl}
-                      alt="Google"
-                      loading="lazy"
-                      className="h-9 w-auto md:h-11 2xl:h-14"
-                    />
-                    <img
-                      src={microsoftLogoUrl}
-                      alt="Microsoft"
-                      loading="lazy"
-                      className="h-9 w-auto md:h-11 2xl:h-14"
-                    />
+                    <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
+                    <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
+
                   </div>
                 </div>
 
