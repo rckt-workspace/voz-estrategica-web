@@ -36,6 +36,9 @@ function loadBoldLibrary(): Promise<void> {
 
 const fmt = (n: number) => "$" + n.toLocaleString("es-CO");
 
+type BoldOrder = Awaited<ReturnType<typeof createBookOrder>>;
+
+
 type Props = {
   open: boolean;
   onClose: () => void;
