@@ -248,9 +248,10 @@ function Page() {
             ))}
           </nav>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, quiero información sobre la conferencia de Diego Camacho en CDMX.")}`}
+            href={waLink()}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("header")}
             className="inline-flex items-center gap-2 rounded-full bg-[#EAC945] px-5 py-2.5 text-sm font-bold text-[#0F0F0F] transition hover:brightness-110 md:text-base"
           >
             WhatsApp →
