@@ -25,7 +25,7 @@ import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { supabase } from "@/integrations/supabase/client";
-import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.png.asset.json";
+import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
