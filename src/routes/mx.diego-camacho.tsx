@@ -835,9 +835,9 @@ function Page() {
             <Reveal delay={0.1}>
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm lg:p-8"
+                className="rounded-3xl border border-black/10 bg-white p-5 shadow-sm lg:p-8"
               >
-                <div className="grid gap-4">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <Field label="Nombre y apellido" error={errors.nombre?.message}>
                     <input
                       {...register("nombre")}
@@ -848,6 +848,13 @@ function Page() {
                   <Field label="Empresa" error={errors.empresa?.message}>
                     <input {...register("empresa")} className="input-base" placeholder="Nombre de tu empresa" />
                   </Field>
+                  <Field label="Cargo / área" error={errors.cargo?.message}>
+                    <input
+                      {...register("cargo")}
+                      className="input-base"
+                      placeholder="Ej: Dir. Comercial, RR.HH."
+                    />
+                  </Field>
                   <Field label="Tipo de evento" error={errors.tipo_evento?.message}>
                     <select {...register("tipo_evento")} className="input-base" defaultValue="">
                       <option value="" disabled>
@@ -857,6 +864,28 @@ function Page() {
                       <option>Congreso</option>
                       <option>In-company</option>
                       <option>Otro</option>
+                    </select>
+                  </Field>
+                  <Field label="Rango de presupuesto" error={errors.presupuesto?.message}>
+                    <select {...register("presupuesto")} className="input-base" defaultValue="">
+                      <option value="" disabled>
+                        Selecciona un rango
+                      </option>
+                      <option>Hasta $150,000 MXN</option>
+                      <option>$150,000 – $300,000 MXN</option>
+                      <option>Más de $300,000 MXN</option>
+                      <option>Aún por definir</option>
+                    </select>
+                  </Field>
+                  <Field label="Asistentes aproximados" error={errors.asistentes?.message}>
+                    <select {...register("asistentes")} className="input-base" defaultValue="">
+                      <option value="" disabled>
+                        Selecciona una opción
+                      </option>
+                      <option>Menos de 100</option>
+                      <option>100 – 300</option>
+                      <option>300 – 800</option>
+                      <option>Más de 800</option>
                     </select>
                   </Field>
                   <Field label="Ciudad y fecha tentativa" error={errors.ciudad_fecha?.message}>
@@ -871,26 +900,35 @@ function Page() {
                       {...register("whatsapp")}
                       type="tel"
                       className="input-base"
-                      placeholder="+52 55 ..."
+                      placeholder={WHATSAPP_DISPLAY}
                     />
                   </Field>
                 </div>
+
+                {/* Campos ocultos de campaña */}
+                <input type="hidden" name="gclid" value={campaign.gclid} readOnly />
+                <input type="hidden" name="utm_source" value={campaign.utm_source} readOnly />
+                <input type="hidden" name="utm_campaign" value={campaign.utm_campaign} readOnly />
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F0F0F] px-6 py-4 text-sm font-bold text-[#F5F2E3] transition hover:bg-black disabled:opacity-60"
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F0F0F] px-6 py-4 text-sm font-bold text-[#F5F2E3] transition hover:bg-black disabled:opacity-60"
                 >
                   <MessageSquare className="h-4 w-4" />
-                  {isSubmitting ? "Abriendo WhatsApp..." : "Escríbenos por WhatsApp"}
+                  {isSubmitting ? "Enviando..." : "Escríbenos por WhatsApp"}
                 </button>
                 {submitted && (
-                  <p className="mt-3 text-center text-xs text-black/60">
-                    Abrimos WhatsApp en otra pestaña. Si no se abrió, revisa el bloqueador de
-                    ventanas emergentes.
+                  <p className="mt-3 rounded-xl bg-[#EAC945]/25 px-4 py-3 text-center text-sm font-semibold text-[#0F0F0F]">
+                    ¡Listo! Te escribimos por WhatsApp en breve.
                   </p>
                 )}
-                <p className="mt-4 text-center text-xs text-black/50">
-                  Al enviar aceptas ser contactado por WhatsApp por el equipo de Voz Estratégica.
+                <p className="mt-3 text-center text-xs text-black/50">
+                  Al enviar, aceptas nuestro{" "}
+                  <a href="/aviso-de-privacidad" className="underline hover:text-black">
+                    Aviso de Privacidad
+                  </a>
+                  .
                 </p>
               </form>
             </Reveal>
