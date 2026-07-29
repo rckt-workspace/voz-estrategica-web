@@ -24,23 +24,89 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
+import { supabase } from "@/integrations/supabase/client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.png.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
-const WHATSAPP_NUMBER = "573106598108";
+// TODO: reemplazar por el número real de México (formato internacional sin signos)
+const WHATSAPP_NUMBER = "52XXXXXXXXXX";
+const WHATSAPP_DISPLAY = "+52 XXX XXX XXXX";
+const WA_DEFAULT_MSG =
+  "Hola, quiero disponibilidad y tarifa de Diego Camacho para un evento en CDMX.";
+
+function waLink(msg: string = WA_DEFAULT_MSG) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+function trackWhatsAppClick(placement: string) {
+  trackEvent("Contact", { method: "whatsapp", placement });
+  trackGA4Event("contact_whatsapp", { placement, landing: "mx-diego-camacho" });
+  if (typeof window !== "undefined") {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "contact_whatsapp", placement });
+  }
+}
 
 const schema = z.object({
   nombre: z.string().trim().min(2, "Tu nombre y apellido"),
   empresa: z.string().trim().min(2, "Nombre de la empresa"),
+  cargo: z.string().trim().min(2, "Tu cargo o área"),
   tipo_evento: z.enum(["Convención", "Congreso", "In-company", "Otro"], {
     errorMap: () => ({ message: "Selecciona un tipo de evento" }),
+  }),
+  presupuesto: z.enum(
+    ["Hasta $150,000 MXN", "$150,000 – $300,000 MXN", "Más de $300,000 MXN", "Aún por definir"],
+    { errorMap: () => ({ message: "Selecciona un rango de presupuesto" }) },
+  ),
+  asistentes: z.enum(["Menos de 100", "100 – 300", "300 – 800", "Más de 800"], {
+    errorMap: () => ({ message: "Selecciona el número de asistentes" }),
   }),
   ciudad_fecha: z.string().trim().min(2, "Ciudad y fecha tentativa"),
   whatsapp: z.string().trim().min(6, "Tu WhatsApp"),
 });
 type FormData = z.infer<typeof schema>;
+
+const PERSON_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Diego Camacho",
+  jobTitle: "Head of New Business Sales en Google · Conferencista de IA y Ventas",
+  url: CANONICAL,
+  image: "https://vozestrategica.com/og-diego-camacho.jpg",
+  nationality: "CO",
+  knowsAbout: [
+    "Inteligencia artificial aplicada a ventas",
+    "Marketing digital",
+    "Transformación comercial",
+  ],
+  worksFor: { "@type": "Organization", name: "Google" },
+  affiliation: {
+    "@type": "Organization",
+    name: "Voz Estratégica",
+    url: "https://vozestrategica.com",
+  },
+};
+
+const SERVICE_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Conferencia de inteligencia artificial y ventas",
+  name: "Conferencia de IA y ventas con Diego Camacho",
+  description:
+    "Conferencia magistral sobre inteligencia artificial aplicada a ventas y marketing para convenciones, congresos y eventos in-company en Ciudad de México.",
+  provider: { "@type": "Organization", name: "Voz Estratégica", url: "https://vozestrategica.com" },
+  areaServed: { "@type": "Country", name: "México" },
+  audience: { "@type": "BusinessAudience", audienceType: "Empresas y equipos comerciales" },
+  offers: {
+    "@type": "Offer",
+    url: CANONICAL,
+    priceCurrency: "MXN",
+    availability: "https://schema.org/InStock",
+    category: "Conferencia corporativa",
+  },
+};
 
 export const Route = createFileRoute("/mx/diego-camacho")({
   head: () => ({
@@ -50,11 +116,6 @@ export const Route = createFileRoute("/mx/diego-camacho")({
         name: "description",
         content:
           "Lleva a Diego Camacho, Head of New Business Sales en Google y referente en IA aplicada a ventas, a tu convención en CDMX. Escríbenos por WhatsApp y recibe disponibilidad y tarifa.",
-      },
-      {
-        name: "keywords",
-        content:
-          "conferencista de inteligencia artificial CDMX, speaker de ventas México, conferencista IA para empresas, ponente inteligencia artificial evento",
       },
       { name: "robots", content: "index, follow" },
       { property: "og:type", content: "profile" },
@@ -75,13 +136,21 @@ export const Route = createFileRoute("/mx/diego-camacho")({
           "Head of New Business Sales en Google. IA aplicada a ventas y marketing. Disponible para tu convención en CDMX.",
       },
     ],
-    links: [{ rel: "canonical", href: CANONICAL }],
+    links: [
+      { rel: "canonical", href: CANONICAL },
+      { rel: "preload", as: "image", href: diegoHeroAsset.url, fetchpriority: "high" },
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
+      { type: "application/ld+json", children: JSON.stringify(SERVICE_JSONLD) },
+    ],
   }),
   component: Page,
 });
 
 function Page() {
   const [submitted, setSubmitted] = useState(false);
+  const [campaign, setCampaign] = useState({ gclid: "", utm_source: "", utm_campaign: "" });
   const {
     register,
     handleSubmit,
@@ -98,14 +167,62 @@ function Page() {
     root.style.setProperty("--bottombar-h", "0px");
   }, []);
 
-  const onSubmit = (data: FormData) => {
-    const msg = `Hola, soy ${data.nombre} de ${data.empresa}. Quiero información sobre la conferencia de Diego Camacho para un ${data.tipo_evento} en ${data.ciudad_fecha}. Mi WhatsApp: ${data.whatsapp}`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+  // Captura de parámetros de campaña desde la URL (campos ocultos del formulario)
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    setCampaign({
+      gclid: p.get("gclid") ?? "",
+      utm_source: p.get("utm_source") ?? "",
+      utm_campaign: p.get("utm_campaign") ?? "",
+    });
+  }, []);
+
+  const onSubmit = async (data: FormData) => {
+    // 1. Guardar el lead antes de abrir WhatsApp
+    await supabase.from("leads_mx").insert({
+      nombre: data.nombre,
+      empresa: data.empresa,
+      cargo: data.cargo,
+      tipo_evento: data.tipo_evento,
+      ciudad_fecha: data.ciudad_fecha,
+      whatsapp: data.whatsapp,
+      presupuesto: data.presupuesto,
+      asistentes: data.asistentes,
+      gclid: campaign.gclid || null,
+      utm_source: campaign.utm_source || null,
+      utm_campaign: campaign.utm_campaign || null,
+      landing: "/mx/diego-camacho",
+    });
+
+    // 2. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
-    trackGA4Event("generate_lead", { source: "diego-camacho-mx" });
-    window.open(url, "_blank", "noopener,noreferrer");
+    trackGA4Event("generate_lead", {
+      source: "diego-camacho-mx",
+      presupuesto: data.presupuesto,
+      asistentes: data.asistentes,
+      utm_source: campaign.utm_source || undefined,
+      utm_campaign: campaign.utm_campaign || undefined,
+      gclid: campaign.gclid || undefined,
+    });
+    if (typeof window !== "undefined") {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "generate_lead",
+        landing: "mx-diego-camacho",
+        presupuesto: data.presupuesto,
+        asistentes: data.asistentes,
+      });
+    }
+
+    // 3. Confirmación visual (independiente de WhatsApp)
     setSubmitted(true);
+
+    // 4. Abrir WhatsApp con el mensaje prellenado
+    const msg = `Hola, soy ${data.nombre} de ${data.empresa} (${data.cargo}). Quiero información sobre la conferencia de Diego Camacho para un ${data.tipo_evento} en ${data.ciudad_fecha}. Asistentes: ${data.asistentes}. Presupuesto: ${data.presupuesto}. Mi WhatsApp: ${data.whatsapp}`;
+    trackWhatsAppClick("form-cta");
+    window.open(waLink(msg), "_blank", "noopener,noreferrer");
   };
+
 
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
