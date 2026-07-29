@@ -176,6 +176,60 @@ export type Database = {
           },
         ]
       }
+      leads_mx: {
+        Row: {
+          asistentes: string | null
+          cargo: string | null
+          ciudad_fecha: string
+          created_at: string
+          empresa: string
+          gclid: string | null
+          id: string
+          landing: string
+          nombre: string
+          presupuesto: string | null
+          tipo_evento: string
+          updated_at: string
+          utm_campaign: string | null
+          utm_source: string | null
+          whatsapp: string
+        }
+        Insert: {
+          asistentes?: string | null
+          cargo?: string | null
+          ciudad_fecha: string
+          created_at?: string
+          empresa: string
+          gclid?: string | null
+          id?: string
+          landing?: string
+          nombre: string
+          presupuesto?: string | null
+          tipo_evento: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_source?: string | null
+          whatsapp: string
+        }
+        Update: {
+          asistentes?: string | null
+          cargo?: string | null
+          ciudad_fecha?: string
+          created_at?: string
+          empresa?: string
+          gclid?: string | null
+          id?: string
+          landing?: string
+          nombre?: string
+          presupuesto?: string | null
+          tipo_evento?: string
+          updated_at?: string
+          utm_campaign?: string | null
+          utm_source?: string | null
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           amount: number | null

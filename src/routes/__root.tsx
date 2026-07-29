@@ -190,13 +190,24 @@ function Shell() {
       {/* WhatsApp floating button — hidden on masterclass landing */}
       {!isSalesLanding && (
         <a
-          href="https://wa.me/573106598108?text=%C2%A1Hola!%20Quiero%20una%20propuesta%20de%20aprendizaje%20para%20mi%20equipo%20%28conferencia%2C%20taller%20o%20programa%29."
+          href={
+            isCampaignLanding
+              ? `https://wa.me/52XXXXXXXXXX?text=${encodeURIComponent("Hola, quiero disponibilidad y tarifa de Diego Camacho para un evento en CDMX.")}`
+              : "https://wa.me/573106598108?text=%C2%A1Hola!%20Quiero%20una%20propuesta%20de%20aprendizaje%20para%20mi%20equipo%20%28conferencia%2C%20taller%20o%20programa%29."
+          }
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
           onClick={() => {
-            trackEvent("Contact", { method: "whatsapp" });
-            trackGA4Event("contact", { method: "whatsapp" });
+            trackEvent("Contact", { method: "whatsapp", placement: "floating" });
+            trackGA4Event(isCampaignLanding ? "contact_whatsapp" : "contact", {
+              method: "whatsapp",
+              placement: "floating",
+            });
+            if (typeof window !== "undefined") {
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({ event: "contact_whatsapp", placement: "floating" });
+            }
           }}
           className="fixed right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl"
           style={{ bottom: "calc(1.5rem + var(--bottombar-h, 0px))" }}
