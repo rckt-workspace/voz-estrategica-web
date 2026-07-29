@@ -11,6 +11,7 @@ import bookMilagrosamente from "@/assets/book-milagrosamente.webp";
 import bookClientesFans from "@/assets/book-clientes-fans.webp";
 import bookMujeresFinanzas from "@/assets/book-mujeres-finanzas-new.jpg";
 import bookBrandExponential from "@/assets/book-brand-exponential-new.jpg";
+import bookEbookPaola from "@/assets/book-ebook-paola-aldaz.jpg";
 
 export type BookSku = "clientes-fans" | "milagrosamente-bien" | "ebook-paola";
 export type BookFormato = "fisico" | "digital";
