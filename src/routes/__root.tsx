@@ -200,7 +200,7 @@ function Shell() {
           aria-label="WhatsApp"
           onClick={() => {
             trackEvent("Contact", { method: "whatsapp", placement: "floating" });
-            trackGA4Event(isCampaignLanding ? "contact_whatsapp" : "contact", {
+            trackGA4Event("contact_whatsapp", {
               method: "whatsapp",
               placement: "floating",
             });
