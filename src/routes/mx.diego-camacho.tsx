@@ -295,6 +295,11 @@ function Page() {
                   <span className="text-[#EAC945]">Lo libera para vender más.</span>
                 </h1>
               </Reveal>
+              <Reveal delay={0.08}>
+                <h2 className="mt-4 max-w-2xl text-lg font-semibold text-white/85 md:text-xl 2xl:text-3xl">
+                  Conferencista de inteligencia artificial y ventas en Ciudad de México.
+                </h2>
+              </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem] xl:max-w-2xl 2xl:leading-snug 2xl:text-3xl">
                   Lleva a <strong className="text-white">Diego Camacho</strong> —Head of New
