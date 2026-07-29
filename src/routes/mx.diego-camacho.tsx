@@ -454,7 +454,7 @@ function Page() {
             </p>
           </Reveal>
 
-          {/* Comparativa: cards apiladas en móvil, tabla en desktop */}
+          {/* Comparativa: una sola versión responsive */}
           {(() => {
             const rows: [string, string][] = [
               ["Miedo a que la IA reemplace", "Un equipo que usa la IA para liberar tiempo y vender mejor"],
@@ -462,51 +462,27 @@ function Page() {
               ["Un discurso que se olvida", "Una acción concreta para implementar esa misma semana"],
             ];
             return (
-              <>
-                {/* Móvil: tarjetas apiladas */}
-                <div className="mt-12 space-y-4 md:hidden">
-                  {rows.map(([a, b]) => (
-                    <div key={a} className="overflow-hidden rounded-2xl border border-white/10">
-                      <div className="bg-white/[0.03] p-5">
-                        <div className="text-[10px] font-bold uppercase tracking-widest text-white/50">
-                          En vez de...
-                        </div>
-                        <div className="mt-2 text-white/80">{a}</div>
-                      </div>
-                      <div className="bg-[#EAC945] p-5 text-[#0F0F0F]">
-                        <div className="text-[10px] font-bold uppercase tracking-widest">
-                          Tu equipo se lleva...
-                        </div>
-                        <div className="mt-2 font-medium">{b}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Desktop: tabla 2 columnas */}
-                <div className="mt-12 hidden overflow-hidden rounded-3xl border border-white/10 md:block">
-                  <div className="grid grid-cols-2">
-                    <div className="border-b border-white/10 bg-white/[0.03] p-6 border-r">
-                      <div className="text-xs font-bold uppercase tracking-widest text-white/50">
+              <div className="mt-12 space-y-4 md:space-y-0 md:overflow-hidden md:rounded-3xl md:border md:border-white/10">
+                {rows.map(([a, b]) => (
+                  <div
+                    key={a}
+                    className="grid overflow-hidden rounded-2xl border border-white/10 md:grid-cols-2 md:rounded-none md:border-0 md:border-t md:border-white/10 md:first:border-t-0"
+                  >
+                    <div className="bg-white/[0.03] p-5 md:border-r md:border-white/10 md:p-6">
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-white/50 md:text-xs">
                         En vez de...
                       </div>
+                      <div className="mt-2 text-white/80">{a}</div>
                     </div>
-                    <div className="bg-[#EAC945] p-6 text-[#0F0F0F]">
-                      <div className="text-xs font-bold uppercase tracking-widest">
+                    <div className="bg-[#EAC945] p-5 text-[#0F0F0F] md:bg-white/[0.02] md:p-6 md:text-white">
+                      <div className="text-[10px] font-bold uppercase tracking-widest md:text-xs md:text-[#EAC945]">
                         Tu equipo se lleva...
                       </div>
+                      <div className="mt-2 font-medium">{b}</div>
                     </div>
-                    {rows.map(([a, b]) => (
-                      <div key={a} className="contents">
-                        <div className="border-t border-white/10 p-6 text-white/70 border-r">{a}</div>
-                        <div className="border-t border-white/10 bg-white/[0.02] p-6 font-medium text-white">
-                          {b}
-                        </div>
-                      </div>
-                    ))}
                   </div>
-                </div>
-              </>
+                ))}
+              </div>
             );
           })()}
 
