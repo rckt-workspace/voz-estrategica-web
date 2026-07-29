@@ -138,7 +138,7 @@ export const Route = createFileRoute("/mx/diego-camacho")({
     ],
     links: [
       { rel: "canonical", href: CANONICAL },
-      { rel: "preload", as: "image", href: diegoHeroAsset.url, fetchpriority: "high" },
+      { rel: "preload", as: "image", href: diegoHeroAsset.url, fetchPriority: "high" },
     ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
