@@ -609,25 +609,26 @@ function Page() {
                   ))}
                 </div>
 
-                <div className="rounded-xl border border-black/10 bg-white p-4">
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-black/50">
+                <div className="rounded-xl border-2 border-black/15 bg-white p-6 shadow-sm">
+                  <div className="font-display text-sm uppercase tracking-widest text-black/70 2xl:text-base">
                     Ha trabajado con
                   </div>
-                  <div className="mt-3 flex flex-wrap items-center gap-x-8 gap-y-4">
+                  <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
                     <img
                       src={googleLogoUrl}
                       alt="Google"
                       loading="lazy"
-                      className="h-6 w-auto opacity-60 grayscale 2xl:h-8"
+                      className="h-9 w-auto md:h-11 2xl:h-14"
                     />
                     <img
                       src={microsoftLogoUrl}
                       alt="Microsoft"
                       loading="lazy"
-                      className="h-6 w-auto opacity-60 grayscale 2xl:h-8"
+                      className="h-9 w-auto md:h-11 2xl:h-14"
                     />
                   </div>
                 </div>
+
               </div>
             </Reveal>
           </div>
