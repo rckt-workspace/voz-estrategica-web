@@ -760,9 +760,9 @@ function Page() {
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {[
               { t: "No es un directorio, es curaduría", d: "Ocho voces que conectan negocio y factor humano." },
-              { t: "Nivel global", d: "Presencia conjunta en más de 12 países y respaldo de CPC · The Glocal Agency." },
+              { t: "Nivel global", d: "Presencia en Colombia, México y España, con voces que han estado en escenarios de más de 12 países." },
               { t: "Respuesta rápida", d: "Disponibilidad, tarifa y recomendación a medida." },
-              { t: "Un evento completo", d: "Si tu agenda necesita más de una voz, armamos el lineup entero." },
+              { t: "Más allá de la conferencia", d: "Si el reto necesita continuidad, extendemos la charla en talleres y programas." },
             ].map((b) => (
               <div key={b.t} className="rounded-2xl border border-black/10 bg-white p-6">
                 <h3 className="font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">{b.t}</h3>
