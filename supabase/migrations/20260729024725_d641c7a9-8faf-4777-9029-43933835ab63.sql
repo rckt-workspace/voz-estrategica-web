@@ -1,0 +1,1 @@
+DELETE FROM public.leads_mx WHERE nombre = 'Prueba GA4' AND gclid = 'TESTGCLID';

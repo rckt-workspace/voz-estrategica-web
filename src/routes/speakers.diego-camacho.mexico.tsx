@@ -220,7 +220,7 @@ function DiegoMexicoLanding() {
                 rel="noopener noreferrer"
                 onClick={() => {
                   trackEvent("Contact", { source: SOURCE_TAG, channel: "whatsapp" });
-                  trackGA4Event("contact", { method: "whatsapp", source: SOURCE_TAG });
+                  trackGA4Event("contact_whatsapp", { method: "whatsapp", source: SOURCE_TAG, placement: "hero" });
                 }}
                 className="bubble bubble-black inline-flex items-center gap-2 px-6 py-4 text-base"
               >
