@@ -368,7 +368,7 @@ function Page() {
                   alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
                   width={1080}
                   height={1080}
-                  loading="eager"
+                  loading="eager" fetchPriority="high" decoding="async"
                   className="block h-auto w-full max-w-[520px] object-contain"
                 />
               </div>
