@@ -28,8 +28,8 @@ import { supabase } from "@/integrations/supabase/client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
-import googleLogoUrl from "@/assets/logos/google.svg";
-import microsoftLogoUrl from "@/assets/logos/microsoft.svg";
+import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
+
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 // TODO: reemplazar por el número real de México (formato internacional sin signos)
