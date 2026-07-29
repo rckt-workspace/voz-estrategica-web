@@ -137,7 +137,6 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
       // El checkout embebido ya está visible: reactivamos el botón para que el
       // usuario pueda reintentar si cierra la ventana de pago sin completarla.
       setLoading(false);
-
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Error inesperado";
       toast.error(msg);
