@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
 import { Route as SolucionesRouteImport } from './routes/soluciones'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecursosRouteImport } from './routes/recursos'
@@ -38,6 +39,11 @@ import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
+const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
+  id: '/terminos-y-condiciones',
+  path: '/terminos-y-condiciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolucionesRoute = SolucionesRouteImport.update({
   id: '/soluciones',
   path: '/soluciones',
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/soluciones': typeof SolucionesRoute
+  '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/soluciones': typeof SolucionesRoute
+  '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
@@ -259,6 +267,7 @@ export interface FileRoutesById {
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/soluciones': typeof SolucionesRoute
+  '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
@@ -291,6 +300,7 @@ export interface FileRouteTypes {
     | '/recursos'
     | '/sitemap.xml'
     | '/soluciones'
+    | '/terminos-y-condiciones'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/pedidos-libros'
@@ -320,6 +330,7 @@ export interface FileRouteTypes {
     | '/recursos'
     | '/sitemap.xml'
     | '/soluciones'
+    | '/terminos-y-condiciones'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/pedidos-libros'
@@ -350,6 +361,7 @@ export interface FileRouteTypes {
     | '/recursos'
     | '/sitemap.xml'
     | '/soluciones'
+    | '/terminos-y-condiciones'
     | '/admin/eventos'
     | '/admin/libros'
     | '/admin/pedidos-libros'
@@ -381,6 +393,7 @@ export interface RootRouteChildren {
   RecursosRoute: typeof RecursosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolucionesRoute: typeof SolucionesRoute
+  TerminosYCondicionesRoute: typeof TerminosYCondicionesRoute
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   MxDiegoCamachoRoute: typeof MxDiegoCamachoRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
@@ -390,6 +403,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terminos-y-condiciones': {
+      id: '/terminos-y-condiciones'
+      path: '/terminos-y-condiciones'
+      fullPath: '/terminos-y-condiciones'
+      preLoaderRoute: typeof TerminosYCondicionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/soluciones': {
       id: '/soluciones'
       path: '/soluciones'
@@ -627,6 +647,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecursosRoute: RecursosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolucionesRoute: SolucionesRoute,
+  TerminosYCondicionesRoute: TerminosYCondicionesRoute,
   MasterclassGraciasRoute: MasterclassGraciasRoute,
   MxDiegoCamachoRoute: MxDiegoCamachoRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
