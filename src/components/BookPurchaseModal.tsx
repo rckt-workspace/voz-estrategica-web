@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { X, Minus, Plus, Loader2 } from "lucide-react";
@@ -36,6 +36,9 @@ function loadBoldLibrary(): Promise<void> {
 
 const fmt = (n: number) => "$" + n.toLocaleString("es-CO");
 
+type BoldOrder = Awaited<ReturnType<typeof createBookOrder>>;
+
+
 type Props = {
   open: boolean;
   onClose: () => void;
@@ -57,6 +60,10 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
   const [ciudad, setCiudad] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [loading, setLoading] = useState(false);
+  // Reutiliza la orden creada si el usuario cierra el checkout y reintenta con los mismos datos,
+  // para no generar filas duplicadas en pedidos_libros.
+  const lastOrderRef = useRef<{ key: string; order: BoldOrder } | null>(null);
+
 
   useEffect(() => {
     if (!open) return;
@@ -94,20 +101,26 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
     }
 
     setLoading(true);
+    const orderKey = JSON.stringify({ sku, cantidad, nombre, email, telefono, direccion, ciudad, departamento });
     try {
       await loadBoldLibrary();
-      const order = await create({
-        data: {
-          sku,
-          cantidad,
-          nombre_completo: nombre,
-          email,
-          telefono,
-          direccion: formato === "fisico" ? direccion : undefined,
-          ciudad: formato === "fisico" ? ciudad : undefined,
-          departamento: formato === "fisico" ? departamento : undefined,
-        },
-      });
+      const cached = lastOrderRef.current;
+      const order =
+        cached && cached.key === orderKey
+          ? cached.order
+          : await create({
+              data: {
+                sku,
+                cantidad,
+                nombre_completo: nombre,
+                email,
+                telefono,
+                direccion: formato === "fisico" ? direccion : undefined,
+                ciudad: formato === "fisico" ? ciudad : undefined,
+                departamento: formato === "fisico" ? departamento : undefined,
+              },
+            });
+      lastOrderRef.current = { key: orderKey, order };
       if (!window.BoldCheckout) throw new Error("Bold no disponible");
       const checkout = new window.BoldCheckout({
         apiKey: order.apiKey,
@@ -121,6 +134,9 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
         renderMode: "embedded",
       });
       checkout.open();
+      // El checkout embebido ya está visible: reactivamos el botón para que el
+      // usuario pueda reintentar si cierra la ventana de pago sin completarla.
+      setLoading(false);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Error inesperado";
       toast.error(msg);
