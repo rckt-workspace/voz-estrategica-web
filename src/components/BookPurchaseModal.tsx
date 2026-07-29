@@ -57,6 +57,10 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
   const [ciudad, setCiudad] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [loading, setLoading] = useState(false);
+  // Reutiliza la orden creada si el usuario cierra el checkout y reintenta con los mismos datos,
+  // para no generar filas duplicadas en pedidos_libros.
+  const lastOrderRef = useRef<{ key: string; order: BoldOrder } | null>(null);
+
 
   useEffect(() => {
     if (!open) return;
