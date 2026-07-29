@@ -28,8 +28,8 @@ import { supabase } from "@/integrations/supabase/client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
-import googleLogoUrl from "@/assets/logos/google.svg";
-import microsoftLogoUrl from "@/assets/logos/microsoft.svg";
+import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
+
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 // TODO: reemplazar por el número real de México (formato internacional sin signos)
@@ -531,12 +531,12 @@ function Page() {
             <p className="mt-3 max-w-2xl text-white/70">
               Una estructura simple que el equipo comercial puede aplicar desde el primer día.
             </p>
-            <ol className="mt-8 grid list-none grid-cols-2 gap-4 p-0 md:grid-cols-3 lg:grid-cols-6">
+            <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
               {["Planear", "Prospectar", "Preparar", "Ponerse en contacto", "Propuesta", "Progreso"].map(
                 (p, i) => (
-                  <li
+                  <div
                     key={p}
-                    className="group list-none rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
+                    className="group rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
                   >
                     <div className="flex items-center gap-2">
                       <span className="grid h-7 w-7 place-items-center rounded-full bg-[#EAC945] text-xs font-bold text-[#0F0F0F]">
@@ -544,10 +544,11 @@ function Page() {
                       </span>
                     </div>
                     <div className="mt-3 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{p}</div>
-                  </li>
+                  </div>
                 ),
               )}
-            </ol>
+            </div>
+
           </div>
         </div>
       </section>
@@ -614,18 +615,9 @@ function Page() {
                     Ha trabajado con
                   </div>
                   <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
-                    <img
-                      src={googleLogoUrl}
-                      alt="Google"
-                      loading="lazy"
-                      className="h-9 w-auto md:h-11 2xl:h-14"
-                    />
-                    <img
-                      src={microsoftLogoUrl}
-                      alt="Microsoft"
-                      loading="lazy"
-                      className="h-9 w-auto md:h-11 2xl:h-14"
-                    />
+                    <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
+                    <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
+
                   </div>
                 </div>
 
