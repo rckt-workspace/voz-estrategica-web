@@ -21,16 +21,21 @@ import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
-  if (typeof window !== "undefined") {
-    window.location.replace("/masterclass-de-clientes-a-fans");
-  }
-  return null;
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="font-display text-4xl uppercase">Página no encontrada</h1>
+        <p className="mt-3 text-sm text-muted-foreground">
+          El enlace que buscas no existe o cambió de dirección.
+        </p>
+        <a href="/" className="bubble bubble-black mt-6 inline-block">
+          Ir al inicio
+        </a>
+      </div>
+    </div>
+  );
 }
 
-// Note: a splat route at src/routes/$.tsx handles unmatched URLs with a
-// proper server-side redirect via beforeLoad. NotFoundComponent above is a
-// fallback for any not-found case the splat doesn't cover (e.g. notFound()
-// thrown from a loader).
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
