@@ -1,12 +1,20 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const serverPath = resolve(__dirname, '../.output/server/index.mjs');
 
+// Only the Node (nitro node-server) build emits .output/server/index.mjs.
+// Other build targets emit elsewhere, so skip silently instead of failing.
+if (!existsSync(serverPath)) {
+  console.log('ℹ️  .output/server/index.mjs not found — skipping server lifecycle fix');
+  process.exit(0);
+}
+
 const content = readFileSync(serverPath, 'utf-8');
+
 
 // Check if already fixed
 if (content.includes('(async () => {\n  try {\n    await serve({')) {
