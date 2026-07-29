@@ -10,7 +10,7 @@ import martanImg from "@/assets/speaker-martan.png";
 import bookMilagrosamente from "@/assets/book-milagrosamente.webp";
 import bookClientesFans from "@/assets/book-clientes-fans.webp";
 import bookMujeresFinanzas from "@/assets/book-mujeres-finanzas-new.jpg";
-import bookBrandExponential from "@/assets/book-brand-exponential-new.jpg";
+import bookEbookPaola from "@/assets/book-ebook-paola-aldaz.jpg";
 
 export type BookSku = "clientes-fans" | "milagrosamente-bien" | "ebook-paola";
 export type BookFormato = "fisico" | "digital";
@@ -273,7 +273,7 @@ export const books: Book[] = [
     id: "b-3",
     titulo: "Ebook Paola Aldaz",
     autorSlug: "paola-aldaz",
-    portada: bookBrandExponential,
+    portada: bookEbookPaola,
     descripcion: "Ebook de Paola Aldaz — descarga digital inmediata.",
     anio: 2024,
     sku: "ebook-paola",
