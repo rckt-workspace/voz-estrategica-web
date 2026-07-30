@@ -5,7 +5,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { ArrowRight, Sparkles, Mic2, Users, Award, MessageCircle } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import { supabase } from "@/integrations/supabase/client";
+import { publicBackend } from "@/lib/public-backend-client";
 import { getSpeaker } from "@/data/content";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
@@ -460,7 +460,7 @@ function LeadForm() {
 
     const mensaje = `${values.mensaje}\n\n— Datos adicionales —\n${extras.join("\n")}`;
 
-    const { error } = await supabase.from("booking_requests").insert({
+    const { error } = await publicBackend.from("booking_requests").insert({
       organizacion: values.organizacion,
       contacto: values.contacto,
       email: values.email,

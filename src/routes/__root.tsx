@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   createRootRouteWithContext,
@@ -14,7 +14,6 @@ import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { BottomBar } from "@/components/BottomBar";
 import { Toaster } from "@/components/ui/sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
 import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
 
@@ -139,8 +138,6 @@ function RootComponent() {
 }
 
 function Shell() {
-  const router = useRouter();
-  const queryClient = useQueryClient();
   const location = useLocation();
   const normalizedPathname = (location.pathname.replace(/\/+$/, "") || "/").toLowerCase();
 
@@ -155,17 +152,6 @@ function Shell() {
     trackPageView();
     trackGA4PageView();
   }, [location.pathname]);
-
-  // Cache invalidation on auth state change
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      router.invalidate();
-      queryClient.invalidateQueries();
-    });
-    return () => subscription.unsubscribe();
-  }, [router, queryClient]);
 
   const isAdmin = normalizedPathname.startsWith("/admin");
   const isSalesLanding = normalizedPathname.startsWith("/masterclass");
