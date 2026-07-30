@@ -39,7 +39,8 @@ const BOLD_CLOSE_EVENTS = [
  * listeners globales de cierre para resetear el estado de carga del botón
  * cuando el usuario abandona el pago.
  */
-function attachCloseListeners(onClose: () => void) {
+export function attachBoldCloseListeners(onClose: () => void) {
+
   let done = false;
   const handler = () => {
     if (done) return;
