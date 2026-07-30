@@ -123,6 +123,11 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
             });
       lastOrderRef.current = { key: orderKey, order };
       if (!window.BoldCheckout) throw new Error("Bold no disponible");
+      let cleanup = () => {};
+      const finish = () => {
+        cleanup();
+        setLoading(false);
+      };
       const checkout = new window.BoldCheckout({
         apiKey: order.apiKey,
         amount: order.amount,
@@ -133,11 +138,18 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
         redirectionUrl: `${window.location.origin}/pago-confirmado`,
         originUrl: window.location.href,
         renderMode: "embedded",
+        onSuccess: finish,
+        onFailed: finish,
+        onPending: finish,
+        onClose: finish,
+        onDismiss: finish,
       });
+      cleanup = attachBoldCloseListeners(finish);
       checkout.open();
       // El checkout embebido ya está visible: reactivamos el botón para que el
       // usuario pueda reintentar si cierra la ventana de pago sin completarla.
       setLoading(false);
+
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Error inesperado";
       toast.error(msg);
