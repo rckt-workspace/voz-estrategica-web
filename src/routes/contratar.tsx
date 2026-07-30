@@ -5,7 +5,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
-import { supabase } from "@/integrations/supabase/client";
+import { publicBackend } from "@/lib/public-backend-client";
 import { speakers } from "@/data/content";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
@@ -88,7 +88,7 @@ function ContratarPage() {
       (values.origen ? `\n¿Dónde nos conociste?: ${values.origen}` : "") +
       `\n\n${values.mensaje}`;
 
-    const { error } = await supabase.from("booking_requests").insert({
+    const { error } = await publicBackend.from("booking_requests").insert({
       organizacion: values.organizacion,
       contacto: values.contacto,
       email: values.email,

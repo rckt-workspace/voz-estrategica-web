@@ -24,7 +24,7 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
-import { supabase } from "@/integrations/supabase/client";
+import { publicBackend } from "@/lib/public-backend-client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
@@ -181,7 +181,7 @@ function Page() {
 
   const onSubmit = async (data: FormData) => {
     // 1. Guardar el lead antes de abrir WhatsApp
-    await supabase.from("leads_mx").insert({
+    const { error } = await publicBackend.from("leads_mx").insert({
       nombre: data.nombre,
       empresa: data.empresa,
       cargo: data.cargo,
@@ -195,6 +195,9 @@ function Page() {
       utm_campaign: campaign.utm_campaign || null,
       landing: "/mx/diego-camacho",
     });
+    if (error) {
+      throw new Error("No pudimos guardar tus datos. Inténtalo de nuevo.");
+    }
 
     // 2. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
