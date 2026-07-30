@@ -10,9 +10,10 @@ const BOLD_SCRIPT_SRC = "https://checkout.bold.co/library/boldPaymentButton.js";
 type BoldCheckoutInstance = { open: () => void };
 declare global {
   interface Window {
-    BoldCheckout?: new (config: Record<string, string>) => BoldCheckoutInstance;
+    BoldCheckout?: new (config: Record<string, unknown>) => BoldCheckoutInstance;
   }
 }
+
 
 function loadBoldLibrary(): Promise<void> {
   if (window.BoldCheckout) return Promise.resolve();
