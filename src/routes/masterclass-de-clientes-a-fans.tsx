@@ -82,7 +82,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
 
 /* ───────────────────────── Checkout ───────────────────────── */
 
-async function startCheckout() {
+async function startCheckout(onClose?: () => void) {
   trackEvent("InitiateCheckout", {
     content_name: PRODUCT_NAME,
     value: PRICE_USD,
@@ -98,8 +98,10 @@ async function startCheckout() {
     currency: "USD",
     description: PRODUCT_NAME,
     redirectionUrl: `${window.location.origin}/masterclass/gracias`,
+    onClose,
   });
 }
+
 
 function BuyButton({
   variant = "primary",
