@@ -124,6 +124,12 @@ export async function openBoldEmbeddedCheckout(opts: {
 
   if (!window.BoldCheckout) throw new Error("Bold checkout is not available");
 
+  let cleanup = () => {};
+  const finish = () => {
+    cleanup();
+    opts.onClose?.();
+  };
+
   const checkout = new window.BoldCheckout({
     apiKey: order.apiKey,
     amount: order.amount,
@@ -134,7 +140,25 @@ export async function openBoldEmbeddedCheckout(opts: {
     redirectionUrl: opts.redirectionUrl,
     originUrl: window.location.href,
     renderMode: "embedded",
+    onSuccess: () => {
+      opts.onSuccess?.();
+      finish();
+    },
+    onFailed: () => {
+      opts.onFailed?.();
+      finish();
+    },
+    onPending: () => {
+      opts.onPending?.();
+      finish();
+    },
+    onClose: finish,
+    // Alias usado por algunas versiones de la librería de Bold.
+    onDismiss: finish,
   });
+
+  cleanup = attachBoldCloseListeners(finish);
 
   checkout.open();
 }
+
