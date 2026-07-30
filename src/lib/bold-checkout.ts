@@ -93,8 +93,9 @@ export async function openBoldEmbeddedCheckout(opts: {
   description: string;
   redirectionUrl: string;
   discountCode?: string;
-}) {
+} & BoldCheckoutCallbacks) {
   await loadBoldLibrary();
+
 
   const order = await createBoldOrder({
     data: {
