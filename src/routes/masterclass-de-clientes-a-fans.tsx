@@ -82,7 +82,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
 
 /* ───────────────────────── Checkout ───────────────────────── */
 
-async function startCheckout() {
+async function startCheckout(onClose?: () => void) {
   trackEvent("InitiateCheckout", {
     content_name: PRODUCT_NAME,
     value: PRICE_USD,
@@ -98,8 +98,10 @@ async function startCheckout() {
     currency: "USD",
     description: PRODUCT_NAME,
     redirectionUrl: `${window.location.origin}/masterclass/gracias`,
+    onClose,
   });
 }
+
 
 function BuyButton({
   variant = "primary",
@@ -117,7 +119,7 @@ function BuyButton({
     if (loading) return;
     setLoading(true);
     try {
-      await startCheckout();
+      await startCheckout(() => setLoading(false));
     } catch (err) {
       console.error(err);
       toast.error("No pudimos abrir el pago. Intenta de nuevo en unos segundos.");
@@ -125,6 +127,7 @@ function BuyButton({
       setLoading(false);
     }
   };
+
 
   const base =
     "inline-flex min-h-[56px] w-full max-w-md cursor-pointer items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-center text-[15px] font-extrabold uppercase leading-tight tracking-wide transition-all duration-150 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 sm:text-base md:px-8";

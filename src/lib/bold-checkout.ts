@@ -8,9 +8,59 @@ type BoldCheckoutInstance = {
 
 declare global {
   interface Window {
-    BoldCheckout?: new (config: Record<string, string>) => BoldCheckoutInstance;
+    BoldCheckout?: new (config: Record<string, unknown>) => BoldCheckoutInstance;
   }
 }
+
+export type BoldCheckoutCallbacks = {
+  /** El pago terminó de forma exitosa. */
+  onSuccess?: () => void;
+  /** El pago falló o fue rechazado. */
+  onFailed?: () => void;
+  /** El pago quedó pendiente de confirmación. */
+  onPending?: () => void;
+  /** El usuario cerró la ventana de pago (con o sin completarla). */
+  onClose?: () => void;
+};
+
+// Nombres de evento que la librería de Bold ha usado para notificar el cierre
+// del checkout embebido. Escuchamos todas las variantes para que el botón de
+// pagar se rehabilite aunque Bold cambie el nombre del evento.
+const BOLD_CLOSE_EVENTS = [
+  "bold-checkout-close",
+  "boldCheckoutClose",
+  "bold_checkout_close",
+  "checkoutClosed",
+];
+
+/**
+ * Conecta los callbacks del checkout de Bold. Además de pasarlos en la
+ * configuración (por si la librería los soporta de forma nativa), registramos
+ * listeners globales de cierre para resetear el estado de carga del botón
+ * cuando el usuario abandona el pago.
+ */
+export function attachBoldCloseListeners(onClose: () => void) {
+
+  let done = false;
+  const handler = () => {
+    if (done) return;
+    done = true;
+    cleanup();
+    onClose();
+  };
+  const cleanup = () => {
+    for (const name of BOLD_CLOSE_EVENTS) {
+      window.removeEventListener(name, handler);
+      document.removeEventListener(name, handler);
+    }
+  };
+  for (const name of BOLD_CLOSE_EVENTS) {
+    window.addEventListener(name, handler);
+    document.addEventListener(name, handler);
+  }
+  return cleanup;
+}
+
 
 function loadBoldLibrary() {
   if (window.BoldCheckout) return Promise.resolve();
@@ -43,8 +93,9 @@ export async function openBoldEmbeddedCheckout(opts: {
   description: string;
   redirectionUrl: string;
   discountCode?: string;
-}) {
+} & BoldCheckoutCallbacks) {
   await loadBoldLibrary();
+
 
   const order = await createBoldOrder({
     data: {
@@ -73,6 +124,12 @@ export async function openBoldEmbeddedCheckout(opts: {
 
   if (!window.BoldCheckout) throw new Error("Bold checkout is not available");
 
+  let cleanup = () => {};
+  const finish = () => {
+    cleanup();
+    opts.onClose?.();
+  };
+
   const checkout = new window.BoldCheckout({
     apiKey: order.apiKey,
     amount: order.amount,
@@ -83,7 +140,25 @@ export async function openBoldEmbeddedCheckout(opts: {
     redirectionUrl: opts.redirectionUrl,
     originUrl: window.location.href,
     renderMode: "embedded",
+    onSuccess: () => {
+      opts.onSuccess?.();
+      finish();
+    },
+    onFailed: () => {
+      opts.onFailed?.();
+      finish();
+    },
+    onPending: () => {
+      opts.onPending?.();
+      finish();
+    },
+    onClose: finish,
+    // Alias usado por algunas versiones de la librería de Bold.
+    onDismiss: finish,
   });
+
+  cleanup = attachBoldCloseListeners(finish);
 
   checkout.open();
 }
+
