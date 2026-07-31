@@ -54,7 +54,7 @@ export const Route = createFileRoute("/contratar")({
       },
       { property: "og:url", content: "https://vozestrategica.com/contratar" },
       { property: "og:type", content: "website" },
-      { name: "robots", content: "noindex, follow" },
+      { name: "robots", content: "index, follow" },
     ],
     links: [{ rel: "canonical", href: "https://vozestrategica.com/contratar" }],
   }),
