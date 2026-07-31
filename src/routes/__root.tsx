@@ -161,8 +161,8 @@ function Shell() {
   const isCampaignLanding = normalizedPathname.startsWith("/mx/");
   const hideChrome = isAdmin || isSalesLanding || isCampaignLanding;
 
-  const isMasterclassLanding = normalizedPathname === "/masterclass-de-clientes-a-fans";
-  const hidePromoBars = isMasterclassLanding || isCampaignLanding;
+  // Todo el embudo de la masterclass (venta, checkout, gracias) va sin barras promocionales.
+  const hidePromoBars = isSalesLanding || isCampaignLanding;
 
   return (
     <>
