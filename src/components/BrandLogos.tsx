@@ -32,7 +32,13 @@ export function GoogleLogo({ className }: { className?: string }) {
   );
 }
 
-export function MicrosoftLogo({ className }: { className?: string }) {
+export function MicrosoftLogo({
+  className,
+  textFill = "#1F1F1F",
+}: {
+  className?: string;
+  textFill?: string;
+}) {
   return (
     <svg
       className={className}
@@ -50,7 +56,7 @@ export function MicrosoftLogo({ className }: { className?: string }) {
         y="17.5"
         fontFamily="Segoe UI, Arial, Helvetica, sans-serif"
         fontSize="16"
-        fill="#1F1F1F"
+        fill={textFill}
       >
         Microsoft
       </text>
