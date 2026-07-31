@@ -41,7 +41,7 @@ export function TopBar() {
         href={URL}
         className="flex-1 px-4 py-2 text-center text-sm font-bold leading-tight sm:text-base"
       >
-        Masterclass en vivo con Carlos Laguna · 25 de julio · Reserva tu cupo →
+        Masterclass: De Clientes a Fans · Con Carlos Laguna · Vender sin perseguir clientes · USD 19 →
       </a>
       <button
         onClick={close}
