@@ -1,0 +1,74 @@
+import { createServerFn } from "@tanstack/react-start";
+import { createHash, randomBytes } from "crypto";
+import { BOLD_IDENTITY_KEY } from "./bold.functions";
+
+/** Precio de la grabación (USD). */
+export const MASTERCLASS_PRICE_USD = 19;
+/** Order bump: Kit de Ejecución (USD). Precio estimado, fácil de ajustar. */
+export const KIT_PRICE_USD = 17;
+
+export const PRODUCT_BASE = "Grabación Masterclass: De clientes a fans";
+export const PRODUCT_WITH_KIT = "Grabación Masterclass: De clientes a fans + Kit de Ejecución";
+
+export type MasterclassCheckout = {
+  orderId: string;
+  integritySignature: string;
+  apiKey: string;
+  amount: string;
+  currency: "USD";
+  description: string;
+  kit: boolean;
+};
+
+type Input = {
+  nombre: string;
+  email: string;
+  kit: boolean;
+};
+
+export const createMasterclassCheckout = createServerFn({ method: "POST" })
+  .inputValidator((input: Input) => {
+    const nombre = (input?.nombre ?? "").trim();
+    const email = (input?.email ?? "").trim().toLowerCase();
+    if (nombre.length < 2 || nombre.length > 120) throw new Error("Nombre no válido");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 200) {
+      throw new Error("Correo electrónico no válido");
+    }
+    return { nombre, email, kit: !!input?.kit };
+  })
+  .handler(async ({ data }): Promise<MasterclassCheckout> => {
+    const secret = process.env["BOLD_SECRET_KEY"];
+    if (!secret) throw new Error("BOLD_SECRET_KEY no está configurada");
+
+    const amount = MASTERCLASS_PRICE_USD + (data.kit ? KIT_PRICE_USD : 0);
+    const currency = "USD" as const;
+    const orderId = `MC-${Date.now()}-${randomBytes(4).toString("hex")}`;
+    const amountStr = String(amount);
+    const integritySignature = createHash("sha256")
+      .update(`${orderId}${amountStr}${currency}${secret}`, "utf8")
+      .digest("hex");
+    const description = data.kit ? PRODUCT_WITH_KIT : PRODUCT_BASE;
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.from("orders").insert({
+      order_id: orderId,
+      status: "pending",
+      amount,
+      currency,
+      product: description,
+      customer_name: data.nombre,
+      customer_email: data.email,
+      raw_payload: { order_bump_kit: data.kit, source: "masterclass-checkout" },
+    });
+    if (error) throw new Error(error.message);
+
+    return {
+      orderId,
+      integritySignature,
+      apiKey: BOLD_IDENTITY_KEY,
+      amount: amountStr,
+      currency,
+      description,
+      kit: data.kit,
+    };
+  });
