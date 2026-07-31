@@ -181,6 +181,7 @@ function Shell() {
       {!hideChrome && <Footer />}
       {!hidePromoBars && <BottomBar />}
       <Toaster />
+      <CookieConsent />
       {/* WhatsApp floating button — hidden on masterclass landing */}
       {!isSalesLanding && (
         <a
