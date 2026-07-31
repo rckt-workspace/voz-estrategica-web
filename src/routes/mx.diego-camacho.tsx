@@ -1090,7 +1090,17 @@ function Page() {
   );
 }
 
-function StatCard({ num, label, compact = false }: { num: string; label: string; compact?: boolean }) {
+function StatCard({
+  num,
+  label,
+  compact = false,
+  word = false,
+}: {
+  num: string;
+  label: string;
+  compact?: boolean;
+  word?: boolean;
+}) {
   if (compact) {
     return (
       <div className="rounded-xl border border-white/10 bg-[#0F0F0F]/60 p-2.5 text-center">
@@ -1101,7 +1111,15 @@ function StatCard({ num, label, compact = false }: { num: string; label: string;
   }
   return (
     <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
-      <div className="font-display text-4xl text-[#EAC945] md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">{num}</div>
+      <div
+        className={
+          word
+            ? "font-display text-3xl uppercase leading-tight text-[#EAC945] md:text-4xl 2xl:text-6xl"
+            : "font-display text-4xl text-[#EAC945] md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]"
+        }
+      >
+        {num}
+      </div>
       <div className="mt-1 text-xs uppercase tracking-widest text-white/60">{label}</div>
     </div>
   );
