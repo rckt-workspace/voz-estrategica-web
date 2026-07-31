@@ -82,7 +82,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
 
 /* ───────────────────────── Checkout ───────────────────────── */
 
-async function startCheckout(onClose?: () => void) {
+function goToCheckout() {
   trackEvent("InitiateCheckout", {
     content_name: PRODUCT_NAME,
     value: PRICE_USD,
@@ -93,15 +93,7 @@ async function startCheckout(onClose?: () => void) {
     value: PRICE_USD,
     currency: "USD",
   });
-  await openBoldEmbeddedCheckout({
-    amount: PRICE_USD,
-    currency: "USD",
-    description: PRODUCT_NAME,
-    redirectionUrl: `${window.location.origin}/masterclass/gracias`,
-    onClose,
-  });
 }
-
 
 function BuyButton({
   variant = "primary",
@@ -112,25 +104,10 @@ function BuyButton({
   className?: string;
   label?: string;
 }) {
-  const [loading, setLoading] = useState(false);
   const text = label ?? (variant === "secondary" ? SECONDARY_LABEL : PRIMARY_LABEL);
 
-  const onClick = async () => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      await startCheckout(() => setLoading(false));
-    } catch (err) {
-      console.error(err);
-      toast.error("No pudimos abrir el pago. Intenta de nuevo en unos segundos.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
   const base =
-    "inline-flex min-h-[56px] w-full max-w-md cursor-pointer items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-center text-[15px] font-extrabold uppercase leading-tight tracking-wide transition-all duration-150 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70 sm:text-base md:px-8";
+    "inline-flex min-h-[56px] w-full max-w-md cursor-pointer items-center justify-center gap-2 rounded-[6px] px-6 py-4 text-center text-[15px] font-extrabold uppercase leading-tight tracking-wide transition-all duration-150 active:scale-[0.97] sm:text-base md:px-8";
 
   const style: React.CSSProperties =
     variant === "secondary"
@@ -138,10 +115,9 @@ function BuyButton({
       : { backgroundColor: GREEN, color: BLACK, ...serif };
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={loading}
+    <Link
+      to="/masterclass/checkout"
+      onClick={goToCheckout}
       className={`${base} ${
         variant === "secondary"
           ? "border-2 bg-transparent hover:bg-[rgba(64,237,81,0.1)]"
@@ -149,8 +125,8 @@ function BuyButton({
       } ${className}`}
       style={style}
     >
-      {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : text}
-    </button>
+      {text}
+    </Link>
   );
 }
 
