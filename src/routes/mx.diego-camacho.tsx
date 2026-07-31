@@ -1149,3 +1149,14 @@ function Field({
     </label>
   );
 }
+
+function LogoStatCard({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
+      <div className="flex min-h-[72px] items-center justify-center rounded-xl bg-white px-4 py-4 md:min-h-[88px] 2xl:min-h-[112px]">
+        {children}
+      </div>
+      <div className="mt-3 text-xs uppercase tracking-widest text-white/60">{label}</div>
+    </div>
+  );
+}
