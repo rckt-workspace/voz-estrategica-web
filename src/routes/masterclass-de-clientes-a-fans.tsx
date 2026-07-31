@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, X, ChevronDown, Play, Loader2 } from "lucide-react";
+import { Check, X, ChevronDown, Play } from "lucide-react";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
 import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
