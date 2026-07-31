@@ -617,17 +617,6 @@ function Page() {
                   ))}
                 </div>
 
-                <div className="rounded-xl border-2 border-black/15 bg-white p-6 shadow-sm">
-                  <div className="font-display text-sm uppercase tracking-widest text-black/70 2xl:text-base">
-                    Ha trabajado con
-                  </div>
-                  <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
-                    <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
-                    <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
-
-                  </div>
-                </div>
-
               </div>
             </Reveal>
           </div>
@@ -802,10 +791,10 @@ function Page() {
           </Reveal>
           <Reveal delay={0.05}>
             <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4">
+              <StatCard num="+150" label="conferencias" />
               <StatCard num="+2000" label="clientes atendidos" />
               <StatCard num="4" label="continentes" />
               <StatCard num="+20" label="países" />
-              <StatCard num="+150" label="conferencias" />
             </div>
           </Reveal>
           <Reveal delay={0.1}>
@@ -818,7 +807,57 @@ function Page() {
               </figcaption>
             </figure>
           </Reveal>
-          {/* Logos de clientes: se activan cuando estén disponibles */}
+          <Reveal delay={0.15}>
+            <div className="mt-14 rounded-xl border-2 border-white/15 bg-white p-6">
+              <div className="font-display text-sm uppercase tracking-widest text-black/70 2xl:text-base">
+                Ha trabajado con
+              </div>
+              <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
+                <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
+                <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <div className="mt-14">
+              <div className="font-display text-sm uppercase tracking-widest text-white/60 2xl:text-base">
+                Conferencias recientes
+              </div>
+              <div className="mt-6 grid gap-4 md:grid-cols-3">
+                {[
+                  {
+                    brand: "SC Johnson",
+                    topic: "Ventas & Motivación de equipo",
+                    place: "CDMX · Julio 2024",
+                  },
+                  {
+                    brand: "The North Face",
+                    topic: "Liderazgo & Ventas de equipo",
+                    place: "CDMX · Julio 2024",
+                  },
+                  {
+                    brand: "EXMA Panamá",
+                    topic: "IA aplicada a las ventas",
+                    place: "Panamá · Junio 2024",
+                  },
+                ].map((c) => (
+                  <div
+                    key={c.brand}
+                    className="rounded-xl border border-white/15 bg-white/5 p-5"
+                  >
+                    <div className="font-display text-xl uppercase leading-tight text-[#EAC945] 2xl:text-3xl">
+                      {c.brand}
+                    </div>
+                    <div className="mt-2 text-base text-white/85 2xl:text-xl">{c.topic}</div>
+                    <div className="mt-3 text-xs uppercase tracking-widest text-white/50">
+                      {c.place}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
