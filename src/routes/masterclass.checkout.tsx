@@ -25,10 +25,16 @@ export const Route = createFileRoute("/masterclass/checkout")({
       { name: "robots", content: "noindex,nofollow" },
       { property: "og:type", content: "website" },
       { property: "og:title", content: "Checkout · Vender sin perseguir clientes" },
-      { property: "og:description", content: "Grabación completa por USD 19. Acceso inmediato y permanente." },
+      {
+        property: "og:description",
+        content: "Grabación completa por USD 19. Acceso inmediato y permanente.",
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Checkout · Vender sin perseguir clientes" },
-      { name: "twitter:description", content: "Grabación completa por USD 19. Acceso inmediato y permanente." },
+      {
+        name: "twitter:description",
+        content: "Grabación completa por USD 19. Acceso inmediato y permanente.",
+      },
     ],
   }),
   component: CheckoutPage,
@@ -62,9 +68,10 @@ function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // Reutiliza la orden si el usuario cierra el checkout y reintenta con los mismos datos.
-  const lastOrderRef = useRef<{ key: string; order: Awaited<ReturnType<typeof createMasterclassCheckout>> } | null>(
-    null,
-  );
+  const lastOrderRef = useRef<{
+    key: string;
+    order: Awaited<ReturnType<typeof createMasterclassCheckout>>;
+  } | null>(null);
 
   const total = useMemo(() => MASTERCLASS_PRICE_USD + (kit ? KIT_PRICE_USD : 0), [kit]);
 
@@ -93,8 +100,16 @@ function CheckoutPage() {
           : await create({ data: { nombre: nombre.trim(), email: email.trim(), kit } });
       lastOrderRef.current = { key, order };
 
-      trackEvent("InitiateCheckout", { content_name: order.description, value: total, currency: "USD" });
-      trackGA4Event("begin_checkout", { content_name: order.description, value: total, currency: "USD" });
+      trackEvent("InitiateCheckout", {
+        content_name: order.description,
+        value: total,
+        currency: "USD",
+      });
+      trackGA4Event("begin_checkout", {
+        content_name: order.description,
+        value: total,
+        currency: "USD",
+      });
 
       try {
         sessionStorage.setItem(
@@ -160,11 +175,15 @@ function CheckoutPage() {
           <ArrowLeft className="h-3.5 w-3.5" /> Volver
         </Link>
 
-        <h1 className="mt-6 text-3xl font-extrabold leading-tight md:text-4xl">Completa tu compra</h1>
+        <h1 className="mt-6 text-3xl font-extrabold leading-tight md:text-4xl">
+          Completa tu compra
+        </h1>
 
         {/* 1. Resumen */}
         <section className="mt-6 rounded-lg border border-white/15 bg-white/[0.04] p-5">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Tu pedido</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
+            Tu pedido
+          </p>
           <div className="mt-3 flex items-start justify-between gap-4">
             <div>
               <p className="font-bold">Vender sin perseguir clientes — Grabación completa</p>
@@ -181,7 +200,9 @@ function CheckoutPage() {
           )}
 
           <div className="mt-4 flex items-baseline justify-between border-t border-white/15 pt-4">
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">Total</span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
+              Total
+            </span>
             <span className="text-3xl font-extrabold" style={{ color: GREEN }}>
               USD {total}
             </span>
@@ -194,7 +215,10 @@ function CheckoutPage() {
           onClick={() => setKit((v) => !v)}
           aria-pressed={kit}
           className="mt-5 flex w-full items-start gap-3 rounded-lg border-2 border-dashed p-5 text-left transition-colors"
-          style={{ borderColor: kit ? GREEN : "rgba(64,237,81,0.45)", backgroundColor: "rgba(64,237,81,0.07)" }}
+          style={{
+            borderColor: kit ? GREEN : "rgba(64,237,81,0.45)",
+            backgroundColor: "rgba(64,237,81,0.07)",
+          }}
         >
           <span
             className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border-2"
@@ -203,7 +227,10 @@ function CheckoutPage() {
             {kit && <Check className="h-3.5 w-3.5" style={{ color: BLACK }} strokeWidth={3} />}
           </span>
           <span>
-            <span className="block text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: GREEN }}>
+            <span
+              className="block text-[10px] font-bold uppercase tracking-[0.2em]"
+              style={{ color: GREEN }}
+            >
               Añade y ahorra tiempo
             </span>
             <span className="mt-1 block text-sm font-bold">
@@ -241,7 +268,9 @@ function CheckoutPage() {
               autoComplete="email"
               className="w-full rounded-md border border-white/20 bg-white/[0.06] px-4 py-3 text-base text-white outline-none focus:border-[#40ed51]"
             />
-            <span className="mt-1.5 block text-xs text-white/50">Ahí te enviamos el acceso y el recibo.</span>
+            <span className="mt-1.5 block text-xs text-white/50">
+              Ahí te enviamos el acceso y el recibo.
+            </span>
           </label>
 
           {/* 7. Error + reintento (los datos se conservan) */}
