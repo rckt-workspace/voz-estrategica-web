@@ -131,11 +131,11 @@ function GraciasPage() {
               Pago aprobado
             </p>
             <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
-              ¡Tu cupo está reservado!
+              ¡Gracias por tu compra!
             </h1>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
-              En los próximos minutos te llega un correo con el enlace de Zoom, el calendario y los recursos
-              de la masterclass. Si no lo ves, revisa tu carpeta de Promociones o Spam.
+              ¡Listo! Tu compra fue exitosa. En breve recibirás un correo con el acceso a tu contenido. Si no
+              lo ves, revisa tu carpeta de Promociones o Spam.
             </p>
           </>
         )}
@@ -187,7 +187,7 @@ function GraciasPage() {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           {isFail ? (
             <Link
-              to="/masterclass-de-clientes-a-fans"
+              to="/masterclass/checkout"
               className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[6px] px-8 py-3 text-sm font-bold uppercase tracking-wide text-[#0e0f0c]"
               style={{ backgroundColor: BRAND }}
             >
