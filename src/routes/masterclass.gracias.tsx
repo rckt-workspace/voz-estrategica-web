@@ -83,13 +83,15 @@ function GraciasPage() {
       });
   }, [orderId, status, order, orderLoaded, saveOrder]);
 
-  // Fire conversion events once on success
+  // Fire conversion events once on success — espera a que se lea el detalle
+  // guardado (monto real: 19 o 36 con order bump) antes de reportar.
   useEffect(() => {
-    if (status !== "approved" || !orderId) return;
+    if (status !== "approved" || !orderId || !orderLoaded) return;
     const firedKey = `bold:purchase-fired:${orderId}`;
     if (sessionStorage.getItem(firedKey)) return;
 
-    const value = order?.currency === "USD" ? Number(order.amount) : 20;
+    const parsed = Number(order?.amount);
+    const value = order?.currency === "USD" && Number.isFinite(parsed) && parsed > 0 ? parsed : 19;
     const currency = order?.currency ?? "USD";
 
     trackEvent("Purchase", {
@@ -112,7 +114,7 @@ function GraciasPage() {
       ],
     });
     sessionStorage.setItem(firedKey, "1");
-  }, [status, orderId, order]);
+  }, [status, orderId, order, orderLoaded]);
 
   const isApproved = status === "approved";
   const isPending = status === "pending";

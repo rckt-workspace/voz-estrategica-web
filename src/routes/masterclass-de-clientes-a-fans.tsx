@@ -63,13 +63,18 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
           description:
             "Grabación de 2 horas del sistema comercial de Carlos Laguna, con matrices de negociación, prompts de IA y guía de preguntas.",
           brand: { "@type": "Brand", name: "Voz Estratégica" },
+          category: "Curso de ventas y negociación",
+          author: { "@type": "Person", name: "Carlos Laguna" },
+          provider: { "@type": "Organization", name: "Voz Estratégica", url: "https://vozestrategica.com" },
           image: gallerySpeaker.url,
           offers: {
             "@type": "Offer",
             price: String(PRICE_USD),
             priceCurrency: "USD",
             availability: "https://schema.org/InStock",
+            itemCondition: "https://schema.org/NewCondition",
             url: PAGE_URL,
+            seller: { "@type": "Organization", name: "Voz Estratégica" },
           },
         }),
       },
