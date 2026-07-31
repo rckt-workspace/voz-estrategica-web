@@ -22,6 +22,49 @@ const PAGE_URL = "https://vozestrategica.com/masterclass-de-clientes-a-fans";
 
 const serif: React.CSSProperties = { fontFamily: "'Montserrat', sans-serif" };
 
+/** Preguntas frecuentes reales de la página (usadas en el bloque FAQ y en el JSON-LD FAQPage). */
+const FAQS = [
+  {
+    q: "¿Cuánto dura y cómo lo veo?",
+    a: "Es una sesión completa de cerca de 2 horas, con capítulos para que puedas ir directo al tema que te interesa y retomar donde lo dejaste. Lo ves desde el celular o el computador, cuando quieras, cuantas veces quieras.",
+  },
+  { q: "¿Por cuánto tiempo tengo acceso?", a: "Para siempre. Compras una vez y queda en tu cuenta." },
+  { q: "¿Es en vivo?", a: "No. Es la grabación completa de la sesión, con todos los recursos incluidos." },
+  {
+    q: "¿Tengo que verlo de una sola vez?",
+    a: "No. El reproductor recuerda dónde te quedaste y puedes navegar por capítulos.",
+  },
+  { q: "¿Sirve si no tengo equipo?", a: "Sí. Si vendes tú, aplica igual." },
+  {
+    q: "¿Sirve para mi industria?",
+    a: "El método es de conversación comercial, no de producto. Funciona en servicios, B2B, retail y ticket alto.",
+  },
+  {
+    q: "¿Puedo ver algo antes de comprar?",
+    a: "Sí. Hay un fragmento disponible gratis, sin registrarte.",
+  },
+  {
+    q: "¿Cómo puedo pagar?",
+    a: "Tarjeta de crédito o débito, PSE, Nequi y transferencia.",
+  },
+  {
+    q: "¿Puedo pedir devolución?",
+    a: "Sí. Tienes 7 días desde la compra para solicitarla escribiéndonos a contacto@vozestrategica.com.",
+  },
+  { q: "¿Necesito saber de IA?", a: "Cero. Los prompts están listos para copiar y pegar." },
+];
+
+const FAQ_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+
 export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   head: () => ({
     meta: [
@@ -78,7 +121,9 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
           },
         }),
       },
+      { type: "application/ld+json", children: JSON.stringify(FAQ_JSONLD) },
     ],
+
   }),
   component: MasterclassRecordingPage,
 });
@@ -333,36 +378,8 @@ function MasterclassRecordingPage() {
     },
   ];
 
-  const faqs = [
-    {
-      q: "¿Cuánto dura y cómo lo veo?",
-      a: "Es una sesión completa de cerca de 2 horas, con capítulos para que puedas ir directo al tema que te interesa y retomar donde lo dejaste. Lo ves desde el celular o el computador, cuando quieras, cuantas veces quieras.",
-    },
-    { q: "¿Por cuánto tiempo tengo acceso?", a: "Para siempre. Compras una vez y queda en tu cuenta." },
-    { q: "¿Es en vivo?", a: "No. Es la grabación completa de la sesión, con todos los recursos incluidos." },
-    {
-      q: "¿Tengo que verlo de una sola vez?",
-      a: "No. El reproductor recuerda dónde te quedaste y puedes navegar por capítulos.",
-    },
-    { q: "¿Sirve si no tengo equipo?", a: "Sí. Si vendes tú, aplica igual." },
-    {
-      q: "¿Sirve para mi industria?",
-      a: "El método es de conversación comercial, no de producto. Funciona en servicios, B2B, retail y ticket alto.",
-    },
-    {
-      q: "¿Puedo ver algo antes de comprar?",
-      a: "Sí. Hay un fragmento disponible gratis, sin registrarte.",
-    },
-    {
-      q: "¿Cómo puedo pagar?",
-      a: "Tarjeta de crédito o débito, PSE, Nequi y transferencia.",
-    },
-    {
-      q: "¿Puedo pedir devolución?",
-      a: "Sí. Tienes 7 días desde la compra para solicitarla escribiéndonos a contacto@vozestrategica.com.",
-    },
-    { q: "¿Necesito saber de IA?", a: "Cero. Los prompts están listos para copiar y pegar." },
-  ];
+  const faqs = FAQS;
+
 
   return (
     <div className="min-h-screen bg-[#0e0f0c] pb-24 text-white md:pb-0" style={serif}>
