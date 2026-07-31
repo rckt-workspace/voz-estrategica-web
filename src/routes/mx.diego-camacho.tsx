@@ -802,10 +802,10 @@ function Page() {
           </Reveal>
           <Reveal delay={0.05}>
             <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4">
+              <StatCard num="+150" label="conferencias" />
               <StatCard num="+2000" label="clientes atendidos" />
               <StatCard num="4" label="continentes" />
               <StatCard num="+20" label="países" />
-              <StatCard num="+150" label="conferencias" />
             </div>
           </Reveal>
           <Reveal delay={0.1}>
