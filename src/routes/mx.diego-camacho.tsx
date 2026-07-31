@@ -808,16 +808,12 @@ function Page() {
             </figure>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="mt-14 rounded-xl border-2 border-white/15 bg-white p-6">
-              <div className="font-display text-sm uppercase tracking-widest text-black/70 2xl:text-base">
-                Ha trabajado con
-              </div>
-              <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
-                <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
-                <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
-              </div>
+            <div className="mt-14 grid grid-cols-2 gap-6">
+              <StatCard num="Google" label="Ha trabajado con" />
+              <StatCard num="Microsoft" label="Ha trabajado con" />
             </div>
           </Reveal>
+
 
           <Reveal delay={0.2}>
             <div className="mt-14">
