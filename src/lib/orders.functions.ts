@@ -17,6 +17,7 @@ const ALLOWED_DESCRIPTION = new Set([
   "Masterclass: De clientes a fans (50% OFF)",
   "Grabación Masterclass: De clientes a fans",
   "Grabación Masterclass: De clientes a fans (50% OFF)",
+  "Grabación Masterclass: De clientes a fans + Kit de Ejecución",
 ]);
 
 /**
