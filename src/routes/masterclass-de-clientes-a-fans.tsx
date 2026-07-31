@@ -507,9 +507,6 @@ function MasterclassRecordingPage() {
           <p className="mt-4 max-w-2xl text-base text-white/70 md:text-lg">
             Dos horas de sesión completa. Estos son los temas que Carlos desarrolla:
           </p>
-          <p className="mt-3 inline-flex rounded-[4px] border border-dashed border-white/25 px-3 py-1 text-[10px] uppercase tracking-[0.15em] text-white/45">
-            Temario provisional · pendiente de reemplazo
-          </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {temas.map((t) => (
