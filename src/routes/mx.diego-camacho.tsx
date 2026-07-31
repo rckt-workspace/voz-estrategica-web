@@ -29,7 +29,6 @@ import { publicBackend } from "@/lib/public-backend-client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
-import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
 
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
@@ -809,8 +808,8 @@ function Page() {
           </Reveal>
           <Reveal delay={0.15}>
             <div className="mt-14 grid grid-cols-2 gap-6">
-              <StatCard num="Google" label="Ha trabajado con" />
-              <StatCard num="Microsoft" label="Ha trabajado con" />
+              <StatCard num="Google" label="Ha trabajado con" word />
+              <StatCard num="Microsoft" label="Ha trabajado con" word />
             </div>
           </Reveal>
 
