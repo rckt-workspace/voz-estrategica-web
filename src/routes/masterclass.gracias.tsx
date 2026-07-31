@@ -131,11 +131,11 @@ function GraciasPage() {
               Pago aprobado
             </p>
             <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
-              ¡Tu cupo está reservado!
+              ¡Gracias por tu compra!
             </h1>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
-              En los próximos minutos te llega un correo con el enlace de Zoom, el calendario y los recursos
-              de la masterclass. Si no lo ves, revisa tu carpeta de Promociones o Spam.
+              ¡Listo! Tu compra fue exitosa. En breve recibirás un correo con el acceso a tu contenido. Si no
+              lo ves, revisa tu carpeta de Promociones o Spam.
             </p>
           </>
         )}
