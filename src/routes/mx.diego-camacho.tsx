@@ -617,17 +617,6 @@ function Page() {
                   ))}
                 </div>
 
-                <div className="rounded-xl border-2 border-black/15 bg-white p-6 shadow-sm">
-                  <div className="font-display text-sm uppercase tracking-widest text-black/70 2xl:text-base">
-                    Ha trabajado con
-                  </div>
-                  <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
-                    <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
-                    <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
-
-                  </div>
-                </div>
-
               </div>
             </Reveal>
           </div>
