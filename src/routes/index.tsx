@@ -381,6 +381,35 @@ function Home() {
         </Reveal>
       </section>
 
+      {/* 7b. BANNER DIEGO CAMACHO — CDMX */}
+      <section className="relative mx-auto max-w-7xl px-6 pb-16">
+        <Reveal>
+          <div className="rounded-3xl bg-brand p-8 text-brand-foreground md:p-12">
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-10">
+              <div>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em]">
+                  Nuevo · CDMX
+                </span>
+                <h2 className="mt-3 font-display text-3xl uppercase leading-[0.95] md:text-4xl">
+                  Diego Camacho: IA aplicada a ventas y marketing
+                </h2>
+                <p className="mt-3 max-w-xl text-sm md:text-base">
+                  Ideal para líderes comerciales y equipos de marketing en CDMX.
+                </p>
+              </div>
+              <Link
+                to="/mx/diego-camacho"
+                className="bubble bubble-black w-full justify-center px-6 py-3 text-center md:w-auto md:shrink-0"
+              >
+                Conocer a Diego Camacho →
+              </Link>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+
+
       {/* 8. AGENDA */}
       <section className="relative overflow-hidden bg-foreground py-28 text-background">
         <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl" />
