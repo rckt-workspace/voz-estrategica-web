@@ -121,7 +121,9 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
           },
         }),
       },
+      { type: "application/ld+json", children: JSON.stringify(FAQ_JSONLD) },
     ],
+
   }),
   component: MasterclassRecordingPage,
 });
