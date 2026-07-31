@@ -187,7 +187,7 @@ function GraciasPage() {
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           {isFail ? (
             <Link
-              to="/masterclass-de-clientes-a-fans"
+              to="/masterclass/checkout"
               className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-[6px] px-8 py-3 text-sm font-bold uppercase tracking-wide text-[#0e0f0c]"
               style={{ backgroundColor: BRAND }}
             >
