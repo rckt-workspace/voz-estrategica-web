@@ -29,7 +29,6 @@ import { publicBackend } from "@/lib/public-backend-client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
-import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
 
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
@@ -808,16 +807,12 @@ function Page() {
             </figure>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="mt-14 rounded-xl border-2 border-white/15 bg-white p-6">
-              <div className="font-display text-sm uppercase tracking-widest text-black/70 2xl:text-base">
-                Ha trabajado con
-              </div>
-              <div className="mt-5 flex flex-wrap items-center gap-x-12 gap-y-6">
-                <GoogleLogo className="h-9 w-auto md:h-11 2xl:h-14" />
-                <MicrosoftLogo className="h-8 w-auto md:h-10 2xl:h-12" />
-              </div>
+            <div className="mt-14 grid grid-cols-2 gap-6">
+              <StatCard num="Google" label="Ha trabajado con" word />
+              <StatCard num="Microsoft" label="Ha trabajado con" word />
             </div>
           </Reveal>
+
 
           <Reveal delay={0.2}>
             <div className="mt-14">
@@ -1094,7 +1089,17 @@ function Page() {
   );
 }
 
-function StatCard({ num, label, compact = false }: { num: string; label: string; compact?: boolean }) {
+function StatCard({
+  num,
+  label,
+  compact = false,
+  word = false,
+}: {
+  num: string;
+  label: string;
+  compact?: boolean;
+  word?: boolean;
+}) {
   if (compact) {
     return (
       <div className="rounded-xl border border-white/10 bg-[#0F0F0F]/60 p-2.5 text-center">
@@ -1105,7 +1110,15 @@ function StatCard({ num, label, compact = false }: { num: string; label: string;
   }
   return (
     <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
-      <div className="font-display text-4xl text-[#EAC945] md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">{num}</div>
+      <div
+        className={
+          word
+            ? "font-display text-3xl uppercase leading-tight text-[#EAC945] md:text-4xl 2xl:text-6xl"
+            : "font-display text-4xl text-[#EAC945] md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]"
+        }
+      >
+        {num}
+      </div>
       <div className="mt-1 text-xs uppercase tracking-widest text-white/60">{label}</div>
     </div>
   );
