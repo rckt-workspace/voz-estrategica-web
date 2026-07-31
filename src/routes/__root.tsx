@@ -14,6 +14,8 @@ import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { BottomBar } from "@/components/BottomBar";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieConsent } from "@/components/CookieConsent";
+import { initConsentMode } from "@/lib/consent";
 import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
 import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
 
@@ -141,8 +143,9 @@ function Shell() {
   const location = useLocation();
   const normalizedPathname = (location.pathname.replace(/\/+$/, "") || "/").toLowerCase();
 
-  // Init Meta Pixel and GA4 once on mount
+  // Init Consent Mode v2 (denied by default) before any tag loads
   useEffect(() => {
+    initConsentMode();
     initMetaPixel();
     initGA4();
   }, []);
