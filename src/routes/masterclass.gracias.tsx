@@ -114,7 +114,7 @@ function GraciasPage() {
       ],
     });
     sessionStorage.setItem(firedKey, "1");
-  }, [status, orderId, order]);
+  }, [status, orderId, order, orderLoaded]);
 
   const isApproved = status === "approved";
   const isPending = status === "pending";
