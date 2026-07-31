@@ -7,8 +7,6 @@ import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
 import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
-import { openBoldEmbeddedCheckout } from "@/lib/bold-checkout";
-import { toast } from "sonner";
 
 const PRICE_USD = 19;
 const PRODUCT_NAME = "Grabación Masterclass: De clientes a fans";
