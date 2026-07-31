@@ -1,14 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createHash, randomBytes } from "crypto";
 import { BOLD_IDENTITY_KEY } from "./bold.functions";
-
-/** Precio de la grabación (USD). */
-export const MASTERCLASS_PRICE_USD = 19;
-/** Order bump: Kit de Ejecución (USD). Precio estimado, fácil de ajustar. */
-export const KIT_PRICE_USD = 17;
-
-export const PRODUCT_BASE = "Grabación Masterclass: De clientes a fans";
-export const PRODUCT_WITH_KIT = "Grabación Masterclass: De clientes a fans + Kit de Ejecución";
+import {
+  KIT_PRICE_USD,
+  MASTERCLASS_PRICE_USD,
+  PRODUCT_BASE,
+  PRODUCT_WITH_KIT,
+} from "./masterclass-checkout";
 
 export type MasterclassCheckout = {
   orderId: string;
