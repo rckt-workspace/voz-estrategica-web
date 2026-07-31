@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
+import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { setEnhancedConversionUserData } from "@/lib/consent";
