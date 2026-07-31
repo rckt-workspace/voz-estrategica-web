@@ -32,6 +32,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
 import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
+import { Route as MasterclassCheckoutRouteImport } from './routes/masterclass.checkout'
 import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminPedidosLibrosRouteImport } from './routes/admin.pedidos-libros'
@@ -155,6 +156,11 @@ const MasterclassGraciasRoute = MasterclassGraciasRouteImport.update({
   path: '/masterclass/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MasterclassCheckoutRoute = MasterclassCheckoutRouteImport.update({
+  id: '/masterclass/checkout',
+  path: '/masterclass/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
   id: '/suscriptores',
   path: '/suscriptores',
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
@@ -241,6 +248,7 @@ export interface FileRoutesByTo {
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
@@ -273,6 +281,7 @@ export interface FileRoutesById {
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
@@ -306,6 +315,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/masterclass/checkout'
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
     | '/speakers/$slug'
@@ -336,6 +346,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/masterclass/checkout'
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
     | '/speakers/$slug'
@@ -367,6 +378,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/masterclass/checkout'
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
     | '/speakers/$slug'
@@ -394,6 +406,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolucionesRoute: typeof SolucionesRoute
   TerminosYCondicionesRoute: typeof TerminosYCondicionesRoute
+  MasterclassCheckoutRoute: typeof MasterclassCheckoutRoute
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   MxDiegoCamachoRoute: typeof MxDiegoCamachoRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
@@ -564,6 +577,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MasterclassGraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/masterclass/checkout': {
+      id: '/masterclass/checkout'
+      path: '/masterclass/checkout'
+      fullPath: '/masterclass/checkout'
+      preLoaderRoute: typeof MasterclassCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/suscriptores': {
       id: '/admin/suscriptores'
       path: '/suscriptores'
@@ -648,6 +668,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolucionesRoute: SolucionesRoute,
   TerminosYCondicionesRoute: TerminosYCondicionesRoute,
+  MasterclassCheckoutRoute: MasterclassCheckoutRoute,
   MasterclassGraciasRoute: MasterclassGraciasRoute,
   MxDiegoCamachoRoute: MxDiegoCamachoRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
