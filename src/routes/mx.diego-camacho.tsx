@@ -24,6 +24,7 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
+import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
