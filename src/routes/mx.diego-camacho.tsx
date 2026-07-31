@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
+import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { setEnhancedConversionUserData } from "@/lib/consent";
@@ -808,10 +809,15 @@ function Page() {
           </Reveal>
           <Reveal delay={0.15}>
             <div className="mt-14 grid grid-cols-2 gap-6">
-              <StatCard num="Google" label="Ha trabajado con" word />
-              <StatCard num="Microsoft" label="Ha trabajado con" word />
+              <LogoStatCard label="Ha trabajado con">
+                <GoogleLogo className="h-8 w-auto md:h-10 2xl:h-14" />
+              </LogoStatCard>
+              <LogoStatCard label="Ha trabajado con">
+                <MicrosoftLogo className="h-7 w-auto md:h-9 2xl:h-12" />
+              </LogoStatCard>
             </div>
           </Reveal>
+
 
 
           <Reveal delay={0.2}>
@@ -1141,5 +1147,16 @@ function Field({
       {children}
       {error && <span className="mt-1 block text-xs text-red-600">{error}</span>}
     </label>
+  );
+}
+
+function LogoStatCard({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-[#0F0F0F]/60 p-5 text-center">
+      <div className="flex min-h-[72px] items-center justify-center rounded-xl bg-white px-4 py-4 md:min-h-[88px] 2xl:min-h-[112px]">
+        {children}
+      </div>
+      <div className="mt-3 text-xs uppercase tracking-widest text-white/60">{label}</div>
+    </div>
   );
 }
