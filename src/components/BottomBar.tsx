@@ -22,14 +22,14 @@ export function BottomBar() {
           Masterclass: De Clientes a Fans
         </span>
         <span className="w-full truncate text-xs font-normal text-white/70 sm:text-sm">
-          Con Carlos Laguna · 25 de julio · $20 USD
+          Con Carlos Laguna · Acceso inmediato y permanente · USD 19
         </span>
       </div>
       <a
         href={URL}
         className="inline-flex shrink-0 items-center rounded-full bg-[#EAC945] px-5 py-2.5 text-sm font-bold text-black transition-transform hover:scale-105 sm:px-6 sm:py-3 sm:text-base"
       >
-        Reservar →
+        Quiero acceso →
       </a>
     </div>
   );
