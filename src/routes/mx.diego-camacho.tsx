@@ -808,10 +808,15 @@ function Page() {
           </Reveal>
           <Reveal delay={0.15}>
             <div className="mt-14 grid grid-cols-2 gap-6">
-              <StatCard num="Google" label="Ha trabajado con" word />
-              <StatCard num="Microsoft" label="Ha trabajado con" word />
+              <LogoStatCard label="Ha trabajado con">
+                <GoogleLogo className="h-8 w-auto md:h-10 2xl:h-14" />
+              </LogoStatCard>
+              <LogoStatCard label="Ha trabajado con">
+                <MicrosoftLogo className="h-7 w-auto md:h-9 2xl:h-12" />
+              </LogoStatCard>
             </div>
           </Reveal>
+
 
 
           <Reveal delay={0.2}>
