@@ -24,6 +24,7 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
+import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
@@ -199,7 +200,10 @@ function Page() {
       throw new Error("No pudimos guardar tus datos. Inténtalo de nuevo.");
     }
 
-    // 2. Evento de conversión
+    // 2. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
+    await setEnhancedConversionUserData(data.whatsapp);
+
+    // 3. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
     trackGA4Event("generate_lead", {
       source: "diego-camacho-mx",
