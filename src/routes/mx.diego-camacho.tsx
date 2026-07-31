@@ -1044,29 +1044,8 @@ function Page() {
             </h2>
           </Reveal>
           <div className="mt-10 divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.03]">
-            {[
-              {
-                q: "¿Diego da conferencias presenciales en CDMX?",
-                a: "Sí, presenciales en Ciudad de México y toda la república, y también en formato virtual.",
-              },
-              { q: "¿En qué idioma?", a: "Español." },
-              {
-                q: "¿Adapta el contenido a mi industria?",
-                a: "Sí. Cada conferencia se ajusta al sector, al objetivo del evento y al perfil de la audiencia.",
-              },
-              {
-                q: "¿Cuánto cuesta?",
-                a: "Depende del formato, la fecha y la ciudad. Escríbenos por WhatsApp y te damos una propuesta a la medida.",
-              },
-              {
-                q: "¿Qué formatos ofrece?",
-                a: "Keynote, masterclass/taller, programa in-company y participación en paneles.",
-              },
-              {
-                q: "¿Puedo contratar más de una voz?",
-                a: "Sí. Voz Estratégica puede armar el lineup completo de tu agenda.",
-              },
-            ].map((f) => (
+            {FAQS.map((f) => (
+
               <details key={f.q} className="group px-6 py-5">
                 <summary className="flex cursor-pointer items-center justify-between gap-4 list-none">
                   <span className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{f.q}</span>
