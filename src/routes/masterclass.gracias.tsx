@@ -89,7 +89,8 @@ function GraciasPage() {
     const firedKey = `bold:purchase-fired:${orderId}`;
     if (sessionStorage.getItem(firedKey)) return;
 
-    const value = order?.currency === "USD" ? Number(order.amount) : 20;
+    const parsed = Number(order?.amount);
+    const value = order?.currency === "USD" && Number.isFinite(parsed) && parsed > 0 ? parsed : 19;
     const currency = order?.currency ?? "USD";
 
     trackEvent("Purchase", {
