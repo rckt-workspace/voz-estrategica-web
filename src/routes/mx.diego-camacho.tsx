@@ -181,6 +181,8 @@ export const Route = createFileRoute("/mx/diego-camacho")({
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
       { type: "application/ld+json", children: JSON.stringify(SERVICE_JSONLD) },
+      { type: "application/ld+json", children: JSON.stringify(FAQ_JSONLD) },
+
     ],
   }),
   component: Page,
