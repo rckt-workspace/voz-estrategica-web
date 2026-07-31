@@ -293,18 +293,36 @@ function MasterclassRecordingPage() {
   }, []);
 
   const temas = [
-    { n: "01", t: "Mentalidad comercial", d: "Del vendedor que persigue al profesional que cierra." },
-    { n: "02", t: "Los 4 tipos de cliente", d: "Cómo identificarlos en los primeros minutos." },
-    { n: "03", t: "IA para el trabajo comercial", d: "Cómo la IA quita tareas repetitivas." },
-    { n: "04", t: "La pregunta antes del precio", d: "Las 5 categorías de preguntas que cierran." },
-    { n: "05", t: "El ADD On Factor", d: "Cambiar descuento por valor percibido." },
-    { n: "06", t: "El caso Mercedes Benz Colombia", d: "Contado paso a paso." },
+    {
+      n: "01",
+      t: "Mindset comercial",
+      d: "La diferencia entre el vendedor que persigue y el profesional que cierra. El cambio mental que viene antes de la técnica.",
+    },
+    {
+      n: "02",
+      t: "Los 4 tipos de cliente",
+      d: "Cómo identificar al cliente analítico, expresivo, amigable o conductor en los primeros 60 segundos, y cómo adaptar tu estilo a cada uno.",
+    },
+    {
+      n: "03",
+      t: "Tu perfil negociador",
+      d: "Un quiz auto-aplicado para identificar tu estilo natural de negociación y dónde ajustarlo.",
+    },
+    {
+      n: "04",
+      t: "Tipos de preguntas que cierran ventas",
+      d: "Las 5 categorías de preguntas (apertura, calificación, dolor, validación, compromiso) con ejemplos aplicables esta semana, más 5 prompts de IA.",
+    },
+    {
+      n: "05",
+      t: "ADD On Factor + caso Mercedes Benz Colombia",
+      d: "El sistema completo para convertir clientes que pelean precio en clientes que pagan más sin descuento.",
+    },
   ];
 
   const incluido = [
     "Las 2 matrices de negociación",
     "Prompts de IA",
-    "Quiz de perfil negociador",
     "Guía de las 5 categorías de preguntas",
     "Acceso permanente desde cualquier dispositivo",
   ];
