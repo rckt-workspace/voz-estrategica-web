@@ -88,6 +88,20 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
         name: "twitter:description",
         content: "Grabación completa de 2 horas. Acceso permanente por USD 19.",
       },
+      {
+        property: "og:image",
+        content: "https://vozestrategica.com/og/masterclass-clientes-a-fans.jpg",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Vender sin perseguir clientes · Carlos Laguna · Grabación completa · USD 19",
+      },
+      {
+        name: "twitter:image",
+        content: "https://vozestrategica.com/og/masterclass-clientes-a-fans.jpg",
+      },
     ],
     links: [
       { rel: "canonical", href: PAGE_URL },

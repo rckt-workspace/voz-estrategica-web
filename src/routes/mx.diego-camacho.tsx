@@ -173,6 +173,20 @@ export const Route = createFileRoute("/mx/diego-camacho")({
         content:
           "Head of New Business Sales en Google. IA aplicada a ventas y marketing. Disponible para tu convención en CDMX.",
       },
+      {
+        property: "og:image",
+        content: "https://vozestrategica.com/og/diego-camacho.jpg",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Diego Camacho · Conferencista de IA y Ventas · CDMX",
+      },
+      {
+        name: "twitter:image",
+        content: "https://vozestrategica.com/og/diego-camacho.jpg",
+      },
     ],
     links: [
       { rel: "canonical", href: CANONICAL },
