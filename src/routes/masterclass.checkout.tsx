@@ -250,7 +250,7 @@ function CheckoutPage() {
               Añade y ahorra tiempo
             </span>
             <span className="mt-1 block text-sm font-bold">
-              Añade el Kit de Ejecución por solo USD {KIT_PRICE_USD} más
+              Añade el Kit de Ejecución por solo {KIT_PRICE_LABEL} más
             </span>
             <span className="mt-1 block text-sm text-white/70">
               Las 2 matrices, los prompts y la guía de preguntas en versión imprimible.
