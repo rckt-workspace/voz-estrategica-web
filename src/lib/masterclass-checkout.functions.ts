@@ -2,8 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { createHash, randomBytes } from "crypto";
 import { BOLD_IDENTITY_KEY } from "./bold.functions";
 import {
-  KIT_PRICE_USD,
-  MASTERCLASS_PRICE_USD,
+  KIT_PRICE_COP,
+  MASTERCLASS_PRICE_COP,
   PRODUCT_BASE,
   PRODUCT_WITH_KIT,
 } from "./masterclass-checkout";
