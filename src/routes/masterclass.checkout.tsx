@@ -314,7 +314,11 @@ function CheckoutPage() {
             className="mt-1 inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[6px] px-6 text-[15px] font-extrabold uppercase tracking-wide disabled:opacity-70"
             style={{ backgroundColor: GREEN, color: BLACK }}
           >
-            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Pagar USD {total} →</>}
+            {loading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <>Pagar {formatCOP(totalCOP)} →</>
+            )}
           </button>
         </form>
 
