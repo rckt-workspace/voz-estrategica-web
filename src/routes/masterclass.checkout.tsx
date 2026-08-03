@@ -4,7 +4,13 @@ import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, Check, Loader2, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { createMasterclassCheckout } from "@/lib/masterclass-checkout.functions";
-import { KIT_PRICE_USD, MASTERCLASS_PRICE_USD } from "@/lib/masterclass-checkout";
+import {
+  KIT_PRICE_COP,
+  KIT_PRICE_USD,
+  MASTERCLASS_PRICE_COP,
+  MASTERCLASS_PRICE_LABEL,
+  formatCOP,
+} from "@/lib/masterclass-checkout";
 import { attachBoldCloseListeners } from "@/lib/bold-checkout";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
