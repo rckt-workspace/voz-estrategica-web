@@ -41,7 +41,7 @@ export function TopBar() {
         href={URL}
         className="flex-1 px-4 py-2 text-center text-sm font-bold leading-tight sm:text-base"
       >
-        Vender sin perseguir clientes: la grabación completa por USD 19 →
+        Vender sin perseguir clientes: la grabación completa por $22.500 COP →
       </a>
       <button
         onClick={close}

@@ -8,10 +8,11 @@ import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 
-const PRICE_USD = 19;
+const PRICE_COP = 22500;
+const PRICE_LABEL = "$22.500 COP";
 const PRODUCT_NAME = "Grabación Masterclass: De clientes a fans";
-const PRIMARY_LABEL = "Quiero acceso ahora · USD 19";
-const SECONDARY_LABEL = "Quiero la sesión completa · USD 19";
+const PRIMARY_LABEL = "Quiero acceso ahora · $22.500 COP";
+const SECONDARY_LABEL = "Quiero la sesión completa · $22.500 COP";
 
 const GREEN = "#40ed51";
 const GREEN_DIM = "rgba(64, 237, 81, 0.12)";
@@ -72,12 +73,12 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
       {
         name: "description",
         content:
-          "La grabación completa de 2 horas con Carlos Laguna: el sistema que aplica con Mercedes Benz, Nespresso y Bancolombia. Acceso inmediato y permanente por USD 19.",
+          "La grabación completa de 2 horas con Carlos Laguna: el sistema que aplica con Mercedes Benz, Nespresso y Bancolombia. Acceso inmediato y permanente por $22.500 COP.",
       },
       { property: "og:title", content: "Vender sin perseguir clientes · Carlos Laguna" },
       {
         property: "og:description",
-        content: "Sesión completa de 2 horas + recursos. Acceso inmediato y permanente por USD 19.",
+        content: "Sesión completa de 2 horas + recursos. Acceso inmediato y permanente por $22.500 COP.",
       },
       { property: "og:url", content: PAGE_URL },
       { property: "og:type", content: "product" },
@@ -86,7 +87,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
       { name: "twitter:title", content: "Vender sin perseguir clientes · Carlos Laguna" },
       {
         name: "twitter:description",
-        content: "Grabación completa de 2 horas. Acceso permanente por USD 19.",
+        content: "Grabación completa de 2 horas. Acceso permanente por $22.500 COP.",
       },
       {
         property: "og:image",
@@ -96,7 +97,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
       { property: "og:image:height", content: "630" },
       {
         property: "og:image:alt",
-        content: "Vender sin perseguir clientes · Carlos Laguna · Grabación completa · USD 19",
+        content: "Vender sin perseguir clientes · Carlos Laguna · Grabación completa · $22.500 COP",
       },
       {
         name: "twitter:image",
@@ -126,8 +127,8 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
           image: gallerySpeaker.url,
           offers: {
             "@type": "Offer",
-            price: String(PRICE_USD),
-            priceCurrency: "USD",
+            price: String(PRICE_COP),
+            priceCurrency: "COP",
             availability: "https://schema.org/InStock",
             itemCondition: "https://schema.org/NewCondition",
             url: PAGE_URL,
@@ -147,13 +148,13 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
 function goToCheckout() {
   trackEvent("InitiateCheckout", {
     content_name: PRODUCT_NAME,
-    value: PRICE_USD,
-    currency: "USD",
+    value: PRICE_COP,
+    currency: "COP",
   });
   trackGA4Event("begin_checkout", {
     content_name: PRODUCT_NAME,
-    value: PRICE_USD,
-    currency: "USD",
+    value: PRICE_COP,
+    currency: "COP",
   });
 }
 
@@ -219,7 +220,7 @@ function StickyBuyBar({ showAfter }: { showAfter: React.RefObject<HTMLDivElement
         <div className="shrink-0">
           <p className="text-[10px] uppercase tracking-[0.15em] text-white/50">Acceso permanente</p>
           <p className="text-xl font-extrabold text-white" style={serif}>
-            USD 19
+            {PRICE_LABEL}
           </p>
         </div>
         <BuyButton className="!min-h-[52px] !max-w-none !px-3 !text-[13px]" label="Quiero acceso ahora" />
@@ -327,7 +328,7 @@ function MasterclassRecordingPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   useEffect(() => {
-    trackEvent("ViewContent", { content_name: PRODUCT_NAME, value: PRICE_USD, currency: "USD" });
+    trackEvent("ViewContent", { content_name: PRODUCT_NAME, value: PRICE_COP, currency: "COP" });
   }, []);
 
   const temas = [
@@ -401,7 +402,7 @@ function MasterclassRecordingPage() {
       <div className="border-b border-white/10 bg-[#0e0f0c]">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <img src={logoVozEstrategica} alt="Voz Estratégica" className="h-7 w-auto md:h-9" />
-          <span className="text-[11px] uppercase tracking-[0.18em] text-white/50">USD 19</span>
+          <span className="text-[11px] uppercase tracking-[0.18em] text-white/50">{PRICE_LABEL}</span>
         </div>
       </div>
 
@@ -649,7 +650,7 @@ function MasterclassRecordingPage() {
           <div className="mt-8 rounded-[6px] border-2 p-6 text-center" style={{ borderColor: GREEN }}>
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/60">Precio hoy</p>
             <p className="mt-2 text-6xl font-extrabold leading-none md:text-8xl" style={{ color: GREEN }}>
-              USD 19
+              {PRICE_LABEL}
             </p>
           </div>
 

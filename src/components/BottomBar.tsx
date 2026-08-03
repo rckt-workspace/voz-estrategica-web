@@ -22,7 +22,7 @@ export function BottomBar() {
           Masterclass: De Clientes a Fans
         </span>
         <span className="w-full truncate text-xs font-normal text-white/70 sm:text-sm">
-          Con Carlos Laguna · Acceso inmediato y permanente · USD 19
+          Con Carlos Laguna · Acceso inmediato y permanente · $22.500 COP
         </span>
       </div>
       <a

@@ -2,8 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { createHash, randomBytes } from "crypto";
 import { BOLD_IDENTITY_KEY } from "./bold.functions";
 import {
-  KIT_PRICE_USD,
-  MASTERCLASS_PRICE_USD,
+  KIT_PRICE_COP,
+  MASTERCLASS_PRICE_COP,
   PRODUCT_BASE,
   PRODUCT_WITH_KIT,
 } from "./masterclass-checkout";
@@ -13,7 +13,7 @@ export type MasterclassCheckout = {
   integritySignature: string;
   apiKey: string;
   amount: string;
-  currency: "USD";
+  currency: "COP";
   description: string;
   kit: boolean;
 };
@@ -38,8 +38,8 @@ export const createMasterclassCheckout = createServerFn({ method: "POST" })
     const secret = process.env["BOLD_SECRET_KEY"];
     if (!secret) throw new Error("BOLD_SECRET_KEY no está configurada");
 
-    const amount = MASTERCLASS_PRICE_USD + (data.kit ? KIT_PRICE_USD : 0);
-    const currency = "USD" as const;
+    const amount = MASTERCLASS_PRICE_COP + (data.kit ? KIT_PRICE_COP : 0);
+    const currency = "COP" as const;
     const orderId = `MC-${Date.now()}-${randomBytes(4).toString("hex")}`;
     const amountStr = String(amount);
     const integritySignature = createHash("sha256")
