@@ -22,24 +22,24 @@ const BOLD_SCRIPT_SRC = "https://checkout.bold.co/library/boldPaymentButton.js";
 export const Route = createFileRoute("/masterclass/checkout")({
   head: () => ({
     meta: [
-      { title: "Checkout · Vender sin perseguir clientes | USD 19" },
+      { title: "Checkout · Vender sin perseguir clientes | $22.500 COP" },
       {
         name: "description",
         content:
-          "Completa tu compra de la grabación completa 'Vender sin perseguir clientes' por USD 19. Pago seguro con Bold: tarjeta, PSE, Nequi o transferencia.",
+          "Completa tu compra de la grabación completa 'Vender sin perseguir clientes' por $22.500 COP. Pago seguro con Bold: tarjeta, PSE, Nequi o transferencia.",
       },
       { name: "robots", content: "noindex,nofollow" },
       { property: "og:type", content: "website" },
       { property: "og:title", content: "Checkout · Vender sin perseguir clientes" },
       {
         property: "og:description",
-        content: "Grabación completa por USD 19. Acceso inmediato y permanente.",
+        content: "Grabación completa por $22.500 COP. Acceso inmediato y permanente.",
       },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Checkout · Vender sin perseguir clientes" },
       {
         name: "twitter:description",
-        content: "Grabación completa por USD 19. Acceso inmediato y permanente.",
+        content: "Grabación completa por $22.500 COP. Acceso inmediato y permanente.",
       },
     ],
   }),

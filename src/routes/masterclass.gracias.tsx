@@ -91,8 +91,8 @@ function GraciasPage() {
     if (sessionStorage.getItem(firedKey)) return;
 
     const parsed = Number(order?.amount);
-    const value = order?.currency === "USD" && Number.isFinite(parsed) && parsed > 0 ? parsed : 19;
-    const currency = order?.currency ?? "USD";
+    const value = Number.isFinite(parsed) && parsed > 0 ? parsed : 22500;
+    const currency = order?.currency ?? "COP";
 
     trackEvent("Purchase", {
       value,
