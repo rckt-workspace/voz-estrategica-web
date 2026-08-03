@@ -196,7 +196,7 @@ function CheckoutPage() {
               <p className="font-bold">Vender sin perseguir clientes — Grabación completa</p>
               <p className="mt-1 text-sm text-white/60">Acceso inmediato y permanente</p>
             </div>
-            <p className="shrink-0 font-extrabold">USD {MASTERCLASS_PRICE_USD}</p>
+            <p className="shrink-0 font-extrabold">{MASTERCLASS_PRICE_LABEL}</p>
           </div>
 
           {kit && (
@@ -206,14 +206,28 @@ function CheckoutPage() {
             </div>
           )}
 
-          <div className="mt-4 flex items-baseline justify-between border-t border-white/15 pt-4">
+          <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-white/15 pt-4">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
               Total
             </span>
-            <span className="text-3xl font-extrabold" style={{ color: GREEN }}>
-              USD {total}
+            <span className="text-right">
+              <span className="block text-3xl font-extrabold leading-none" style={{ color: GREEN }}>
+                {MASTERCLASS_PRICE_LABEL}
+              </span>
+              {kit && (
+                <span className="mt-1 block text-lg font-extrabold" style={{ color: GREEN }}>
+                  + USD {KIT_PRICE_USD}
+                </span>
+              )}
             </span>
           </div>
+
+          {kit && (
+            <p className="mt-3 text-xs text-white/50">
+              El cobro se procesa en una sola transacción en pesos colombianos:{" "}
+              {formatCOP(totalCOP)}.
+            </p>
+          )}
         </section>
 
         {/* 2. Order bump */}
