@@ -13,7 +13,7 @@ export type MasterclassCheckout = {
   integritySignature: string;
   apiKey: string;
   amount: string;
-  currency: "USD";
+  currency: "COP";
   description: string;
   kit: boolean;
 };
