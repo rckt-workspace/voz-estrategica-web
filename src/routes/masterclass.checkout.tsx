@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { createMasterclassCheckout } from "@/lib/masterclass-checkout.functions";
 import {
   KIT_PRICE_COP,
-  KIT_PRICE_USD,
+  KIT_PRICE_LABEL,
   MASTERCLASS_PRICE_COP,
   MASTERCLASS_PRICE_LABEL,
   formatCOP,
