@@ -4,7 +4,13 @@ import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, Check, Loader2, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { createMasterclassCheckout } from "@/lib/masterclass-checkout.functions";
-import { KIT_PRICE_USD, MASTERCLASS_PRICE_USD } from "@/lib/masterclass-checkout";
+import {
+  KIT_PRICE_COP,
+  KIT_PRICE_USD,
+  MASTERCLASS_PRICE_COP,
+  MASTERCLASS_PRICE_LABEL,
+  formatCOP,
+} from "@/lib/masterclass-checkout";
 import { attachBoldCloseListeners } from "@/lib/bold-checkout";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
@@ -16,24 +22,24 @@ const BOLD_SCRIPT_SRC = "https://checkout.bold.co/library/boldPaymentButton.js";
 export const Route = createFileRoute("/masterclass/checkout")({
   head: () => ({
     meta: [
-      { title: "Checkout · Vender sin perseguir clientes | USD 19" },
+      { title: "Checkout · Vender sin perseguir clientes | $22.500 COP" },
       {
         name: "description",
         content:
-          "Completa tu compra de la grabación completa 'Vender sin perseguir clientes' por USD 19. Pago seguro con Bold: tarjeta, PSE, Nequi o transferencia.",
+          "Completa tu compra de la grabación completa 'Vender sin perseguir clientes' por $22.500 COP. Pago seguro con Bold: tarjeta, PSE, Nequi o transferencia.",
       },
       { name: "robots", content: "noindex,nofollow" },
       { property: "og:type", content: "website" },
       { property: "og:title", content: "Checkout · Vender sin perseguir clientes" },
       {
         property: "og:description",
-        content: "Grabación completa por USD 19. Acceso inmediato y permanente.",
+        content: "Grabación completa por $22.500 COP. Acceso inmediato y permanente.",
       },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Checkout · Vender sin perseguir clientes" },
       {
         name: "twitter:description",
-        content: "Grabación completa por USD 19. Acceso inmediato y permanente.",
+        content: "Grabación completa por $22.500 COP. Acceso inmediato y permanente.",
       },
     ],
   }),
@@ -73,7 +79,8 @@ function CheckoutPage() {
     order: Awaited<ReturnType<typeof createMasterclassCheckout>>;
   } | null>(null);
 
-  const total = useMemo(() => MASTERCLASS_PRICE_USD + (kit ? KIT_PRICE_USD : 0), [kit]);
+  // Bold cobra una sola moneda por transacción: el total real se procesa en COP.
+  const totalCOP = useMemo(() => MASTERCLASS_PRICE_COP + (kit ? KIT_PRICE_COP : 0), [kit]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -102,13 +109,13 @@ function CheckoutPage() {
 
       trackEvent("InitiateCheckout", {
         content_name: order.description,
-        value: total,
-        currency: "USD",
+        value: totalCOP,
+        currency: "COP",
       });
       trackGA4Event("begin_checkout", {
         content_name: order.description,
-        value: total,
-        currency: "USD",
+        value: totalCOP,
+        currency: "COP",
       });
 
       try {
@@ -189,7 +196,7 @@ function CheckoutPage() {
               <p className="font-bold">Vender sin perseguir clientes — Grabación completa</p>
               <p className="mt-1 text-sm text-white/60">Acceso inmediato y permanente</p>
             </div>
-            <p className="shrink-0 font-extrabold">USD {MASTERCLASS_PRICE_USD}</p>
+            <p className="shrink-0 font-extrabold">{MASTERCLASS_PRICE_LABEL}</p>
           </div>
 
           {kit && (
@@ -199,14 +206,28 @@ function CheckoutPage() {
             </div>
           )}
 
-          <div className="mt-4 flex items-baseline justify-between border-t border-white/15 pt-4">
+          <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-white/15 pt-4">
             <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
               Total
             </span>
-            <span className="text-3xl font-extrabold" style={{ color: GREEN }}>
-              USD {total}
+            <span className="text-right">
+              <span className="block text-3xl font-extrabold leading-none" style={{ color: GREEN }}>
+                {MASTERCLASS_PRICE_LABEL}
+              </span>
+              {kit && (
+                <span className="mt-1 block text-lg font-extrabold" style={{ color: GREEN }}>
+                  + USD {KIT_PRICE_USD}
+                </span>
+              )}
             </span>
           </div>
+
+          {kit && (
+            <p className="mt-3 text-xs text-white/50">
+              El cobro se procesa en una sola transacción en pesos colombianos:{" "}
+              {formatCOP(totalCOP)}.
+            </p>
+          )}
         </section>
 
         {/* 2. Order bump */}
@@ -293,7 +314,11 @@ function CheckoutPage() {
             className="mt-1 inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-[6px] px-6 text-[15px] font-extrabold uppercase tracking-wide disabled:opacity-70"
             style={{ backgroundColor: GREEN, color: BLACK }}
           >
-            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Pagar USD {total} →</>}
+            {loading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <>Pagar {formatCOP(totalCOP)} →</>
+            )}
           </button>
         </form>
 
