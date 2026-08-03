@@ -79,7 +79,8 @@ function CheckoutPage() {
     order: Awaited<ReturnType<typeof createMasterclassCheckout>>;
   } | null>(null);
 
-  const total = useMemo(() => MASTERCLASS_PRICE_USD + (kit ? KIT_PRICE_USD : 0), [kit]);
+  // Bold cobra una sola moneda por transacción: el total real se procesa en COP.
+  const totalCOP = useMemo(() => MASTERCLASS_PRICE_COP + (kit ? KIT_PRICE_COP : 0), [kit]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
