@@ -202,7 +202,7 @@ function CheckoutPage() {
           {kit && (
             <div className="mt-4 flex items-start justify-between gap-4 border-t border-white/10 pt-4">
               <p className="text-sm font-bold">Kit de Ejecución (imprimible)</p>
-              <p className="shrink-0 font-extrabold">USD {KIT_PRICE_USD}</p>
+              <p className="shrink-0 font-extrabold">{KIT_PRICE_LABEL}</p>
             </div>
           )}
 
@@ -212,13 +212,8 @@ function CheckoutPage() {
             </span>
             <span className="text-right">
               <span className="block text-3xl font-extrabold leading-none" style={{ color: GREEN }}>
-                {MASTERCLASS_PRICE_LABEL}
+                {formatCOP(totalCOP)}
               </span>
-              {kit && (
-                <span className="mt-1 block text-lg font-extrabold" style={{ color: GREEN }}>
-                  + USD {KIT_PRICE_USD}
-                </span>
-              )}
             </span>
           </div>
 
