@@ -109,13 +109,13 @@ function CheckoutPage() {
 
       trackEvent("InitiateCheckout", {
         content_name: order.description,
-        value: total,
-        currency: "USD",
+        value: totalCOP,
+        currency: "COP",
       });
       trackGA4Event("begin_checkout", {
         content_name: order.description,
-        value: total,
-        currency: "USD",
+        value: totalCOP,
+        currency: "COP",
       });
 
       try {
