@@ -39,7 +39,6 @@ export const Route = createFileRoute("/sitemap.xml")({
           })),
         ];
 
-
         const urls = entries.map((e) =>
           [
             `  <url>`,

@@ -1,5 +1,8 @@
 // Meta Pixel helper (client-only)
-export const META_PIXEL_ID = "4497186893935830";
+// Respects ad_storage consent, does not load if ID is missing
+
+export const META_PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID || "4497186893935830";
+const ANALYTICS_MODE = import.meta.env.VITE_ANALYTICS_MODE || "direct";
 
 declare global {
   interface Window {
@@ -10,9 +13,24 @@ declare global {
 
 let initialized = false;
 
+export function isMetaPixelEnabled(): boolean {
+  if (ANALYTICS_MODE === "disabled") return false;
+  if (!META_PIXEL_ID) return false;
+  return true;
+}
+
+/**
+ * Initialize Meta Pixel only if enabled and ad_storage consent is granted.
+ * In GTM mode, Meta Pixel conversions should be configured within GTM instead.
+ */
 export function initMetaPixel() {
-  if (typeof window === "undefined" || initialized) return;
+  if (typeof window === "undefined" || initialized || !isMetaPixelEnabled()) return;
   initialized = true;
+
+  // If in GTM mode, don't load Meta Pixel directly (configure it in GTM instead)
+  if (ANALYTICS_MODE === "gtm") {
+    return;
+  }
 
   /* eslint-disable */
   // @ts-ignore - standard Meta Pixel bootstrap
@@ -39,12 +57,12 @@ export function initMetaPixel() {
 }
 
 export function trackPageView() {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !isMetaPixelEnabled()) return;
   window.fbq?.("track", "PageView");
 }
 
 export function trackEvent(event: string, params?: Record<string, unknown>) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !isMetaPixelEnabled()) return;
   if (params) window.fbq?.("track", event, params);
   else window.fbq?.("track", event);
 }

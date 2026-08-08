@@ -15,7 +15,8 @@ export const Route = createFileRoute("/soluciones")({
       { property: "og:title", content: "Soluciones — Voz Estratégica" },
       {
         property: "og:description",
-        content: "4 unidades de negocio y un portafolio en escalera para desarrollar a tu organización.",
+        content:
+          "4 unidades de negocio y un portafolio en escalera para desarrollar a tu organización.",
       },
       { property: "og:url", content: "https://vozestrategica.com/soluciones" },
       { property: "og:type", content: "website" },
@@ -158,9 +159,7 @@ function SolucionesPage() {
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="rounded-[60px] bg-brand px-8 py-20 text-center md:px-16">
-          <h2 className="font-display text-4xl uppercase md:text-6xl">
-            Diseñemos tu solución
-          </h2>
+          <h2 className="font-display text-4xl uppercase md:text-6xl">Diseñemos tu solución</h2>
           <Link
             to="/contratar"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-4 text-base font-bold text-background transition-transform hover:scale-105"

@@ -13,7 +13,7 @@ Este proyecto TanStack Start está configurado para ejecutarse en un servidor No
 ✅ `package.json` - Agregado script `start` y `engines`  
 ✅ `.gitignore` - Agregado exclusión de archivos `.env`  
 ✅ `.env.example` - Template de variables de entorno  
-✅ `.env` - Eliminado del repositorio Git  
+✅ `.env` - Eliminado del repositorio Git
 
 ## Pasos de deployment en Hostinger
 
@@ -94,7 +94,7 @@ En el panel de Hostinger:
 ✅ **Supabase** - Integración completa funciona  
 ✅ **Bold** - Sistema de pagos integrado  
 ✅ **Resend** - Sistema de emails integrado  
-✅ **Desarrollo en Lovable** - Sin cambios, sigue funcionando igual  
+✅ **Desarrollo en Lovable** - Sin cambios, sigue funcionando igual
 
 ## Estructura de carpetas después de build
 
@@ -111,12 +111,15 @@ En el panel de Hostinger:
 ## Troubleshooting
 
 **Error: "Cannot find module"**
+
 - Ejecuta `npm install` en Hostinger después de clonar
 
 **Error de versión de Node**
+
 - Verifica que tienes Node.js 22+ instalado: `node --version`
 
 **Error en variables de entorno**
+
 - Confirma que todas las variables están configuradas en Hostinger
 - Las variables deben estar en `.env` (local) o configuradas en Hostinger
 

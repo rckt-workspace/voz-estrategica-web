@@ -23,16 +23,15 @@ type Pedido = {
 
 export const Route = createFileRoute("/admin/pedidos-libros")({
   head: () => ({
-    meta: [
-      { title: "Admin — Pedidos de libros" },
-      { name: "robots", content: "noindex,nofollow" },
-    ],
+    meta: [{ title: "Admin — Pedidos de libros" }, { name: "robots", content: "noindex,nofollow" }],
   }),
   errorComponent: ({ error }) => (
     <div className="mx-auto max-w-xl px-6 py-24 text-center">
       <h1 className="font-display text-3xl uppercase">Acceso denegado</h1>
       <p className="mt-4 text-muted-foreground">{error.message}</p>
-      <Link to="/" className="mt-6 inline-block underline">Volver al inicio</Link>
+      <Link to="/" className="mt-6 inline-block underline">
+        Volver al inicio
+      </Link>
     </div>
   ),
   notFoundComponent: () => <div className="p-8">No encontrado</div>,
@@ -78,8 +77,12 @@ function AdminPedidosPage() {
     <div>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Sección</div>
-          <h2 className="mt-1 font-display text-2xl uppercase leading-tight md:text-3xl">Pedidos de libros</h2>
+          <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            Sección
+          </div>
+          <h2 className="mt-1 font-display text-2xl uppercase leading-tight md:text-3xl">
+            Pedidos de libros
+          </h2>
         </div>
         <div className="flex gap-2">
           {["todos", "pendiente", "aprobado", "rechazado", "cancelado"].map((e) => (
@@ -87,7 +90,9 @@ function AdminPedidosPage() {
               key={e}
               onClick={() => setEstado(e)}
               className={`rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest ${
-                estado === e ? "bg-foreground text-background" : "bg-foreground/5 hover:bg-foreground/10"
+                estado === e
+                  ? "bg-foreground text-background"
+                  : "bg-foreground/5 hover:bg-foreground/10"
               }`}
             >
               {e}
@@ -127,16 +132,31 @@ function AdminPedidosPage() {
             <tbody>
               {pedidos.map((p) => (
                 <tr key={p.id} className="border-t border-foreground/10 align-top">
-                  <Td>{new Date(p.fecha_creacion).toLocaleString("es-CO", { dateStyle: "short", timeStyle: "short" })}</Td>
                   <Td>
-                    <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${
-                      p.estado_pago === "aprobado" ? "bg-green-100 text-green-800" :
-                      p.estado_pago === "rechazado" ? "bg-red-100 text-red-800" :
-                      p.estado_pago === "cancelado" ? "bg-gray-200 text-gray-700" :
-                      "bg-yellow-100 text-yellow-800"
-                    }`}>{p.estado_pago}</span>
+                    {new Date(p.fecha_creacion).toLocaleString("es-CO", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    })}
                   </Td>
-                  <Td className="font-semibold">{p.libro}<div className="text-[10px] uppercase text-muted-foreground">{p.formato}</div></Td>
+                  <Td>
+                    <span
+                      className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${
+                        p.estado_pago === "aprobado"
+                          ? "bg-green-100 text-green-800"
+                          : p.estado_pago === "rechazado"
+                            ? "bg-red-100 text-red-800"
+                            : p.estado_pago === "cancelado"
+                              ? "bg-gray-200 text-gray-700"
+                              : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
+                      {p.estado_pago}
+                    </span>
+                  </Td>
+                  <Td className="font-semibold">
+                    {p.libro}
+                    <div className="text-[10px] uppercase text-muted-foreground">{p.formato}</div>
+                  </Td>
                   <Td>{p.cantidad}</Td>
                   <Td className="font-semibold">${p.total.toLocaleString("es-CO")}</Td>
                   <Td>{p.nombre_completo}</Td>
@@ -147,7 +167,9 @@ function AdminPedidosPage() {
                   <Td>
                     {p.formato === "fisico" ? (
                       <div className="text-xs">
-                        {p.direccion}<br />{p.ciudad}, {p.departamento}
+                        {p.direccion}
+                        <br />
+                        {p.ciudad}, {p.departamento}
                       </div>
                     ) : (
                       <span className="text-xs text-muted-foreground">Digital</span>
@@ -178,7 +200,9 @@ function AdminPedidosPage() {
 }
 
 const Th = ({ children }: { children: React.ReactNode }) => (
-  <th className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{children}</th>
+  <th className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+    {children}
+  </th>
 );
 const Td = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <td className={`px-3 py-3 ${className}`}>{children}</td>

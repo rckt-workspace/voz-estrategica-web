@@ -16,12 +16,18 @@ const schema = z.object({
   cargo: z.string().max(120).optional().or(z.literal("")),
   email: z.string().email("Email inválido").max(200),
   telefono: z.string().max(40).optional().or(z.literal("")),
-  interes: z.enum(
-    ["Conferencia", "Taller o workshop", "Programa o Escuela", "Consultoría"],
-    { message: "Cuéntanos qué te interesa" },
-  ),
+  interes: z.enum(["Conferencia", "Taller o workshop", "Programa o Escuela", "Consultoría"], {
+    message: "Cuéntanos qué te interesa",
+  }),
   territorio: z.enum(
-    ["Liderazgo", "Comunicación", "Cultura", "Transformación", "Ventas y cliente", "Aún no lo tengo claro"],
+    [
+      "Liderazgo",
+      "Comunicación",
+      "Cultura",
+      "Transformación",
+      "Ventas y cliente",
+      "Aún no lo tengo claro",
+    ],
     { message: "Selecciona un territorio" },
   ),
   audiencia: z.string().max(120).optional().or(z.literal("")),
@@ -76,9 +82,7 @@ function ContratarPage() {
   });
 
   async function onSubmit(values: FormData) {
-    const spk = values.speaker
-      ? speakers.find((s) => s.slug === values.speaker)
-      : null;
+    const spk = values.speaker ? speakers.find((s) => s.slug === values.speaker) : null;
 
     const mensajeCompleto =
       `¿Qué te interesa?: ${values.interes}` +
@@ -100,7 +104,6 @@ function ContratarPage() {
       speaker_id: null,
       estado: "nuevo",
     });
-
 
     if (error) {
       toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
@@ -175,7 +178,9 @@ function ContratarPage() {
                   defaultValue=""
                   {...register("interes")}
                 >
-                  <option value="" disabled>Selecciona una opción</option>
+                  <option value="" disabled>
+                    Selecciona una opción
+                  </option>
                   <option value="Conferencia">Conferencia (keynote / charla)</option>
                   <option value="Taller o workshop">Taller o workshop</option>
                   <option value="Programa o Escuela">Programa o Escuela (multisesión)</option>
@@ -201,7 +206,9 @@ function ContratarPage() {
                   defaultValue=""
                   {...register("territorio")}
                 >
-                  <option value="" disabled>Selecciona un territorio</option>
+                  <option value="" disabled>
+                    Selecciona un territorio
+                  </option>
                   <option value="Liderazgo">Liderazgo</option>
                   <option value="Comunicación">Comunicación</option>
                   <option value="Cultura">Cultura</option>
@@ -301,7 +308,6 @@ function ContratarPage() {
     </>
   );
 }
-
 
 const input =
   "w-full rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-base text-foreground outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30";

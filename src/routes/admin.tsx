@@ -6,10 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [
-      { title: "Admin — Voz Estratégica" },
-      { name: "robots", content: "noindex,nofollow" },
-    ],
+    meta: [{ title: "Admin — Voz Estratégica" }, { name: "robots", content: "noindex,nofollow" }],
   }),
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
@@ -18,7 +15,6 @@ export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
 
-
 function AdminLayout() {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
@@ -26,7 +22,9 @@ function AdminLayout() {
 
   useEffect(() => {
     (async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) {
         navigate({ to: "/auth" });
         return;
@@ -57,8 +55,8 @@ function AdminLayout() {
         <h1 className="mt-6 font-display text-4xl uppercase">Falta rol de administrador</h1>
         <p className="mt-4 text-muted-foreground">
           Tu cuenta <span className="font-bold">{email}</span> no tiene el rol{" "}
-          <code className="rounded bg-muted px-1.5 py-0.5">admin</code>. Pedile
-          al equipo que lo agregue desde la base de datos.
+          <code className="rounded bg-muted px-1.5 py-0.5">admin</code>. Pedile al equipo que lo
+          agregue desde la base de datos.
         </p>
         <button onClick={signOut} className="bubble bubble-black mt-8">
           Cerrar sesión
@@ -116,4 +114,3 @@ function AdminLayout() {
     </div>
   );
 }
-

@@ -78,9 +78,7 @@ function EventosPage() {
                       })}
                     </div>
                     <div className="flex-1">
-                      <div className="font-display text-3xl uppercase md:text-4xl">
-                        {ev.titulo}
-                      </div>
+                      <div className="font-display text-3xl uppercase md:text-4xl">{ev.titulo}</div>
                       <div className="mt-2 text-sm text-background/70">
                         {ev.ciudad} · {ev.descripcion}
                       </div>

@@ -15,7 +15,8 @@ export const Route = createFileRoute("/casos")({
       { property: "og:title", content: "Casos de impacto — Voz Estratégica" },
       {
         property: "og:description",
-        content: "Organizaciones que trabajan su desarrollo con nuestras conferencias, programas y escuelas.",
+        content:
+          "Organizaciones que trabajan su desarrollo con nuestras conferencias, programas y escuelas.",
       },
       { property: "og:url", content: "https://vozestrategica.com/casos" },
       { property: "og:type", content: "website" },
@@ -26,9 +27,24 @@ export const Route = createFileRoute("/casos")({
 });
 
 const CASOS = [
-  { empresa: "Cliente 1", reto: "Reto del negocio.", solucion: "Unidad / programa aplicado.", resultado: "Resultado observable." },
-  { empresa: "Cliente 2", reto: "Reto del negocio.", solucion: "Unidad / programa aplicado.", resultado: "Resultado observable." },
-  { empresa: "Cliente 3", reto: "Reto del negocio.", solucion: "Unidad / programa aplicado.", resultado: "Resultado observable." },
+  {
+    empresa: "Cliente 1",
+    reto: "Reto del negocio.",
+    solucion: "Unidad / programa aplicado.",
+    resultado: "Resultado observable.",
+  },
+  {
+    empresa: "Cliente 2",
+    reto: "Reto del negocio.",
+    solucion: "Unidad / programa aplicado.",
+    resultado: "Resultado observable.",
+  },
+  {
+    empresa: "Cliente 3",
+    reto: "Reto del negocio.",
+    solucion: "Unidad / programa aplicado.",
+    resultado: "Resultado observable.",
+  },
 ];
 
 function CasosPage() {
@@ -53,11 +69,16 @@ function CasosPage() {
       <section className="mx-auto max-w-7xl px-6 py-16">
         <Reveal>
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/10 sm:grid-cols-3 md:grid-cols-6">
-            {["Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5", "Cliente 6"].map((c) => (
-              <div key={c} className="grid h-28 place-items-center bg-background px-4 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                {c}
-              </div>
-            ))}
+            {["Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4", "Cliente 5", "Cliente 6"].map(
+              (c) => (
+                <div
+                  key={c}
+                  className="grid h-28 place-items-center bg-background px-4 text-center font-mono text-[10px] uppercase tracking-widest text-muted-foreground"
+                >
+                  {c}
+                </div>
+              ),
+            )}
           </div>
         </Reveal>
       </section>
@@ -72,15 +93,21 @@ function CasosPage() {
               </div>
               <div className="grid gap-6 md:grid-cols-3">
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Reto</div>
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                    Reto
+                  </div>
                   <p className="mt-2 text-sm text-muted-foreground">{c.reto}</p>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Solución</div>
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                    Solución
+                  </div>
                   <p className="mt-2 text-sm text-muted-foreground">{c.solucion}</p>
                 </div>
                 <div>
-                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Resultado</div>
+                  <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                    Resultado
+                  </div>
                   <p className="mt-2 text-sm text-muted-foreground">{c.resultado}</p>
                 </div>
               </div>

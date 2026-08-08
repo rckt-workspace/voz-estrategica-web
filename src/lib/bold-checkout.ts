@@ -40,7 +40,6 @@ const BOLD_CLOSE_EVENTS = [
  * cuando el usuario abandona el pago.
  */
 export function attachBoldCloseListeners(onClose: () => void) {
-
   let done = false;
   const handler = () => {
     if (done) return;
@@ -61,11 +60,12 @@ export function attachBoldCloseListeners(onClose: () => void) {
   return cleanup;
 }
 
-
 function loadBoldLibrary() {
   if (window.BoldCheckout) return Promise.resolve();
 
-  const existingScript = document.querySelector<HTMLScriptElement>(`script[src="${BOLD_SCRIPT_SRC}"]`);
+  const existingScript = document.querySelector<HTMLScriptElement>(
+    `script[src="${BOLD_SCRIPT_SRC}"]`,
+  );
   if (existingScript) {
     return new Promise<void>((resolve, reject) => {
       if (window.BoldCheckout) {
@@ -73,7 +73,11 @@ function loadBoldLibrary() {
         return;
       }
       existingScript.addEventListener("load", () => resolve(), { once: true });
-      existingScript.addEventListener("error", () => reject(new Error("Bold checkout failed to load")), { once: true });
+      existingScript.addEventListener(
+        "error",
+        () => reject(new Error("Bold checkout failed to load")),
+        { once: true },
+      );
     });
   }
 
@@ -87,15 +91,16 @@ function loadBoldLibrary() {
   });
 }
 
-export async function openBoldEmbeddedCheckout(opts: {
-  amount: number;
-  currency: "USD" | "COP";
-  description: string;
-  redirectionUrl: string;
-  discountCode?: string;
-} & BoldCheckoutCallbacks) {
+export async function openBoldEmbeddedCheckout(
+  opts: {
+    amount: number;
+    currency: "USD" | "COP";
+    description: string;
+    redirectionUrl: string;
+    discountCode?: string;
+  } & BoldCheckoutCallbacks,
+) {
   await loadBoldLibrary();
-
 
   const order = await createBoldOrder({
     data: {
@@ -105,7 +110,6 @@ export async function openBoldEmbeddedCheckout(opts: {
       discountCode: opts.discountCode,
     },
   });
-
 
   // Persist for the thank-you page
   try {
@@ -161,4 +165,3 @@ export async function openBoldEmbeddedCheckout(opts: {
 
   checkout.open();
 }
-

@@ -23,8 +23,12 @@ export const Route = createFileRoute("/masterclass/gracias")({
     ],
   }),
   validateSearch: (search: Record<string, unknown>) => ({
-    "bold-order-id": typeof search["bold-order-id"] === "string" ? (search["bold-order-id"] as string) : undefined,
-    "bold-tx-status": typeof search["bold-tx-status"] === "string" ? (search["bold-tx-status"] as string) : undefined,
+    "bold-order-id":
+      typeof search["bold-order-id"] === "string" ? (search["bold-order-id"] as string) : undefined,
+    "bold-tx-status":
+      typeof search["bold-tx-status"] === "string"
+        ? (search["bold-tx-status"] as string)
+        : undefined,
   }),
   component: GraciasPage,
 });
@@ -129,15 +133,18 @@ function GraciasPage() {
         {isApproved && (
           <>
             <CheckCircle2 className="mb-6 h-16 w-16" style={{ color: BRAND }} strokeWidth={1.5} />
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em]" style={{ color: BRAND }}>
+            <p
+              className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em]"
+              style={{ color: BRAND }}
+            >
               Pago aprobado
             </p>
             <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
               ¡Gracias por tu compra!
             </h1>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
-              ¡Listo! Tu compra fue exitosa. En breve recibirás un correo con el acceso a tu contenido. Si no
-              lo ves, revisa tu carpeta de Promociones o Spam.
+              ¡Listo! Tu compra fue exitosa. En breve recibirás un correo con el acceso a tu
+              contenido. Si no lo ves, revisa tu carpeta de Promociones o Spam.
             </p>
           </>
         )}
@@ -148,10 +155,12 @@ function GraciasPage() {
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-yellow-400">
               Pago en revisión
             </p>
-            <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">Estamos confirmando tu pago</h1>
+            <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
+              Estamos confirmando tu pago
+            </h1>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
-              Tu transacción quedó en proceso. En cuanto se apruebe te enviaremos por correo el acceso a la
-              masterclass. No hace falta volver a pagar.
+              Tu transacción quedó en proceso. En cuanto se apruebe te enviaremos por correo el
+              acceso a la masterclass. No hace falta volver a pagar.
             </p>
           </>
         )}
@@ -162,10 +171,12 @@ function GraciasPage() {
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-red-400">
               Pago no procesado
             </p>
-            <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">No pudimos cobrar tu pago</h1>
+            <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
+              No pudimos cobrar tu pago
+            </h1>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
-              La transacción no se completó. Puedes intentarlo de nuevo con la misma tarjeta u otro método de
-              pago. Si el problema persiste, escríbenos a contacto@vozestrategica.com.
+              La transacción no se completó. Puedes intentarlo de nuevo con la misma tarjeta u otro
+              método de pago. Si el problema persiste, escríbenos a contacto@vozestrategica.com.
             </p>
           </>
         )}
@@ -173,7 +184,9 @@ function GraciasPage() {
         {status === "unknown" && (
           <>
             <Clock className="mb-6 h-16 w-16 text-white/60" strokeWidth={1.5} />
-            <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">Estamos verificando tu pago</h1>
+            <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
+              Estamos verificando tu pago
+            </h1>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
               Si completaste el pago, recibirás el acceso por correo en unos minutos.
             </p>

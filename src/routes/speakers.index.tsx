@@ -55,7 +55,8 @@ const CATEGORIES: { id: CategoryId; label: string; match: (s: Speaker) => boolea
   {
     id: "ventas",
     label: "Ventas & negocios",
-    match: (s) => s.tematicas.some((t) => /ventas|negocio|experiencia de cliente|comportamiento/i.test(t)),
+    match: (s) =>
+      s.tematicas.some((t) => /ventas|negocio|experiencia de cliente|comportamiento/i.test(t)),
   },
   {
     id: "finanzas",
@@ -65,7 +66,8 @@ const CATEGORIES: { id: CategoryId; label: string; match: (s: Speaker) => boolea
   {
     id: "ia",
     label: "IA & transformación digital",
-    match: (s) => s.tematicas.some((t) => /inteligencia artificial|transformaci|innovaci|digital/i.test(t)),
+    match: (s) =>
+      s.tematicas.some((t) => /inteligencia artificial|transformaci|innovaci|digital/i.test(t)),
   },
   {
     id: "comunicacion",
@@ -75,7 +77,10 @@ const CATEGORIES: { id: CategoryId; label: string; match: (s: Speaker) => boolea
   {
     id: "inspiracion",
     label: "Inspiración & propósito",
-    match: (s) => s.tematicas.some((t) => /resiliencia|inclusi|prop[oó]sito|motivaci|transformaci[oó]n$/i.test(t)),
+    match: (s) =>
+      s.tematicas.some((t) =>
+        /resiliencia|inclusi|prop[oó]sito|motivaci|transformaci[oó]n$/i.test(t),
+      ),
   },
 ];
 
@@ -113,14 +118,15 @@ function SpeakersPage() {
                 className={`bubble ${active ? "bubble-black" : "bubble-outline"}`}
               >
                 {c.label}
-                <span className={`ml-2 text-[10px] font-bold ${active ? "opacity-70" : "opacity-50"}`}>
+                <span
+                  className={`ml-2 text-[10px] font-bold ${active ? "opacity-70" : "opacity-50"}`}
+                >
                   {count}
                 </span>
               </button>
             );
           })}
         </div>
-
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((s, i) => (
@@ -143,9 +149,7 @@ function SpeakersPage() {
                   <div className="text-xs font-bold uppercase tracking-widest text-brand">
                     {s.especialidad}
                   </div>
-                  <div className="mt-2 font-display text-3xl uppercase">
-                    {s.nombre}
-                  </div>
+                  <div className="mt-2 font-display text-3xl uppercase">{s.nombre}</div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     {s.tematicas.map((t) => (
                       <span

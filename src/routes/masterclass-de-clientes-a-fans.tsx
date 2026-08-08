@@ -29,8 +29,14 @@ const FAQS = [
     q: "¿Cuánto dura y cómo lo veo?",
     a: "Es una sesión completa de cerca de 2 horas, con capítulos para que puedas ir directo al tema que te interesa y retomar donde lo dejaste. Lo ves desde el celular o el computador, cuando quieras, cuantas veces quieras.",
   },
-  { q: "¿Por cuánto tiempo tengo acceso?", a: "Para siempre. Compras una vez y queda en tu cuenta." },
-  { q: "¿Es en vivo?", a: "No. Es la grabación completa de la sesión, con todos los recursos incluidos." },
+  {
+    q: "¿Por cuánto tiempo tengo acceso?",
+    a: "Para siempre. Compras una vez y queda en tu cuenta.",
+  },
+  {
+    q: "¿Es en vivo?",
+    a: "No. Es la grabación completa de la sesión, con todos los recursos incluidos.",
+  },
   {
     q: "¿Tengo que verlo de una sola vez?",
     a: "No. El reproductor recuerda dónde te quedaste y puedes navegar por capítulos.",
@@ -65,7 +71,6 @@ const FAQ_JSONLD = {
   })),
 };
 
-
 export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
   head: () => ({
     meta: [
@@ -78,7 +83,8 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
       { property: "og:title", content: "Vender sin perseguir clientes · Carlos Laguna" },
       {
         property: "og:description",
-        content: "Sesión completa de 2 horas + recursos. Acceso inmediato y permanente por $22.500 COP.",
+        content:
+          "Sesión completa de 2 horas + recursos. Acceso inmediato y permanente por $22.500 COP.",
       },
       { property: "og:url", content: PAGE_URL },
       { property: "og:type", content: "product" },
@@ -123,7 +129,11 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
           brand: { "@type": "Brand", name: "Voz Estratégica" },
           category: "Curso de ventas y negociación",
           author: { "@type": "Person", name: "Carlos Laguna" },
-          provider: { "@type": "Organization", name: "Voz Estratégica", url: "https://vozestrategica.com" },
+          provider: {
+            "@type": "Organization",
+            name: "Voz Estratégica",
+            url: "https://vozestrategica.com",
+          },
           image: gallerySpeaker.url,
           offers: {
             "@type": "Offer",
@@ -138,7 +148,6 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
       },
       { type: "application/ld+json", children: JSON.stringify(FAQ_JSONLD) },
     ],
-
   }),
   component: MasterclassRecordingPage,
 });
@@ -209,7 +218,6 @@ function StickyBuyBar({ showAfter }: { showAfter: React.RefObject<HTMLDivElement
     return () => window.removeEventListener("scroll", onScroll);
   }, [showAfter]);
 
-
   return (
     <div
       className={`fixed inset-x-0 bottom-0 z-50 border-t border-white/15 bg-[#0e0f0c]/95 px-4 py-3 backdrop-blur transition-transform duration-300 md:hidden ${
@@ -223,7 +231,10 @@ function StickyBuyBar({ showAfter }: { showAfter: React.RefObject<HTMLDivElement
             {PRICE_LABEL}
           </p>
         </div>
-        <BuyButton className="!min-h-[52px] !max-w-none !px-3 !text-[13px]" label="Quiero acceso ahora" />
+        <BuyButton
+          className="!min-h-[52px] !max-w-none !px-3 !text-[13px]"
+          label="Quiero acceso ahora"
+        />
       </div>
     </div>
   );
@@ -395,14 +406,15 @@ function MasterclassRecordingPage() {
 
   const faqs = FAQS;
 
-
   return (
     <div className="min-h-screen bg-[#0e0f0c] pb-24 text-white md:pb-0" style={serif}>
       {/* Barra superior mínima — sin menú */}
       <div className="border-b border-white/10 bg-[#0e0f0c]">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <img src={logoVozEstrategica} alt="Voz Estratégica" className="h-7 w-auto md:h-9" />
-          <span className="text-[11px] uppercase tracking-[0.18em] text-white/50">{PRICE_LABEL}</span>
+          <span className="text-[11px] uppercase tracking-[0.18em] text-white/50">
+            {PRICE_LABEL}
+          </span>
         </div>
       </div>
 
@@ -418,12 +430,11 @@ function MasterclassRecordingPage() {
                 Acceso inmediato · 2 horas · Para equipos comerciales
               </span>
               <h1 className="mt-6 text-[42px] font-extrabold leading-[1.02] tracking-tight text-white md:text-[68px] lg:text-[76px]">
-                Vender sin{" "}
-                <span style={{ color: GREEN }}>perseguir</span> clientes.
+                Vender sin <span style={{ color: GREEN }}>perseguir</span> clientes.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-white/80 md:text-xl">
-                El sistema completo de Carlos Laguna —el mismo que aplica con Mercedes Benz, Nespresso y
-                Bancolombia— en 2 horas que puedes ver hoy y aplicar mañana.
+                El sistema completo de Carlos Laguna —el mismo que aplica con Mercedes Benz,
+                Nespresso y Bancolombia— en 2 horas que puedes ver hoy y aplicar mañana.
               </p>
 
               {/* Video primero en móvil */}
@@ -540,7 +551,10 @@ function MasterclassRecordingPage() {
             className="mt-10 rounded-[6px] border-2 border-dashed p-6"
             style={{ borderColor: GREEN, backgroundColor: GREEN_DIM }}
           >
-            <p className="text-sm font-extrabold uppercase tracking-[0.18em]" style={{ color: GREEN }}>
+            <p
+              className="text-sm font-extrabold uppercase tracking-[0.18em]"
+              style={{ color: GREEN }}
+            >
               Y además, incluido
             </p>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -569,12 +583,15 @@ function MasterclassRecordingPage() {
             loading="lazy"
           />
           <div>
-            <h2 className="text-3xl font-extrabold text-white md:text-5xl">Quién te va a enseñar</h2>
+            <h2 className="text-3xl font-extrabold text-white md:text-5xl">
+              Quién te va a enseñar
+            </h2>
             <p className="mt-6 text-base leading-relaxed text-white/80 md:text-lg">
-              20 años entrenando equipos comerciales de marcas que no se pueden dar el lujo de improvisar:
-              Mercedes Benz, Nespresso, Bancolombia, Kimberly Clark Professional, Pepsi y Pernod Ricard. Autor
-              de <em>De Clientes a Fans</em>, reseñado por Forbes Colombia y Semana. Esto no es teoría de aula.
-              Es el sistema que aplica con marcas tier-1, condensado para que lo apliques en tu negocio.
+              20 años entrenando equipos comerciales de marcas que no se pueden dar el lujo de
+              improvisar: Mercedes Benz, Nespresso, Bancolombia, Kimberly Clark Professional, Pepsi
+              y Pernod Ricard. Autor de <em>De Clientes a Fans</em>, reseñado por Forbes Colombia y
+              Semana. Esto no es teoría de aula. Es el sistema que aplica con marcas tier-1,
+              condensado para que lo apliques en tu negocio.
             </p>
             <div className="mt-8 border-t border-white/10 pt-6">
               <PressRow />
@@ -586,7 +603,9 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 6 · ¿ES PARA TI? ══ */}
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-5xl px-5 py-16 md:py-24">
-          <h2 className="text-center text-3xl font-extrabold text-white md:text-5xl">¿Es para ti?</h2>
+          <h2 className="text-center text-3xl font-extrabold text-white md:text-5xl">
+            ¿Es para ti?
+          </h2>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             <div
               className="rounded-[6px] border-2 p-6 md:p-8"
@@ -602,7 +621,10 @@ function MasterclassRecordingPage() {
                   "Estás cansado de competir por precio",
                   "Eres emprendedor y vender depende de ti",
                 ].map((s) => (
-                  <li key={s} className="flex items-start gap-3 text-base leading-relaxed text-white md:text-lg">
+                  <li
+                    key={s}
+                    className="flex items-start gap-3 text-base leading-relaxed text-white md:text-lg"
+                  >
                     <Check className="mt-0.5 h-5 w-5 shrink-0" style={{ color: GREEN }} />
                     {s}
                   </li>
@@ -617,7 +639,10 @@ function MasterclassRecordingPage() {
                   "Esperas resultados sin aplicar nada",
                   "Vendes exclusivamente por impulso y volumen bajo",
                 ].map((s) => (
-                  <li key={s} className="flex items-start gap-3 text-base leading-relaxed text-white/60">
+                  <li
+                    key={s}
+                    className="flex items-start gap-3 text-base leading-relaxed text-white/60"
+                  >
                     <X className="mt-0.5 h-5 w-5 shrink-0 text-white/40" />
                     {s}
                   </li>
@@ -631,32 +656,46 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 7 · CUÁNTO VALE Y CUÁNTO CUESTA ══ */}
       <section className="bg-[#16181a]">
         <div className="mx-auto max-w-3xl px-5 py-16 md:py-24">
-          <h2 className="text-3xl font-extrabold text-white md:text-5xl">Cuánto vale y cuánto cuesta</h2>
+          <h2 className="text-3xl font-extrabold text-white md:text-5xl">
+            Cuánto vale y cuánto cuesta
+          </h2>
 
           <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
             {valorItems.map((v) => (
               <li key={v.item} className="flex items-start justify-between gap-4 py-4">
                 <span className="text-base text-white/85 md:text-lg">{v.item}</span>
-                <span className="shrink-0 text-base font-bold text-white/70 md:text-lg">{v.valor}</span>
+                <span className="shrink-0 text-base font-bold text-white/70 md:text-lg">
+                  {v.valor}
+                </span>
               </li>
             ))}
           </ul>
 
           <div className="mt-6 flex items-baseline justify-between gap-4">
-            <span className="text-lg font-bold uppercase tracking-wide text-white/60">Valor total</span>
-            <span className="text-3xl font-extrabold text-white/45 line-through md:text-4xl">USD 492</span>
+            <span className="text-lg font-bold uppercase tracking-wide text-white/60">
+              Valor total
+            </span>
+            <span className="text-3xl font-extrabold text-white/45 line-through md:text-4xl">
+              USD 492
+            </span>
           </div>
 
-          <div className="mt-8 rounded-[6px] border-2 p-6 text-center" style={{ borderColor: GREEN }}>
+          <div
+            className="mt-8 rounded-[6px] border-2 p-6 text-center"
+            style={{ borderColor: GREEN }}
+          >
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/60">Precio hoy</p>
-            <p className="mt-2 text-6xl font-extrabold leading-none md:text-8xl" style={{ color: GREEN }}>
+            <p
+              className="mt-2 text-6xl font-extrabold leading-none md:text-8xl"
+              style={{ color: GREEN }}
+            >
               {PRICE_LABEL}
             </p>
           </div>
 
           <p className="mt-6 text-center text-base text-white/70 md:text-lg">
-            Menos de lo que cuesta una comida de negocios. Y a diferencia de la comida, esto te queda para
-            siempre.
+            Menos de lo que cuesta una comida de negocios. Y a diferencia de la comida, esto te
+            queda para siempre.
           </p>
 
           <div className="mt-8 flex justify-center">
@@ -672,10 +711,12 @@ function MasterclassRecordingPage() {
             className="rounded-[8px] border-2 bg-[#1c1f1b] p-6 md:p-10"
             style={{ borderColor: GREEN }}
           >
-            <h2 className="text-3xl font-extrabold text-white md:text-5xl">Míralo antes de decidir.</h2>
+            <h2 className="text-3xl font-extrabold text-white md:text-5xl">
+              Míralo antes de decidir.
+            </h2>
             <p className="mt-4 text-base leading-relaxed text-white/80 md:text-lg">
-              No tienes que creerle a esta página. Mira un fragmento real de la sesión, comprueba cómo explica
-              Carlos y decide con criterio propio.
+              No tienes que creerle a esta página. Mira un fragmento real de la sesión, comprueba
+              cómo explica Carlos y decide con criterio propio.
             </p>
             <div className="mt-8">
               <VideoPlaceholder
@@ -683,7 +724,9 @@ function MasterclassRecordingPage() {
                 note="Pendiente de fragmento de 10–15 min"
               />
             </div>
-            <p className="mt-4 text-center text-sm text-white/60">Sin correo, sin formularios. Dale play.</p>
+            <p className="mt-4 text-center text-sm text-white/60">
+              Sin correo, sin formularios. Dale play.
+            </p>
             <div className="mt-8 flex justify-center">
               <BuyButton variant="secondary" />
             </div>
@@ -787,10 +830,13 @@ function MasterclassRecordingPage() {
           >
             Dos horas hoy, o seguir improvisando el próximo trimestre.
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed md:text-lg" style={{ color: "rgba(14,15,12,0.8)" }}>
-            El precio de no tener un sistema no se ve en una factura: se ve en las negociaciones que se caen,
-            en los descuentos que regalas y en el tiempo que tu equipo pierde persiguiendo a quien nunca iba a
-            comprar.
+          <p
+            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed md:text-lg"
+            style={{ color: "rgba(14,15,12,0.8)" }}
+          >
+            El precio de no tener un sistema no se ve en una factura: se ve en las negociaciones que
+            se caen, en los descuentos que regalas y en el tiempo que tu equipo pierde persiguiendo
+            a quien nunca iba a comprar.
           </p>
           <div className="mt-10 flex flex-col items-center">
             <BuyButton className="!bg-[#0e0f0c] !text-[#40ed51] !shadow-none hover:!shadow-none" />
@@ -806,15 +852,24 @@ function MasterclassRecordingPage() {
         <div className="mx-auto max-w-4xl px-5 py-10 text-center text-xs text-white/50">
           <p>Un producto de Carlos Laguna · Operado por Voz Estratégica</p>
           <p className="mt-3 space-x-3">
-            <a href="/terminos-y-condiciones" className="underline underline-offset-2 hover:text-white">
+            <a
+              href="/terminos-y-condiciones"
+              className="underline underline-offset-2 hover:text-white"
+            >
               Términos y condiciones
             </a>
             <span>·</span>
-            <a href="/aviso-de-privacidad" className="underline underline-offset-2 hover:text-white">
+            <a
+              href="/aviso-de-privacidad"
+              className="underline underline-offset-2 hover:text-white"
+            >
               Política de privacidad
             </a>
             <span>·</span>
-            <a href="mailto:contacto@vozestrategica.com" className="underline underline-offset-2 hover:text-white">
+            <a
+              href="mailto:contacto@vozestrategica.com"
+              className="underline underline-offset-2 hover:text-white"
+            >
               contacto@vozestrategica.com
             </a>
           </p>

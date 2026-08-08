@@ -87,20 +87,14 @@ function AuthPage() {
             disabled={loading}
             className="bubble bubble-black w-full justify-center py-3 disabled:opacity-60"
           >
-            {loading
-              ? "Procesando..."
-              : mode === "signin"
-                ? "Ingresar"
-                : "Crear cuenta"}
+            {loading ? "Procesando..." : mode === "signin" ? "Ingresar" : "Crear cuenta"}
           </button>
         </form>
         <button
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
           className="mt-6 w-full text-center text-sm text-muted-foreground hover:text-foreground"
         >
-          {mode === "signin"
-            ? "¿Sos nuevo? Crear cuenta"
-            : "¿Ya tienes cuenta? Ingresar"}
+          {mode === "signin" ? "¿Sos nuevo? Crear cuenta" : "¿Ya tienes cuenta? Ingresar"}
         </button>
       </div>
     </div>

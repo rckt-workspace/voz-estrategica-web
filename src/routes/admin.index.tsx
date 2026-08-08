@@ -38,13 +38,12 @@ function BookingInbox() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   async function updateEstado(id: string, estado: string) {
-    const { error } = await supabase
-      .from("booking_requests")
-      .update({ estado })
-      .eq("id", id);
+    const { error } = await supabase.from("booking_requests").update({ estado }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Estado actualizado");
     setReqs((r) => r.map((x) => (x.id === id ? { ...x, estado } : x)));
@@ -91,9 +90,7 @@ function BookingInbox() {
                   ) : null}
                 </td>
                 <td className="px-4 py-3 text-xs">{r.tipo_evento ?? "—"}</td>
-                <td className="px-4 py-3 max-w-sm text-xs text-muted-foreground">
-                  {r.mensaje}
-                </td>
+                <td className="px-4 py-3 max-w-sm text-xs text-muted-foreground">{r.mensaje}</td>
                 <td className="px-4 py-3">
                   <select
                     value={r.estado}

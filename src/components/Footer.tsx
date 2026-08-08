@@ -9,7 +9,8 @@ export function Footer() {
           <div>
             <Logo className="h-14 w-auto" />
             <p className="mt-6 max-w-xs text-sm text-background/70">
-              Firma de aprendizaje corporativo, liderazgo y transformación. Las voces que cambian la conversación.
+              Firma de aprendizaje corporativo, liderazgo y transformación. Las voces que cambian la
+              conversación.
             </p>
           </div>
 
@@ -22,7 +23,7 @@ export function Footer() {
                 ["/soluciones", "Soluciones"],
                 ["/programas", "Programas"],
                 ["/speakers", "Conferencistas"],
-                
+
                 ["/recursos", "Recursos"],
                 ["/nosotros", "Nosotros"],
                 ["/contratar", "Solicitar propuesta"],
@@ -37,12 +38,13 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display text-xs uppercase tracking-widest text-brand">
-              Contacto
-            </h4>
+            <h4 className="font-display text-xs uppercase tracking-widest text-brand">Contacto</h4>
             <ul className="mt-4 space-y-2 text-base">
               <li>
-                <a href="mailto:contacto@vozestrategica.com" className="transition-colors hover:text-brand">
+                <a
+                  href="mailto:contacto@vozestrategica.com"
+                  className="transition-colors hover:text-brand"
+                >
                   contacto@vozestrategica.com
                 </a>
               </li>

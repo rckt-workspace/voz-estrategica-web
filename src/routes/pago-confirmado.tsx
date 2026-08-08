@@ -13,13 +13,19 @@ export const Route = createFileRoute("/pago-confirmado")({
   }),
   validateSearch: (search: Record<string, unknown>) => ({
     orderId: typeof search.orderId === "string" ? search.orderId : undefined,
-    "bold-order-id": typeof search["bold-order-id"] === "string" ? (search["bold-order-id"] as string) : undefined,
-    "bold-tx-status": typeof search["bold-tx-status"] === "string" ? (search["bold-tx-status"] as string) : undefined,
+    "bold-order-id":
+      typeof search["bold-order-id"] === "string" ? (search["bold-order-id"] as string) : undefined,
+    "bold-tx-status":
+      typeof search["bold-tx-status"] === "string"
+        ? (search["bold-tx-status"] as string)
+        : undefined,
   }),
   errorComponent: () => (
     <div className="mx-auto max-w-xl px-6 py-24 text-center">
       <h1 className="font-display text-3xl uppercase">Algo salió mal</h1>
-      <Link to="/recursos" className="mt-6 inline-block underline">Volver a /recursos</Link>
+      <Link to="/recursos" className="mt-6 inline-block underline">
+        Volver a /recursos
+      </Link>
     </div>
   ),
   notFoundComponent: () => (
@@ -48,7 +54,9 @@ function PagoConfirmadoPage() {
   const rawStatus = search["bold-tx-status"] ?? "";
   const record = useServerFn(recordBookOrderStatus);
   const [pedido, setPedido] = useState<Pedido | null>(null);
-  const [state, setState] = useState<"loading" | "aprobado" | "rechazado" | "pendiente" | "unknown">("loading");
+  const [state, setState] = useState<
+    "loading" | "aprobado" | "rechazado" | "pendiente" | "unknown"
+  >("loading");
 
   useEffect(() => {
     if (!orderId) {
@@ -85,19 +93,28 @@ function PagoConfirmadoPage() {
           </h1>
           {pedido && (
             <div className="mt-8 w-full rounded-2xl border border-foreground/10 bg-card p-6 text-left">
-              <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Resumen</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                Resumen
+              </div>
               <div className="mt-2 flex justify-between">
-                <span>{pedido.cantidad}× {pedido.libro}</span>
+                <span>
+                  {pedido.cantidad}× {pedido.libro}
+                </span>
                 <span className="font-semibold">${pedido.total.toLocaleString("es-CO")}</span>
               </div>
               {pedido.formato === "fisico" && pedido.direccion && (
                 <div className="mt-4 rounded-lg bg-foreground/5 p-4 text-sm">
-                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">Envío a</div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                    Envío a
+                  </div>
                   <div>{pedido.nombre_completo}</div>
                   <div>{pedido.direccion}</div>
-                  <div>{pedido.ciudad}, {pedido.departamento}</div>
+                  <div>
+                    {pedido.ciudad}, {pedido.departamento}
+                  </div>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    Tu pedido será empacado y despachado a esta dirección en los próximos días hábiles.
+                    Tu pedido será empacado y despachado a esta dirección en los próximos días
+                    hábiles.
                   </p>
                 </div>
               )}
