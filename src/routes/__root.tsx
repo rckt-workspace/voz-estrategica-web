@@ -18,6 +18,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { initConsentMode } from "@/lib/consent";
 import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
 import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
+import { getConsentBootstrapScript, getGTMScripts } from "@/lib/gtm";
 
 import appCss from "../styles.css?url";
 
@@ -36,7 +37,6 @@ function NotFoundComponent() {
     </div>
   );
 }
-
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
@@ -61,54 +61,77 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "google-site-verification", content: "Ydnk16YEN2evp2xf3wVyZyT3mLVSlv7iT5QLo6fhMYY" },
-      { title: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
-      {
-        name: "description",
-        content:
-          "Firma de aprendizaje corporativo en Colombia, México y España. Conferencias, talleres, programas y escuelas que desarrollan personas, fortalecen equipos y generan resultados de negocio.",
-      },
-      { name: "author", content: "Voz Estratégica" },
-      { property: "og:site_name", content: "Voz Estratégica" },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "es_CO" },
-      { property: "og:title", content: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
-      {
-        property: "og:description",
-        content:
-          "Conferencias, talleres, programas y escuelas que transforman organizaciones. Colombia · México · España.",
-      },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Voz Estratégica — Aprendizaje corporativo" },
-      {
-        name: "twitter:description",
-        content: "Desarrollamos capacidades que transforman organizaciones.",
-      },
-    ],
-    links: [{ rel: "stylesheet", href: appCss }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "Voz Estratégica",
-          url: "https://vozestrategica.com",
-          description:
-            "Firma de aprendizaje corporativo, liderazgo y transformación. Conferencias, talleres, programas y escuelas en Colombia, México y España.",
-          areaServed: [
-            { "@type": "Country", name: "Colombia" },
-            { "@type": "Country", name: "México" },
-            { "@type": "Place", name: "Latinoamérica" },
-          ],
-        }),
-      },
-    ],
-  }),
+  head: () => {
+    const gtmScripts = getGTMScripts();
+    const consentBootstrap = getConsentBootstrapScript();
+
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        {
+          name: "google-site-verification",
+          content: "Ydnk16YEN2evp2xf3wVyZyT3mLVSlv7iT5QLo6fhMYY",
+        },
+        { title: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
+        {
+          name: "description",
+          content:
+            "Firma de aprendizaje corporativo en Colombia, México y España. Conferencias, talleres, programas y escuelas que desarrollan personas, fortalecen equipos y generan resultados de negocio.",
+        },
+        { name: "author", content: "Voz Estratégica" },
+        { property: "og:site_name", content: "Voz Estratégica" },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "es_CO" },
+        {
+          property: "og:title",
+          content: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación",
+        },
+        {
+          property: "og:description",
+          content:
+            "Conferencias, talleres, programas y escuelas que transforman organizaciones. Colombia · México · España.",
+        },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: "Voz Estratégica — Aprendizaje corporativo" },
+        {
+          name: "twitter:description",
+          content: "Desarrollamos capacidades que transforman organizaciones.",
+        },
+      ],
+      links: [{ rel: "stylesheet", href: appCss }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Voz Estratégica",
+            url: "https://vozestrategica.com",
+            description:
+              "Firma de aprendizaje corporativo, liderazgo y transformación. Conferencias, talleres, programas y escuelas en Colombia, México y España.",
+            areaServed: [
+              { "@type": "Country", name: "Colombia" },
+              { "@type": "Country", name: "México" },
+              { "@type": "Place", name: "Latinoamérica" },
+            ],
+          }),
+        },
+        // Consent Mode v2 and dataLayer bootstrap (must load BEFORE GTM)
+        {
+          children: consentBootstrap,
+        },
+        // Google Tag Manager (only loads if VITE_GTM_ID is configured)
+        ...(gtmScripts.head
+          ? [
+              {
+                children: gtmScripts.head,
+              },
+            ]
+          : []),
+      ],
+    };
+  },
 
   shellComponent: RootShell,
   component: RootComponent,
@@ -117,12 +140,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  const gtmScripts = getGTMScripts();
+
   return (
     <html lang="es">
       <head>
         <HeadContent />
       </head>
       <body>
+        {/* GTM noscript fallback (must be right after opening body) */}
+        {gtmScripts.body && (
+          <div dangerouslySetInnerHTML={{ __html: gtmScripts.body }} suppressHydrationWarning />
+        )}
         {children}
         <Scripts />
       </body>
@@ -170,9 +199,7 @@ function Shell() {
       {!hideChrome && <Header />}
       <main
         style={{
-          paddingTop: hideChrome
-            ? "var(--topbar-h, 0px)"
-            : "calc(5rem + var(--topbar-h, 0px))",
+          paddingTop: hideChrome ? "var(--topbar-h, 0px)" : "calc(5rem + var(--topbar-h, 0px))",
           paddingBottom: "var(--bottombar-h, 0px)",
         }}
       >
@@ -223,10 +250,18 @@ function Shell() {
         />
       </noscript>
       {/* Editorial grain overlay */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 z-[60] mix-blend-multiply opacity-[0.035]">
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-0 z-[60] mix-blend-multiply opacity-[0.035]"
+      >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
           <filter id="grain">
-            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.85"
+              numOctaves="2"
+              stitchTiles="stitch"
+            />
             <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0" />
           </filter>
           <rect width="100%" height="100%" filter="url(#grain)" />

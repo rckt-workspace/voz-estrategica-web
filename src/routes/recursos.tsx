@@ -14,7 +14,8 @@ export const Route = createFileRoute("/recursos")({
       { title: "Recursos — Voz Estratégica" },
       {
         name: "description",
-        content: "Newsletter, libros y recursos para desarrollar a tu equipo. Ideas, lecturas y herramientas.",
+        content:
+          "Newsletter, libros y recursos para desarrollar a tu equipo. Ideas, lecturas y herramientas.",
       },
       { property: "og:title", content: "Recursos — Voz Estratégica" },
       {
@@ -168,7 +169,10 @@ function RecursosPage() {
         </Reveal>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="rounded-2xl border border-dashed border-foreground/20 bg-card p-8 text-center">
+            <div
+              key={n}
+              className="rounded-2xl border border-dashed border-foreground/20 bg-card p-8 text-center"
+            >
               <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                 Próximamente
               </div>

@@ -15,7 +15,6 @@ declare global {
   }
 }
 
-
 function loadBoldLibrary(): Promise<void> {
   if (window.BoldCheckout) return Promise.resolve();
   const existing = document.querySelector<HTMLScriptElement>(`script[src="${BOLD_SCRIPT_SRC}"]`);
@@ -23,7 +22,9 @@ function loadBoldLibrary(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (window.BoldCheckout) return resolve();
       existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener("error", () => reject(new Error("Bold checkout failed to load")), { once: true });
+      existing.addEventListener("error", () => reject(new Error("Bold checkout failed to load")), {
+        once: true,
+      });
     });
   }
   return new Promise((resolve, reject) => {
@@ -39,7 +40,6 @@ function loadBoldLibrary(): Promise<void> {
 const fmt = (n: number) => "$" + n.toLocaleString("es-CO");
 
 type BoldOrder = Awaited<ReturnType<typeof createBookOrder>>;
-
 
 type Props = {
   open: boolean;
@@ -66,10 +66,11 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
   // para no generar filas duplicadas en pedidos_libros.
   const lastOrderRef = useRef<{ key: string; order: BoldOrder } | null>(null);
 
-
   useEffect(() => {
     if (!open) return;
-    getConfig().then((r) => setFlete(r.flete_nacional)).catch(() => {});
+    getConfig()
+      .then((r) => setFlete(r.flete_nacional))
+      .catch(() => {});
   }, [open, getConfig]);
 
   useEffect(() => {
@@ -103,7 +104,16 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
     }
 
     setLoading(true);
-    const orderKey = JSON.stringify({ sku, cantidad, nombre, email, telefono, direccion, ciudad, departamento });
+    const orderKey = JSON.stringify({
+      sku,
+      cantidad,
+      nombre,
+      email,
+      telefono,
+      direccion,
+      ciudad,
+      departamento,
+    });
     try {
       await loadBoldLibrary();
       const cached = lastOrderRef.current;
@@ -150,7 +160,6 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
       // El checkout embebido ya está visible: reactivamos el botón para que el
       // usuario pueda reintentar si cierra la ventana de pago sin completarla.
       setLoading(false);
-
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Error inesperado";
       toast.error(msg);
@@ -174,7 +183,9 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
             Comprar libro
           </div>
           <h2 className="mt-1 font-display text-2xl uppercase leading-tight">{titulo}</h2>
-          <div className="mt-1 text-lg font-semibold">{fmt(precio)} <span className="text-xs font-normal text-muted-foreground">c/u</span></div>
+          <div className="mt-1 text-lg font-semibold">
+            {fmt(precio)} <span className="text-xs font-normal text-muted-foreground">c/u</span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-6 py-5">
@@ -206,19 +217,57 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
           </div>
 
           <div className="grid gap-3">
-            <Field label="Nombre completo" value={nombre} onChange={setNombre} required autoComplete="name" />
-            <Field label="Email" type="email" value={email} onChange={setEmail} required autoComplete="email" />
-            <Field label="Teléfono (WhatsApp)" type="tel" value={telefono} onChange={setTelefono} required autoComplete="tel" />
+            <Field
+              label="Nombre completo"
+              value={nombre}
+              onChange={setNombre}
+              required
+              autoComplete="name"
+            />
+            <Field
+              label="Email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              required
+              autoComplete="email"
+            />
+            <Field
+              label="Teléfono (WhatsApp)"
+              type="tel"
+              value={telefono}
+              onChange={setTelefono}
+              required
+              autoComplete="tel"
+            />
 
             {formato === "fisico" && (
               <>
                 <div className="mt-2 rounded-lg bg-foreground/5 px-3 py-2 text-xs text-muted-foreground">
                   Envío disponible solo dentro de Colombia.
                 </div>
-                <Field label="Dirección de envío" value={direccion} onChange={setDireccion} required autoComplete="street-address" />
+                <Field
+                  label="Dirección de envío"
+                  value={direccion}
+                  onChange={setDireccion}
+                  required
+                  autoComplete="street-address"
+                />
                 <div className="grid grid-cols-2 gap-3">
-                  <Field label="Ciudad" value={ciudad} onChange={setCiudad} required autoComplete="address-level2" />
-                  <Field label="Departamento" value={departamento} onChange={setDepartamento} required autoComplete="address-level1" />
+                  <Field
+                    label="Ciudad"
+                    value={ciudad}
+                    onChange={setCiudad}
+                    required
+                    autoComplete="address-level2"
+                  />
+                  <Field
+                    label="Departamento"
+                    value={departamento}
+                    onChange={setDepartamento}
+                    required
+                    autoComplete="address-level1"
+                  />
                 </div>
               </>
             )}
@@ -227,7 +276,9 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
           {/* Resumen */}
           <div className="mt-6 rounded-xl border border-foreground/10 bg-foreground/5 p-4">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">{fmt(precio)} × {cantidad}</span>
+              <span className="text-muted-foreground">
+                {fmt(precio)} × {cantidad}
+              </span>
               <span className="font-semibold">{fmt(subtotal)}</span>
             </div>
             {formato === "fisico" && (
@@ -237,7 +288,9 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
               </div>
             )}
             <div className="mt-3 flex items-baseline justify-between border-t border-foreground/10 pt-3">
-              <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Total</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                Total
+              </span>
               <span className="font-display text-2xl">{fmt(total)}</span>
             </div>
           </div>
@@ -251,7 +304,9 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
             className="bubble bubble-yellow w-full justify-center disabled:opacity-60"
           >
             {loading ? (
-              <><Loader2 className="h-4 w-4 animate-spin" /> Procesando...</>
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" /> Procesando...
+              </>
             ) : (
               <>Pagar {fmt(total)} →</>
             )}
@@ -266,7 +321,12 @@ export function BookPurchaseModal({ open, onClose, sku, titulo, precio, formato 
 }
 
 function Field({
-  label, value, onChange, type = "text", required, autoComplete,
+  label,
+  value,
+  onChange,
+  type = "text",
+  required,
+  autoComplete,
 }: {
   label: string;
   value: string;
@@ -277,7 +337,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-bold uppercase tracking-widest text-muted-foreground">{label}</span>
+      <span className="mb-1 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+        {label}
+      </span>
       <input
         type={type}
         value={value}

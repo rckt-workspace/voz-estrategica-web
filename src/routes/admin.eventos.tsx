@@ -16,13 +16,20 @@ interface EventRow {
   descripcion: string | null;
   speaker_id: string | null;
 }
-interface SpkOpt { id: string; nombre: string }
+interface SpkOpt {
+  id: string;
+  nombre: string;
+}
 
 function AdminEventos() {
   const [list, setList] = useState<EventRow[]>([]);
   const [spks, setSpks] = useState<SpkOpt[]>([]);
   const [draft, setDraft] = useState({
-    titulo: "", fecha: "", ciudad: "", descripcion: "", speaker_id: "",
+    titulo: "",
+    fecha: "",
+    ciudad: "",
+    descripcion: "",
+    speaker_id: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +44,9 @@ function AdminEventos() {
     setSpks((s.data as SpkOpt[] | null) ?? []);
     setLoading(false);
   }
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   async function save() {
     if (!draft.titulo || !draft.fecha || !draft.ciudad) {
@@ -67,10 +76,17 @@ function AdminEventos() {
         <h2 className="font-display text-2xl uppercase">Nuevo evento</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           <I label="Título" v={draft.titulo} on={(v) => setDraft({ ...draft, titulo: v })} />
-          <I label="Fecha" type="date" v={draft.fecha} on={(v) => setDraft({ ...draft, fecha: v })} />
+          <I
+            label="Fecha"
+            type="date"
+            v={draft.fecha}
+            on={(v) => setDraft({ ...draft, fecha: v })}
+          />
           <I label="Ciudad" v={draft.ciudad} on={(v) => setDraft({ ...draft, ciudad: v })} />
           <label className="block">
-            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">Speaker</span>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              Speaker
+            </span>
             <select
               value={draft.speaker_id}
               onChange={(e) => setDraft({ ...draft, speaker_id: e.target.value })}
@@ -78,12 +94,16 @@ function AdminEventos() {
             >
               <option value="">—</option>
               {spks.map((s) => (
-                <option key={s.id} value={s.id}>{s.nombre}</option>
+                <option key={s.id} value={s.id}>
+                  {s.nombre}
+                </option>
               ))}
             </select>
           </label>
           <div className="md:col-span-2">
-            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">Descripción</span>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              Descripción
+            </span>
             <textarea
               rows={3}
               value={draft.descripcion}
@@ -99,7 +119,9 @@ function AdminEventos() {
 
       <section>
         <h2 className="font-display text-2xl uppercase">Existentes ({list.length})</h2>
-        {loading ? <p className="mt-4 text-muted-foreground">Cargando…</p> : (
+        {loading ? (
+          <p className="mt-4 text-muted-foreground">Cargando…</p>
+        ) : (
           <ul className="mt-4 divide-y divide-foreground/10 rounded-2xl border border-foreground/10 bg-card">
             {list.map((ev) => (
               <li key={ev.id} className="flex items-center gap-4 p-4">
@@ -110,7 +132,10 @@ function AdminEventos() {
                   <div className="font-display text-lg uppercase">{ev.titulo}</div>
                   <div className="text-xs text-muted-foreground">{ev.ciudad}</div>
                 </div>
-                <button onClick={() => remove(ev.id)} className="rounded-full border border-destructive/40 p-2 text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                <button
+                  onClick={() => remove(ev.id)}
+                  className="rounded-full border border-destructive/40 p-2 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                >
                   <Trash2 className="h-4 w-4" />
                 </button>
               </li>
@@ -122,11 +147,28 @@ function AdminEventos() {
   );
 }
 
-function I({ label, v, on, type = "text" }: { label: string; v: string; on: (v: string) => void; type?: string }) {
+function I({
+  label,
+  v,
+  on,
+  type = "text",
+}: {
+  label: string;
+  v: string;
+  on: (v: string) => void;
+  type?: string;
+}) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">{label}</span>
-      <input type={type} value={v} onChange={(e) => on(e.target.value)} className="w-full rounded-2xl border border-foreground/15 bg-background px-4 py-3" />
+      <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+        {label}
+      </span>
+      <input
+        type={type}
+        value={v}
+        onChange={(e) => on(e.target.value)}
+        className="w-full rounded-2xl border border-foreground/15 bg-background px-4 py-3"
+      />
     </label>
   );
 }

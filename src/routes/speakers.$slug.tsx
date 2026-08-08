@@ -1,12 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-import {
-  getSpeaker,
-  speakers,
-  eventsForSpeaker,
-  booksForSpeaker,
-} from "@/data/content";
+import { getSpeaker, speakers, eventsForSpeaker, booksForSpeaker } from "@/data/content";
 
 export const Route = createFileRoute("/speakers/$slug")({
   loader: ({ params }) => {
@@ -23,7 +18,10 @@ export const Route = createFileRoute("/speakers/$slug")({
     return {
       meta: [
         { title: `${s.nombre} — ${s.especialidad} | Voz Estratégica` },
-        { name: "description", content: `${s.nombre}, ${s.especialidad}. ${bioText.slice(0, 130)}` },
+        {
+          name: "description",
+          content: `${s.nombre}, ${s.especialidad}. ${bioText.slice(0, 130)}`,
+        },
         { property: "og:title", content: `${s.nombre} — ${s.especialidad}` },
         { property: "og:description", content: bioText.slice(0, 160) },
         { property: "og:image", content: s.foto },
@@ -66,8 +64,18 @@ export const Route = createFileRoute("/speakers/$slug")({
               {
                 "@type": "BreadcrumbList",
                 itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Inicio", item: "https://vozestrategica.com/" },
-                  { "@type": "ListItem", position: 2, name: "Speakers", item: "https://vozestrategica.com/speakers" },
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Inicio",
+                    item: "https://vozestrategica.com/",
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Speakers",
+                    item: "https://vozestrategica.com/speakers",
+                  },
                   { "@type": "ListItem", position: 3, name: s.nombre, item: canonical },
                 ],
               },
@@ -118,9 +126,7 @@ function SpeakerDetail() {
           <Reveal delay={150}>
             <div>
               <span className="bubble bubble-outline">{speaker.especialidad}</span>
-              <h1 className="mt-6 font-display text-6xl uppercase md:text-7xl">
-                {speaker.nombre}
-              </h1>
+              <h1 className="mt-6 font-display text-6xl uppercase md:text-7xl">{speaker.nombre}</h1>
               <div className="mt-6 flex flex-wrap gap-2">
                 {speaker.tematicas.map((t: string) => (
                   <span key={t} className="bubble bubble-yellow">
@@ -168,9 +174,7 @@ function SpeakerDetail() {
           <span className="section-badge">Charlas</span>
           <div className="h-px flex-1 bg-foreground/15" />
         </div>
-        <h2 className="mt-8 font-display text-4xl uppercase md:text-6xl">
-          Conferencias insignia
-        </h2>
+        <h2 className="mt-8 font-display text-4xl uppercase md:text-6xl">Conferencias insignia</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {speaker.charlas.map((c: string, i: number) => (
             <Reveal key={c} delay={i * 80}>
@@ -178,9 +182,7 @@ function SpeakerDetail() {
                 <div className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                   Conferencia · 0{i + 1}
                 </div>
-                <div className="mt-3 font-display text-2xl uppercase leading-tight">
-                  {c}
-                </div>
+                <div className="mt-3 font-display text-2xl uppercase leading-tight">{c}</div>
               </div>
             </Reveal>
           ))}
@@ -190,12 +192,13 @@ function SpeakerDetail() {
       {evs.length > 0 ? (
         <section className="mx-auto max-w-7xl px-6 py-20">
           <span className="section-badge">Agenda</span>
-          <h2 className="mt-6 font-display text-4xl uppercase md:text-5xl">
-            Próximas charlas
-          </h2>
+          <h2 className="mt-6 font-display text-4xl uppercase md:text-5xl">Próximas charlas</h2>
           <ul className="mt-10 divide-y divide-foreground/15">
             {evs.map((ev) => (
-              <li key={ev.id} className="flex flex-col gap-2 py-6 md:flex-row md:items-center md:gap-10">
+              <li
+                key={ev.id}
+                className="flex flex-col gap-2 py-6 md:flex-row md:items-center md:gap-10"
+              >
                 <div className="font-mono text-sm font-bold uppercase tracking-widest text-foreground/60 md:w-40">
                   {new Date(ev.fecha + "T00:00:00").toLocaleDateString("es-ES", {
                     day: "2-digit",
@@ -204,9 +207,7 @@ function SpeakerDetail() {
                   })}
                 </div>
                 <div className="flex-1">
-                  <div className="font-display text-xl uppercase md:text-2xl">
-                    {ev.titulo}
-                  </div>
+                  <div className="font-display text-xl uppercase md:text-2xl">{ev.titulo}</div>
                   <div className="text-sm text-muted-foreground">{ev.ciudad}</div>
                 </div>
               </li>
@@ -260,9 +261,7 @@ function SpeakerDetail() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-background">
-                <div className="text-xs uppercase tracking-widest text-brand">
-                  {s.especialidad}
-                </div>
+                <div className="text-xs uppercase tracking-widest text-brand">{s.especialidad}</div>
                 <div className="font-display text-2xl uppercase">{s.nombre}</div>
               </div>
             </Link>

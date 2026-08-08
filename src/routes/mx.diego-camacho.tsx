@@ -31,7 +31,6 @@ import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
 
-
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 // TODO: reemplazar por el número real de México (formato internacional sin signos)
 const WHATSAPP_NUMBER = "573106598108";
@@ -106,7 +105,6 @@ const FAQ_JSONLD = {
 };
 
 const PERSON_JSONLD = {
-
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Diego Camacho",
@@ -196,7 +194,6 @@ export const Route = createFileRoute("/mx/diego-camacho")({
       { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
       { type: "application/ld+json", children: JSON.stringify(SERVICE_JSONLD) },
       { type: "application/ld+json", children: JSON.stringify(FAQ_JSONLD) },
-
     ],
   }),
   component: Page,
@@ -283,7 +280,6 @@ function Page() {
     window.open(waLink(msg), "_blank", "noopener,noreferrer");
   };
 
-
   return (
     <div className="bg-[#0F0F0F] text-[#F5F2E3]">
       {/* Header minimal — solo logo + anclas de esta landing */}
@@ -319,7 +315,6 @@ function Page() {
         </div>
       </header>
 
-
       {/* ============ BLOQUE 1 — HERO ============ */}
       <section className="relative flex items-start overflow-hidden border-b border-white/10">
         {/* fondo decorativo */}
@@ -340,7 +335,6 @@ function Page() {
         </div>
 
         <div className="relative mx-auto w-full max-w-[1600px] px-6 xl:px-12 pt-4 pb-16 lg:pt-6 lg:pb-20">
-
           <div className="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center">
             <div>
               <Reveal>
@@ -363,9 +357,9 @@ function Page() {
               <Reveal delay={0.1}>
                 <p className="mt-4 max-w-xl text-base text-white/75 lg:text-[1.05rem] xl:max-w-2xl 2xl:leading-snug 2xl:text-3xl">
                   Lleva a <strong className="text-white">Diego Camacho</strong> —Head of New
-                  Business Sales en Google y referente en IA aplicada a ventas— al escenario de
-                  tu próxima convención en CDMX. Una conferencia que tu equipo comercial entiende
-                  y aplica el lunes siguiente.
+                  Business Sales en Google y referente en IA aplicada a ventas— al escenario de tu
+                  próxima convención en CDMX. Una conferencia que tu equipo comercial entiende y
+                  aplica el lunes siguiente.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
@@ -390,7 +384,8 @@ function Page() {
                     <Award className="h-3.5 w-3.5 text-[#EAC945]" /> Trayectoria en Google
                   </li>
                   <li className="inline-flex items-center gap-2">
-                    <Mic2 className="h-3.5 w-3.5 text-[#EAC945]" /> +150 conferencias · 4 continentes
+                    <Mic2 className="h-3.5 w-3.5 text-[#EAC945]" /> +150 conferencias · 4
+                    continentes
                   </li>
                   <li className="inline-flex items-center gap-2">
                     <Sparkles className="h-3.5 w-3.5 text-[#EAC945]" /> Curaduría Voz Estratégica
@@ -428,7 +423,9 @@ function Page() {
                   alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
                   width={1080}
                   height={1080}
-                  loading="eager" fetchPriority="high" decoding="async"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
                   className="block h-auto w-full max-w-[520px] object-contain"
                 />
               </div>
@@ -455,8 +452,8 @@ function Page() {
           <Reveal delay={0.1}>
             <p className="mt-5 max-w-3xl text-lg text-black/70">
               La mayoría de las empresas en México ya compró herramientas de IA. El problema no es
-              la tecnología: es que nadie la tradujo en resultados comerciales. Y en una
-              convención, un conferencista genérico deja aplausos, no acción.
+              la tecnología: es que nadie la tradujo en resultados comerciales. Y en una convención,
+              un conferencista genérico deja aplausos, no acción.
             </p>
           </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -488,7 +485,9 @@ function Page() {
                     <b.icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{b.t}</h3>
+                    <h3 className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">
+                      {b.t}
+                    </h3>
                     <p className="mt-1 text-sm text-black/65">{b.d}</p>
                   </div>
                 </div>
@@ -508,18 +507,24 @@ function Page() {
             <p className="mt-5 max-w-3xl text-xl leading-relaxed text-white/85 md:text-2xl 2xl:text-4xl 2xl:leading-relaxed">
               Diego Camacho traduce la inteligencia artificial a un idioma que el área comercial y
               de marketing <span className="text-[#EAC945]">entiende y aplica</span>: menos tareas
-              repetitivas, más tiempo frente al cliente y mejores conversiones. No es teoría ni
-              humo tecnológico: es negocio con factor humano, con casos, herramientas concretas y
-              una acción para ejecutar de inmediato.
+              repetitivas, más tiempo frente al cliente y mejores conversiones. No es teoría ni humo
+              tecnológico: es negocio con factor humano, con casos, herramientas concretas y una
+              acción para ejecutar de inmediato.
             </p>
           </Reveal>
 
           {/* Comparativa: una sola versión responsive */}
           {(() => {
             const rows: [string, string][] = [
-              ["Miedo a que la IA reemplace", "Un equipo que usa la IA para liberar tiempo y vender mejor"],
+              [
+                "Miedo a que la IA reemplace",
+                "Un equipo que usa la IA para liberar tiempo y vender mejor",
+              ],
               ["Teoría abstracta", "Herramientas y ejemplos aplicables a su día a día"],
-              ["Un discurso que se olvida", "Una acción concreta para implementar esa misma semana"],
+              [
+                "Un discurso que se olvida",
+                "Una acción concreta para implementar esa misma semana",
+              ],
             ];
             return (
               <div className="mt-12 space-y-4 md:space-y-0 md:overflow-hidden md:rounded-3xl md:border md:border-white/10">
@@ -566,7 +571,10 @@ function Page() {
                   </span>
                   <p className="font-display text-2xl uppercase leading-tight md:text-3xl 2xl:text-4xl">
                     Booking.com implementó IA de Google para personalizar anuncios,{" "}
-                    <span className="text-[#EAC945]">con un aumento del 15% en el valor promedio de transacción</span>.
+                    <span className="text-[#EAC945]">
+                      con un aumento del 15% en el valor promedio de transacción
+                    </span>
+                    .
                   </p>
                   <p className="text-sm text-white/65 2xl:text-base">
                     Uno de los casos con los que Diego demuestra, en escenario, cómo la IA se
@@ -590,23 +598,29 @@ function Page() {
               Una estructura simple que el equipo comercial puede aplicar desde el primer día.
             </p>
             <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-              {["Planear", "Prospectar", "Preparar", "Ponerse en contacto", "Propuesta", "Progreso"].map(
-                (p, i) => (
-                  <div
-                    key={p}
-                    className="group rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="grid h-7 w-7 place-items-center rounded-full bg-[#EAC945] text-xs font-bold text-[#0F0F0F]">
-                        {i + 1}
-                      </span>
-                    </div>
-                    <div className="mt-3 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{p}</div>
+              {[
+                "Planear",
+                "Prospectar",
+                "Preparar",
+                "Ponerse en contacto",
+                "Propuesta",
+                "Progreso",
+              ].map((p, i) => (
+                <div
+                  key={p}
+                  className="group rounded-2xl border border-white/10 bg-[#0F0F0F] p-4 transition hover:border-[#EAC945]/60"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="grid h-7 w-7 place-items-center rounded-full bg-[#EAC945] text-xs font-bold text-[#0F0F0F]">
+                      {i + 1}
+                    </span>
                   </div>
-                ),
-              )}
+                  <div className="mt-3 font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">
+                    {p}
+                  </div>
+                </div>
+              ))}
             </div>
-
           </div>
         </div>
       </section>
@@ -663,16 +677,15 @@ function Page() {
                       <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-black/50">
                         {c.t}
                       </div>
-                      <div className="mt-1 font-display text-sm uppercase leading-snug 2xl:text-base 2xl:leading-snug">{c.d}</div>
+                      <div className="mt-1 font-display text-sm uppercase leading-snug 2xl:text-base 2xl:leading-snug">
+                        {c.d}
+                      </div>
                     </div>
                   ))}
                 </div>
-
               </div>
             </Reveal>
           </div>
-
-
         </div>
       </section>
 
@@ -684,7 +697,8 @@ function Page() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="mt-5 max-w-3xl font-display text-4xl uppercase md:text-5xl 2xl:text-8xl 2xl:leading-[1.05]">
-              Cuatro conferencias, un mismo hilo: <span className="text-[#EAC945]">IA que vende</span>.
+              Cuatro conferencias, un mismo hilo:{" "}
+              <span className="text-[#EAC945]">IA que vende</span>.
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -724,7 +738,9 @@ function Page() {
                       <div className="text-xs font-bold uppercase tracking-widest text-white/45">
                         Tema 0{i + 1}
                       </div>
-                      <h3 className="mt-1 font-display text-2xl uppercase leading-tight 2xl:text-5xl 2xl:leading-tight">{c.t}</h3>
+                      <h3 className="mt-1 font-display text-2xl uppercase leading-tight 2xl:text-5xl 2xl:leading-tight">
+                        {c.t}
+                      </h3>
                     </div>
                   </div>
                   <p className="mt-4 text-white/70">{c.d}</p>
@@ -751,10 +767,30 @@ function Page() {
           </Reveal>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: Mic2, t: "Keynote", meta: "45–60 min", d: "Convenciones, kickoffs de ventas, congresos y aperturas o cierres de evento." },
-              { icon: GraduationCap, t: "Masterclass / taller", meta: "2–3 h", d: "Sesiones prácticas donde el equipo sale con herramientas aplicadas." },
-              { icon: Building2, t: "Programa in-company", meta: "Varias sesiones", d: "Acompañamiento a un equipo comercial o de marketing en varias sesiones." },
-              { icon: Users, t: "Panel / moderación", meta: "Congresos y foros", d: "Donde Diego aporta la mirada tech y de negocio." },
+              {
+                icon: Mic2,
+                t: "Keynote",
+                meta: "45–60 min",
+                d: "Convenciones, kickoffs de ventas, congresos y aperturas o cierres de evento.",
+              },
+              {
+                icon: GraduationCap,
+                t: "Masterclass / taller",
+                meta: "2–3 h",
+                d: "Sesiones prácticas donde el equipo sale con herramientas aplicadas.",
+              },
+              {
+                icon: Building2,
+                t: "Programa in-company",
+                meta: "Varias sesiones",
+                d: "Acompañamiento a un equipo comercial o de marketing en varias sesiones.",
+              },
+              {
+                icon: Users,
+                t: "Panel / moderación",
+                meta: "Congresos y foros",
+                d: "Donde Diego aporta la mirada tech y de negocio.",
+              },
             ].map((f, i) => (
               <Reveal key={f.t} delay={0.05 * i}>
                 <div className="h-full rounded-2xl border border-black/10 bg-white p-6">
@@ -762,7 +798,9 @@ function Page() {
                   <div className="mt-4 text-xs font-bold uppercase tracking-widest text-black/50">
                     {f.meta}
                   </div>
-                  <h3 className="mt-1 font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">{f.t}</h3>
+                  <h3 className="mt-1 font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">
+                    {f.t}
+                  </h3>
                   <p className="mt-2 text-sm text-black/65">{f.d}</p>
                 </div>
               </Reveal>
@@ -820,13 +858,24 @@ function Page() {
           </Reveal>
           <div className="mt-12 grid gap-5 md:grid-cols-2">
             {[
-              { t: "No es un directorio, es curaduría", d: "Ocho voces que conectan negocio y factor humano." },
-              { t: "Nivel global", d: "Presencia en Colombia, México y España, con voces que han estado en escenarios de más de 12 países." },
+              {
+                t: "No es un directorio, es curaduría",
+                d: "Ocho voces que conectan negocio y factor humano.",
+              },
+              {
+                t: "Nivel global",
+                d: "Presencia en Colombia, México y España, con voces que han estado en escenarios de más de 12 países.",
+              },
               { t: "Respuesta rápida", d: "Disponibilidad, tarifa y recomendación a medida." },
-              { t: "Más allá de la conferencia", d: "Si el reto necesita continuidad, extendemos la charla en talleres y programas." },
+              {
+                t: "Más allá de la conferencia",
+                d: "Si el reto necesita continuidad, extendemos la charla en talleres y programas.",
+              },
             ].map((b) => (
               <div key={b.t} className="rounded-2xl border border-black/10 bg-white p-6">
-                <h3 className="font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">{b.t}</h3>
+                <h3 className="font-display text-xl uppercase 2xl:text-3xl 2xl:leading-snug">
+                  {b.t}
+                </h3>
                 <p className="mt-2 text-black/65">{b.d}</p>
               </div>
             ))}
@@ -869,8 +918,6 @@ function Page() {
             </div>
           </Reveal>
 
-
-
           <Reveal delay={0.2}>
             <div className="mt-14">
               <div className="font-display text-sm uppercase tracking-widest text-white/60 2xl:text-base">
@@ -894,10 +941,7 @@ function Page() {
                     place: "Panamá · Junio 2024",
                   },
                 ].map((c) => (
-                  <div
-                    key={c.brand}
-                    className="rounded-xl border border-white/15 bg-white/5 p-5"
-                  >
+                  <div key={c.brand} className="rounded-xl border border-white/15 bg-white/5 p-5">
                     <div className="font-display text-xl uppercase leading-tight text-[#EAC945] 2xl:text-3xl">
                       {c.brand}
                     </div>
@@ -932,14 +976,14 @@ function Page() {
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-5 max-w-lg text-lg text-black/70">
-                  Cuéntanos sobre tu evento y te respondemos por WhatsApp con disponibilidad,
-                  tarifa y una propuesta a la medida.
+                  Cuéntanos sobre tu evento y te respondemos por WhatsApp con disponibilidad, tarifa
+                  y una propuesta a la medida.
                 </p>
               </Reveal>
               <Reveal delay={0.15}>
                 <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-black/15 bg-white px-4 py-2 text-sm text-black/70">
-                  <MapPin className="h-4 w-4 text-[#0F0F0F]" /> Ciudad de México · toda la
-                  república · virtual
+                  <MapPin className="h-4 w-4 text-[#0F0F0F]" /> Ciudad de México · toda la república
+                  · virtual
                 </div>
               </Reveal>
             </div>
@@ -958,7 +1002,11 @@ function Page() {
                     />
                   </Field>
                   <Field label="Empresa" error={errors.empresa?.message}>
-                    <input {...register("empresa")} className="input-base" placeholder="Nombre de tu empresa" />
+                    <input
+                      {...register("empresa")}
+                      className="input-base"
+                      placeholder="Nombre de tu empresa"
+                    />
                   </Field>
                   <Field label="Cargo / área" error={errors.cargo?.message}>
                     <input
@@ -1061,10 +1109,11 @@ function Page() {
           </Reveal>
           <div className="mt-10 divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.03]">
             {FAQS.map((f) => (
-
               <details key={f.q} className="group px-6 py-5">
                 <summary className="flex cursor-pointer items-center justify-between gap-4 list-none">
-                  <span className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">{f.q}</span>
+                  <span className="font-display text-lg uppercase 2xl:text-2xl 2xl:leading-snug">
+                    {f.q}
+                  </span>
                   <ChevronDown className="h-5 w-5 shrink-0 text-[#EAC945] transition group-open:rotate-180" />
                 </summary>
                 <p className="mt-3 text-white/70">{f.a}</p>
@@ -1100,12 +1149,9 @@ function Page() {
             <a href="mailto:contacto@vozestrategica.com" className="hover:text-white transition">
               contacto@vozestrategica.com
             </a>
-
-
           </div>
         </div>
       </footer>
-
 
       <style>{`
         .input-base {
@@ -1139,8 +1185,12 @@ function StatCard({
   if (compact) {
     return (
       <div className="rounded-xl border border-white/10 bg-[#0F0F0F]/60 p-2.5 text-center">
-        <div className="font-display text-xl text-[#EAC945] md:text-2xl 2xl:text-3xl leading-none">{num}</div>
-        <div className="mt-1 text-[9px] uppercase tracking-widest text-white/55 md:text-[10px]">{label}</div>
+        <div className="font-display text-xl text-[#EAC945] md:text-2xl 2xl:text-3xl leading-none">
+          {num}
+        </div>
+        <div className="mt-1 text-[9px] uppercase tracking-widest text-white/55 md:text-[10px]">
+          {label}
+        </div>
       </div>
     );
   }

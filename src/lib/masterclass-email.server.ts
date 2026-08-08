@@ -7,14 +7,15 @@
  *
  * Variables de entorno (configurar en Lovable y en Hostinger):
  *  - RESEND_API_KEY            (privada, obligatoria)
- *  - MASTERCLASS_FROM_EMAIL    (opcional, por defecto onboarding@resend.dev)
+ *  - RESEND_FROM_EMAIL         (opcional, por defecto onboarding@resend.dev)
+ *  - RESEND_REPLY_TO           (opcional)
  *  - MASTERCLASS_ACCESS_URL    (opcional, enlace a la grabación)
- *  - MASTERCLASS_NOTIFY_TO     (opcional, copia interna; por defecto tatinsu83@gmail.com)
+ *  - MASTERCLASS_NOTIFY_TO     (opcional, copia interna)
+ *  - NOTIFY_TO_EMAIL           (opcional, copia interna; deprecated: usar MASTERCLASS_NOTIFY_TO)
  */
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const DEFAULT_FROM = "Voz Estratégica <onboarding@resend.dev>";
-const DEFAULT_NOTIFY_TO = "tatinsu83@gmail.com";
 
 export const MASTERCLASS_PRODUCT_NAME = "Grabación Masterclass: De clientes a fans";
 export const MASTERCLASS_PRICE_USD = 19;
@@ -113,20 +114,32 @@ export async function sendMasterclassPurchaseEmail(input: MasterclassPurchaseEma
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) throw new Error("Email no válido");
 
   const { subject, html, text } = renderMasterclassPurchaseEmail({ ...input, email });
-  return resendSend({
-    from: process.env["MASTERCLASS_FROM_EMAIL"] ?? DEFAULT_FROM,
+  const payload: Record<string, unknown> = {
+    from: process.env["RESEND_FROM_EMAIL"] ?? process.env["MASTERCLASS_FROM_EMAIL"] ?? DEFAULT_FROM,
     to: [email],
     subject,
     html,
     text,
-  });
+  };
+
+  if (process.env["RESEND_REPLY_TO"]) {
+    payload.reply_to = process.env["RESEND_REPLY_TO"];
+  }
+
+  return resendSend(payload);
 }
 
 /** Aviso interno de venta (opcional, para el equipo). */
 export async function notifyMasterclassSaleInternal(input: MasterclassPurchaseEmailInput) {
-  const to = process.env["MASTERCLASS_NOTIFY_TO"] ?? DEFAULT_NOTIFY_TO;
-  return resendSend({
-    from: process.env["MASTERCLASS_FROM_EMAIL"] ?? DEFAULT_FROM,
+  const to = process.env["MASTERCLASS_NOTIFY_TO"] || process.env["NOTIFY_TO_EMAIL"] || "";
+
+  if (!to) {
+    console.log("MASTERCLASS_NOTIFY_TO no configurado, omitiendo notificación interna");
+    return;
+  }
+
+  const payload: Record<string, unknown> = {
+    from: process.env["RESEND_FROM_EMAIL"] ?? process.env["MASTERCLASS_FROM_EMAIL"] ?? DEFAULT_FROM,
     to: [to],
     subject: `Nueva venta masterclass: ${input.email}`,
     html: `<h2>Nueva venta de la grabación</h2>
@@ -134,5 +147,11 @@ export async function notifyMasterclassSaleInternal(input: MasterclassPurchaseEm
 <p><strong>Nombre:</strong> ${esc(input.nombre ?? "—")}</p>
 <p><strong>Referencia:</strong> ${esc(input.orderId ?? "—")}</p>
 <p><strong>Valor:</strong> USD ${input.amountUsd ?? MASTERCLASS_PRICE_USD}</p>`,
-  });
+  };
+
+  if (process.env["RESEND_REPLY_TO"]) {
+    payload.reply_to = process.env["RESEND_REPLY_TO"];
+  }
+
+  return resendSend(payload);
 }

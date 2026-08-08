@@ -14,7 +14,10 @@ export const Route = createFileRoute("/")({
         content:
           "Firma de aprendizaje corporativo en Colombia, México y España. Conferencias, talleres, programas y escuelas que desarrollan personas, fortalecen equipos y generan resultados de negocio.",
       },
-      { property: "og:title", content: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación" },
+      {
+        property: "og:title",
+        content: "Voz Estratégica — Aprendizaje corporativo, liderazgo y transformación",
+      },
       {
         property: "og:description",
         content:
@@ -44,9 +47,21 @@ const TERRITORIOS = [
 
 const SOLUCIONES = [
   { icon: Mic2, titulo: "Conferencias", desc: "La chispa. 60–90 min con una de nuestras 8 voces." },
-  { icon: GraduationCap, titulo: "Formación", desc: "Talleres, workshops y programas que instalan capacidades." },
-  { icon: Users, titulo: "Consultoría", desc: "Acompañamiento a medida en cultura, comunicación y liderazgo." },
-  { icon: BookOpen, titulo: "Contenido", desc: "Libros, newsletter y recursos que extienden el aprendizaje." },
+  {
+    icon: GraduationCap,
+    titulo: "Formación",
+    desc: "Talleres, workshops y programas que instalan capacidades.",
+  },
+  {
+    icon: Users,
+    titulo: "Consultoría",
+    desc: "Acompañamiento a medida en cultura, comunicación y liderazgo.",
+  },
+  {
+    icon: BookOpen,
+    titulo: "Contenido",
+    desc: "Libros, newsletter y recursos que extienden el aprendizaje.",
+  },
 ];
 
 const ESCALERA = [
@@ -68,8 +83,14 @@ function Home() {
     <>
       {/* 1. HERO */}
       <section className="relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute -right-32 top-10 h-[36rem] w-[36rem] rounded-full bg-brand/45 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -left-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-foreground/10 blur-3xl" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-10 h-[36rem] w-[36rem] rounded-full bg-brand/45 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-foreground/10 blur-3xl"
+        />
 
         <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-28 md:pt-28 md:pb-36">
           <Reveal>
@@ -95,7 +116,8 @@ function Home() {
 
           <Reveal delay={260}>
             <p className="mt-10 max-w-2xl text-lg text-muted-foreground md:text-xl">
-              Diseñamos experiencias de aprendizaje —conferencias, talleres, programas y escuelas— que desarrollan personas, fortalecen equipos y generan resultados de negocio.
+              Diseñamos experiencias de aprendizaje —conferencias, talleres, programas y escuelas—
+              que desarrollan personas, fortalecen equipos y generan resultados de negocio.
             </p>
           </Reveal>
 
@@ -147,7 +169,8 @@ function Home() {
               Desarrollamos capacidades que transforman organizaciones
             </h2>
             <p className="mt-6 text-lg text-muted-foreground">
-              No vendemos un evento: diseñamos procesos de aprendizaje que se aplican y se miden. Trabajamos cinco territorios donde el negocio se cruza con el factor humano.
+              No vendemos un evento: diseñamos procesos de aprendizaje que se aplican y se miden.
+              Trabajamos cinco territorios donde el negocio se cruza con el factor humano.
             </p>
           </div>
         </Reveal>
@@ -177,7 +200,8 @@ function Home() {
             <div>
               <span className="section-badge">Soluciones</span>
               <h2 className="mt-6 font-display text-4xl uppercase leading-[0.95] md:text-6xl">
-                Del descubrimiento a<br />la transformación
+                Del descubrimiento a<br />
+                la transformación
               </h2>
             </div>
             <Link to="/soluciones" className="bubble bubble-outline w-fit">
@@ -224,8 +248,14 @@ function Home() {
 
       {/* 5. ESCUELA VOZ ESTRATÉGICA */}
       <section className="relative overflow-hidden bg-foreground py-24 text-background md:py-32">
-        <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -left-40 bottom-0 h-[24rem] w-[24rem] rounded-full bg-brand/10 blur-3xl" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-40 bottom-0 h-[24rem] w-[24rem] rounded-full bg-brand/10 blur-3xl"
+        />
 
         <div className="relative mx-auto max-w-6xl px-6">
           <Reveal>
@@ -233,13 +263,16 @@ function Home() {
           </Reveal>
           <Reveal delay={100}>
             <h2 className="mt-6 font-display text-5xl uppercase leading-[0.9] md:text-7xl lg:text-8xl">
-              Escuela<br />
+              Escuela
+              <br />
               <span className="text-brand">Voz Estratégica</span>
             </h2>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-8 max-w-2xl text-lg text-background/75 md:text-xl">
-              Nuestros programas de liderazgo, comunicación, cultura, ventas e innovación. Un método que garantiza que el aprendizaje se aplique y se mida —no que se olvide al salir del auditorio.
+              Nuestros programas de liderazgo, comunicación, cultura, ventas e innovación. Un método
+              que garantiza que el aprendizaje se aplique y se mida —no que se olvide al salir del
+              auditorio.
             </p>
           </Reveal>
 
@@ -255,9 +288,7 @@ function Home() {
                       </div>
                       <div className="font-display text-lg uppercase">{paso}</div>
                     </div>
-                    {i < METODO.length - 1 ? (
-                      <ArrowRight className="h-5 w-5 text-brand" />
-                    ) : null}
+                    {i < METODO.length - 1 ? <ArrowRight className="h-5 w-5 text-brand" /> : null}
                   </div>
                 ))}
               </div>
@@ -289,13 +320,15 @@ function Home() {
               treatment === 0
                 ? "text-foreground"
                 : treatment === 1
-                ? "text-brand"
-                : treatment === 2
-                ? "text-transparent [-webkit-text-stroke:1.5px_var(--foreground)]"
-                : "text-foreground/25";
+                  ? "text-brand"
+                  : treatment === 2
+                    ? "text-transparent [-webkit-text-stroke:1.5px_var(--foreground)]"
+                    : "text-foreground/25";
             return (
               <span key={`${name}-${i}`} className="flex items-center">
-                <span className={`mx-8 font-display text-5xl uppercase md:text-8xl ${cls}`}>{name}</span>
+                <span className={`mx-8 font-display text-5xl uppercase md:text-8xl ${cls}`}>
+                  {name}
+                </span>
                 <svg
                   viewBox="0 0 24 24"
                   className={`h-7 w-7 md:h-10 md:w-10 shrink-0 ${
@@ -324,12 +357,15 @@ function Home() {
         <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <Reveal delay={100}>
             <h2 className="font-display text-5xl uppercase leading-[0.85] md:text-7xl">
-              Nuestras<br />voces
+              Nuestras
+              <br />
+              voces
             </h2>
           </Reveal>
           <Reveal delay={200}>
             <p className="max-w-md text-muted-foreground md:text-lg">
-              Nuestras 8 voces son la puerta de entrada. Cada una conecta negocio y factor humano —y abre la conversación que después se convierte en un programa a medida.
+              Nuestras 8 voces son la puerta de entrada. Cada una conecta negocio y factor humano —y
+              abre la conversación que después se convierte en un programa a medida.
             </p>
           </Reveal>
         </div>
@@ -408,11 +444,12 @@ function Home() {
         </Reveal>
       </section>
 
-
-
       {/* 8. AGENDA */}
       <section className="relative overflow-hidden bg-foreground py-28 text-background">
-        <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl"
+        />
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="flex items-center gap-4">
@@ -465,9 +502,7 @@ function Home() {
                       {formatDate(ev.fecha)}
                     </div>
                     <div className="flex-1">
-                      <div className="font-display text-2xl uppercase md:text-3xl">
-                        {ev.titulo}
-                      </div>
+                      <div className="font-display text-2xl uppercase md:text-3xl">{ev.titulo}</div>
                       <div className="mt-2 text-sm text-background/60">
                         {ev.ciudad} · {ev.descripcion}
                       </div>
@@ -527,7 +562,8 @@ function Home() {
                   Escribir el futuro hoy.
                 </h3>
                 <p className="mt-6 max-w-md text-foreground/80 md:text-lg">
-                  Acompañamos a nuestros conferencistas a convertir sus ideas en libros, ensayos y manifiestos que extienden la conversación más allá del escenario.
+                  Acompañamos a nuestros conferencistas a convertir sus ideas en libros, ensayos y
+                  manifiestos que extienden la conversación más allá del escenario.
                 </p>
                 <Link
                   to="/recursos"
@@ -545,12 +581,17 @@ function Home() {
       <section className="mx-auto max-w-7xl px-6 pb-28">
         <Reveal>
           <div className="relative overflow-hidden rounded-[60px] bg-brand px-8 py-24 text-center md:px-16 md:py-32">
-            <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-foreground/10 blur-3xl" />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-foreground/10 blur-3xl"
+            />
             <h2 className="relative font-display text-4xl uppercase leading-tight md:text-7xl">
-              ¿Listo para desarrollar<br />a tu equipo?
+              ¿Listo para desarrollar
+              <br />a tu equipo?
             </h2>
             <p className="relative mx-auto mt-6 max-w-2xl text-foreground/80 md:text-lg">
-              Cuéntanos el reto de tu organización y te armamos una propuesta a medida —conferencia, programa o escuela— en menos de 48 horas.
+              Cuéntanos el reto de tu organización y te armamos una propuesta a medida —conferencia,
+              programa o escuela— en menos de 48 horas.
             </p>
             <Link
               to="/contratar"

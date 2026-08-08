@@ -8,7 +8,7 @@ const NAV = [
   { to: "/soluciones", label: "Soluciones" },
   { to: "/programas", label: "Programas" },
   { to: "/speakers", label: "Conferencistas" },
-  
+
   { to: "/recursos", label: "Recursos" },
   { to: "/nosotros", label: "Nosotros" },
 ] as const;
@@ -42,7 +42,10 @@ export function Header() {
               key={n.to}
               to={n.to}
               className="rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground"
-              activeProps={{ className: "rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider bg-black text-white" }}
+              activeProps={{
+                className:
+                  "rounded-full px-3 py-2 text-[11px] font-semibold uppercase tracking-wider bg-black text-white",
+              }}
               activeOptions={{ exact: n.to === "/" }}
             >
               {n.label}
@@ -75,7 +78,10 @@ export function Header() {
                 to={n.to}
                 onClick={() => setOpen(false)}
                 className="rounded-full px-4 py-3 text-sm font-semibold uppercase tracking-wider"
-                activeProps={{ className: "rounded-full px-4 py-3 text-sm font-semibold uppercase tracking-wider bg-black text-white" }}
+                activeProps={{
+                  className:
+                    "rounded-full px-4 py-3 text-sm font-semibold uppercase tracking-wider bg-black text-white",
+                }}
                 activeOptions={{ exact: n.to === "/" }}
               >
                 {n.label}

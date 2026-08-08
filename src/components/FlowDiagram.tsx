@@ -52,8 +52,6 @@ const rightPaths = [
   `M ${HUB.x} ${HUB.y} C 680 ${HUB.y + 40}, 780 600, 1000 600`,
 ];
 
-
-
 function Card({ item, align, index = 0 }: { item: Item; align: "left" | "right"; index?: number }) {
   const animate = align === "right";
   const iconAnims = ["animate-pulse-soft", "animate-bob", "animate-spin-slow"];
@@ -64,7 +62,9 @@ function Card({ item, align, index = 0 }: { item: Item; align: "left" | "right";
         align === "right" ? "md:flex-row-reverse md:text-right" : ""
       }`}
     >
-      <div className={`relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-foreground text-brand`}>
+      <div
+        className={`relative grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-foreground text-brand`}
+      >
         {animate && (
           <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-brand/30 to-transparent animate-shimmer" />
         )}
@@ -78,7 +78,6 @@ function Card({ item, align, index = 0 }: { item: Item; align: "left" | "right";
   );
 }
 
-
 export function FlowDiagram() {
   return (
     <section className="relative overflow-hidden bg-[#f7f3e7] py-20 md:py-28">
@@ -89,7 +88,9 @@ export function FlowDiagram() {
               Cómo trabajamos contigo
             </div>
             <h2 className="mt-4 font-display text-4xl uppercase leading-[0.95] md:text-6xl">
-              De tu evento a una<br />conversación que perdura
+              De tu evento a una
+              <br />
+              conversación que perdura
             </h2>
           </div>
         </Reveal>
@@ -136,8 +137,13 @@ export function FlowDiagram() {
                 <filter id="tube-shadow" x="-10%" y="-10%" width="120%" height="120%">
                   <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
                   <feOffset dy="1" result="off" />
-                  <feComponentTransfer><feFuncA type="linear" slope="0.18" /></feComponentTransfer>
-                  <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.18" />
+                  </feComponentTransfer>
+                  <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
                 </filter>
               </defs>
 
@@ -196,7 +202,6 @@ export function FlowDiagram() {
                   );
                 }),
               )}
-
 
               {/* Particles flowing along right paths */}
               {rightPaths.map((_, i) =>

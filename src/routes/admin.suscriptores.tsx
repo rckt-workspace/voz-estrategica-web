@@ -41,18 +41,10 @@ function SuscriptoresPage() {
   function exportCsv() {
     const rows = [
       ["email", "fecha_suscripcion", "origen"],
-      ...subs.map((s) => [
-        s.email,
-        new Date(s.created_at).toISOString(),
-        s.source ?? "",
-      ]),
+      ...subs.map((s) => [s.email, new Date(s.created_at).toISOString(), s.source ?? ""]),
     ];
     const csv = rows
-      .map((r) =>
-        r
-          .map((v) => `"${String(v).replace(/"/g, '""')}"`)
-          .join(","),
-      )
+      .map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","))
       .join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -116,9 +108,7 @@ function SuscriptoresPage() {
               {filtered.map((s) => (
                 <tr key={s.id} className="border-t border-foreground/10">
                   <td className="px-4 py-3 font-medium">{s.email}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">
-                    {s.source ?? "—"}
-                  </td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground">{s.source ?? "—"}</td>
                   <td className="px-4 py-3 text-xs text-muted-foreground">
                     {new Date(s.created_at).toLocaleString("es-ES")}
                   </td>

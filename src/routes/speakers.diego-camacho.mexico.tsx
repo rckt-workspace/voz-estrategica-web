@@ -36,7 +36,11 @@ export const Route = createFileRoute("/speakers/diego-camacho/mexico")({
         content:
           "Conferencista internacional experto en inteligencia artificial, ventas y marketing digital. Líder de Google Ads para Hispanoamérica. Disponible para eventos corporativos en Ciudad de México y todo México. Solicita cotización en menos de 48 horas.",
       },
-      { name: "keywords", content: "diego camacho speaker, conferencista IA México, speaker inteligencia artificial CDMX, conferencista ventas Ciudad de México, contratar speaker IA México, keynote IA México" },
+      {
+        name: "keywords",
+        content:
+          "diego camacho speaker, conferencista IA México, speaker inteligencia artificial CDMX, conferencista ventas Ciudad de México, contratar speaker IA México, keynote IA México",
+      },
       { property: "og:type", content: "profile" },
       { property: "og:title", content: "Diego Camacho · Speaker IA y Ventas · México" },
       {
@@ -51,15 +55,28 @@ export const Route = createFileRoute("/speakers/diego-camacho/mexico")({
       { name: "twitter:title", content: "Diego Camacho · Speaker IA y Ventas · México" },
       {
         name: "twitter:description",
-        content: "Contrata al speaker internacional experto en IA y ventas para tu evento en México.",
+        content:
+          "Contrata al speaker internacional experto en IA y ventas para tu evento en México.",
       },
     ],
     links: [
       { rel: "canonical", href: CANONICAL },
       { rel: "alternate", hrefLang: "es-MX", href: CANONICAL },
-      { rel: "alternate", hrefLang: "es-CO", href: "https://vozestrategica.com/speakers/diego-camacho" },
-      { rel: "alternate", hrefLang: "es", href: "https://vozestrategica.com/speakers/diego-camacho" },
-      { rel: "alternate", hrefLang: "x-default", href: "https://vozestrategica.com/speakers/diego-camacho" },
+      {
+        rel: "alternate",
+        hrefLang: "es-CO",
+        href: "https://vozestrategica.com/speakers/diego-camacho",
+      },
+      {
+        rel: "alternate",
+        hrefLang: "es",
+        href: "https://vozestrategica.com/speakers/diego-camacho",
+      },
+      {
+        rel: "alternate",
+        hrefLang: "x-default",
+        href: "https://vozestrategica.com/speakers/diego-camacho",
+      },
     ],
     scripts: [
       {
@@ -108,10 +125,25 @@ export const Route = createFileRoute("/speakers/diego-camacho/mexico")({
                 "@type": "OfferCatalog",
                 name: "Formatos disponibles",
                 itemListElement: [
-                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Conferencia magistral (45–60 min)" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Keynote para convenciones corporativas" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Workshop ejecutivo" } },
-                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Panel / moderación" } },
+                  {
+                    "@type": "Offer",
+                    itemOffered: { "@type": "Service", name: "Conferencia magistral (45–60 min)" },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Keynote para convenciones corporativas",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: { "@type": "Service", name: "Workshop ejecutivo" },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: { "@type": "Service", name: "Panel / moderación" },
+                  },
                 ],
               },
             },
@@ -156,9 +188,24 @@ export const Route = createFileRoute("/speakers/diego-camacho/mexico")({
             {
               "@type": "BreadcrumbList",
               itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Inicio", item: "https://vozestrategica.com/" },
-                { "@type": "ListItem", position: 2, name: "Speakers", item: "https://vozestrategica.com/speakers" },
-                { "@type": "ListItem", position: 3, name: "Diego Camacho", item: "https://vozestrategica.com/speakers/diego-camacho" },
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Inicio",
+                  item: "https://vozestrategica.com/",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Speakers",
+                  item: "https://vozestrategica.com/speakers",
+                },
+                {
+                  "@type": "ListItem",
+                  position: 3,
+                  name: "Diego Camacho",
+                  item: "https://vozestrategica.com/speakers/diego-camacho",
+                },
                 { "@type": "ListItem", position: 4, name: "México", item: CANONICAL },
               ],
             },
@@ -198,12 +245,16 @@ function DiegoMexicoLanding() {
             </span>
             <h1 className="mt-5 font-display text-4xl uppercase leading-[0.95] md:text-6xl">
               Contrata a <span className="text-brand">Diego Camacho</span> como speaker en{" "}
-              <span className="highlight-yellow"><span>Ciudad de México</span><span /></span>
+              <span className="highlight-yellow">
+                <span>Ciudad de México</span>
+                <span />
+              </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
               International Business Speaker. Líder del equipo comercial de{" "}
               <strong>Google Ads para Hispanoamérica</strong>. Conferencias de impacto sobre{" "}
-              <strong>inteligencia artificial, ventas y marketing digital</strong> para empresas mexicanas.
+              <strong>inteligencia artificial, ventas y marketing digital</strong> para empresas
+              mexicanas.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -220,7 +271,11 @@ function DiegoMexicoLanding() {
                 rel="noopener noreferrer"
                 onClick={() => {
                   trackEvent("Contact", { source: SOURCE_TAG, channel: "whatsapp" });
-                  trackGA4Event("contact_whatsapp", { method: "whatsapp", source: SOURCE_TAG, placement: "hero" });
+                  trackGA4Event("contact_whatsapp", {
+                    method: "whatsapp",
+                    source: SOURCE_TAG,
+                    placement: "hero",
+                  });
                 }}
                 className="bubble bubble-black inline-flex items-center gap-2 px-6 py-4 text-base"
               >
@@ -229,8 +284,12 @@ function DiegoMexicoLanding() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5"><Award className="h-4 w-4 text-brand" /> Google · Endeavor · Angel Investor</span>
-              <span className="inline-flex items-center gap-1.5"><Users className="h-4 w-4 text-brand" /> +20 países</span>
+              <span className="inline-flex items-center gap-1.5">
+                <Award className="h-4 w-4 text-brand" /> Google · Endeavor · Angel Investor
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Users className="h-4 w-4 text-brand" /> +20 países
+              </span>
             </div>
           </Reveal>
 
@@ -295,19 +354,23 @@ function DiegoMexicoLanding() {
           </ul>
 
           <p className="mt-8 text-xs uppercase tracking-widest text-muted-foreground/70">
-            Conferencias en México · Panamá · Chile · Argentina · Colombia · Sudeste Asiático · Australia
+            Conferencias en México · Panamá · Chile · Argentina · Colombia · Sudeste Asiático ·
+            Australia
           </p>
         </div>
       </section>
-
-
 
       {/* CONFERENCIAS / TEMAS */}
       <section className="mx-auto max-w-6xl px-6 py-20">
         <Reveal>
           <p className="text-xs font-bold uppercase tracking-widest text-brand">Conferencias</p>
           <h2 className="mt-3 font-display text-3xl uppercase md:text-5xl">
-            Tres temas que <span className="highlight-yellow"><span>transforman</span><span /></span> tu evento
+            Tres temas que{" "}
+            <span className="highlight-yellow">
+              <span>transforman</span>
+              <span />
+            </span>{" "}
+            tu evento
           </h2>
         </Reveal>
 
@@ -334,10 +397,22 @@ function DiegoMexicoLanding() {
               Experiencia real, no teoría
             </h2>
             <ul className="mt-8 space-y-4 text-base text-foreground/90">
-              <li className="flex gap-3"><Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> Lidera el equipo comercial de Nuevos Negocios de <strong>Google Ads para Hispanoamérica</strong>.</li>
-              <li className="flex gap-3"><Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> StartUp Coach en <strong>Google Launchpad</strong> y mentor de la red <strong>Endeavor</strong>.</li>
-              <li className="flex gap-3"><Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> Angel investor y socio de varias startups en Latinoamérica.</li>
-              <li className="flex gap-3"><Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> Posiciones de liderazgo en tecnología y consumo masivo en LatAm, Sudeste Asiático y Australia.</li>
+              <li className="flex gap-3">
+                <Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> Lidera el equipo comercial de
+                Nuevos Negocios de <strong>Google Ads para Hispanoamérica</strong>.
+              </li>
+              <li className="flex gap-3">
+                <Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> StartUp Coach en{" "}
+                <strong>Google Launchpad</strong> y mentor de la red <strong>Endeavor</strong>.
+              </li>
+              <li className="flex gap-3">
+                <Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> Angel investor y socio de
+                varias startups en Latinoamérica.
+              </li>
+              <li className="flex gap-3">
+                <Mic2 className="mt-1 h-5 w-5 flex-none text-brand" /> Posiciones de liderazgo en
+                tecnología y consumo masivo en LatAm, Sudeste Asiático y Australia.
+              </li>
             </ul>
           </Reveal>
 
@@ -360,7 +435,11 @@ function DiegoMexicoLanding() {
         <Reveal>
           <p className="text-xs font-bold uppercase tracking-widest text-brand">Formatos</p>
           <h2 className="mt-3 font-display text-3xl uppercase md:text-5xl">
-            Adaptable a <span className="highlight-yellow"><span>tu evento</span><span /></span>
+            Adaptable a{" "}
+            <span className="highlight-yellow">
+              <span>tu evento</span>
+              <span />
+            </span>
           </h2>
         </Reveal>
 
@@ -390,7 +469,8 @@ function DiegoMexicoLanding() {
               Solicita tu propuesta para <span className="text-brand">México</span>
             </h2>
             <p className="mt-4 text-base text-background/70">
-              Respondemos en menos de 48 horas con disponibilidad, formato sugerido y propuesta económica.
+              Respondemos en menos de 48 horas con disponibilidad, formato sugerido y propuesta
+              económica.
             </p>
           </Reveal>
 
@@ -405,8 +485,12 @@ function DiegoMexicoLanding() {
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 py-20">
         <Reveal>
-          <p className="text-xs font-bold uppercase tracking-widest text-brand">Preguntas frecuentes</p>
-          <h2 className="mt-3 font-display text-3xl uppercase md:text-5xl">Lo que más nos preguntan</h2>
+          <p className="text-xs font-bold uppercase tracking-widest text-brand">
+            Preguntas frecuentes
+          </p>
+          <h2 className="mt-3 font-display text-3xl uppercase md:text-5xl">
+            Lo que más nos preguntan
+          </h2>
         </Reveal>
 
         <div className="mt-10 space-y-4">
@@ -510,7 +594,12 @@ function LeadForm() {
 
       <div className="grid gap-5 md:grid-cols-2">
         <Field label="WhatsApp (opcional)" error={errors.telefono?.message}>
-          <input className={inputCls} placeholder="+52 ..." {...register("telefono")} autoComplete="tel" />
+          <input
+            className={inputCls}
+            placeholder="+52 ..."
+            {...register("telefono")}
+            autoComplete="tel"
+          />
         </Field>
         <Field label="Ciudad" error={errors.ciudad?.message}>
           <input className={inputCls} placeholder="Ciudad de México" {...register("ciudad")} />
@@ -522,12 +611,20 @@ function LeadForm() {
           <input type="date" className={inputCls} {...register("fecha_evento")} />
         </Field>
         <Field label="Tipo de evento" error={errors.tipo_evento?.message}>
-          <input className={inputCls} placeholder="Convención, keynote, workshop..." {...register("tipo_evento")} />
+          <input
+            className={inputCls}
+            placeholder="Convención, keynote, workshop..."
+            {...register("tipo_evento")}
+          />
         </Field>
       </div>
 
       <Field label="Número de asistentes (aprox.)" error={errors.asistentes?.message}>
-        <input className={inputCls} placeholder="200, 1,000, 5,000..." {...register("asistentes")} />
+        <input
+          className={inputCls}
+          placeholder="200, 1,000, 5,000..."
+          {...register("asistentes")}
+        />
       </Field>
 
       <Field label="Cuéntanos sobre tu evento" error={errors.mensaje?.message}>
@@ -544,7 +641,12 @@ function LeadForm() {
 
       <p className="pt-1 text-center text-xs text-muted-foreground">
         ¿Prefieres WhatsApp?{" "}
-        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="font-bold text-brand underline">
+        <a
+          href={whatsappLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-bold text-brand underline"
+        >
           Escríbenos directo
         </a>
       </p>

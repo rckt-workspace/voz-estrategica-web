@@ -14,7 +14,8 @@ export const Route = createFileRoute("/programas")({
       { property: "og:title", content: "Escuela Voz Estratégica — Programas" },
       {
         property: "og:description",
-        content: "Producto estrella: programas que convierten el conocimiento en capacidades medibles.",
+        content:
+          "Producto estrella: programas que convierten el conocimiento en capacidades medibles.",
       },
       { property: "og:url", content: "https://vozestrategica.com/programas" },
       { property: "og:type", content: "website" },
@@ -47,11 +48,15 @@ function ProgramasPage() {
     <>
       {/* Hero oscuro */}
       <section className="relative overflow-hidden bg-foreground pt-32 pb-20 text-background md:pt-44 md:pb-28">
-        <div aria-hidden className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-40 top-20 h-[28rem] w-[28rem] rounded-full bg-brand/20 blur-3xl"
+        />
         <div className="relative mx-auto max-w-7xl px-6">
           <span className="bubble bubble-yellow mb-8">Producto estrella</span>
           <h1 className="font-display text-5xl uppercase leading-[0.9] md:text-7xl lg:text-8xl">
-            Escuela<br />
+            Escuela
+            <br />
             <span className="text-brand">Voz Estratégica</span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-background/75 md:text-xl">
@@ -102,7 +107,10 @@ function ProgramasPage() {
                 <p className="mt-3 text-sm text-muted-foreground">{p.desc}</p>
                 <div className="mt-6 flex flex-wrap gap-2">
                   {["3 meses", "6 meses", "12 meses"].map((d) => (
-                    <span key={d} className="rounded-full border border-foreground/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span
+                      key={d}
+                      className="rounded-full border border-foreground/15 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+                    >
                       {d}
                     </span>
                   ))}
@@ -123,7 +131,10 @@ function ProgramasPage() {
         </Reveal>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
           {PARA_QUIEN.map((p) => (
-            <div key={p} className="rounded-2xl border border-foreground/10 bg-card px-6 py-8 text-center">
+            <div
+              key={p}
+              className="rounded-2xl border border-foreground/10 bg-card px-6 py-8 text-center"
+            >
               <div className="font-display text-xl uppercase">{p}</div>
             </div>
           ))}

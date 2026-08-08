@@ -32,22 +32,18 @@ function trimStr(v: unknown, max = 200): string {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
 }
 
-export const getConfiguracion = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const { createClient } = await import("@supabase/supabase-js");
-    const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_PUBLISHABLE_KEY!,
-      { auth: { persistSession: false, autoRefreshToken: false } },
-    );
-    const { data } = await supabase
-      .from("configuracion")
-      .select("flete_nacional")
-      .limit(1)
-      .maybeSingle();
-    return { flete_nacional: data?.flete_nacional ?? 12000 };
-  },
-);
+export const getConfiguracion = createServerFn({ method: "GET" }).handler(async () => {
+  const { createClient } = await import("@supabase/supabase-js");
+  const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const { data } = await supabase
+    .from("configuracion")
+    .select("flete_nacional")
+    .limit(1)
+    .maybeSingle();
+  return { flete_nacional: data?.flete_nacional ?? 12000 };
+});
 
 type CreateInput = {
   sku: string;
@@ -159,7 +155,9 @@ export const recordBookOrderStatus = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: existing } = await supabaseAdmin
       .from("pedidos_libros")
-      .select("id, estado_pago, libro, formato, nombre_completo, email, telefono, direccion, ciudad, departamento, cantidad, total")
+      .select(
+        "id, estado_pago, libro, formato, nombre_completo, email, telefono, direccion, ciudad, departamento, cantidad, total",
+      )
       .eq("bold_order_id", data.orderId)
       .maybeSingle();
     if (!existing) return { ok: false, pedido: null as null | typeof existing };
@@ -224,9 +222,10 @@ ${p.formato === "fisico" ? `<h3>Envío</h3><p>${p.direccion}<br>${p.ciudad}, ${p
 export const listPedidosLibros = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { estado?: string } | undefined) => ({
-    estado: data?.estado && ["pendiente", "aprobado", "rechazado", "cancelado"].includes(data.estado)
-      ? (data.estado as "pendiente" | "aprobado" | "rechazado" | "cancelado")
-      : undefined,
+    estado:
+      data?.estado && ["pendiente", "aprobado", "rechazado", "cancelado"].includes(data.estado)
+        ? (data.estado as "pendiente" | "aprobado" | "rechazado" | "cancelado")
+        : undefined,
   }))
   .handler(async ({ data, context }) => {
     const { data: isAdmin } = await context.supabase.rpc("has_role", {

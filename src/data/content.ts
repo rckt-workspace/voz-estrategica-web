@@ -81,7 +81,13 @@ export const speakers: Speaker[] = [
       "Conferencista internacional, autora y experta en bienestar financiero corporativo. Elaine Miranda es la autora del best-seller Mujeres y Finanzas y fundadora de Plata con Plática; ha transformado la vida financiera de más de 500.000 personas a través de conferencias, talleres, contenido digital y programas corporativos en la región.",
       "Con más de 1.500 conferencias impartidas en 10 países y una comunidad digital de más de 200.000 seguidores, combina claridad, empatía y estrategia para hablar de dinero con un enfoque humano, práctico y transformador. Su estilo mezcla storytelling, neurofinanzas, psicología del comportamiento y acción sin excusas.",
     ],
-    tematicas: ["Bienestar financiero", "Finanzas personales", "Neurofinanzas", "Psicología del comportamiento", "Storytelling"],
+    tematicas: [
+      "Bienestar financiero",
+      "Finanzas personales",
+      "Neurofinanzas",
+      "Psicología del comportamiento",
+      "Storytelling",
+    ],
     charlas: [
       "Mujeres y finanzas: hablar de dinero sin miedo",
       "Neurofinanzas aplicadas a equipos de alto desempeño",
@@ -100,7 +106,13 @@ export const speakers: Speaker[] = [
       "Reconocida como una de las speakers internacionales más influyentes en innovación, liderazgo y transformación digital en Latinoamérica. Es experta en marketing exponencial y escritora del libro Brand Exponential.",
       "También aparece asociada a cargos senior de marketing y marca, incluyendo Head de Marketing & Brand en Keralty y experiencia previa como VP de Marketing de Mastercard en Colombia y Ecuador.",
     ],
-    tematicas: ["Marketing exponencial", "Innovación", "Liderazgo", "Transformación digital", "Marca"],
+    tematicas: [
+      "Marketing exponencial",
+      "Innovación",
+      "Liderazgo",
+      "Transformación digital",
+      "Marca",
+    ],
     charlas: [
       "Brand Exponential: marcas que crecen sin pedir permiso",
       "Liderazgo en la era de la transformación digital",
@@ -126,7 +138,8 @@ export const speakers: Speaker[] = [
       "Segundas oportunidades: liderar desde el propósito",
     ],
     destacado: false,
-    quote: "Cuando te concentras en lo que tienes y no en lo que te hace falta, tienes el poder de hacer milagros.",
+    quote:
+      "Cuando te concentras en lo que tienes y no en lo que te hace falta, tienes el poder de hacer milagros.",
     fuente: "https://vozestrategica.com/julian-giraldo/",
   },
   {
@@ -157,7 +170,13 @@ export const speakers: Speaker[] = [
       "International Business Speaker experto en impulsar el crecimiento de empresas y startups con estrategias digitales. Actualmente lidera el equipo comercial de Nuevos Negocios de Google Ads para Hispanoamérica y se desempeña como StartUp Coach en Google Launchpad.",
       "Mentor de la red Endeavor, Angel Investor y socio de varias startups, ha ocupado posiciones de liderazgo en la industria tecnológica y de consumo masivo en Latinoamérica, Sudeste Asiático y Australia. Sus conferencias han pasado por México, Panamá, Chile, Argentina, Colombia y más.",
     ],
-    tematicas: ["Inteligencia artificial", "Ventas", "Marketing digital", "Liderazgo", "Transformación digital"],
+    tematicas: [
+      "Inteligencia artificial",
+      "Ventas",
+      "Marketing digital",
+      "Liderazgo",
+      "Transformación digital",
+    ],
     charlas: [
       "Inteligencia artificial: la nueva revolución en las ventas",
       "Marketing digital con IA para generar oportunidades de negocio",
@@ -175,14 +194,21 @@ export const speakers: Speaker[] = [
       "CEO y fundadora de Cluster Research, consultora, docente y speaker internacional. Doctora en Administración con énfasis en Marketing y Comportamiento Humano (Summa Cum Laude) por Centrum Católica de Lima y Maastricht School of Management. Reconocida en 2025 como una de las 100 Gerentes del Año por Revista Gerente.",
       "Con más de 18 años liderando áreas de investigación, mercadeo y ventas en compañías multilatinas, hoy impulsa CRTools by Cluster Research, la primera plataforma 100% digital de investigación de mercados creada en Colombia. Ha llevado sus conferencias y consultorías a México, Estados Unidos, España, Panamá, Colombia, Ecuador, Guatemala, Perú, República Dominicana y Bolivia.",
     ],
-    tematicas: ["Investigación de mercados", "Marketing", "Comportamiento del consumidor", "Inteligencia artificial predictiva", "Branding"],
+    tematicas: [
+      "Investigación de mercados",
+      "Marketing",
+      "Comportamiento del consumidor",
+      "Inteligencia artificial predictiva",
+      "Branding",
+    ],
     charlas: [
       "El arte de la conquista en marketing",
       "Inteligencia artificial predictiva",
       "Human Centric Model: cultura centrada en las personas",
     ],
     destacado: false,
-    quote: "Cuando sé qué flores te gustan, me doy cuenta de que no siempre con las rosas conquisto tu corazón.",
+    quote:
+      "Cuando sé qué flores te gustan, me doy cuenta de que no siempre con las rosas conquisto tu corazón.",
   },
   {
     slug: "martan",
@@ -193,7 +219,13 @@ export const speakers: Speaker[] = [
       "Oscar Martan es fundador de ConverxIA, xIA e Incdustry. Con más de 20 años en el sector tech, ha liderado más de 5,000 proyectos en 12 países, ayudando a marcas como Netflix, Coca-Cola, Rappi y Ford a transformar sus procesos con inteligencia artificial y automatización.",
       "Ganador de 2 Cannes Lions y 2 Guinness World Records, es referente en IA conversacional y WhatsApp Business. Su misión: ayudar a empresas y profesionales a ahorrar tiempo, generar ingresos y enfocarse en lo que realmente importa.",
     ],
-    tematicas: ["Inteligencia artificial", "Automatización", "Transformación digital", "Ventas", "Productividad"],
+    tematicas: [
+      "Inteligencia artificial",
+      "Automatización",
+      "Transformación digital",
+      "Ventas",
+      "Productividad",
+    ],
     charlas: [
       "Chatear para vender: estrategias de WhatsApp con IA",
       "Money automation: sistemas que generan ingresos solos",
@@ -210,7 +242,8 @@ export const events: EventItem[] = [
     titulo: "Cumbre de Bienestar Financiero Corporativo",
     fecha: "2026-09-22",
     ciudad: "Ciudad de México",
-    descripcion: "Elaine Miranda abre la cumbre con su keynote sobre neurofinanzas aplicadas a equipos.",
+    descripcion:
+      "Elaine Miranda abre la cumbre con su keynote sobre neurofinanzas aplicadas a equipos.",
     speakerSlug: "elaine-miranda",
   },
   {
@@ -226,7 +259,8 @@ export const events: EventItem[] = [
     titulo: "MilagrosaMENTE bien — Conferencia Anual",
     fecha: "2026-11-18",
     ciudad: "Lima",
-    descripcion: "Julián Giraldo presenta su charla insignia sobre resiliencia, inclusión y propósito.",
+    descripcion:
+      "Julián Giraldo presenta su charla insignia sobre resiliencia, inclusión y propósito.",
     speakerSlug: "julian-giraldo",
   },
 ];
@@ -275,9 +309,7 @@ export const books: Book[] = [
   },
 ];
 
-export const tematicas = Array.from(
-  new Set(speakers.flatMap((s) => s.tematicas)),
-).sort();
+export const tematicas = Array.from(new Set(speakers.flatMap((s) => s.tematicas))).sort();
 
 export function getSpeaker(slug: string) {
   return speakers.find((s) => s.slug === slug);

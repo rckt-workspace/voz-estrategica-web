@@ -48,7 +48,9 @@ function AdminSpeakers() {
     setList((data as Speaker[] | null) ?? []);
     setLoading(false);
   }
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   async function uploadPhoto(file: File): Promise<string | null> {
     const path = `speakers/${Date.now()}-${file.name.replace(/\s+/g, "-")}`;
@@ -67,7 +69,10 @@ function AdminSpeakers() {
       return;
     }
     setSaving(true);
-    const tematicas = tematicasStr.split(",").map((t) => t.trim()).filter(Boolean);
+    const tematicas = tematicasStr
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
     const { error } = await supabase.from("speakers").insert({ ...draft, tematicas });
     setSaving(false);
     if (error) return toast.error(error.message);
@@ -90,12 +95,32 @@ function AdminSpeakers() {
       <section className="rounded-2xl border border-foreground/10 bg-card p-6">
         <h2 className="font-display text-2xl uppercase">Nuevo speaker</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <Input label="Slug" value={draft.slug} onChange={(v) => setDraft({ ...draft, slug: v })} placeholder="julian-giraldo" />
-          <Input label="Nombre" value={draft.nombre} onChange={(v) => setDraft({ ...draft, nombre: v })} />
-          <Input label="Especialidad" value={draft.especialidad} onChange={(v) => setDraft({ ...draft, especialidad: v })} />
-          <Input label="Temáticas (coma)" value={tematicasStr} onChange={setTematicasStr} placeholder="Liderazgo, Cultura" />
+          <Input
+            label="Slug"
+            value={draft.slug}
+            onChange={(v) => setDraft({ ...draft, slug: v })}
+            placeholder="julian-giraldo"
+          />
+          <Input
+            label="Nombre"
+            value={draft.nombre}
+            onChange={(v) => setDraft({ ...draft, nombre: v })}
+          />
+          <Input
+            label="Especialidad"
+            value={draft.especialidad}
+            onChange={(v) => setDraft({ ...draft, especialidad: v })}
+          />
+          <Input
+            label="Temáticas (coma)"
+            value={tematicasStr}
+            onChange={setTematicasStr}
+            placeholder="Liderazgo, Cultura"
+          />
           <div className="md:col-span-2">
-            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">Bio</span>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              Bio
+            </span>
             <textarea
               rows={4}
               value={draft.bio ?? ""}
@@ -104,7 +129,9 @@ function AdminSpeakers() {
             />
           </div>
           <div>
-            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">Foto</span>
+            <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              Foto
+            </span>
             <input
               type="file"
               accept="image/*"
@@ -129,7 +156,11 @@ function AdminSpeakers() {
               />
               Destacado
             </label>
-            <Input label="Orden" value={String(draft.orden)} onChange={(v) => setDraft({ ...draft, orden: Number(v) || 0 })} />
+            <Input
+              label="Orden"
+              value={String(draft.orden)}
+              onChange={(v) => setDraft({ ...draft, orden: Number(v) || 0 })}
+            />
           </div>
         </div>
         <button
@@ -148,7 +179,10 @@ function AdminSpeakers() {
         ) : (
           <div className="mt-4 space-y-3">
             {list.map((s) => (
-              <div key={s.id} className="flex items-center gap-4 rounded-2xl border border-foreground/10 bg-card p-3">
+              <div
+                key={s.id}
+                className="flex items-center gap-4 rounded-2xl border border-foreground/10 bg-card p-3"
+              >
                 {s.foto_url ? (
                   <img src={s.foto_url} alt="" className="h-14 w-14 rounded-xl object-cover" />
                 ) : (
@@ -177,11 +211,21 @@ function AdminSpeakers() {
 }
 
 function Input({
-  label, value, onChange, placeholder,
-}: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">{label}</span>
+      <span className="mb-2 block text-xs font-bold uppercase tracking-widest text-muted-foreground">
+        {label}
+      </span>
       <input
         value={value}
         placeholder={placeholder}

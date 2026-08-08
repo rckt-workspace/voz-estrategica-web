@@ -1,4 +1,7 @@
 // Google Consent Mode v2 (client-only)
+// Bootstrap script in __root.tsx initializes consent to denied by default
+// These functions are called after user interaction or in useEffect
+
 export const CONSENT_STORAGE_KEY = "ve_consent_v2";
 
 export type ConsentChoice = "granted" | "denied";
@@ -9,17 +12,6 @@ const CATEGORIES = [
   "ad_user_data",
   "ad_personalization",
 ] as const;
-
-function ensureGtag() {
-  if (typeof window === "undefined") return;
-  window.dataLayer = window.dataLayer || [];
-  if (!window.gtag) {
-    window.gtag = function () {
-      // eslint-disable-next-line prefer-rest-params
-      window.dataLayer!.push(arguments);
-    };
-  }
-}
 
 function consentPayload(value: ConsentChoice) {
   return CATEGORIES.reduce<Record<string, ConsentChoice>>((acc, key) => {
@@ -33,35 +25,33 @@ export function readStoredConsent(): ConsentChoice | null {
   try {
     const raw = window.localStorage.getItem(CONSENT_STORAGE_KEY);
     return raw === "granted" || raw === "denied" ? raw : null;
+    // eslint-disable-next-line no-empty
   } catch {
     return null;
   }
 }
 
 /**
- * Must run BEFORE GA4 / Google Ads / Meta Pixel load.
- * Defaults every category to denied, then replays a stored choice if any.
+ * Initialize consent mode from stored preference (for use in useEffect).
+ * By the time this runs, the inline bootstrap script has already set consent to denied,
+ * so this only needs to restore a previously saved choice.
  */
 export function initConsentMode() {
   if (typeof window === "undefined") return;
-  ensureGtag();
-
-  window.gtag!("consent", "default", {
-    ...consentPayload("denied"),
-    wait_for_update: 500,
-  });
-
   const stored = readStoredConsent();
-  if (stored) {
-    window.gtag!("consent", "update", consentPayload(stored));
+  if (stored && window.gtag) {
+    window.gtag("consent", "update", consentPayload(stored));
   }
 }
 
 export function setConsent(choice: ConsentChoice) {
   if (typeof window === "undefined") return;
-  ensureGtag();
-  window.gtag!("consent", "update", consentPayload(choice));
-  window.dataLayer!.push({ event: "consent_update", consent_state: choice });
+  if (!window.gtag) return;
+
+  window.gtag("consent", "update", consentPayload(choice));
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "consent_update", consent_state: choice });
+
   try {
     window.localStorage.setItem(CONSENT_STORAGE_KEY, choice);
   } catch {

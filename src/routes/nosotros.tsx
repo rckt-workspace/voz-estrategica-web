@@ -56,17 +56,24 @@ function NosotrosPage() {
         <div className="grid gap-6 md:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-3xl border border-foreground/10 bg-card p-8 md:p-10">
-              <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Misión</div>
+              <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                Misión
+              </div>
               <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                Impulsamos el crecimiento de las organizaciones a través de experiencias de aprendizaje, conferencias y programas de desarrollo que fortalecen el liderazgo, la comunicación y las capacidades del talento humano.
+                Impulsamos el crecimiento de las organizaciones a través de experiencias de
+                aprendizaje, conferencias y programas de desarrollo que fortalecen el liderazgo, la
+                comunicación y las capacidades del talento humano.
               </p>
             </div>
           </Reveal>
           <Reveal delay={100}>
             <div className="h-full rounded-3xl border border-foreground/10 bg-card p-8 md:p-10">
-              <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Visión</div>
+              <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                Visión
+              </div>
               <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-                Ser la compañía referente en Latinoamérica en formación corporativa y experiencias de aprendizaje que transforman personas, equipos y organizaciones.
+                Ser la compañía referente en Latinoamérica en formación corporativa y experiencias
+                de aprendizaje que transforman personas, equipos y organizaciones.
               </p>
             </div>
           </Reveal>
@@ -104,12 +111,16 @@ function NosotrosPage() {
               Foto Tatiana
             </div>
             <div>
-              <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Cara visible</div>
+              <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+                Cara visible
+              </div>
               <h3 className="mt-3 font-display text-4xl uppercase leading-[0.95] md:text-5xl">
                 Tatiana Suárez Peralta
               </h3>
               <p className="mt-6 text-background/75 md:text-lg">
-                Líder y cara visible de Voz Estratégica. Lidera la gestión y el desarrollo de conferencistas y la creación de programas formativos, con trayectoria en experiencias de alto impacto para organizaciones de distintas industrias.
+                Líder y cara visible de Voz Estratégica. Lidera la gestión y el desarrollo de
+                conferencistas y la creación de programas formativos, con trayectoria en
+                experiencias de alto impacto para organizaciones de distintas industrias.
               </p>
             </div>
           </div>
@@ -120,7 +131,9 @@ function NosotrosPage() {
       <section className="mx-auto max-w-7xl px-6 py-16">
         <Reveal>
           <div className="text-center">
-            <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">Presencia</div>
+            <div className="font-mono text-[10px] font-bold uppercase tracking-widest text-brand">
+              Presencia
+            </div>
             <h2 className="mt-4 font-display text-5xl uppercase md:text-7xl">
               Colombia · México · España
             </h2>
@@ -131,9 +144,7 @@ function NosotrosPage() {
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="rounded-[60px] bg-brand px-8 py-20 text-center md:px-16">
-          <h2 className="font-display text-4xl uppercase md:text-6xl">
-            Trabajemos juntos
-          </h2>
+          <h2 className="font-display text-4xl uppercase md:text-6xl">Trabajemos juntos</h2>
           <Link
             to="/contratar"
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-4 text-base font-bold text-background transition-transform hover:scale-105"
