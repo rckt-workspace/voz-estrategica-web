@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, X, ChevronDown, Play } from "lucide-react";
+import { Check, X, ChevronDown } from "lucide-react";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
 import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
@@ -292,14 +292,12 @@ function PressRow() {
 function VideoPlaceholder({
   image,
   fallbackImage,
-  overlayText,
   note,
   aspect = "aspect-video",
   priority = false,
 }: {
   image: string;
   fallbackImage?: string;
-  overlayText?: string;
   note?: string;
   aspect?: string;
   priority?: boolean;
@@ -324,22 +322,8 @@ function VideoPlaceholder({
             event.currentTarget.src = `${fallback}?v=20260810`;
           }}
         />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-gradient-to-t from-black/70 via-black/25 to-black/10">
-          <span
-            className="flex h-16 w-16 items-center justify-center rounded-full shadow-xl md:h-20 md:w-20"
-            style={{ backgroundColor: GREEN }}
-          >
-            <Play className="ml-1 h-7 w-7 md:h-9 md:w-9" style={{ color: BLACK }} fill={BLACK} />
-          </span>
-          {overlayText && (
-            <p
-              className="px-4 text-center text-2xl font-extrabold uppercase tracking-[0.12em] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] md:text-4xl"
-              style={serif}
-            >
-              {overlayText}
-            </p>
-          )}
-        </div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
       </div>
 
       {note && (
@@ -463,7 +447,6 @@ function MasterclassRecordingPage() {
               <VideoPlaceholder
                 image={carlosPortrait}
                 fallbackImage={galleryCrehana.url}
-                overlayText="VENDER SIN PERSEGUIR"
                 aspect="aspect-[4/5]"
                 priority
               />
@@ -505,7 +488,6 @@ function MasterclassRecordingPage() {
         <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
           <VideoPlaceholder
             image={galleryCrehana.url}
-            overlayText="VENDER SIN PERSEGUIR"
             note="Pendiente: video de ventas de 6–9 min"
           />
           <div className="mt-8 flex flex-col items-center">
