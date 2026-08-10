@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, X, ChevronDown, Play } from "lucide-react";
+import { Check, X, ChevronDown } from "lucide-react";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
 import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
@@ -292,14 +292,12 @@ function PressRow() {
 function VideoPlaceholder({
   image,
   fallbackImage,
-  overlayText,
   note,
   aspect = "aspect-video",
   priority = false,
 }: {
   image: string;
   fallbackImage?: string;
-  overlayText?: string;
   note?: string;
   aspect?: string;
   priority?: boolean;
@@ -449,7 +447,6 @@ function MasterclassRecordingPage() {
               <VideoPlaceholder
                 image={carlosPortrait}
                 fallbackImage={galleryCrehana.url}
-                overlayText="VENDER SIN PERSEGUIR"
                 aspect="aspect-[4/5]"
                 priority
               />
@@ -491,7 +488,6 @@ function MasterclassRecordingPage() {
         <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
           <VideoPlaceholder
             image={galleryCrehana.url}
-            overlayText="VENDER SIN PERSEGUIR"
             note="Pendiente: video de ventas de 6–9 min"
           />
           <div className="mt-8 flex flex-col items-center">
