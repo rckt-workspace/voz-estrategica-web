@@ -370,7 +370,7 @@ function Home() {
               <img
                 src={tatianaFoto.url}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
-                className="aspect-[4/5] w-full object-cover"
+                className="aspect-[3/4] w-full object-cover"
                 loading="lazy"
                 decoding="async"
               />
@@ -382,12 +382,11 @@ function Home() {
               <span className="section-badge text-sm tracking-[0.28em] md:text-base">
                 Fundadora
               </span>
-              <h2 className="mt-6 font-display text-5xl uppercase leading-[0.85] md:text-6xl">
-                Tatiana
-                <br />
-                Suárez
+              <h2 className="mt-6 font-display text-4xl uppercase leading-[0.9] md:text-5xl lg:text-6xl">
+                Tatiana Suárez
               </h2>
             </Reveal>
+
 
             <Reveal delay={140}>
               <div className="mt-8 space-y-5 text-muted-foreground md:text-lg">
