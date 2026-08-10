@@ -421,8 +421,8 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 1 · PORTADA ══ */}
       <section className="bg-[#16181a]">
         <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
-          <div className="grid items-center gap-10 md:grid-cols-[55fr_45fr] md:gap-14">
-            <div>
+          <div className="grid gap-8 md:grid-cols-[55fr_45fr] md:items-center md:gap-14">
+            <div className="md:col-start-1 md:row-start-1">
               <span
                 className="inline-flex rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] md:text-[11px]"
                 style={{ borderColor: GREEN, color: GREEN }}
@@ -436,13 +436,16 @@ function MasterclassRecordingPage() {
                 El sistema completo de Carlos Laguna —el mismo que aplica con Mercedes Benz,
                 Nespresso y Bancolombia— en 2 horas que puedes ver hoy y aplicar mañana.
               </p>
+            </div>
 
-              {/* Video primero en móvil */}
-              <div className="mt-8 md:hidden">
-                <VideoPlaceholder image={galleryCrehana.url} overlayText="VENDER SIN PERSEGUIR" />
-              </div>
+            {/* Única instancia de la imagen del Hero: en móvil va debajo del titular,
+                en escritorio ocupa la columna derecha */}
+            <div className="md:col-start-2 md:row-start-1 md:row-span-2">
+              <VideoPlaceholder image={galleryCrehana.url} overlayText="VENDER SIN PERSEGUIR" />
+            </div>
 
-              <ul className="mt-8 space-y-3">
+            <div className="md:col-start-1 md:row-start-2">
+              <ul className="space-y-3">
                 {[
                   "Un método para entrar a cada negociación con plan, no con esperanza",
                   "El framework para que te paguen más sin pelear precio",
@@ -462,11 +465,8 @@ function MasterclassRecordingPage() {
                 </p>
               </div>
             </div>
-
-            <div className="hidden md:block">
-              <VideoPlaceholder image={galleryCrehana.url} overlayText="VENDER SIN PERSEGUIR" />
-            </div>
           </div>
+
 
           <div className="mt-12 border-t border-white/10 pt-8">
             <BrandLogosRow label="Carlos ha entrenado a los equipos comerciales de" />
