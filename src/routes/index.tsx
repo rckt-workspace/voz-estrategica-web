@@ -364,18 +364,19 @@ function Home() {
 
       {/* 6b. FUNDADORA */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
-        <div className="grid items-start gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
-          <Reveal>
-            <div className="overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
+        <div className="grid items-stretch gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
+          <Reveal className="md:h-full">
+            <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
               <img
                 src={tatianaFoto.url}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
-                className="aspect-[3/4] w-full object-cover"
+                className="aspect-[3/4] w-full object-cover object-top md:aspect-auto md:h-full"
                 loading="lazy"
                 decoding="async"
               />
             </div>
           </Reveal>
+
 
           <div className="min-w-0">
             <Reveal delay={80}>
@@ -460,14 +461,15 @@ function Home() {
           </Reveal>
         </div>
 
-        <div className="mt-20 grid gap-10 md:grid-cols-3">
+        <div className="mt-20 grid items-start gap-10 md:grid-cols-3">
           {destacados.map((s, i) => (
             <Reveal key={s.slug} delay={i * 80}>
               <Link
                 to="/speakers/$slug"
                 params={{ slug: s.slug }}
-                className={`group block ${i === 1 ? "md:mt-24" : ""}`}
+                className="group block"
               >
+
                 <div className="relative mb-6 aspect-[3/4] overflow-hidden bg-foreground/5">
                   <img
                     src={s.foto}
