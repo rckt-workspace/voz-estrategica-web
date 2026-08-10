@@ -41,7 +41,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export const Route = createFileRoute("/contratar")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { speaker?: string } => ({
     speaker: typeof s.speaker === "string" ? s.speaker : undefined,
   }),
   head: () => ({

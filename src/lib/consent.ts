@@ -81,9 +81,8 @@ export function normalizePhone(raw: string, defaultCountryCode = "57") {
 }
 
 export async function setEnhancedConversionUserData(phone: string) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !window.gtag) return;
   const hashed = await sha256Hex(normalizePhone(phone));
   if (!hashed) return;
-  ensureGtag();
-  window.gtag!("set", "user_data", { phone_number: hashed });
+  window.gtag("set", "user_data", { phone_number: hashed });
 }
