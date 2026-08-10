@@ -2,8 +2,25 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Users, Mic2, GraduationCap, BookOpen } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { FlowDiagram } from "@/components/FlowDiagram";
+import tatianaFoto from "@/assets/tatiana-suarez-bw.jpg.asset.json";
 
 import { speakers, events, books } from "@/data/content";
+
+const CASOS_FUNDADORA = [
+  {
+    marca: "UIP",
+    año: "2025",
+    linea:
+      "La capacitación en planeación estratégica facilitada con la conferencista Paola Aldaz para United International Pictures (UIP) fue adoptada como base de su plan de negocio del año.",
+  },
+  {
+    marca: "Kimberly-Clark Colombia — KCC",
+    año: "2026",
+    linea:
+      'Facilitamos con la conferencista María José Quiceno una capacitación de comunicación estratégica dirigida a formar a la persona encargada de las capacitaciones internas de la compañía (modelo "formación de formadores").',
+  },
+];
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -345,7 +362,88 @@ function Home() {
         </div>
       </section>
 
+      {/* 6b. FUNDADORA */}
+      <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
+        <div className="grid items-start gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
+          <Reveal>
+            <div className="overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
+              <img
+                src={tatianaFoto.url}
+                alt="Tatiana Suárez, fundadora de Voz Estratégica"
+                className="aspect-[4/5] w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </Reveal>
+
+          <div className="min-w-0">
+            <Reveal delay={80}>
+              <span className="section-badge">Fundadora</span>
+              <h2 className="mt-6 font-display text-5xl uppercase leading-[0.85] md:text-6xl">
+                Tatiana
+                <br />
+                Suárez
+              </h2>
+            </Reveal>
+
+            <Reveal delay={140}>
+              <div className="mt-8 space-y-5 text-muted-foreground md:text-lg">
+                <p>
+                  Tatiana Suárez es la fundadora de Voz Estratégica, agencia de representación de
+                  conferencistas y capacitación corporativa que ha facturado con clientes en varios
+                  países de Latinoamérica, entre ellos México, Panamá, República Dominicana, Ecuador
+                  y Bolivia. Cuenta con 10 años de experiencia en el sector.
+                </p>
+                <p>
+                  Lo que comenzó como una agencia enfocada en eventos y conferencias se ha
+                  transformado, bajo su liderazgo, en un modelo integral de desarrollo de talento
+                  corporativo: desde keynotes inspiracionales hasta programas estructurados de
+                  Academia Corporativa y una Biblioteca de Voz con contenido on-demand para equipos
+                  de trabajo. Su roster reúne a varios conferencistas especializados en distintas
+                  áreas de desarrollo organizacional.
+                </p>
+                <p>
+                  Su enfoque está dirigido a Directores de Recursos Humanos (CHRO) y Directores
+                  Comerciales de empresas medianas y grandes que buscan un socio estratégico —no un
+                  proveedor de eventos— capaz de acompañar el crecimiento de sus equipos con
+                  contenido relevante, conferencistas alineados a los retos reales de cada
+                  organización y programas medibles en el tiempo.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <div className="mt-10">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                  Casos destacados
+                </p>
+                <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                  {CASOS_FUNDADORA.map((c) => (
+                    <div
+                      key={c.marca}
+                      className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+                    >
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-display text-lg uppercase leading-none">
+                          {c.marca}
+                        </span>
+                        <span className="text-sm text-brand">{c.año}</span>
+                      </div>
+                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                        {c.linea}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* 7. CONFERENCISTAS */}
+
       <section className="relative mx-auto max-w-7xl px-6 py-28">
         <Reveal>
           <div className="flex items-center gap-4">
