@@ -290,12 +290,14 @@ function PressRow() {
 
 function VideoPlaceholder({
   image,
+  fallbackImage,
   overlayText,
   note,
   aspect = "aspect-video",
   priority = false,
 }: {
   image: string;
+  fallbackImage?: string;
   overlayText?: string;
   note?: string;
   aspect?: string;
@@ -304,18 +306,24 @@ function VideoPlaceholder({
   return (
     <figure className="relative overflow-hidden rounded-[6px] border border-white/15 bg-black">
       <div
-        className="relative bg-cover bg-center"
-        style={{ backgroundImage: `url("${image}")`, backgroundColor: "#0e0f0c" }}
+        className={`relative ${aspect}`}
+        style={{ backgroundColor: "#0e0f0c" }}
       >
         <img
-          src={image}
+          src={`${image}?v=20260810`}
           alt="Carlos Laguna en escenario"
-          className={`${aspect} w-full object-cover`}
+          className="absolute inset-0 z-0 h-full w-full object-cover"
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : undefined}
           decoding="async"
+          onError={(event) => {
+            const fallback = fallbackImage;
+            if (!fallback || event.currentTarget.dataset.fallbackApplied === "true") return;
+            event.currentTarget.dataset.fallbackApplied = "true";
+            event.currentTarget.src = `${fallback}?v=20260810`;
+          }}
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-t from-black/80 via-black/45 to-black/35">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-gradient-to-t from-black/70 via-black/25 to-black/10">
           <span
             className="flex h-16 w-16 items-center justify-center rounded-full shadow-xl md:h-20 md:w-20"
             style={{ backgroundColor: GREEN }}
@@ -453,6 +461,7 @@ function MasterclassRecordingPage() {
             <div className="md:col-start-2 md:row-start-1 md:row-span-2">
               <VideoPlaceholder
                 image={gallerySpeaker.url}
+                fallbackImage={galleryCrehana.url}
                 overlayText="VENDER SIN PERSEGUIR"
                 priority
               />
