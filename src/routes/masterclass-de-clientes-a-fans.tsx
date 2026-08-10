@@ -451,7 +451,11 @@ function MasterclassRecordingPage() {
             {/* Única instancia de la imagen del Hero: en móvil va debajo del titular,
                 en escritorio ocupa la columna derecha */}
             <div className="md:col-start-2 md:row-start-1 md:row-span-2">
-              <VideoPlaceholder image={galleryCrehana.url} overlayText="VENDER SIN PERSEGUIR" />
+              <VideoPlaceholder
+                image={gallerySpeaker.url}
+                overlayText="VENDER SIN PERSEGUIR"
+                priority
+              />
             </div>
 
             <div className="md:col-start-1 md:row-start-2">
@@ -488,7 +492,7 @@ function MasterclassRecordingPage() {
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
           <VideoPlaceholder
-            image={gallerySpeaker.url}
+            image={galleryCrehana.url}
             overlayText="VENDER SIN PERSEGUIR"
             note="Pendiente: video de ventas de 6–9 min"
           />
