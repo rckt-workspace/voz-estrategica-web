@@ -313,7 +313,7 @@ function VideoPlaceholder({
         <img
           src={`${image}?v=20260810`}
           alt="Carlos Laguna en escenario"
-          className="absolute inset-0 z-0 h-full w-full object-cover"
+          className="absolute inset-0 z-0 h-full w-full object-cover object-top"
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : undefined}
           decoding="async"
