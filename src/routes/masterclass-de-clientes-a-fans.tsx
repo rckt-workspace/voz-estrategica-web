@@ -464,8 +464,10 @@ function MasterclassRecordingPage() {
                 image={carlosPortrait}
                 fallbackImage={galleryCrehana.url}
                 overlayText="VENDER SIN PERSEGUIR"
+                aspect="aspect-[4/5]"
                 priority
               />
+
             </div>
 
             <div className="md:col-start-1 md:row-start-2">
