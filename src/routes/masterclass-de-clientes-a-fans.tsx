@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Check, X, ChevronDown } from "lucide-react";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
-import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
-import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
+import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg";
+import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 
@@ -135,7 +135,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
             name: "Voz Estratégica",
             url: "https://vozestrategica.com",
           },
-          image: gallerySpeaker.url,
+          image: gallerySpeaker,
           offers: {
             "@type": "Offer",
             price: String(PRICE_COP),
@@ -438,7 +438,7 @@ function MasterclassRecordingPage() {
             <div className="md:col-start-2 md:row-start-1 md:row-span-2">
               <VideoPlaceholder
                 image={carlosPortrait}
-                fallbackImage={galleryCrehana.url}
+                fallbackImage={galleryCrehana}
                 aspect="aspect-[4/5]"
                 priority
               />
@@ -479,7 +479,7 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 2 · VIDEO DE VENTAS ══ */}
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
-          <VideoPlaceholder image={galleryCrehana.url} />
+          <VideoPlaceholder image={galleryCrehana} />
 
           <div className="mt-8 flex flex-col items-center">
             <BuyButton />
@@ -576,7 +576,7 @@ function MasterclassRecordingPage() {
       <section className="bg-[#16181a]">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-[45fr_55fr] md:py-24">
           <img
-            src={gallerySpeaker.url}
+            src={gallerySpeaker}
             alt="Carlos Laguna en conferencia frente a auditorio lleno"
             className="aspect-[4/5] w-full rounded-[6px] object-cover shadow-2xl"
             loading="lazy"
