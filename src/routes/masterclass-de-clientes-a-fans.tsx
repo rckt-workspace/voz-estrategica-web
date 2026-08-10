@@ -703,14 +703,8 @@ function MasterclassRecordingPage() {
         </div>
       </section>
 
-      {/* ══ BLOQUE 8 · CTA ══ */}
-      <section className="bg-[#0e0f0c]">
-        <div className="mx-auto max-w-4xl px-5 py-16 md:py-24">
-          <div className="flex justify-center">
-            <BuyButton variant="secondary" />
-          </div>
-        </div>
-      </section>
+
+
 
 
       {/* ══ BLOQUE 9 · PRUEBA SOCIAL ══ */}
