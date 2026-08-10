@@ -293,36 +293,46 @@ function VideoPlaceholder({
   overlayText,
   note,
   aspect = "aspect-video",
+  priority = false,
 }: {
   image: string;
   overlayText?: string;
   note?: string;
   aspect?: string;
+  priority?: boolean;
 }) {
   return (
     <figure className="relative overflow-hidden rounded-[6px] border border-white/15 bg-black">
-      <img
-        src={image}
-        alt="Carlos Laguna en escenario"
-        className={`${aspect} w-full object-cover opacity-70`}
-        loading="lazy"
-      />
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/40">
-        <span
-          className="flex h-16 w-16 items-center justify-center rounded-full shadow-xl md:h-20 md:w-20"
-          style={{ backgroundColor: GREEN }}
-        >
-          <Play className="ml-1 h-7 w-7 md:h-9 md:w-9" style={{ color: BLACK }} fill={BLACK} />
-        </span>
-        {overlayText && (
-          <p
-            className="px-4 text-center text-2xl font-extrabold uppercase tracking-[0.12em] text-white md:text-4xl"
-            style={serif}
+      <div
+        className="relative bg-cover bg-center"
+        style={{ backgroundImage: `url("${image}")`, backgroundColor: "#0e0f0c" }}
+      >
+        <img
+          src={image}
+          alt="Carlos Laguna en escenario"
+          className={`${aspect} w-full object-cover`}
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : undefined}
+          decoding="async"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-t from-black/80 via-black/45 to-black/35">
+          <span
+            className="flex h-16 w-16 items-center justify-center rounded-full shadow-xl md:h-20 md:w-20"
+            style={{ backgroundColor: GREEN }}
           >
-            {overlayText}
-          </p>
-        )}
+            <Play className="ml-1 h-7 w-7 md:h-9 md:w-9" style={{ color: BLACK }} fill={BLACK} />
+          </span>
+          {overlayText && (
+            <p
+              className="px-4 text-center text-2xl font-extrabold uppercase tracking-[0.12em] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] md:text-4xl"
+              style={serif}
+            >
+              {overlayText}
+            </p>
+          )}
+        </div>
       </div>
+
       {note && (
         <figcaption className="border-t border-white/10 bg-[#0e0f0c] px-4 py-2 text-center text-[11px] uppercase tracking-[0.15em] text-white/40">
           {note}
