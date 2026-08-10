@@ -27,9 +27,9 @@ import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
-import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
+import diegoHeroUrl from "@/assets/diego-mx/diego-hero-ai.webp";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
-import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
+import diegoBookingUrl from "@/assets/diego-mx/diego-booking.jpg";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 // TODO: reemplazar por el número real de México (formato internacional sin signos)
@@ -188,7 +188,7 @@ export const Route = createFileRoute("/mx/diego-camacho")({
     ],
     links: [
       { rel: "canonical", href: CANONICAL },
-      { rel: "preload", as: "image", href: diegoHeroAsset.url, fetchPriority: "high" },
+      { rel: "preload", as: "image", href: diegoHeroUrl, fetchPriority: "high" },
     ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
@@ -419,7 +419,7 @@ function Page() {
             <Reveal delay={0.2}>
               <div className="relative flex items-center justify-center">
                 <img
-                  src={diegoHeroAsset.url}
+                  src={diegoHeroUrl}
                   alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
                   width={1080}
                   height={1080}
@@ -557,7 +557,7 @@ function Page() {
               <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-center">
                 <div className="flex items-center justify-center">
                   <img
-                    src={diegoBookingAsset.url}
+                    src={diegoBookingUrl}
                     alt="Diego Camacho en escenario presentando el caso real de Booking.com sobre implementación de IA de Google y aumento del 15% en valor promedio de transacción"
                     loading="lazy"
                     width={1080}

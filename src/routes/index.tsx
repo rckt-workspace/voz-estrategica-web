@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Users, Mic2, GraduationCap, BookOpen } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { FlowDiagram } from "@/components/FlowDiagram";
-import tatianaFoto from "@/assets/tatiana-suarez-bw.jpg.asset.json";
+import tatianaFoto from "@/assets/tatiana-suarez-bw.jpg";
 
 import { speakers, events, books } from "@/data/content";
 
@@ -368,7 +368,7 @@ function Home() {
           <Reveal className="md:h-full">
             <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
               <img
-                src={tatianaFoto.url}
+                src={tatianaFoto}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
                 className="aspect-[3/4] w-full object-cover object-top md:aspect-auto md:h-full"
                 loading="lazy"
