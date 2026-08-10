@@ -12,7 +12,7 @@ const PRICE_COP = 22500;
 const PRICE_LABEL = "$22.500 COP";
 const PRODUCT_NAME = "Grabación Masterclass: De clientes a fans";
 const PRIMARY_LABEL = "Quiero acceso ahora · $22.500 COP";
-const SECONDARY_LABEL = "Quiero la sesión completa · $22.500 COP";
+const SECONDARY_LABEL = "Quiero acceso ahora · $22.500 COP";
 
 const GREEN = "#40ed51";
 const GREEN_DIM = "rgba(64, 237, 81, 0.12)";
