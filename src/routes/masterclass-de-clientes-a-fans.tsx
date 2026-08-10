@@ -324,22 +324,8 @@ function VideoPlaceholder({
             event.currentTarget.src = `${fallback}?v=20260810`;
           }}
         />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-gradient-to-t from-black/70 via-black/25 to-black/10">
-          <span
-            className="flex h-16 w-16 items-center justify-center rounded-full shadow-xl md:h-20 md:w-20"
-            style={{ backgroundColor: GREEN }}
-          >
-            <Play className="ml-1 h-7 w-7 md:h-9 md:w-9" style={{ color: BLACK }} fill={BLACK} />
-          </span>
-          {overlayText && (
-            <p
-              className="px-4 text-center text-2xl font-extrabold uppercase tracking-[0.12em] text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] md:text-4xl"
-              style={serif}
-            >
-              {overlayText}
-            </p>
-          )}
-        </div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
       </div>
 
       {note && (
