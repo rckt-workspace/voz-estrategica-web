@@ -13,19 +13,15 @@ export function validateGTMId(id: string): boolean {
 }
 
 /**
- * Returns the script to load GTM with Consent Mode v2.
- * Must be inserted AFTER the inline consent bootstrap script but BEFORE closing head.
- * Includes the noscript fallback for browsers without JS.
+ * Returns the GTM loader code (raw JS, NO <script> wrapper — TanStack head()
+ * wraps `children` as the script body) plus the noscript HTML fallback.
  */
 export function getGTMScripts(): { head: string; body: string } {
   if (!isGTMEnabled()) {
     return { head: "", body: "" };
   }
 
-  // GTM script for head
   const headScript = `
-<!-- Google Tag Manager -->
-<script>
 (function(w,d,s,l,i){
   w[l]=w[l]||[];
   w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
@@ -35,8 +31,6 @@ export function getGTMScripts(): { head: string; body: string } {
   j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
   f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','${GTM_ID}');
-</script>
-<!-- End Google Tag Manager -->
 `.trim();
 
   // GTM noscript fallback for body (right after opening <body>)
@@ -53,19 +47,17 @@ export function getGTMScripts(): { head: string; body: string } {
 }
 
 /**
- * Returns the inline script that initializes Consent Mode v2 and dataLayer.
- * Must run BEFORE GTM loads so that consent is set before any tags fire.
- * This is inserted directly in HTML, not as a React component.
+ * Consent Mode v2 + dataLayer bootstrap as raw JS (no <script> wrapper).
+ * Must run BEFORE GTM/GA load so consent defaults apply to every tag.
  */
 export function getConsentBootstrapScript(): string {
   return `
-<script>
-// Initialize dataLayer and gtag before GTM loads
 window.dataLayer = window.dataLayer || [];
-function gtag() { window.dataLayer.push(arguments); }
-gtag.js = new Date();
+function gtag(){ window.dataLayer.push(arguments); }
+window.gtag = window.gtag || gtag;
 
-// Set consent to denied by default (GDPR compliant)
+gtag('js', new Date());
+
 gtag('consent', 'default', {
   'ad_storage': 'denied',
   'analytics_storage': 'denied',
@@ -74,7 +66,6 @@ gtag('consent', 'default', {
   'wait_for_update': 500
 });
 
-// Check localStorage for stored consent decision
 try {
   var stored = window.localStorage.getItem('ve_consent_v2');
   if (stored === 'granted' || stored === 'denied') {
@@ -85,9 +76,7 @@ try {
       'ad_personalization': stored
     });
   }
-} catch (e) {
-  // localStorage may be blocked, that's ok
-}
-</script>
+} catch (e) {}
 `.trim();
 }
+
