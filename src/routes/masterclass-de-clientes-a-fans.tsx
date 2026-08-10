@@ -470,8 +470,9 @@ function MasterclassRecordingPage() {
               <div className="mt-8">
                 <BuyButton />
                 <p className="mt-3 text-sm text-white/60">
-                  Acceso inmediato y permanente · Mira un fragmento gratis antes de comprar
+                  Acceso inmediato y permanente
                 </p>
+
               </div>
             </div>
           </div>
@@ -486,10 +487,8 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 2 · VIDEO DE VENTAS ══ */}
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
-          <VideoPlaceholder
-            image={galleryCrehana.url}
-            note="Pendiente: video de ventas de 6–9 min"
-          />
+          <VideoPlaceholder image={galleryCrehana.url} />
+
           <div className="mt-8 flex flex-col items-center">
             <BuyButton />
           </div>
@@ -712,35 +711,15 @@ function MasterclassRecordingPage() {
         </div>
       </section>
 
-      {/* ══ BLOQUE 8 · MÍRALO ANTES DE DECIDIR ══ */}
+      {/* ══ BLOQUE 8 · CTA ══ */}
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-4xl px-5 py-16 md:py-24">
-          <div
-            className="rounded-[8px] border-2 bg-[#1c1f1b] p-6 md:p-10"
-            style={{ borderColor: GREEN }}
-          >
-            <h2 className="text-3xl font-extrabold text-white md:text-5xl">
-              Míralo antes de decidir.
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-white/80 md:text-lg">
-              No tienes que creerle a esta página. Mira un fragmento real de la sesión, comprueba
-              cómo explica Carlos y decide con criterio propio.
-            </p>
-            <div className="mt-8">
-              <VideoPlaceholder
-                image={galleryExma.url}
-                note="Pendiente de fragmento de 10–15 min"
-              />
-            </div>
-            <p className="mt-4 text-center text-sm text-white/60">
-              Sin correo, sin formularios. Dale play.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <BuyButton variant="secondary" />
-            </div>
+          <div className="flex justify-center">
+            <BuyButton variant="secondary" />
           </div>
         </div>
       </section>
+
 
       {/* ══ BLOQUE 9 · PRUEBA SOCIAL ══ */}
       <section className="bg-[#16181a]">
