@@ -370,7 +370,7 @@ function Home() {
               <img
                 src={tatianaFoto.url}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
-                className="aspect-[4/5] w-full object-cover"
+                className="aspect-[3/4] w-full object-cover"
                 loading="lazy"
                 decoding="async"
               />
