@@ -5,7 +5,6 @@ import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
 import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
 import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
 import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
-import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 
