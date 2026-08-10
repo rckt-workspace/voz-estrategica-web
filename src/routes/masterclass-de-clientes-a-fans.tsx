@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Check, X, ChevronDown, Play } from "lucide-react";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
+import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
 import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
 import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
 import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
@@ -460,7 +461,7 @@ function MasterclassRecordingPage() {
                 en escritorio ocupa la columna derecha */}
             <div className="md:col-start-2 md:row-start-1 md:row-span-2">
               <VideoPlaceholder
-                image={gallerySpeaker.url}
+                image={carlosPortrait}
                 fallbackImage={galleryCrehana.url}
                 overlayText="VENDER SIN PERSEGUIR"
                 priority
