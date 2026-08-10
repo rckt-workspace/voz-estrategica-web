@@ -461,14 +461,15 @@ function Home() {
           </Reveal>
         </div>
 
-        <div className="mt-20 grid gap-10 md:grid-cols-3">
+        <div className="mt-20 grid items-start gap-10 md:grid-cols-3">
           {destacados.map((s, i) => (
             <Reveal key={s.slug} delay={i * 80}>
               <Link
                 to="/speakers/$slug"
                 params={{ slug: s.slug }}
-                className={`group block ${i === 1 ? "md:mt-24" : ""}`}
+                className="group block"
               >
+
                 <div className="relative mb-6 aspect-[3/4] overflow-hidden bg-foreground/5">
                   <img
                     src={s.foto}
