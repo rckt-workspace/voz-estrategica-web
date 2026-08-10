@@ -48,9 +48,10 @@ const FAQS = [
     a: "El método es de conversación comercial, no de producto. Funciona en servicios, B2B, retail y ticket alto.",
   },
   {
-    q: "¿Puedo ver algo antes de comprar?",
-    a: "Sí. Hay un fragmento disponible gratis, sin registrarte.",
+    q: "¿Por cuánto tiempo tengo acceso?",
+    a: "El acceso es inmediato y permanente: puedes verla cuantas veces quieras.",
   },
+
   {
     q: "¿Cómo puedo pagar?",
     a: "Tarjeta de crédito o débito, PSE, Nequi y transferencia.",
@@ -292,13 +293,11 @@ function PressRow() {
 function VideoPlaceholder({
   image,
   fallbackImage,
-  note,
   aspect = "aspect-video",
   priority = false,
 }: {
   image: string;
   fallbackImage?: string;
-  note?: string;
   aspect?: string;
   priority?: boolean;
 }) {
@@ -323,17 +322,11 @@ function VideoPlaceholder({
           }}
         />
         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-
       </div>
-
-      {note && (
-        <figcaption className="border-t border-white/10 bg-[#0e0f0c] px-4 py-2 text-center text-[11px] uppercase tracking-[0.15em] text-white/40">
-          {note}
-        </figcaption>
-      )}
     </figure>
   );
 }
+
 
 /* ───────────────────────── Page ───────────────────────── */
 
