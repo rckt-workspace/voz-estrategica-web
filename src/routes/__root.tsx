@@ -207,7 +207,8 @@ function Shell() {
         <Outlet />
       </main>
       {!hideChrome && <Footer />}
-      {!hidePromoBars && <BottomBar />}
+      {/* Anuncio masterclass Carlos Laguna (desactivado temporalmente) */}
+      {/* {!hidePromoBars && <BottomBar />} */}
       <Toaster />
       <CookieConsent />
       {/* WhatsApp floating button — hidden on masterclass landing */}
