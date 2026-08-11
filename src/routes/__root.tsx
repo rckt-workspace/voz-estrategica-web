@@ -195,7 +195,8 @@ function Shell() {
 
   return (
     <>
-      {!hidePromoBars && <TopBar />}
+      {/* Anuncio masterclass Carlos Laguna (desactivado temporalmente) */}
+      {/* {!hidePromoBars && <TopBar />} */}
       {!hideChrome && <Header />}
       <main
         style={{
