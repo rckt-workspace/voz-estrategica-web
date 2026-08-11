@@ -371,13 +371,13 @@ function Home() {
 
       {/* 6b. FUNDADORA */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
-        <div className="grid items-end gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
-          <Reveal>
-            <div className="overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
+        <div className="grid items-stretch gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
+          <Reveal className="md:h-full">
+            <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
               <img
                 src={tatianaFoto}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
-                className="aspect-[3/4] w-full object-cover object-top"
+                className="aspect-[3/4] w-full object-cover object-top md:aspect-auto md:h-full"
                 loading="lazy"
                 decoding="async"
               />
@@ -398,17 +398,28 @@ function Home() {
               <div className="mt-8 space-y-5 text-muted-foreground md:text-lg">
                 <p>
                   Tatiana Suárez es la fundadora de Voz Estratégica, agencia de representación de
-                  conferencistas y capacitación corporativa con 10 años de experiencia y clientes en
-                  México, Panamá, República Dominicana, Ecuador y Bolivia.
+                  conferencistas y capacitación corporativa que ha facturado con clientes en varios
+                  países de Latinoamérica, entre ellos México, Panamá, República Dominicana, Ecuador
+                  y Bolivia. Cuenta con 10 años de experiencia en el sector.
                 </p>
                 <p>
-                  Bajo su liderazgo, la agencia se transformó en un modelo integral de desarrollo de
-                  talento: keynotes, programas de Academia Corporativa y una Biblioteca de Voz con
-                  contenido on-demand. Su enfoque: ser el socio estratégico de Directores de RRHH y
-                  Comerciales, no un simple proveedor de eventos.
+                  Lo que comenzó como una agencia enfocada en eventos y conferencias se ha
+                  transformado, bajo su liderazgo, en un modelo integral de desarrollo de talento
+                  corporativo: desde keynotes inspiracionales hasta programas estructurados de
+                  Academia Corporativa y una Biblioteca de Voz con contenido on-demand para equipos
+                  de trabajo. Su roster reúne a varios conferencistas especializados en distintas
+                  áreas de desarrollo organizacional.
+                </p>
+                <p>
+                  Su enfoque está dirigido a Directores de Recursos Humanos (CHRO) y Directores
+                  Comerciales de empresas medianas y grandes que buscan un socio estratégico —no un
+                  proveedor de eventos— capaz de acompañar el crecimiento de sus equipos con
+                  contenido relevante, conferencistas alineados a los retos reales de cada
+                  organización y programas medibles en el tiempo.
                 </p>
               </div>
             </Reveal>
+
           </div>
         </div>
 
