@@ -21,6 +21,13 @@ const CASOS_FUNDADORA = [
   },
 ];
 
+const DATOS_FUNDADORA = [
+  { titulo: "10 años", linea: "De experiencia en el sector" },
+  { titulo: "5 países", linea: "México, Panamá, República Dominicana, Ecuador y Bolivia" },
+  { titulo: "Modelo integral", linea: "Keynotes, Academia Corporativa y Biblioteca de Voz" },
+];
+
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
