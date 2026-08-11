@@ -372,8 +372,8 @@ function Home() {
       {/* 6b. FUNDADORA */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
         <div className="grid items-stretch gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
-          <Reveal className="md:h-full">
-            <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
+          <div className="relative md:h-full">
+            <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5 md:absolute md:inset-0">
               <img
                 src={tatianaFoto}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
@@ -382,7 +382,8 @@ function Home() {
                 decoding="async"
               />
             </div>
-          </Reveal>
+          </div>
+
 
           <div className="min-w-0">
             <Reveal delay={80}>
