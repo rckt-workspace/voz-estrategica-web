@@ -406,6 +406,22 @@ function Home() {
               </div>
             </Reveal>
 
+            <Reveal delay={170}>
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {DATOS_FUNDADORA.map((d) => (
+                  <div
+                    key={d.titulo}
+                    className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+                  >
+                    <span className="font-display text-lg uppercase leading-none">{d.titulo}</span>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.linea}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+
+
 
             <Reveal delay={200}>
               <div className="mt-10">
