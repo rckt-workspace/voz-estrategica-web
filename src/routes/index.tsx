@@ -475,7 +475,7 @@ function Home() {
       </section>
 
       {/* 6c. TU PRÓXIMA VOZ */}
-      <section className="bg-secondary/60 py-24 md:py-28">
+      <section className="bg-secondary/60 py-12 md:py-14">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
             <h2 className="font-display text-4xl uppercase leading-[0.9] md:text-6xl">
