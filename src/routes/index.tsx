@@ -526,7 +526,7 @@ function Home() {
 
       {/* 7. CONFERENCISTAS */}
 
-      <section className="relative mx-auto max-w-7xl px-6 py-28">
+      <section className="relative mx-auto max-w-7xl px-6 pt-12 pb-28">
         <Reveal>
           <div className="flex items-center gap-4">
             <span className="section-badge">01 · Conferencistas</span>
