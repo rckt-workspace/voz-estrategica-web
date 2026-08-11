@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { readStoredConsent, setConsent } from "@/lib/consent";
 
 export function CookieConsent() {
@@ -23,7 +24,14 @@ export function CookieConsent() {
       style={{ bottom: "calc(1.5rem + var(--bottombar-h, 0px))" }}
     >
       <p className="text-sm text-muted-foreground">
-        Usamos cookies para mejorar tu experiencia y medir nuestras campañas.
+        Usamos cookies para mejorar tu experiencia y medir nuestras campañas. Conoce más en nuestro{" "}
+        <Link
+          to="/aviso-de-privacidad"
+          className="underline underline-offset-4 hover:text-foreground"
+        >
+          Aviso de Privacidad
+        </Link>
+        .
       </p>
       <div className="mt-4 flex gap-3">
         <button

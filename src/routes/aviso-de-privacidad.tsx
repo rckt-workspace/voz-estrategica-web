@@ -67,7 +67,7 @@ function AvisoPrivacidad() {
       </p>
 
       <p className="mt-8 text-muted-foreground">
-        Voz Estratégica (“nosotros”) respeta la privacidad de las personas que visitan nuestro sitio
+        Voz Estratégica respeta la privacidad de las personas que visitan nuestro sitio
         web, se registran a nuestros contenidos, solicitan información sobre nuestros servicios o
         adquieren productos a través de él. Este Aviso de Privacidad describe qué datos personales
         recolectamos, para qué los usamos, con quién los compartimos y cómo puedes ejercer tus
