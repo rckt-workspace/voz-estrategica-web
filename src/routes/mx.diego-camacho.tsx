@@ -422,12 +422,13 @@ function Page() {
                   <img
                     src={diegoHeroUrl}
                     alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
-                    width={1026}
-                    height={1026}
+                    width={1804}
+                    height={1804}
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full scale-[1.04] object-cover"
+
                   />
                 </div>
               </div>
