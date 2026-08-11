@@ -475,7 +475,7 @@ function Home() {
       </section>
 
       {/* 6c. TU PRÓXIMA VOZ */}
-      <section className="bg-secondary/60 py-24 md:py-28">
+      <section className="bg-secondary/60 py-12 md:py-14">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
             <h2 className="font-display text-4xl uppercase leading-[0.9] md:text-6xl">
@@ -508,10 +508,10 @@ function Home() {
           </Reveal>
 
           <Reveal delay={190}>
-            <p className="mt-16 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+            <p className="mt-9 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
               Marcas que han confiado en nosotros
             </p>
-            <ul className="mx-auto mt-8 grid max-w-3xl grid-cols-2 items-center justify-center gap-x-8 gap-y-8 sm:grid-cols-3">
+            <ul className="mx-auto mt-5 grid max-w-3xl grid-cols-2 items-center justify-center gap-x-8 gap-y-5 sm:grid-cols-3">
               {MARCAS_CONFIANZA.map((m) => (
                 <li key={m} className="flex items-center justify-center">
                   <span className="font-display text-lg uppercase tracking-tight text-foreground/45 grayscale transition hover:text-foreground/75 md:text-xl">
