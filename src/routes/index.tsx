@@ -462,6 +462,56 @@ function Home() {
 
       </section>
 
+      {/* 6c. TU PRÓXIMA VOZ */}
+      <section className="bg-secondary/60 py-24 md:py-28">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <Reveal>
+            <h2 className="font-display text-4xl uppercase leading-[0.9] md:text-6xl">
+              Tu próxima voz está aquí.
+            </h2>
+          </Reveal>
+          <Reveal delay={90}>
+            <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
+              Explora nuestras voces y descubre cuál puede transformar la cultura, el liderazgo o las
+              ventas de tu organización. Si tienes preguntas, contáctanos.
+            </p>
+          </Reveal>
+          <Reveal delay={140}>
+            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                to="/speakers"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-semibold text-background transition hover:opacity-90 sm:w-auto"
+              >
+                Ver conferencistas <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href={WHATSAPP_HOME}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-foreground px-7 py-3.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background sm:w-auto"
+              >
+                Contáctanos <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={190}>
+            <p className="mt-16 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+              Marcas que han confiado en nosotros
+            </p>
+            <ul className="mx-auto mt-8 grid max-w-3xl grid-cols-2 items-center justify-center gap-x-8 gap-y-8 sm:grid-cols-3">
+              {MARCAS_CONFIANZA.map((m) => (
+                <li key={m} className="flex items-center justify-center">
+                  <span className="font-display text-lg uppercase tracking-tight text-foreground/45 grayscale transition hover:text-foreground/75 md:text-xl">
+                    {m}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
       {/* 7. CONFERENCISTAS */}
 
       <section className="relative mx-auto max-w-7xl px-6 py-28">
