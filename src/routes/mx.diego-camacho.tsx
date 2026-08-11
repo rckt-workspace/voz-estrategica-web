@@ -427,7 +427,7 @@ function Page() {
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
-                    className="h-full w-full scale-[1.14] object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               </div>
