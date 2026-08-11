@@ -475,7 +475,7 @@ function Home() {
       </section>
 
       {/* 6c. TU PRÓXIMA VOZ */}
-      <section className="bg-secondary/60 py-12 md:py-14">
+      <section className="bg-secondary/60 py-8 md:py-10">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
             <h2 className="font-display text-4xl uppercase leading-[0.9] md:text-6xl">
@@ -483,13 +483,13 @@ function Home() {
             </h2>
           </Reveal>
           <Reveal delay={90}>
-            <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
+            <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
               Explora nuestras voces y descubre cuál puede transformar la cultura, el liderazgo o las
               ventas de tu organización. Si tienes preguntas, contáctanos.
             </p>
           </Reveal>
           <Reveal delay={140}>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 to="/speakers"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-semibold text-background transition hover:opacity-90 sm:w-auto"
@@ -508,7 +508,7 @@ function Home() {
           </Reveal>
 
           <Reveal delay={190}>
-            <p className="mt-9 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+            <p className="mt-7 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
               Marcas que han confiado en nosotros
             </p>
             <ul className="mx-auto mt-5 grid max-w-3xl grid-cols-2 items-center justify-center gap-x-8 gap-y-5 sm:grid-cols-3">
