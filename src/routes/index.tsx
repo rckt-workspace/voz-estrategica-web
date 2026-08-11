@@ -21,6 +21,13 @@ const CASOS_FUNDADORA = [
   },
 ];
 
+const DATOS_FUNDADORA = [
+  { titulo: "10 años", linea: "De experiencia en el sector" },
+  { titulo: "5 países", linea: "México, Panamá, República Dominicana, Ecuador y Bolivia" },
+  { titulo: "Modelo integral", linea: "Keynotes, Academia Corporativa y Biblioteca de Voz" },
+];
+
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -364,18 +371,19 @@ function Home() {
 
       {/* 6b. FUNDADORA */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
-        <div className="grid items-stretch gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
-          <Reveal className="md:h-full">
-            <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
+        <div className="grid items-start gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
+          <Reveal>
+            <div className="overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
               <img
                 src={tatianaFoto}
                 alt="Tatiana Suárez, fundadora de Voz Estratégica"
-                className="aspect-[3/4] w-full object-cover object-top md:aspect-auto md:h-full"
+                className="aspect-[3/4] w-full object-cover object-top"
                 loading="lazy"
                 decoding="async"
               />
             </div>
           </Reveal>
+
 
 
           <div className="min-w-0">
@@ -404,6 +412,22 @@ function Home() {
                 </p>
               </div>
             </Reveal>
+
+            <Reveal delay={170}>
+              <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                {DATOS_FUNDADORA.map((d) => (
+                  <div
+                    key={d.titulo}
+                    className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+                  >
+                    <span className="font-display text-lg uppercase leading-none">{d.titulo}</span>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.linea}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+
 
 
             <Reveal delay={200}>
