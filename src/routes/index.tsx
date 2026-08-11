@@ -371,7 +371,7 @@ function Home() {
 
       {/* 6b. FUNDADORA */}
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
-        <div className="grid items-start gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
+        <div className="grid items-end gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
           <Reveal>
             <div className="overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5">
               <img
@@ -384,8 +384,6 @@ function Home() {
             </div>
           </Reveal>
 
-
-
           <div className="min-w-0">
             <Reveal delay={80}>
               <span className="section-badge text-sm tracking-[0.28em] md:text-base">
@@ -395,7 +393,6 @@ function Home() {
                 Tatiana Suárez
               </h2>
             </Reveal>
-
 
             <Reveal delay={140}>
               <div className="mt-8 space-y-5 text-muted-foreground md:text-lg">
@@ -412,51 +409,45 @@ function Home() {
                 </p>
               </div>
             </Reveal>
-
-            <Reveal delay={170}>
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                {DATOS_FUNDADORA.map((d) => (
-                  <div
-                    key={d.titulo}
-                    className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
-                  >
-                    <span className="font-display text-lg uppercase leading-none">{d.titulo}</span>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.linea}</p>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-
-
-
-
-            <Reveal delay={200}>
-              <div className="mt-10">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-                  Casos destacados
-                </p>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  {CASOS_FUNDADORA.map((c) => (
-                    <div
-                      key={c.marca}
-                      className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
-                    >
-                      <div className="flex items-baseline gap-2">
-                        <span className="font-display text-lg uppercase leading-none">
-                          {c.marca}
-                        </span>
-                        <span className="text-sm text-brand">{c.año}</span>
-                      </div>
-                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                        {c.linea}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
           </div>
         </div>
+
+        <Reveal delay={170}>
+          <div className="mt-12 grid gap-4 sm:grid-cols-3 md:mt-16">
+            {DATOS_FUNDADORA.map((d) => (
+              <div
+                key={d.titulo}
+                className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+              >
+                <span className="font-display text-lg uppercase leading-none">{d.titulo}</span>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.linea}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <div className="mt-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              Casos destacados
+            </p>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {CASOS_FUNDADORA.map((c) => (
+                <div
+                  key={c.marca}
+                  className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-lg uppercase leading-none">{c.marca}</span>
+                    <span className="text-sm text-brand">{c.año}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.linea}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
       </section>
 
       {/* 7. CONFERENCISTAS */}
