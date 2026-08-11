@@ -418,17 +418,20 @@ function Page() {
             {/* Slot visual: foto real de Diego en escenario (IA) */}
             <Reveal delay={0.2}>
               <div className="relative flex items-center justify-center">
-                <img
-                  src={diegoHeroUrl}
-                  alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
-                  width={1080}
-                  height={1080}
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="block h-auto w-full max-w-[520px] object-contain"
-                />
+                <div className="relative aspect-square w-full max-w-[520px] overflow-hidden rounded-full">
+                  <img
+                    src={diegoHeroUrl}
+                    alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
+                    width={1026}
+                    height={1026}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="h-full w-full scale-[1.06] object-cover"
+                  />
+                </div>
               </div>
+
             </Reveal>
           </div>
         </div>
