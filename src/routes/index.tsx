@@ -382,7 +382,7 @@ function Home() {
       </section>
 
       {/* 6b. FUNDADORA */}
-      <section className="mx-auto max-w-7xl px-6 py-24 md:py-28">
+      <section className="mx-auto max-w-7xl px-6 pt-24 pb-10 md:pt-28 md:pb-12">
         <div className="grid items-stretch gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
           <div className="relative md:h-full">
             <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5 md:absolute md:inset-0">
@@ -526,7 +526,7 @@ function Home() {
 
       {/* 7. CONFERENCISTAS */}
 
-      <section className="relative mx-auto max-w-7xl px-6 py-28">
+      <section className="relative mx-auto max-w-7xl px-6 pt-12 pb-28">
         <Reveal>
           <div className="flex items-center gap-4">
             <span className="section-badge">01 · Conferencistas</span>
