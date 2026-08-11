@@ -27,6 +27,18 @@ const DATOS_FUNDADORA = [
   { titulo: "Modelo integral", linea: "Keynotes, Academia Corporativa y Biblioteca de Voz" },
 ];
 
+const WHATSAPP_HOME =
+  "https://wa.me/573106598108?text=%C2%A1Hola!%20Quiero%20una%20propuesta%20de%20aprendizaje%20para%20mi%20equipo%20%28conferencia%2C%20taller%20o%20programa%29.";
+
+const MARCAS_CONFIANZA: string[] = [
+  "Mercedes-Benz",
+  "Nespresso",
+  "Bancolombia",
+  "Kimberly-Clark",
+  "SC Johnson",
+  "The North Face",
+];
+
 
 
 export const Route = createFileRoute("/")({
