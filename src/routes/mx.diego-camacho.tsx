@@ -27,6 +27,7 @@ import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
+import { notifyDiegoLead } from "@/lib/leads-email.functions";
 import diegoHeroUrl from "@/assets/diego-mx/diego-hero-ai.webp";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingUrl from "@/assets/diego-mx/diego-booking.jpg";
@@ -248,8 +249,26 @@ function Page() {
       throw new Error("No pudimos guardar tus datos. Inténtalo de nuevo.");
     }
 
-    // 2. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
+    // 2. Notificación por correo (no bloquea la apertura de WhatsApp)
+    void notifyDiegoLead({
+      data: {
+        nombre: data.nombre,
+        empresa: data.empresa,
+        cargo: data.cargo,
+        tipo_evento: data.tipo_evento,
+        presupuesto: data.presupuesto,
+        asistentes: data.asistentes,
+        ciudad_fecha: data.ciudad_fecha,
+        whatsapp: data.whatsapp,
+        gclid: campaign.gclid || undefined,
+        utm_source: campaign.utm_source || undefined,
+        utm_campaign: campaign.utm_campaign || undefined,
+      },
+    }).catch((e: unknown) => console.error("[leads-email] no se pudo notificar", e));
+
+    // 3. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
     await setEnhancedConversionUserData(data.whatsapp);
+
 
     // 3. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
