@@ -248,8 +248,26 @@ function Page() {
       throw new Error("No pudimos guardar tus datos. Inténtalo de nuevo.");
     }
 
-    // 2. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
+    // 2. Notificación por correo (no bloquea la apertura de WhatsApp)
+    void notifyDiegoLead({
+      data: {
+        nombre: data.nombre,
+        empresa: data.empresa,
+        cargo: data.cargo,
+        tipo_evento: data.tipo_evento,
+        presupuesto: data.presupuesto,
+        asistentes: data.asistentes,
+        ciudad_fecha: data.ciudad_fecha,
+        whatsapp: data.whatsapp,
+        gclid: campaign.gclid || undefined,
+        utm_source: campaign.utm_source || undefined,
+        utm_campaign: campaign.utm_campaign || undefined,
+      },
+    }).catch((e) => console.error("[leads-email] no se pudo notificar", e));
+
+    // 3. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
     await setEnhancedConversionUserData(data.whatsapp);
+
 
     // 3. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
