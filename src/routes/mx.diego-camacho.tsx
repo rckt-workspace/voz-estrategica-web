@@ -27,6 +27,7 @@ import { trackEvent } from "@/lib/meta-pixel";
 import { trackGA4Event } from "@/lib/ga4";
 import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
+import { notifyDiegoLead } from "@/lib/leads-email.functions";
 import diegoHeroUrl from "@/assets/diego-mx/diego-hero-ai.webp";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
 import diegoBookingUrl from "@/assets/diego-mx/diego-booking.jpg";
