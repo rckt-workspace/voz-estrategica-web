@@ -46,10 +46,7 @@ const FAQS = [
     q: "¿Sirve para mi industria?",
     a: "El método es de conversación comercial, no de producto. Funciona en servicios, B2B, retail y ticket alto.",
   },
-  {
-    q: "¿Por cuánto tiempo tengo acceso?",
-    a: "El acceso es inmediato y permanente: puedes verla cuantas veces quieras.",
-  },
+
 
   {
     q: "¿Cómo puedo pagar?",
