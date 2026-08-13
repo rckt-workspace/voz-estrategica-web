@@ -72,6 +72,7 @@ export const Route = createFileRoute("/contratar")({
 
 function ContratarPage() {
   const { speaker: prefSpeaker } = useSearch({ from: "/contratar" });
+  const notifyEmail = useServerFn(notifyBookingRequest);
 
   const {
     register,
@@ -111,6 +112,25 @@ function ContratarPage() {
       toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
       return;
     }
+
+    // El correo va después del guardado y nunca bloquea la confirmación al usuario.
+    void notifyEmail({
+      data: {
+        organizacion: values.organizacion,
+        contacto: values.contacto,
+        cargo: values.cargo || undefined,
+        email: values.email,
+        telefono: values.telefono || undefined,
+        interes: values.interes,
+        territorio: values.territorio,
+        audiencia: values.audiencia || undefined,
+        fecha_evento: values.fecha_evento || undefined,
+        presupuesto: values.presupuesto || undefined,
+        origen: values.origen || undefined,
+        mensaje: values.mensaje,
+      },
+    }).catch(() => {});
+
     trackEvent("Lead", {
       content_name: "Solicitud de contratación",
       speaker: spk?.nombre ?? null,
