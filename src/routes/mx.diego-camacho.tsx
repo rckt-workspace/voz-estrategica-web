@@ -273,8 +273,6 @@ function Page() {
       console.error("[enhanced-conversions] fallo no bloqueante", e);
     }
 
-
-
     // 3. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
     trackGA4Event("generate_lead", {
@@ -452,11 +450,9 @@ function Page() {
                     fetchPriority="high"
                     decoding="async"
                     className="h-full w-full scale-[1.04] object-cover"
-
                   />
                 </div>
               </div>
-
             </Reveal>
           </div>
         </div>
