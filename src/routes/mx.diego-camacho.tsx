@@ -267,7 +267,12 @@ function Page() {
     }).catch((e: unknown) => console.error("[leads-email] no se pudo notificar", e));
 
     // 3. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
-    await setEnhancedConversionUserData(data.whatsapp);
+    try {
+      await setEnhancedConversionUserData(data.whatsapp);
+    } catch (e) {
+      console.error("[enhanced-conversions] fallo no bloqueante", e);
+    }
+
 
 
     // 3. Evento de conversión
