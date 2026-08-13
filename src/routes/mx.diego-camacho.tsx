@@ -264,7 +264,7 @@ function Page() {
         utm_source: campaign.utm_source || undefined,
         utm_campaign: campaign.utm_campaign || undefined,
       },
-    }).catch((e) => console.error("[leads-email] no se pudo notificar", e));
+    }).catch((e: unknown) => console.error("[leads-email] no se pudo notificar", e));
 
     // 3. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
     await setEnhancedConversionUserData(data.whatsapp);
