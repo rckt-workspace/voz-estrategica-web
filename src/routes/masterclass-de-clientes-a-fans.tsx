@@ -31,7 +31,7 @@ const FAQS = [
   },
   {
     q: "¿Por cuánto tiempo tengo acceso?",
-    a: "Para siempre. Compras una vez y queda en tu cuenta.",
+    a: "Para siempre. Compras una vez y queda en tu cuenta: el acceso es inmediato y puedes verla cuantas veces quieras.",
   },
   {
     q: "¿Es en vivo?",
