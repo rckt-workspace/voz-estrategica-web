@@ -25,7 +25,6 @@ export function readStoredConsent(): ConsentChoice | null {
   try {
     const raw = window.localStorage.getItem(CONSENT_STORAGE_KEY);
     return raw === "granted" || raw === "denied" ? raw : null;
-    // eslint-disable-next-line no-empty
   } catch {
     return null;
   }
