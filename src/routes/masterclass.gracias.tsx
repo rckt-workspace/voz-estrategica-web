@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, XCircle, Clock, ArrowRight } from "lucide-react";
 import { trackEvent } from "@/lib/meta-pixel";
-import { trackGA4Event } from "@/lib/ga4";
+import { trackPurchase } from "@/lib/analytics";
 import { recordOrder } from "@/lib/orders.functions";
 
 type BoldStatus = "approved" | "rejected" | "pending" | "failed" | "unknown";
@@ -104,7 +104,7 @@ function GraciasPage() {
       content_name: order?.description ?? "Masterclass: De clientes a fans",
       order_id: orderId,
     });
-    trackGA4Event("purchase", {
+    trackPurchase({
       transaction_id: orderId,
       value,
       currency,

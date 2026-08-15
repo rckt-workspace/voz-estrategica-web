@@ -8,7 +8,7 @@ import { Reveal } from "@/components/Reveal";
 import { publicBackend } from "@/lib/public-backend-client";
 import { getSpeaker } from "@/data/content";
 import { trackEvent } from "@/lib/meta-pixel";
-import { trackGA4Event } from "@/lib/ga4";
+import { trackWhatsAppContact, trackGenerateLead } from "@/lib/analytics";
 
 const CANONICAL = "https://vozestrategica.com/speakers/diego-camacho/mexico";
 const WHATSAPP_NUMBER = "573046464644"; // mismo contacto comercial
@@ -271,8 +271,7 @@ function DiegoMexicoLanding() {
                 rel="noopener noreferrer"
                 onClick={() => {
                   trackEvent("Contact", { source: SOURCE_TAG, channel: "whatsapp" });
-                  trackGA4Event("contact_whatsapp", {
-                    method: "whatsapp",
+                  trackWhatsAppContact({
                     source: SOURCE_TAG,
                     placement: "hero",
                   });
@@ -567,10 +566,10 @@ function LeadForm() {
       source: SOURCE_TAG,
       currency: "MXN",
     });
-    trackGA4Event("generate_lead", {
-      content_name: "Cotización Diego Camacho México",
+    trackGenerateLead({
+      form_name: "Cotización Diego Camacho México",
       source: SOURCE_TAG,
-      currency: "MXN",
+      placement: "form-cta",
     });
 
     toast.success("¡Recibido! Te contactamos en menos de 48 horas.");

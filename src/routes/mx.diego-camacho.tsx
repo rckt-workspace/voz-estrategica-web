@@ -24,7 +24,7 @@ import { Reveal } from "@/components/Reveal";
 import { Logo } from "@/components/Logo";
 import { GoogleLogo, MicrosoftLogo } from "@/components/BrandLogos";
 import { trackEvent } from "@/lib/meta-pixel";
-import { trackGA4Event } from "@/lib/ga4";
+import { trackWhatsAppContact, trackGenerateLead } from "@/lib/analytics";
 import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
 import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
@@ -44,11 +44,7 @@ function waLink(msg: string = WA_DEFAULT_MSG) {
 
 function trackWhatsAppClick(placement: string) {
   trackEvent("Contact", { method: "whatsapp", placement });
-  trackGA4Event("contact_whatsapp", { placement, landing: "mx-diego-camacho" });
-  if (typeof window !== "undefined") {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "contact_whatsapp", placement });
-  }
+  trackWhatsAppContact({ placement, source: "mx-diego-camacho" });
 }
 
 const schema = z.object({
@@ -253,23 +249,11 @@ function Page() {
 
     // 3. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
-    trackGA4Event("generate_lead", {
-      source: "diego-camacho-mx",
-      presupuesto: data.presupuesto,
-      asistentes: data.asistentes,
-      utm_source: campaign.utm_source || undefined,
-      utm_campaign: campaign.utm_campaign || undefined,
-      gclid: campaign.gclid || undefined,
+    trackGenerateLead({
+      form_name: "Diego Camacho MX Formulario",
+      source: "mx-diego-camacho",
+      placement: "form-cta",
     });
-    if (typeof window !== "undefined") {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "generate_lead",
-        landing: "mx-diego-camacho",
-        presupuesto: data.presupuesto,
-        asistentes: data.asistentes,
-      });
-    }
 
     // 3. Confirmación visual (independiente de WhatsApp)
     setSubmitted(true);

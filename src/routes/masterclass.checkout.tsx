@@ -13,7 +13,7 @@ import {
 } from "@/lib/masterclass-checkout";
 import { attachBoldCloseListeners } from "@/lib/bold-checkout";
 import { trackEvent } from "@/lib/meta-pixel";
-import { trackGA4Event } from "@/lib/ga4";
+import { trackBeginCheckout } from "@/lib/analytics";
 
 const GREEN = "#40ed51";
 const BLACK = "#0e0f0c";
@@ -112,10 +112,10 @@ function CheckoutPage() {
         value: totalCOP,
         currency: "COP",
       });
-      trackGA4Event("begin_checkout", {
-        content_name: order.description,
-        value: totalCOP,
+      trackBeginCheckout({
         currency: "COP",
+        value: totalCOP,
+        order_id: order.orderId,
       });
 
       try {
