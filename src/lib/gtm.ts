@@ -9,7 +9,7 @@ export function isGTMEnabled(): boolean {
 }
 
 export function validateGTMId(id: string): boolean {
-  return /^GTM-[A-Z0-9]{6}$/.test(id);
+  return /^GTM-[A-Z0-9]{6,}$/.test(id);
 }
 
 /**

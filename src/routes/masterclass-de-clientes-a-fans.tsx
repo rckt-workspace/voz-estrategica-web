@@ -6,7 +6,7 @@ import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
 import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg";
 import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg";
 import { trackEvent } from "@/lib/meta-pixel";
-import { trackGA4Event } from "@/lib/ga4";
+import { trackBeginCheckout } from "@/lib/analytics";
 
 const PRICE_COP = 22500;
 const PRICE_LABEL = "$22.500 COP";
@@ -158,10 +158,9 @@ function goToCheckout() {
     value: PRICE_COP,
     currency: "COP",
   });
-  trackGA4Event("begin_checkout", {
-    content_name: PRODUCT_NAME,
-    value: PRICE_COP,
+  trackBeginCheckout({
     currency: "COP",
+    value: PRICE_COP,
   });
 }
 

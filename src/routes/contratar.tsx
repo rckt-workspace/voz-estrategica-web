@@ -10,7 +10,7 @@ import { publicBackend } from "@/lib/public-backend-client";
 import { notifyBookingRequest } from "@/lib/booking-email.functions";
 import { speakers } from "@/data/content";
 import { trackEvent } from "@/lib/meta-pixel";
-import { trackGA4Event } from "@/lib/ga4";
+import { trackGenerateLead } from "@/lib/analytics";
 
 const schema = z.object({
   organizacion: z.string().min(2, "Indica tu organización").max(200),
@@ -135,9 +135,9 @@ function ContratarPage() {
       content_name: "Solicitud de contratación",
       speaker: spk?.nombre ?? null,
     });
-    trackGA4Event("generate_lead", {
-      content_name: "Solicitud de contratación",
-      speaker: spk?.nombre ?? null,
+    trackGenerateLead({
+      form_name: "Solicitud de contratación",
+      source: "contratar-page",
     });
     toast.success(
       spk
