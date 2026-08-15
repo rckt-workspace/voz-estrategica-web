@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arquitectura — Voz Estratégica</title>
+<style>
+:root{
+  --bg:#0b0d10;--panel:#12161b;--panel2:#171c22;--text:#f6f7f8;--muted:#aab2bd;
+  --line:#2b333d;--yellow:#f5c928;--green:#2ecc71;--blue:#4ea1ff;--purple:#a979ff;
+  --orange:#ff9d42;--red:#ff6262;--cyan:#37d6d0;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at 15% 10%,rgba(245,201,40,.08),transparent 28%),
+             radial-gradient(circle at 85% 20%,rgba(78,161,255,.08),transparent 28%),var(--bg);
+  color:var(--text);line-height:1.45;
+}
+.wrap{max-width:1500px;margin:auto;padding:36px 22px 80px}
+.hero{border:1px solid var(--line);background:linear-gradient(145deg,rgba(245,201,40,.10),rgba(255,255,255,.02));border-radius:24px;padding:28px;margin-bottom:24px}
+h1{font-size:clamp(32px,5vw,62px);line-height:.95;margin:0 0 14px;letter-spacing:-.04em}
+h2{font-size:28px;margin:0 0 16px} h3{font-size:18px;margin:0 0 8px}
+p{margin:0;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);color:#fff;background:#11161b;font-size:12px;font-weight:700;margin:0 7px 7px 0}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+.section{background:rgba(18,22,27,.88);border:1px solid var(--line);border-radius:24px;padding:24px;margin:22px 0;box-shadow:0 18px 60px rgba(0,0,0,.18)}
+.section-head{display:flex;gap:16px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.legend span{font-size:12px;color:var(--muted);padding:6px 9px;border:1px solid var(--line);border-radius:999px}
+.lane{display:grid;grid-template-columns:minmax(160px,1fr) 54px minmax(180px,1.1fr) 54px minmax(220px,1.4fr) 54px minmax(190px,1.2fr);gap:8px;align-items:stretch;margin:12px 0}
+.node{border:1px solid var(--line);background:linear-gradient(145deg,var(--panel2),#11151a);border-radius:18px;padding:16px;min-height:116px;display:flex;flex-direction:column;justify-content:center}
+.node strong{font-size:16px;margin-bottom:5px}.node small{color:var(--muted)}
+.node .status{font-size:11px;font-weight:800;margin-top:8px;letter-spacing:.04em}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--yellow);font-size:28px;font-weight:900}
+.current{border-left:4px solid var(--green)} .pending{border-left:4px solid var(--orange)}
+.future{border-left:4px solid var(--purple)} .google{border-left:4px solid var(--blue)}
+.data{border-left:4px solid var(--cyan)} .payment{border-left:4px solid var(--yellow)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:18px}
+.card ul{margin:9px 0 0;padding-left:18px;color:var(--muted)}.card li{margin:6px 0}
+code{background:#0d1116;border:1px solid var(--line);padding:2px 6px;border-radius:7px;color:#d9e8ff}
+.flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.flow .node{flex:1 1 180px;min-width:180px}.flow .arrow{flex:0 0 32px}
+.matrix{width:100%;border-collapse:collapse;overflow:hidden;border-radius:14px}
+.matrix th,.matrix td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}
+.matrix th{color:#fff;background:#101419;font-size:12px;text-transform:uppercase;letter-spacing:.04em}.matrix td{color:var(--muted)}
+.ok{color:var(--green);font-weight:800}.wait{color:var(--orange);font-weight:800}.target{color:var(--purple);font-weight:800}
+.callout{border:1px solid rgba(245,201,40,.32);background:rgba(245,201,40,.07);border-radius:18px;padding:18px;color:#f6edbf}
+.commit{white-space:pre-wrap;background:#0c1014;border:1px solid var(--line);padding:16px;border-radius:16px;color:#e9edf2;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.foot{margin-top:26px;color:#77818d;font-size:12px;text-align:center}
+@media(max-width:1100px){.lane{grid-template-columns:1fr}.lane .arrow{transform:rotate(90deg);min-height:32px}.cols,.three{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <div class="badge"><span class="dot"></span> Voz Estratégica · Arquitectura técnica</div>
+  <h1>Cómo funciona hoy<br>y cómo debe quedar</h1>
+  <p>Mapa de desarrollo, despliegue, datos, analítica, publicidad, pagos y correo transaccional.</p>
+</header>
+
+<section class="section">
+  <div class="section-head">
+    <div><h2>1. Estado actual programado</h2><p>Lo que ya quedó preparado en código con la arquitectura preparada para integrar las cuentas reales de Google.</p></div>
+    <div class="legend"><span>🟢 Implementado</span><span>🟠 Requiere configuración externa</span><span>🟣 Objetivo posterior</span></div>
+  </div>
+
+  <div class="lane">
+    <div class="node current"><strong>Usuario / visitante</strong><small>SEO, tráfico directo, WhatsApp, campañas futuras</small><span class="status ok">ACTIVO</span></div>
+    <div class="arrow">→</div>
+    <div class="node current"><strong>vozestrategica.com</strong><small>TanStack Start + Nitro / Node.js desplegado en Hostinger</small><span class="status ok">ACTIVO</span></div>
+    <div class="arrow">→</div>
+    <div class="node current data"><strong>Capa de analítica</strong><small><code>src/lib/analytics.ts</code><br>Eventos unificados: page_view, lead, WhatsApp, checkout, purchase</small><span class="status ok">PROGRAMADO</span></div>
+    <div class="arrow">→</div>
+    <div class="node pending google"><strong>GA4 / GTM / Google Ads</strong><small>El código está listo, pero falta completar la configuración con las cuentas oficiales y sus IDs.</small><span class="status wait">PENDIENTE DE CONFIGURACIÓN</span></div>
+  </div>
+
+  <div class="lane">
+    <div class="node current"><strong>Formularios / usuarios</strong><small>Leads, newsletter, administración</small></div>
+    <div class="arrow">→</div>
+    <div class="node current data"><strong>Supabase</strong><small>Base de datos, Auth, tablas, Edge Functions y Secrets</small><span class="status ok">ACTIVO</span></div>
+    <div class="arrow">→</div>
+    <div class="node pending"><strong>Resend</strong><small>La integración existe y requiere completar la configuración de cuenta, dominio y variables de producción.</small><span class="status wait">PENDIENTE DE CONFIGURACIÓN</span></div>
+    <div class="arrow">→</div>
+    <div class="node pending"><strong>Correo transaccional</strong><small>Compradores, suscriptores y notificaciones internas.</small><span class="status wait">CONFIGURACIÓN FINAL PENDIENTE</span></div>
+  </div>
+
+  <div class="lane">
+    <div class="node current"><strong>Compra</strong><small>Masterclass / libros / productos</small></div>
+    <div class="arrow">→</div>
+    <div class="node current payment"><strong>Bold</strong><small>Pasarela de pago actual</small><span class="status ok">INTEGRADA</span></div>
+    <div class="arrow">→</div>
+    <div class="node pending"><strong>onSuccess del navegador</strong><small>Actualmente participa en el flujo posterior al pago.</small><span class="status wait">FUNCIONA, PERO NO ES EL DISEÑO FINAL</span></div>
+    <div class="arrow">→</div>
+    <div class="node future"><strong>Webhook Bold</strong><small>Confirmación servidor-a-servidor, idempotencia y trazabilidad.</small><span class="status target">OBJETIVO</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>2. Arquitectura objetivo</h2><p>Cómo debería quedar el flujo completo cuando estén conectadas las cuentas reales.</p></div></div>
+  <div class="flow">
+    <div class="node google"><strong>1 · Fuentes de tráfico</strong><small>Google Ads · Google Search · Directo · Meta · LinkedIn</small></div>
+    <div class="arrow">→</div>
+    <div class="node current"><strong>2 · Voz Estratégica Web</strong><small>Landing, programas, speakers, formularios, checkout y admin</small></div>
+    <div class="arrow">→</div>
+    <div class="node data"><strong>3 · Consent Mode v2</strong><small>Define permisos para analytics y ads según consentimiento</small></div>
+    <div class="arrow">→</div>
+    <div class="node data"><strong>4 · Analytics Layer</strong><small>Una API interna para todos los eventos de negocio</small></div>
+  </div>
+  <div class="flow" style="margin-top:12px">
+    <div class="node google"><strong>5A · Google Tag Manager</strong><small>Recibe eventos por <code>dataLayer</code> y decide qué etiquetas disparar</small></div>
+    <div class="arrow">→</div>
+    <div class="node google"><strong>5B · GA4</strong><small>Analiza navegación, funnel, leads, checkout y compras</small></div>
+    <div class="arrow">→</div>
+    <div class="node google"><strong>5C · Google Ads</strong><small>Usa conversiones para atribución y optimización</small></div>
+    <div class="arrow">→</div>
+    <div class="node future"><strong>5D · Enhanced Conversions</strong><small>Señales first-party hasheadas cuando consentimiento y configuración estén correctos</small></div>
+  </div>
+  <div class="flow" style="margin-top:12px">
+    <div class="node data"><strong>6 · Supabase</strong><small>Leads, users, roles, orders, subscribers y logs</small></div>
+    <div class="arrow">→</div>
+    <div class="node future payment"><strong>7 · Webhook de Bold</strong><small>Pago aprobado confirmado desde servidor</small></div>
+    <div class="arrow">→</div>
+    <div class="node future"><strong>8 · Orquestación backend</strong><small>Marca orden pagada, evita duplicados y dispara efectos posteriores</small></div>
+    <div class="arrow">→</div>
+    <div class="node future"><strong>9 · Resend + Analytics</strong><small>Email de compra + purchase confiable + notificación interna</small></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>3. Flujo de una conversión real</h2><p>Ejemplo de cómo debería rastrearse una venta desde anuncio hasta pago.</p></div></div>
+  <div class="flow">
+    <div class="node google"><strong>Google Ads</strong><small>Usuario hace clic en anuncio</small></div>
+    <div class="arrow">→</div>
+    <div class="node current"><strong>Landing</strong><small>Entra a vozestrategica.com</small></div>
+    <div class="arrow">→</div>
+    <div class="node data"><strong>GTM / GA4</strong><small>page_view + comportamiento</small></div>
+    <div class="arrow">→</div>
+    <div class="node current"><strong>CTA / formulario</strong><small>generate_lead o contact_whatsapp</small></div>
+    <div class="arrow">→</div>
+    <div class="node payment"><strong>Checkout Bold</strong><small>begin_checkout</small></div>
+    <div class="arrow">→</div>
+    <div class="node future"><strong>Pago confirmado</strong><small>purchase + order paid + email</small></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><div><h2>4. Responsabilidad de cada tecnología</h2><p>Qué componente es la fuente de verdad para cada cosa.</p></div></div>
+  <table class="matrix">
+    <thead><tr><th>Componente</th><th>Responsabilidad</th><th>No debería encargarse de</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lovable</strong></td><td>Edición asistida y sincronización del proyecto</td><td>Ser fuente de verdad de pagos o analítica</td></tr>
+      <tr><td><strong>GitHub</strong></td><td>Versionado, historial y fuente del despliegue</td><td>Guardar secretos</td></tr>
+      <tr><td><strong>Hostinger</strong></td><td>Ejecutar la aplicación Node/Nitro y alojar variables de entorno</td><td>Decidir reglas de negocio</td></tr>
+      <tr><td><strong>Supabase</strong></td><td>Datos, Auth, roles, Edge Functions y secretos</td><td>Administrar campañas publicitarias</td></tr>
+      <tr><td><strong>Analytics Layer</strong></td><td>Normalizar eventos del producto</td><td>Guardar la historia financiera</td></tr>
+      <tr><td><strong>GTM</strong></td><td>Orquestar tags y mapear eventos a plataformas</td><td>Ser base de datos</td></tr>
+      <tr><td><strong>GA4</strong></td><td>Medición de comportamiento y funnels</td><td>Confirmar pagos</td></tr>
+      <tr><td><strong>Google Ads</strong></td><td>Adquisición, atribución y optimización de campañas</td><td>Determinar si Bold pagó</td></tr>
+      <tr><td><strong>Bold</strong></td><td>Procesamiento y confirmación de pagos</td><td>Enviar el correo final desde el navegador</td></tr>
+      <tr><td><strong>Resend</strong></td><td>Entrega de emails transaccionales</td><td>Ser la fuente de verdad de órdenes</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="callout"><strong>Principio de arquitectura:</strong> el código define <em>qué ocurrió en el negocio</em>; GTM decide <em>a qué plataforma reportarlo</em>; GA4 analiza <em>qué hicieron los usuarios</em>; Google Ads usa las conversiones para <em>optimizar adquisición</em>; Supabase conserva el estado del negocio; Bold confirma el pago; Resend comunica el resultado.</div>
+</section>
+
+<div class="foot">Voz Estratégica · Diagrama técnico de referencia · 2026</div>
+</div>
+</body>
+</html>

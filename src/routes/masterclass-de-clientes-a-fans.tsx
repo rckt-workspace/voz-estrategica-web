@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Check, X, ChevronDown, Play } from "lucide-react";
+import { Check, X, ChevronDown } from "lucide-react";
 import logoVozEstrategica from "@/assets/logo-voz-estrategica-masterclass.png";
-import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg.asset.json";
-import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg.asset.json";
-import galleryExma from "@/assets/carlos-gallery/exma.jpg.asset.json";
+import carlosPortrait from "@/assets/speaker-carlos-laguna.jpg";
+import gallerySpeaker from "@/assets/carlos-gallery/speaker.jpg";
+import galleryCrehana from "@/assets/carlos-gallery/crehana.jpg";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackBeginCheckout } from "@/lib/analytics";
 
@@ -12,7 +12,7 @@ const PRICE_COP = 22500;
 const PRICE_LABEL = "$22.500 COP";
 const PRODUCT_NAME = "Grabación Masterclass: De clientes a fans";
 const PRIMARY_LABEL = "Quiero acceso ahora · $22.500 COP";
-const SECONDARY_LABEL = "Quiero la sesión completa · $22.500 COP";
+const SECONDARY_LABEL = "Quiero acceso ahora · $22.500 COP";
 
 const GREEN = "#40ed51";
 const GREEN_DIM = "rgba(64, 237, 81, 0.12)";
@@ -31,7 +31,7 @@ const FAQS = [
   },
   {
     q: "¿Por cuánto tiempo tengo acceso?",
-    a: "Para siempre. Compras una vez y queda en tu cuenta.",
+    a: "Para siempre. Compras una vez y queda en tu cuenta: el acceso es inmediato y puedes verla cuantas veces quieras.",
   },
   {
     q: "¿Es en vivo?",
@@ -46,10 +46,8 @@ const FAQS = [
     q: "¿Sirve para mi industria?",
     a: "El método es de conversación comercial, no de producto. Funciona en servicios, B2B, retail y ticket alto.",
   },
-  {
-    q: "¿Puedo ver algo antes de comprar?",
-    a: "Sí. Hay un fragmento disponible gratis, sin registrarte.",
-  },
+
+
   {
     q: "¿Cómo puedo pagar?",
     a: "Tarjeta de crédito o débito, PSE, Nequi y transferencia.",
@@ -134,7 +132,7 @@ export const Route = createFileRoute("/masterclass-de-clientes-a-fans")({
             name: "Voz Estratégica",
             url: "https://vozestrategica.com",
           },
-          image: gallerySpeaker.url,
+          image: gallerySpeaker,
           offers: {
             "@type": "Offer",
             price: String(PRICE_COP),
@@ -289,47 +287,41 @@ function PressRow() {
 
 function VideoPlaceholder({
   image,
-  overlayText,
-  note,
+  fallbackImage,
   aspect = "aspect-video",
+  priority = false,
 }: {
   image: string;
-  overlayText?: string;
-  note?: string;
+  fallbackImage?: string;
   aspect?: string;
+  priority?: boolean;
 }) {
   return (
     <figure className="relative overflow-hidden rounded-[6px] border border-white/15 bg-black">
-      <img
-        src={image}
-        alt="Carlos Laguna en escenario"
-        className={`${aspect} w-full object-cover opacity-70`}
-        loading="lazy"
-      />
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/40">
-        <span
-          className="flex h-16 w-16 items-center justify-center rounded-full shadow-xl md:h-20 md:w-20"
-          style={{ backgroundColor: GREEN }}
-        >
-          <Play className="ml-1 h-7 w-7 md:h-9 md:w-9" style={{ color: BLACK }} fill={BLACK} />
-        </span>
-        {overlayText && (
-          <p
-            className="px-4 text-center text-2xl font-extrabold uppercase tracking-[0.12em] text-white md:text-4xl"
-            style={serif}
-          >
-            {overlayText}
-          </p>
-        )}
+      <div
+        className={`relative ${aspect}`}
+        style={{ backgroundColor: "#0e0f0c" }}
+      >
+        <img
+          src={`${image}?v=20260810`}
+          alt="Carlos Laguna en escenario"
+          className="absolute inset-0 z-0 h-full w-full object-cover object-top"
+          loading={priority ? "eager" : "lazy"}
+          fetchPriority={priority ? "high" : undefined}
+          decoding="async"
+          onError={(event) => {
+            const fallback = fallbackImage;
+            if (!fallback || event.currentTarget.dataset.fallbackApplied === "true") return;
+            event.currentTarget.dataset.fallbackApplied = "true";
+            event.currentTarget.src = `${fallback}?v=20260810`;
+          }}
+        />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
       </div>
-      {note && (
-        <figcaption className="border-t border-white/10 bg-[#0e0f0c] px-4 py-2 text-center text-[11px] uppercase tracking-[0.15em] text-white/40">
-          {note}
-        </figcaption>
-      )}
     </figure>
   );
 }
+
 
 /* ───────────────────────── Page ───────────────────────── */
 
@@ -420,8 +412,8 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 1 · PORTADA ══ */}
       <section className="bg-[#16181a]">
         <div className="mx-auto max-w-6xl px-5 py-12 md:py-20">
-          <div className="grid items-center gap-10 md:grid-cols-[55fr_45fr] md:gap-14">
-            <div>
+          <div className="grid gap-8 md:grid-cols-[55fr_45fr] md:items-center md:gap-14">
+            <div className="md:col-start-1 md:row-start-1">
               <span
                 className="inline-flex rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] md:text-[11px]"
                 style={{ borderColor: GREEN, color: GREEN }}
@@ -435,13 +427,22 @@ function MasterclassRecordingPage() {
                 El sistema completo de Carlos Laguna —el mismo que aplica con Mercedes Benz,
                 Nespresso y Bancolombia— en 2 horas que puedes ver hoy y aplicar mañana.
               </p>
+            </div>
 
-              {/* Video primero en móvil */}
-              <div className="mt-8 md:hidden">
-                <VideoPlaceholder image={galleryCrehana.url} overlayText="VENDER SIN PERSEGUIR" />
-              </div>
+            {/* Única instancia de la imagen del Hero: en móvil va debajo del titular,
+                en escritorio ocupa la columna derecha */}
+            <div className="md:col-start-2 md:row-start-1 md:row-span-2">
+              <VideoPlaceholder
+                image={carlosPortrait}
+                fallbackImage={galleryCrehana}
+                aspect="aspect-[4/5]"
+                priority
+              />
 
-              <ul className="mt-8 space-y-3">
+            </div>
+
+            <div className="md:col-start-1 md:row-start-2">
+              <ul className="space-y-3">
                 {[
                   "Un método para entrar a cada negociación con plan, no con esperanza",
                   "El framework para que te paguen más sin pelear precio",
@@ -457,15 +458,13 @@ function MasterclassRecordingPage() {
               <div className="mt-8">
                 <BuyButton />
                 <p className="mt-3 text-sm text-white/60">
-                  Acceso inmediato y permanente · Mira un fragmento gratis antes de comprar
+                  Acceso inmediato y permanente
                 </p>
+
               </div>
             </div>
-
-            <div className="hidden md:block">
-              <VideoPlaceholder image={galleryCrehana.url} overlayText="VENDER SIN PERSEGUIR" />
-            </div>
           </div>
+
 
           <div className="mt-12 border-t border-white/10 pt-8">
             <BrandLogosRow label="Carlos ha entrenado a los equipos comerciales de" />
@@ -476,11 +475,8 @@ function MasterclassRecordingPage() {
       {/* ══ BLOQUE 2 · VIDEO DE VENTAS ══ */}
       <section className="bg-[#0e0f0c]">
         <div className="mx-auto max-w-4xl px-5 py-14 md:py-20">
-          <VideoPlaceholder
-            image={gallerySpeaker.url}
-            overlayText="VENDER SIN PERSEGUIR"
-            note="Pendiente: video de ventas de 6–9 min"
-          />
+          <VideoPlaceholder image={galleryCrehana} />
+
           <div className="mt-8 flex flex-col items-center">
             <BuyButton />
           </div>
@@ -576,7 +572,7 @@ function MasterclassRecordingPage() {
       <section className="bg-[#16181a]">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-[45fr_55fr] md:py-24">
           <img
-            src={gallerySpeaker.url}
+            src={gallerySpeaker}
             alt="Carlos Laguna en conferencia frente a auditorio lleno"
             className="aspect-[4/5] w-full rounded-[6px] object-cover shadow-2xl"
             loading="lazy"
@@ -703,35 +699,9 @@ function MasterclassRecordingPage() {
         </div>
       </section>
 
-      {/* ══ BLOQUE 8 · MÍRALO ANTES DE DECIDIR ══ */}
-      <section className="bg-[#0e0f0c]">
-        <div className="mx-auto max-w-4xl px-5 py-16 md:py-24">
-          <div
-            className="rounded-[8px] border-2 bg-[#1c1f1b] p-6 md:p-10"
-            style={{ borderColor: GREEN }}
-          >
-            <h2 className="text-3xl font-extrabold text-white md:text-5xl">
-              Míralo antes de decidir.
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-white/80 md:text-lg">
-              No tienes que creerle a esta página. Mira un fragmento real de la sesión, comprueba
-              cómo explica Carlos y decide con criterio propio.
-            </p>
-            <div className="mt-8">
-              <VideoPlaceholder
-                image={galleryExma.url}
-                note="Pendiente de fragmento de 10–15 min"
-              />
-            </div>
-            <p className="mt-4 text-center text-sm text-white/60">
-              Sin correo, sin formularios. Dale play.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <BuyButton variant="secondary" />
-            </div>
-          </div>
-        </div>
-      </section>
+
+
+
 
       {/* ══ BLOQUE 9 · PRUEBA SOCIAL ══ */}
       <section className="bg-[#16181a]">

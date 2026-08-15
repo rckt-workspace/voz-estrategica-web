@@ -58,11 +58,25 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col justify-between gap-4 border-t border-background/15 pt-8 text-xs text-background/60 md:flex-row">
-          <p>© {new Date().getFullYear()} Voz Estratégica. Todos los derechos reservados.</p>
-          <Link to="/auth" className="hover:text-brand">
-            Acceso administrador
-          </Link>
+        <div className="mt-16 border-t border-background/15 pt-8">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-background/70">
+            <li>
+              <Link to="/aviso-de-privacidad" className="hover:text-brand">
+                Aviso de Privacidad
+              </Link>
+            </li>
+            <li>
+              <Link to="/terminos-y-condiciones" className="hover:text-brand">
+                Términos y Condiciones
+              </Link>
+            </li>
+          </ul>
+          <div className="mt-6 flex flex-col justify-between gap-4 text-xs text-background/60 md:flex-row">
+            <p>© {new Date().getFullYear()} Voz Estratégica. Todos los derechos reservados.</p>
+            <Link to="/auth" className="hover:text-brand">
+              Acceso administrador
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

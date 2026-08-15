@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
+import { useServerFn } from "@tanstack/react-start";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { publicBackend } from "@/lib/public-backend-client";
+import { notifyBookingRequest } from "@/lib/booking-email.functions";
 import { speakers } from "@/data/content";
 import { trackEvent } from "@/lib/meta-pixel";
 import { trackGenerateLead } from "@/lib/analytics";
@@ -41,7 +43,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export const Route = createFileRoute("/contratar")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { speaker?: string } => ({
     speaker: typeof s.speaker === "string" ? s.speaker : undefined,
   }),
   head: () => ({
@@ -70,6 +72,7 @@ export const Route = createFileRoute("/contratar")({
 
 function ContratarPage() {
   const { speaker: prefSpeaker } = useSearch({ from: "/contratar" });
+  const notifyEmail = useServerFn(notifyBookingRequest);
 
   const {
     register,
@@ -109,6 +112,25 @@ function ContratarPage() {
       toast.error("No pudimos enviar tu solicitud. Inténtalo de nuevo.");
       return;
     }
+
+    // El correo va después del guardado y nunca bloquea la confirmación al usuario.
+    void notifyEmail({
+      data: {
+        organizacion: values.organizacion,
+        contacto: values.contacto,
+        cargo: values.cargo || undefined,
+        email: values.email,
+        telefono: values.telefono || undefined,
+        interes: values.interes,
+        territorio: values.territorio,
+        audiencia: values.audiencia || undefined,
+        fecha_evento: values.fecha_evento || undefined,
+        presupuesto: values.presupuesto || undefined,
+        origen: values.origen || undefined,
+        mensaje: values.mensaje,
+      },
+    }).catch(() => {});
+
     trackEvent("Lead", {
       content_name: "Solicitud de contratación",
       speaker: spk?.nombre ?? null,

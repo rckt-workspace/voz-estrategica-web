@@ -27,9 +27,10 @@ import { trackEvent } from "@/lib/meta-pixel";
 import { trackWhatsAppContact, trackGenerateLead } from "@/lib/analytics";
 import { setEnhancedConversionUserData } from "@/lib/consent";
 import { publicBackend } from "@/lib/public-backend-client";
-import diegoHeroAsset from "@/assets/diego-mx/diego-hero-ai.webp.asset.json";
+import { notifyDiegoLead } from "@/lib/leads-email.functions";
+import diegoHeroUrl from "@/assets/diego-mx/diego-hero-ai.webp";
 import diegoPortraitCleanUrl from "@/assets/diego-mx/diego-portrait-clean.png";
-import diegoBookingAsset from "@/assets/diego-mx/diego-booking.png.asset.json";
+import diegoBookingUrl from "@/assets/diego-mx/diego-booking.jpg";
 
 const CANONICAL = "https://vozestrategica.com/mx/diego-camacho";
 // TODO: reemplazar por el número real de México (formato internacional sin signos)
@@ -184,7 +185,7 @@ export const Route = createFileRoute("/mx/diego-camacho")({
     ],
     links: [
       { rel: "canonical", href: CANONICAL },
-      { rel: "preload", as: "image", href: diegoHeroAsset.url, fetchPriority: "high" },
+      { rel: "preload", as: "image", href: diegoHeroUrl, fetchPriority: "high" },
     ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(PERSON_JSONLD) },
@@ -244,8 +245,29 @@ function Page() {
       throw new Error("No pudimos guardar tus datos. Inténtalo de nuevo.");
     }
 
-    // 2. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
-    await setEnhancedConversionUserData(data.whatsapp);
+    // 2. Notificación por correo (no bloquea la apertura de WhatsApp)
+    void notifyDiegoLead({
+      data: {
+        nombre: data.nombre,
+        empresa: data.empresa,
+        cargo: data.cargo,
+        tipo_evento: data.tipo_evento,
+        presupuesto: data.presupuesto,
+        asistentes: data.asistentes,
+        ciudad_fecha: data.ciudad_fecha,
+        whatsapp: data.whatsapp,
+        gclid: campaign.gclid || undefined,
+        utm_source: campaign.utm_source || undefined,
+        utm_campaign: campaign.utm_campaign || undefined,
+      },
+    }).catch((e: unknown) => console.error("[leads-email] no se pudo notificar", e));
+
+    // 3. Enhanced Conversions: teléfono hasheado (SHA-256), nunca en claro
+    try {
+      await setEnhancedConversionUserData(data.whatsapp);
+    } catch (e) {
+      console.error("[enhanced-conversions] fallo no bloqueante", e);
+    }
 
     // 3. Evento de conversión
     trackEvent("Lead", { content_name: "diego-camacho-mx", source: "landing-form" });
@@ -402,16 +424,18 @@ function Page() {
             {/* Slot visual: foto real de Diego en escenario (IA) */}
             <Reveal delay={0.2}>
               <div className="relative flex items-center justify-center">
-                <img
-                  src={diegoHeroAsset.url}
-                  alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
-                  width={1080}
-                  height={1080}
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="block h-auto w-full max-w-[520px] object-contain"
-                />
+                <div className="relative aspect-square w-full max-w-[520px] overflow-hidden rounded-full">
+                  <img
+                    src={diegoHeroUrl}
+                    alt="Diego Camacho en escenario junto a un holograma con el texto AI e íconos tecnológicos"
+                    width={1804}
+                    height={1804}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="h-full w-full scale-[1.04] object-cover"
+                  />
+                </div>
               </div>
             </Reveal>
           </div>
@@ -541,7 +565,7 @@ function Page() {
               <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-center">
                 <div className="flex items-center justify-center">
                   <img
-                    src={diegoBookingAsset.url}
+                    src={diegoBookingUrl}
                     alt="Diego Camacho en escenario presentando el caso real de Booking.com sobre implementación de IA de Google y aumento del 15% en valor promedio de transacción"
                     loading="lazy"
                     width={1080}
