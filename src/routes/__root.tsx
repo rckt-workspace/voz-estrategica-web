@@ -16,8 +16,9 @@ import { BottomBar } from "@/components/BottomBar";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieConsent } from "@/components/CookieConsent";
 import { initConsentMode } from "@/lib/consent";
-import { initMetaPixel, trackPageView, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
-import { initGA4, trackGA4PageView, trackGA4Event } from "@/lib/ga4";
+import { initMetaPixel, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
+import { initGA4 } from "@/lib/ga4";
+import { trackPageView, trackWhatsAppContact } from "@/lib/analytics";
 import { getConsentBootstrapScript, getGTMScripts } from "@/lib/gtm";
 
 import appCss from "../styles.css?url";
@@ -182,7 +183,6 @@ function Shell() {
   // Track PageView on route change (SPA)
   useEffect(() => {
     trackPageView();
-    trackGA4PageView();
   }, [location.pathname]);
 
   const isAdmin = normalizedPathname.startsWith("/admin");
@@ -222,14 +222,7 @@ function Shell() {
           aria-label="WhatsApp"
           onClick={() => {
             trackEvent("Contact", { method: "whatsapp", placement: "floating" });
-            trackGA4Event("contact_whatsapp", {
-              method: "whatsapp",
-              placement: "floating",
-            });
-            if (typeof window !== "undefined") {
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({ event: "contact_whatsapp", placement: "floating" });
-            }
+            trackWhatsAppContact({ placement: "floating" });
           }}
           className="fixed right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 hover:shadow-xl"
           style={{ bottom: "calc(1.5rem + var(--bottombar-h, 0px))" }}
