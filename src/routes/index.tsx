@@ -2,8 +2,44 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Users, Mic2, GraduationCap, BookOpen } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { FlowDiagram } from "@/components/FlowDiagram";
+import tatianaFoto from "@/assets/tatiana-suarez-bw.jpg";
 
 import { speakers, events, books } from "@/data/content";
+
+const CASOS_FUNDADORA = [
+  {
+    marca: "UIP",
+    año: "2025",
+    linea:
+      "La capacitación en planeación estratégica facilitada con la conferencista Paola Aldaz para United International Pictures (UIP) fue adoptada como base de su plan de negocio del año.",
+  },
+  {
+    marca: "Kimberly-Clark Colombia — KCC",
+    año: "2026",
+    linea:
+      'Facilitamos con la conferencista María José Quiceno una capacitación de comunicación estratégica dirigida a formar a la persona encargada de las capacitaciones internas de la compañía (modelo "formación de formadores").',
+  },
+];
+
+const DATOS_FUNDADORA = [
+  { titulo: "10 años", linea: "De experiencia en el sector" },
+  { titulo: "5 países", linea: "México, Panamá, República Dominicana, Ecuador y Bolivia" },
+  { titulo: "Modelo integral", linea: "Keynotes, Academia Corporativa y Biblioteca de Voz" },
+];
+
+const WHATSAPP_HOME =
+  "https://wa.me/573106598108?text=%C2%A1Hola!%20Quiero%20una%20propuesta%20de%20aprendizaje%20para%20mi%20equipo%20%28conferencia%2C%20taller%20o%20programa%29.";
+
+const MARCAS_CONFIANZA: string[] = [
+  "Mercedes-Benz",
+  "Nespresso",
+  "Bancolombia",
+  "Kimberly-Clark",
+  "SC Johnson",
+  "The North Face",
+];
+
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -345,8 +381,152 @@ function Home() {
         </div>
       </section>
 
+      {/* 6b. FUNDADORA */}
+      <section className="mx-auto max-w-7xl px-6 pt-24 pb-10 md:pt-28 md:pb-12">
+        <div className="grid items-stretch gap-12 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-16">
+          <div className="relative md:h-full">
+            <div className="h-full overflow-hidden rounded-sm border border-foreground/15 bg-foreground/5 md:absolute md:inset-0">
+              <img
+                src={tatianaFoto}
+                alt="Tatiana Suárez, fundadora de Voz Estratégica"
+                className="aspect-[3/4] w-full object-cover object-top md:aspect-auto md:h-full"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+
+          <div className="min-w-0">
+            <Reveal delay={80}>
+              <span className="section-badge text-sm tracking-[0.28em] md:text-base">
+                Fundadora
+              </span>
+              <h2 className="mt-6 font-display text-4xl uppercase leading-[0.9] md:text-5xl lg:text-6xl">
+                Tatiana Suárez
+              </h2>
+            </Reveal>
+
+            <Reveal delay={140}>
+              <div className="mt-8 space-y-5 text-muted-foreground md:text-lg">
+                <p>
+                  Tatiana Suárez es la fundadora de Voz Estratégica, agencia de representación de
+                  conferencistas y capacitación corporativa que ha facturado con clientes en varios
+                  países de Latinoamérica, entre ellos México, Panamá, República Dominicana, Ecuador
+                  y Bolivia. Cuenta con 10 años de experiencia en el sector.
+                </p>
+                <p>
+                  Lo que comenzó como una agencia enfocada en eventos y conferencias se ha
+                  transformado, bajo su liderazgo, en un modelo integral de desarrollo de talento
+                  corporativo: desde keynotes inspiracionales hasta programas estructurados de
+                  Academia Corporativa y una Biblioteca de Voz con contenido on-demand para equipos
+                  de trabajo. Su roster reúne a varios conferencistas especializados en distintas
+                  áreas de desarrollo organizacional.
+                </p>
+                <p>
+                  Su enfoque está dirigido a Directores de Recursos Humanos (CHRO) y Directores
+                  Comerciales de empresas medianas y grandes que buscan un socio estratégico —no un
+                  proveedor de eventos— capaz de acompañar el crecimiento de sus equipos con
+                  contenido relevante, conferencistas alineados a los retos reales de cada
+                  organización y programas medibles en el tiempo.
+                </p>
+              </div>
+            </Reveal>
+
+          </div>
+        </div>
+
+        <Reveal delay={170}>
+          <div className="mt-12 grid gap-4 sm:grid-cols-3 md:mt-16">
+            {DATOS_FUNDADORA.map((d) => (
+              <div
+                key={d.titulo}
+                className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+              >
+                <span className="font-display text-lg uppercase leading-none">{d.titulo}</span>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{d.linea}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <div className="mt-10">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+              Casos destacados
+            </p>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {CASOS_FUNDADORA.map((c) => (
+                <div
+                  key={c.marca}
+                  className="rounded-sm border border-foreground/15 bg-foreground/[0.03] p-5"
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-lg uppercase leading-none">{c.marca}</span>
+                    <span className="text-sm text-brand">{c.año}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{c.linea}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
+      </section>
+
+      {/* 6c. TU PRÓXIMA VOZ */}
+      <section className="bg-secondary/60 py-8 md:py-10">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <Reveal>
+            <h2 className="font-display text-4xl uppercase leading-[0.9] md:text-6xl">
+              Tu próxima voz está aquí.
+            </h2>
+          </Reveal>
+          <Reveal delay={90}>
+            <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
+              Explora nuestras voces y descubre cuál puede transformar la cultura, el liderazgo o las
+              ventas de tu organización. Si tienes preguntas, contáctanos.
+            </p>
+          </Reveal>
+          <Reveal delay={140}>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link
+                to="/speakers"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-3.5 text-sm font-semibold text-background transition hover:opacity-90 sm:w-auto"
+              >
+                Ver conferencistas <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href={WHATSAPP_HOME}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-foreground px-7 py-3.5 text-sm font-semibold text-foreground transition hover:bg-foreground hover:text-background sm:w-auto"
+              >
+                Contáctanos <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
+          </Reveal>
+
+          <Reveal delay={190}>
+            <p className="mt-7 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+              Marcas que han confiado en nosotros
+            </p>
+            <ul className="mx-auto mt-5 grid max-w-3xl grid-cols-2 items-center justify-center gap-x-8 gap-y-5 sm:grid-cols-3">
+              {MARCAS_CONFIANZA.map((m) => (
+                <li key={m} className="flex items-center justify-center">
+                  <span className="font-display text-lg uppercase tracking-tight text-foreground/45 grayscale transition hover:text-foreground/75 md:text-xl">
+                    {m}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
       {/* 7. CONFERENCISTAS */}
-      <section className="relative mx-auto max-w-7xl px-6 py-28">
+
+      <section className="relative mx-auto max-w-7xl px-6 pt-12 pb-28">
         <Reveal>
           <div className="flex items-center gap-4">
             <span className="section-badge">01 · Conferencistas</span>
@@ -370,14 +550,15 @@ function Home() {
           </Reveal>
         </div>
 
-        <div className="mt-20 grid gap-10 md:grid-cols-3">
+        <div className="mt-20 grid items-start gap-10 md:grid-cols-3">
           {destacados.map((s, i) => (
             <Reveal key={s.slug} delay={i * 80}>
               <Link
                 to="/speakers/$slug"
                 params={{ slug: s.slug }}
-                className={`group block ${i === 1 ? "md:mt-24" : ""}`}
+                className="group block"
               >
+
                 <div className="relative mb-6 aspect-[3/4] overflow-hidden bg-foreground/5">
                   <img
                     src={s.foto}

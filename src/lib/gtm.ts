@@ -13,18 +13,16 @@ export function validateGTMId(id: string): boolean {
 }
 
 /**
- * Returns the script to load GTM with Consent Mode v2.
- * Must be inserted AFTER the inline consent bootstrap script but BEFORE closing head.
- * TanStack wraps this in <script> tags automatically via head().scripts[].children
- * Includes the noscript fallback for browsers without JS (as HTML for dangerouslySetInnerHTML).
+ * Returns the GTM loader code (raw JS, NO <script> wrapper — TanStack head()
+ * wraps `children` as the script body) plus the noscript HTML fallback.
  */
 export function getGTMScripts(): { head: string; body: string } {
   if (!isGTMEnabled()) {
     return { head: "", body: "" };
   }
 
-  // GTM script for head (JavaScript ONLY — no <script> tags, TanStack adds them)
-  const headScript = `(function(w,d,s,l,i){
+  const headScript = `
+(function(w,d,s,l,i){
   w[l]=w[l]||[];
   w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
   var f=d.getElementsByTagName(s)[0],
@@ -32,29 +30,34 @@ export function getGTMScripts(): { head: string; body: string } {
   j.async=true;
   j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
   f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${GTM_ID}');`;
+})(window,document,'script','dataLayer','${GTM_ID}');
+`.trim();
 
-  // GTM noscript fallback for body (HTML, inserted with dangerouslySetInnerHTML)
-  const bodyScript = `<noscript>
+  // GTM noscript fallback for body (right after opening <body>)
+  const bodyScript = `
+<!-- Google Tag Manager (noscript) -->
+<noscript>
   <iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}"
     height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>`;
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+`.trim();
 
   return { head: headScript, body: bodyScript };
 }
 
 /**
- * Returns the inline script that initializes Consent Mode v2 and dataLayer.
- * Must run BEFORE GTM loads so that consent is set before any tags fire.
- * TanStack wraps this in <script> tags automatically via head().scripts[].children
- * Returns JavaScript ONLY — no <script> tags.
+ * Consent Mode v2 + dataLayer bootstrap as raw JS (no <script> wrapper).
+ * Must run BEFORE GTM/GA load so consent defaults apply to every tag.
  */
 export function getConsentBootstrapScript(): string {
-  return `window.dataLayer = window.dataLayer || [];
-function gtag() { window.dataLayer.push(arguments); }
-gtag.js = new Date();
+  return `
+window.dataLayer = window.dataLayer || [];
+function gtag(){ window.dataLayer.push(arguments); }
+window.gtag = window.gtag || gtag;
 
-// Set consent to denied by default (GDPR compliant)
+gtag('js', new Date());
+
 gtag('consent', 'default', {
   'ad_storage': 'denied',
   'analytics_storage': 'denied',
@@ -63,7 +66,6 @@ gtag('consent', 'default', {
   'wait_for_update': 500
 });
 
-// Check localStorage for stored consent decision
 try {
   var stored = window.localStorage.getItem('ve_consent_v2');
   if (stored === 'granted' || stored === 'denied') {
@@ -74,7 +76,7 @@ try {
       'ad_personalization': stored
     });
   }
-} catch (e) {
-  // localStorage may be blocked, that's ok
-}`;
+} catch (e) {}
+`.trim();
 }
+
