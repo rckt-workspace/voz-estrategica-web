@@ -277,26 +277,31 @@ function SuscribetePage() {
               </fieldset>
 
               <label className="flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
-                <input
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 h-4 w-4 rounded accent-[var(--brand)]"
-                  required
-                />
-                <span>
-                  Acepto la{" "}
-                  <a
-                    href="/aviso-de-privacidad"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:text-foreground"
-                  >
-                    Política de Tratamiento de Datos
-                  </a>{" "}
-                  <span className="text-brand">*</span>
-                </span>
-              </label>
+              <div className="flex items-start gap-3 rounded-2xl border border-foreground/10 bg-brand/[0.07] px-4 py-3">
+                <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
+                <label className="flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    className="mt-1 h-4 w-4 rounded accent-[var(--brand)]"
+                    required
+                  />
+                  <span>
+                    Acepto la{" "}
+                    <a
+                      href="/aviso-de-privacidad"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline underline-offset-4 hover:text-foreground"
+                    >
+                      Política de Tratamiento de Datos
+                    </a>{" "}
+                    <span className="text-brand">*</span>
+                  </span>
+                </label>
+              </div>
+
 
               {error && (
                 <p role="alert" className="text-sm text-destructive">
