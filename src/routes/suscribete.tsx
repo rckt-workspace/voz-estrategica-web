@@ -63,30 +63,53 @@ function SuscribetePage() {
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 
   function toggleInteres(value: string) {
     setIntereses((prev) =>
       prev.includes(value) ? prev.filter((i) => i !== value) : [...prev, value],
     );
+    setFieldErrors((prev) => ({ ...prev, intereses: "" }));
   }
+
+  const isComplete =
+    nombre.trim() !== "" &&
+    EMAIL_RE.test(email.trim()) &&
+    empresa.trim() !== "" &&
+    telefono.trim() !== "" &&
+    rol !== "" &&
+    intereses.length > 0 &&
+    consent;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
 
-    if (!nombre.trim()) return setError("Escribe tu nombre.");
-    if (!EMAIL_RE.test(email.trim())) return setError("Escribe un correo electrónico válido.");
-    if (!consent) return setError("Debes aceptar la Política de Tratamiento de Datos.");
+    const errs: Record<string, string> = {};
+    if (!nombre.trim()) errs.nombre = "Este campo es obligatorio";
+    if (!email.trim()) errs.email = "Este campo es obligatorio";
+    else if (!EMAIL_RE.test(email.trim())) errs.email = "Escribe un correo electrónico válido";
+    if (!empresa.trim()) errs.empresa = "Este campo es obligatorio";
+    if (!telefono.trim()) errs.telefono = "Este campo es obligatorio";
+    if (!rol) errs.rol = "Este campo es obligatorio";
+    if (intereses.length === 0) errs.intereses = "Selecciona al menos una opción";
+    if (!consent) errs.consent = "Debes aceptar la Política de Tratamiento de Datos";
+
+    setFieldErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setError("Completa los campos obligatorios.");
+      return;
+    }
 
     setLoading(true);
     try {
       const { error: dbError } = await publicBackend.rpc("subscribe_newsletter", {
         p_nombre: nombre.trim().slice(0, 200),
         p_email: email.trim().toLowerCase().slice(0, 320),
-        p_empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
-        p_rol: rol || undefined,
-        p_telefono: telefono.trim() ? telefono.trim().slice(0, 40) : undefined,
+        p_empresa: empresa.trim().slice(0, 200),
+        p_rol: rol,
+        p_telefono: telefono.trim().slice(0, 40),
         p_intereses: intereses,
         p_source: "suscribete",
       });
