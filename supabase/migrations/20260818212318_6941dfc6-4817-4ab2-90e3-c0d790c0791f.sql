@@ -1,0 +1,1 @@
+ALTER TABLE public.suscriptores_newsletter ADD COLUMN activo BOOLEAN NOT NULL DEFAULT true;
