@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
+import { Route as SuscribeteRouteImport } from './routes/suscribete'
 import { Route as SolucionesRouteImport } from './routes/soluciones'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RecursosRouteImport } from './routes/recursos'
@@ -43,6 +44,11 @@ import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speaker
 const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
   id: '/terminos-y-condiciones',
   path: '/terminos-y-condiciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuscribeteRoute = SuscribeteRouteImport.update({
+  id: '/suscribete',
+  path: '/suscribete',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolucionesRoute = SolucionesRouteImport.update({
@@ -211,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/soluciones': typeof SolucionesRoute
+  '/suscribete': typeof SuscribeteRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
@@ -242,6 +249,7 @@ export interface FileRoutesByTo {
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/soluciones': typeof SolucionesRoute
+  '/suscribete': typeof SuscribeteRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
@@ -275,6 +283,7 @@ export interface FileRoutesById {
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/soluciones': typeof SolucionesRoute
+  '/suscribete': typeof SuscribeteRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
   '/admin/libros': typeof AdminLibrosRoute
@@ -309,6 +318,7 @@ export interface FileRouteTypes {
     | '/recursos'
     | '/sitemap.xml'
     | '/soluciones'
+    | '/suscribete'
     | '/terminos-y-condiciones'
     | '/admin/eventos'
     | '/admin/libros'
@@ -340,6 +350,7 @@ export interface FileRouteTypes {
     | '/recursos'
     | '/sitemap.xml'
     | '/soluciones'
+    | '/suscribete'
     | '/terminos-y-condiciones'
     | '/admin/eventos'
     | '/admin/libros'
@@ -372,6 +383,7 @@ export interface FileRouteTypes {
     | '/recursos'
     | '/sitemap.xml'
     | '/soluciones'
+    | '/suscribete'
     | '/terminos-y-condiciones'
     | '/admin/eventos'
     | '/admin/libros'
@@ -405,6 +417,7 @@ export interface RootRouteChildren {
   RecursosRoute: typeof RecursosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolucionesRoute: typeof SolucionesRoute
+  SuscribeteRoute: typeof SuscribeteRoute
   TerminosYCondicionesRoute: typeof TerminosYCondicionesRoute
   MasterclassCheckoutRoute: typeof MasterclassCheckoutRoute
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
@@ -421,6 +434,13 @@ declare module '@tanstack/react-router' {
       path: '/terminos-y-condiciones'
       fullPath: '/terminos-y-condiciones'
       preLoaderRoute: typeof TerminosYCondicionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suscribete': {
+      id: '/suscribete'
+      path: '/suscribete'
+      fullPath: '/suscribete'
+      preLoaderRoute: typeof SuscribeteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/soluciones': {
@@ -667,6 +687,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecursosRoute: RecursosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolucionesRoute: SolucionesRoute,
+  SuscribeteRoute: SuscribeteRoute,
   TerminosYCondicionesRoute: TerminosYCondicionesRoute,
   MasterclassCheckoutRoute: MasterclassCheckoutRoute,
   MasterclassGraciasRoute: MasterclassGraciasRoute,
