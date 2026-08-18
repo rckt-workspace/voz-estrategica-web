@@ -231,8 +231,9 @@ function SuscribetePage() {
               <div className="rounded-3xl border border-foreground/10 bg-card p-6 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] md:p-8">
                 <p className="font-display text-lg uppercase">¡Listo!</p>
                 <p className="mt-2 text-muted-foreground">
-                  Revisa tu correo para confirmar tu suscripción.
+                  Ya estás suscrito a nuestro newsletter.
                 </p>
+
                 <Link
                   to="/"
                   className="mt-6 inline-block text-sm underline underline-offset-4 hover:text-foreground"
