@@ -407,6 +407,45 @@ export type Database = {
         }
         Relationships: []
       }
+      suscriptores_newsletter: {
+        Row: {
+          consentimiento: boolean
+          created_at: string
+          email: string
+          empresa: string | null
+          id: string
+          intereses: string[]
+          nombre: string
+          rol: string | null
+          source: string | null
+          updated_at: string
+        }
+        Insert: {
+          consentimiento?: boolean
+          created_at?: string
+          email: string
+          empresa?: string | null
+          id?: string
+          intereses?: string[]
+          nombre: string
+          rol?: string | null
+          source?: string | null
+          updated_at?: string
+        }
+        Update: {
+          consentimiento?: boolean
+          created_at?: string
+          email?: string
+          empresa?: string | null
+          id?: string
+          intereses?: string[]
+          nombre?: string
+          rol?: string | null
+          source?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
