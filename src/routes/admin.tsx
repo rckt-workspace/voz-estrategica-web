@@ -90,6 +90,7 @@ function AdminLayout() {
             ["/admin", "Solicitudes"],
             ["/admin/leads-mx", "Leads MX"],
             ["/admin/suscriptores", "Suscriptores"],
+            ["/admin/suscriptores-recursos", "Suscriptores recursos"],
             ["/admin/pedidos-libros", "Pedidos de libros"],
 
             // Ocultas por pedido del cliente (rutas siguen activas):

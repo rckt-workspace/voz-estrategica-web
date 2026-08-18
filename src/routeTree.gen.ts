@@ -35,6 +35,7 @@ import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
 import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
 import { Route as MasterclassCheckoutRouteImport } from './routes/masterclass.checkout'
 import { Route as AdminVentasMasterclassRouteImport } from './routes/admin.ventas-masterclass'
+import { Route as AdminSuscriptoresRecursosRouteImport } from './routes/admin.suscriptores-recursos'
 import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminPedidosLibrosRouteImport } from './routes/admin.pedidos-libros'
@@ -174,6 +175,12 @@ const AdminVentasMasterclassRoute = AdminVentasMasterclassRouteImport.update({
   path: '/ventas-masterclass',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSuscriptoresRecursosRoute =
+  AdminSuscriptoresRecursosRouteImport.update({
+    id: '/suscriptores-recursos',
+    path: '/suscriptores-recursos',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
   id: '/suscriptores',
   path: '/suscriptores',
@@ -237,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/admin/suscriptores-recursos': typeof AdminSuscriptoresRecursosRoute
   '/admin/ventas-masterclass': typeof AdminVentasMasterclassRoute
   '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
@@ -271,6 +279,7 @@ export interface FileRoutesByTo {
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/admin/suscriptores-recursos': typeof AdminSuscriptoresRecursosRoute
   '/admin/ventas-masterclass': typeof AdminVentasMasterclassRoute
   '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
@@ -307,6 +316,7 @@ export interface FileRoutesById {
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/admin/suscriptores-recursos': typeof AdminSuscriptoresRecursosRoute
   '/admin/ventas-masterclass': typeof AdminVentasMasterclassRoute
   '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
@@ -344,6 +354,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/admin/suscriptores-recursos'
     | '/admin/ventas-masterclass'
     | '/masterclass/checkout'
     | '/masterclass/gracias'
@@ -378,6 +389,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/admin/suscriptores-recursos'
     | '/admin/ventas-masterclass'
     | '/masterclass/checkout'
     | '/masterclass/gracias'
@@ -413,6 +425,7 @@ export interface FileRouteTypes {
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/admin/suscriptores-recursos'
     | '/admin/ventas-masterclass'
     | '/masterclass/checkout'
     | '/masterclass/gracias'
@@ -635,6 +648,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminVentasMasterclassRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/suscriptores-recursos': {
+      id: '/admin/suscriptores-recursos'
+      path: '/suscriptores-recursos'
+      fullPath: '/admin/suscriptores-recursos'
+      preLoaderRoute: typeof AdminSuscriptoresRecursosRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/suscriptores': {
       id: '/admin/suscriptores'
       path: '/suscriptores'
@@ -694,6 +714,7 @@ interface AdminRouteChildren {
   AdminPedidosLibrosRoute: typeof AdminPedidosLibrosRoute
   AdminSpeakersRoute: typeof AdminSpeakersRoute
   AdminSuscriptoresRoute: typeof AdminSuscriptoresRoute
+  AdminSuscriptoresRecursosRoute: typeof AdminSuscriptoresRecursosRoute
   AdminVentasMasterclassRoute: typeof AdminVentasMasterclassRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -705,6 +726,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminPedidosLibrosRoute: AdminPedidosLibrosRoute,
   AdminSpeakersRoute: AdminSpeakersRoute,
   AdminSuscriptoresRoute: AdminSuscriptoresRoute,
+  AdminSuscriptoresRecursosRoute: AdminSuscriptoresRecursosRoute,
   AdminVentasMasterclassRoute: AdminVentasMasterclassRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
