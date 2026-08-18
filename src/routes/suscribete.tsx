@@ -52,6 +52,21 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const inputClass =
   "w-full rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-base text-foreground outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30";
 
+const errorClass = "border-destructive focus:border-destructive focus:ring-destructive/30";
+
+function cx(...parts: Array<string | false | undefined>) {
+  return parts.filter(Boolean).join(" ");
+}
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return (
+    <p role="alert" className="mt-2 text-sm text-destructive">
+      {message}
+    </p>
+  );
+}
+
 function SuscribetePage() {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -63,30 +78,53 @@ function SuscribetePage() {
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [done, setDone] = useState(false);
 
   function toggleInteres(value: string) {
     setIntereses((prev) =>
       prev.includes(value) ? prev.filter((i) => i !== value) : [...prev, value],
     );
+    setFieldErrors((prev) => ({ ...prev, intereses: "" }));
   }
+
+  const isComplete =
+    nombre.trim() !== "" &&
+    EMAIL_RE.test(email.trim()) &&
+    empresa.trim() !== "" &&
+    telefono.trim() !== "" &&
+    rol !== "" &&
+    intereses.length > 0 &&
+    consent;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
 
-    if (!nombre.trim()) return setError("Escribe tu nombre.");
-    if (!EMAIL_RE.test(email.trim())) return setError("Escribe un correo electrónico válido.");
-    if (!consent) return setError("Debes aceptar la Política de Tratamiento de Datos.");
+    const errs: Record<string, string> = {};
+    if (!nombre.trim()) errs.nombre = "Este campo es obligatorio";
+    if (!email.trim()) errs.email = "Este campo es obligatorio";
+    else if (!EMAIL_RE.test(email.trim())) errs.email = "Escribe un correo electrónico válido";
+    if (!empresa.trim()) errs.empresa = "Este campo es obligatorio";
+    if (!telefono.trim()) errs.telefono = "Este campo es obligatorio";
+    if (!rol) errs.rol = "Este campo es obligatorio";
+    if (intereses.length === 0) errs.intereses = "Selecciona al menos una opción";
+    if (!consent) errs.consent = "Debes aceptar la Política de Tratamiento de Datos";
+
+    setFieldErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setError("Completa los campos obligatorios.");
+      return;
+    }
 
     setLoading(true);
     try {
       const { error: dbError } = await publicBackend.rpc("subscribe_newsletter", {
         p_nombre: nombre.trim().slice(0, 200),
         p_email: email.trim().toLowerCase().slice(0, 320),
-        p_empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
-        p_rol: rol || undefined,
-        p_telefono: telefono.trim() ? telefono.trim().slice(0, 40) : undefined,
+        p_empresa: empresa.trim().slice(0, 200),
+        p_rol: rol,
+        p_telefono: telefono.trim().slice(0, 40),
         p_intereses: intereses,
         p_source: "suscribete",
       });
@@ -216,13 +254,17 @@ function SuscribetePage() {
                 <input
                   id="nombre"
                   type="text"
-                  required
                   maxLength={200}
                   value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => {
+                    setNombre(e.target.value);
+                    setFieldErrors((p) => ({ ...p, nombre: "" }));
+                  }}
+                  aria-invalid={!!fieldErrors.nombre}
+                  className={cx(inputClass, fieldErrors.nombre && errorClass)}
                   autoComplete="name"
                 />
+                <FieldError message={fieldErrors.nombre} />
               </div>
 
               <div>
@@ -232,33 +274,42 @@ function SuscribetePage() {
                 <input
                   id="email"
                   type="email"
-                  required
                   maxLength={320}
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setFieldErrors((p) => ({ ...p, email: "" }));
+                  }}
+                  aria-invalid={!!fieldErrors.email}
+                  className={cx(inputClass, fieldErrors.email && errorClass)}
                   autoComplete="email"
                 />
+                <FieldError message={fieldErrors.email} />
               </div>
 
               <div>
                 <label htmlFor="empresa" className="mb-2 block text-sm font-medium text-foreground">
-                  Empresa <span className="text-muted-foreground">(opcional)</span>
+                  Empresa <span className="text-brand">*</span>
                 </label>
                 <input
                   id="empresa"
                   type="text"
                   maxLength={200}
                   value={empresa}
-                  onChange={(e) => setEmpresa(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => {
+                    setEmpresa(e.target.value);
+                    setFieldErrors((p) => ({ ...p, empresa: "" }));
+                  }}
+                  aria-invalid={!!fieldErrors.empresa}
+                  className={cx(inputClass, fieldErrors.empresa && errorClass)}
                   autoComplete="organization"
                 />
+                <FieldError message={fieldErrors.empresa} />
               </div>
 
               <div>
                 <label htmlFor="telefono" className="mb-2 block text-sm font-medium text-foreground">
-                  Teléfono <span className="text-muted-foreground">(opcional)</span>
+                  Teléfono <span className="text-brand">*</span>
                 </label>
                 <input
                   id="telefono"
@@ -267,22 +318,30 @@ function SuscribetePage() {
                   maxLength={40}
                   placeholder="+57 300 1234567"
                   value={telefono}
-                  onChange={(e) => setTelefono(e.target.value.replace(/[^\d+\s()-]/g, ""))}
-                  className={inputClass}
+                  onChange={(e) => {
+                    setTelefono(e.target.value.replace(/[^\d+\s()-]/g, ""));
+                    setFieldErrors((p) => ({ ...p, telefono: "" }));
+                  }}
+                  aria-invalid={!!fieldErrors.telefono}
+                  className={cx(inputClass, fieldErrors.telefono && errorClass)}
                   autoComplete="tel"
                 />
+                <FieldError message={fieldErrors.telefono} />
               </div>
 
               <div>
-
                 <label htmlFor="rol" className="mb-2 block text-sm font-medium text-foreground">
-                  Rol <span className="text-muted-foreground">(opcional)</span>
+                  Rol <span className="text-brand">*</span>
                 </label>
                 <select
                   id="rol"
                   value={rol}
-                  onChange={(e) => setRol(e.target.value)}
-                  className={inputClass}
+                  onChange={(e) => {
+                    setRol(e.target.value);
+                    setFieldErrors((p) => ({ ...p, rol: "" }));
+                  }}
+                  aria-invalid={!!fieldErrors.rol}
+                  className={cx(inputClass, fieldErrors.rol && errorClass)}
                 >
                   <option value="">Selecciona una opción</option>
                   {ROLES.map((r) => (
@@ -291,18 +350,22 @@ function SuscribetePage() {
                     </option>
                   ))}
                 </select>
+                <FieldError message={fieldErrors.rol} />
               </div>
 
               <fieldset>
                 <legend className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
                   <Sparkles className="h-4 w-4 text-brand" aria-hidden="true" />
-                  Intereses <span className="text-muted-foreground">(opcional)</span>
+                  Intereses <span className="text-brand">*</span>
                 </legend>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {INTERESES.map((i) => (
                     <label
                       key={i}
-                      className="flex cursor-pointer items-center gap-3 rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-sm transition-colors hover:border-brand"
+                      className={cx(
+                        "flex cursor-pointer items-center gap-3 rounded-2xl border bg-card px-4 py-3 text-sm transition-colors hover:border-brand",
+                        fieldErrors.intereses ? "border-destructive" : "border-foreground/15",
+                      )}
                     >
                       <input
                         type="checkbox"
@@ -314,17 +377,25 @@ function SuscribetePage() {
                     </label>
                   ))}
                 </div>
+                <FieldError message={fieldErrors.intereses} />
               </fieldset>
 
-              <div className="flex items-start gap-3 rounded-2xl border border-foreground/10 bg-brand/[0.07] px-4 py-3">
+              <div
+                className={cx(
+                  "flex items-start gap-3 rounded-2xl border bg-brand/[0.07] px-4 py-3",
+                  fieldErrors.consent ? "border-destructive" : "border-foreground/10",
+                )}
+              >
                 <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
                 <label className="flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
                   <input
                     type="checkbox"
                     checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
+                    onChange={(e) => {
+                      setConsent(e.target.checked);
+                      setFieldErrors((p) => ({ ...p, consent: "" }));
+                    }}
                     className="mt-1 h-4 w-4 rounded accent-[var(--brand)]"
-                    required
                   />
                   <span>
                     Acepto la{" "}
@@ -340,7 +411,7 @@ function SuscribetePage() {
                   </span>
                 </label>
               </div>
-
+              <FieldError message={fieldErrors.consent} />
 
               {error && (
                 <p role="alert" className="text-sm text-destructive">
@@ -350,7 +421,7 @@ function SuscribetePage() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !isComplete}
                 className="bubble bubble-black w-full justify-center py-4 text-base disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? "Enviando…" : "Suscribirme"}
