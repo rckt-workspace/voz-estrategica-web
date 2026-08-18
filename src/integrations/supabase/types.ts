@@ -418,6 +418,7 @@ export type Database = {
           nombre: string
           rol: string | null
           source: string | null
+          telefono: string | null
           updated_at: string
         }
         Insert: {
@@ -430,6 +431,7 @@ export type Database = {
           nombre: string
           rol?: string | null
           source?: string | null
+          telefono?: string | null
           updated_at?: string
         }
         Update: {
@@ -442,6 +444,7 @@ export type Database = {
           nombre?: string
           rol?: string | null
           source?: string | null
+          telefono?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -480,17 +483,30 @@ export type Database = {
         }
         Returns: boolean
       }
-      subscribe_newsletter: {
-        Args: {
-          p_email: string
-          p_empresa?: string
-          p_intereses?: string[]
-          p_nombre: string
-          p_rol?: string
-          p_source?: string
-        }
-        Returns: undefined
-      }
+      subscribe_newsletter:
+        | {
+            Args: {
+              p_email: string
+              p_empresa?: string
+              p_intereses?: string[]
+              p_nombre: string
+              p_rol?: string
+              p_source?: string
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              p_email: string
+              p_empresa?: string
+              p_intereses?: string[]
+              p_nombre: string
+              p_rol?: string
+              p_source?: string
+              p_telefono?: string
+            }
+            Returns: undefined
+          }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
