@@ -20,7 +20,7 @@ Deno.serve(async (req) => {
   if (!RESEND) return new Response("Missing RESEND_API_KEY", { status: 500 });
 
   // Validar RESEND_FROM_EMAIL
-  const FROM = Deno.env.get("RESEND_FROM_EMAIL") || "Voz Estratégica <onboarding@resend.dev>";
+  const FROM = Deno.env.get("RESEND_FROM_EMAIL") || "Voz Estratégica <send@vozestrategica.com>";
 
   // Obtener destino de notificación
   const NOTIFY_TO = Deno.env.get("NOTIFY_TO_EMAIL") || Deno.env.get("MASTERCLASS_NOTIFY_TO") || "";
