@@ -20,6 +20,8 @@ export const newsletterAdminEmailSchema = z.object({
   email: z.string().trim().email().max(320),
   empresa: z.string().trim().max(200).optional(),
   rol: z.string().trim().max(120).optional(),
+  telefono: z.string().trim().max(40).optional(),
+
   intereses: z.array(z.string().trim().max(120)).max(20).optional(),
 });
 
@@ -44,6 +46,8 @@ export async function sendNewsletterAdminNotification(data: NewsletterAdminEmail
     ["Nombre", data.nombre],
     ["Correo", data.email],
     ["Empresa", data.empresa?.trim() || "No especificada"],
+    ["Teléfono", data.telefono?.trim() || "No especificado"],
+
     ["Rol", data.rol?.trim() || "No especificado"],
     [
       "Intereses",
