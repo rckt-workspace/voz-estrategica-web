@@ -181,15 +181,15 @@ function SuscribetePage() {
       />
 
       <header className="relative border-b border-border/60">
-        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-8 md:py-10">
+        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-3 md:py-4">
           <Link to="/" aria-label="Voz Estratégica — Ir al inicio">
-            <Logo className="h-16 w-auto md:h-24" />
+            <Logo className="h-11 w-auto md:h-14" />
           </Link>
         </div>
       </header>
 
-      <main className="relative flex-1 px-6 py-12 md:py-20">
-        <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16">
+      <main className="relative flex-1 px-6 py-6 md:py-10">
+        <div className="mx-auto grid max-w-6xl items-start gap-6 md:grid-cols-2 md:gap-12">
           {/* Columna de apoyo — arriba en mobile */}
           <div className="order-2 md:order-1 md:sticky md:top-16">
             <h1 className="font-display text-3xl uppercase leading-tight md:text-5xl">
