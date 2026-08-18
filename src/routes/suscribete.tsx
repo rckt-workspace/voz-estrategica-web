@@ -181,41 +181,41 @@ function SuscribetePage() {
       />
 
       <header className="relative border-b border-border/60">
-        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-8 md:py-10">
+        <div className="mx-auto flex max-w-6xl items-center justify-center px-6 py-3 md:py-4">
           <Link to="/" aria-label="Voz Estratégica — Ir al inicio">
-            <Logo className="h-16 w-auto md:h-24" />
+            <Logo className="h-11 w-auto md:h-14" />
           </Link>
         </div>
       </header>
 
-      <main className="relative flex-1 px-6 py-12 md:py-20">
-        <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16">
+      <main className="relative flex-1 px-6 py-6 md:py-10">
+        <div className="mx-auto grid max-w-6xl items-start gap-6 md:grid-cols-2 md:gap-12">
           {/* Columna de apoyo — arriba en mobile */}
-          <div className="order-2 md:order-1 md:sticky md:top-16">
-            <h1 className="font-display text-3xl uppercase leading-tight md:text-5xl">
+          <div className="order-2 md:order-1 md:sticky md:top-8">
+            <h1 className="font-display text-2xl uppercase leading-tight md:text-4xl">
               Súmate a la conversación
             </h1>
-            <p className="mt-3 text-muted-foreground md:text-lg">
+            <p className="mt-2 text-sm text-muted-foreground md:text-base">
               Ideas de liderazgo, comunicación y transformación, directo a tu correo.
             </p>
 
-            <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-foreground/15 bg-foreground/15">
+            <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-foreground/15 bg-foreground/15">
               {[
                 ["+1.500", "Conferencias dictadas"],
                 ["+500K", "Vidas impactadas"],
                 ["14", "Países"],
                 ["8", "Voces curadas"],
               ].map(([n, l]) => (
-                <div key={l} className="bg-card px-4 py-6">
-                  <div className="font-display text-3xl md:text-4xl">{n}</div>
-                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                <div key={l} className="bg-card px-4 py-4">
+                  <div className="font-display text-2xl md:text-3xl">{n}</div>
+                  <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {l}
                   </div>
                 </div>
               ))}
             </div>
 
-            <figure className="mt-8 border-l-2 border-brand pl-5">
+            <figure className="mt-5 border-l-2 border-brand pl-5">
               <blockquote className="font-display text-lg uppercase leading-snug md:text-xl">
                 “La voz correcta, en el momento correcto, mueve organizaciones.”
               </blockquote>
@@ -243,7 +243,7 @@ function SuscribetePage() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="space-y-6 rounded-3xl border border-foreground/10 bg-card p-6 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] md:p-8"
+                className="space-y-4 rounded-3xl border border-foreground/10 bg-card p-5 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] md:p-6"
                 noValidate
               >
 
