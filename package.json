@@ -95,6 +95,7 @@
   "overrides": {
     "seroval": "^1.5.6",
     "seroval-plugins": "^1.5.6",
-    "undici": "^7.29.0"
+    "undici": "^7.29.0",
+    "brace-expansion": "^5.0.9"
   }
 }
