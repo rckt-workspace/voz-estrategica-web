@@ -276,7 +276,6 @@ function SuscribetePage() {
                 </div>
               </fieldset>
 
-              <label className="flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
               <div className="flex items-start gap-3 rounded-2xl border border-foreground/10 bg-brand/[0.07] px-4 py-3">
                 <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
                 <label className="flex cursor-pointer items-start gap-3 text-sm text-muted-foreground">
