@@ -1,0 +1,1 @@
+DELETE FROM public.suscriptores_newsletter WHERE email = 'qa.test.final@example.com';
