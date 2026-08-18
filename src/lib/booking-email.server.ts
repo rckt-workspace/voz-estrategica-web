@@ -11,7 +11,7 @@ import { z } from "zod";
  */
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
-const DEFAULT_FROM = "Voz Estratégica <onboarding@resend.dev>";
+const DEFAULT_FROM = "Voz Estratégica <send@vozestrategica.com>";
 const DEFAULT_TO = "tatinsu83@gmail.com";
 
 export const bookingEmailSchema = z.object({
