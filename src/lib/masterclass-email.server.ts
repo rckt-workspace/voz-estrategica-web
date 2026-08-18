@@ -15,7 +15,7 @@
  */
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
-const DEFAULT_FROM = "Voz Estratégica <send@vozestrategica.com>";
+const DEFAULT_FROM = "Voz Estratégica <onboarding@resend.dev>";
 
 export const MASTERCLASS_PRODUCT_NAME = "Grabación Masterclass: De clientes a fans";
 export const MASTERCLASS_PRICE_USD = 19;
