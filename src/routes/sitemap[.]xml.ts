@@ -27,6 +27,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/programas", changefreq: "monthly", priority: "0.8" },
           { path: "/recursos", changefreq: "weekly", priority: "0.7" },
           { path: "/contratar", changefreq: "monthly", priority: "0.8" },
+          { path: "/suscribete", changefreq: "monthly", priority: "0.6" },
           { path: "/masterclass-de-clientes-a-fans", changefreq: "weekly", priority: "0.8" },
           { path: "/mx/diego-camacho", changefreq: "monthly", priority: "0.8" },
           { path: "/aviso-de-privacidad", changefreq: "yearly", priority: "0.3" },
