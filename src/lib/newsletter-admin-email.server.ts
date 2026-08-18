@@ -90,18 +90,29 @@ ${rows.map(([k, v]) => `${k}: ${v}`).join("\n")}
 
 Este correo se generó automáticamente desde el formulario de suscripción en vozestrategica.com/suscribete`;
 
-  const res = await fetch(RESEND_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject: "Nueva suscripción — Newsletter Voz Estratégica",
-      html,
-      text,
-      ...(replyTo ? { reply_to: replyTo } : {}),
-    }),
-  });
+  const send = (fromAddress: string) =>
+    fetch(RESEND_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({
+        from: fromAddress,
+        to: [to],
+        subject: "Nueva suscripción — Newsletter Voz Estratégica",
+        html,
+        text,
+        ...(replyTo ? { reply_to: replyTo } : {}),
+      }),
+    });
+
+  let res = await send(from);
+
+  // Si el dominio del remitente configurado aún no está verificado en Resend,
+  // reintentamos con el remitente verificado para no perder la notificación.
+  if (!res.ok && res.status === 403 && from !== FALLBACK_FROM) {
+    const body = await res.text();
+    console.error(`[newsletter-admin-email] remitente rechazado [403]: ${body}. Reintentando.`);
+    res = await send(FALLBACK_FROM);
+  }
 
   if (!res.ok) {
     const body = await res.text();
