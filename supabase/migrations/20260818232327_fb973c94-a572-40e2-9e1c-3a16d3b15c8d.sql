@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.subscribe_newsletter(text, text, text, text, text[], text);

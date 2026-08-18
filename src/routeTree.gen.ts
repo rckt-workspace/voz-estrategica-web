@@ -34,10 +34,12 @@ import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
 import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
 import { Route as MasterclassCheckoutRouteImport } from './routes/masterclass.checkout'
+import { Route as AdminVentasMasterclassRouteImport } from './routes/admin.ventas-masterclass'
 import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
 import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
 import { Route as AdminPedidosLibrosRouteImport } from './routes/admin.pedidos-libros'
 import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
+import { Route as AdminLeadsMxRouteImport } from './routes/admin.leads-mx'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
 import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
@@ -167,6 +169,11 @@ const MasterclassCheckoutRoute = MasterclassCheckoutRouteImport.update({
   path: '/masterclass/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminVentasMasterclassRoute = AdminVentasMasterclassRouteImport.update({
+  id: '/ventas-masterclass',
+  path: '/ventas-masterclass',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
   id: '/suscriptores',
   path: '/suscriptores',
@@ -185,6 +192,11 @@ const AdminPedidosLibrosRoute = AdminPedidosLibrosRouteImport.update({
 const AdminLibrosRoute = AdminLibrosRouteImport.update({
   id: '/libros',
   path: '/libros',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeadsMxRoute = AdminLeadsMxRouteImport.update({
+  id: '/leads-mx',
+  path: '/leads-mx',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminEventosRoute = AdminEventosRouteImport.update({
@@ -220,10 +232,12 @@ export interface FileRoutesByFullPath {
   '/suscribete': typeof SuscribeteRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
+  '/admin/leads-mx': typeof AdminLeadsMxRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/admin/ventas-masterclass': typeof AdminVentasMasterclassRoute
   '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
@@ -252,10 +266,12 @@ export interface FileRoutesByTo {
   '/suscribete': typeof SuscribeteRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
+  '/admin/leads-mx': typeof AdminLeadsMxRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/admin/ventas-masterclass': typeof AdminVentasMasterclassRoute
   '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
@@ -286,10 +302,12 @@ export interface FileRoutesById {
   '/suscribete': typeof SuscribeteRoute
   '/terminos-y-condiciones': typeof TerminosYCondicionesRoute
   '/admin/eventos': typeof AdminEventosRoute
+  '/admin/leads-mx': typeof AdminLeadsMxRoute
   '/admin/libros': typeof AdminLibrosRoute
   '/admin/pedidos-libros': typeof AdminPedidosLibrosRoute
   '/admin/speakers': typeof AdminSpeakersRoute
   '/admin/suscriptores': typeof AdminSuscriptoresRoute
+  '/admin/ventas-masterclass': typeof AdminVentasMasterclassRoute
   '/masterclass/checkout': typeof MasterclassCheckoutRoute
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
@@ -321,10 +339,12 @@ export interface FileRouteTypes {
     | '/suscribete'
     | '/terminos-y-condiciones'
     | '/admin/eventos'
+    | '/admin/leads-mx'
     | '/admin/libros'
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/admin/ventas-masterclass'
     | '/masterclass/checkout'
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
@@ -353,10 +373,12 @@ export interface FileRouteTypes {
     | '/suscribete'
     | '/terminos-y-condiciones'
     | '/admin/eventos'
+    | '/admin/leads-mx'
     | '/admin/libros'
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/admin/ventas-masterclass'
     | '/masterclass/checkout'
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
@@ -386,10 +408,12 @@ export interface FileRouteTypes {
     | '/suscribete'
     | '/terminos-y-condiciones'
     | '/admin/eventos'
+    | '/admin/leads-mx'
     | '/admin/libros'
     | '/admin/pedidos-libros'
     | '/admin/speakers'
     | '/admin/suscriptores'
+    | '/admin/ventas-masterclass'
     | '/masterclass/checkout'
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
@@ -604,6 +628,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MasterclassCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/ventas-masterclass': {
+      id: '/admin/ventas-masterclass'
+      path: '/ventas-masterclass'
+      fullPath: '/admin/ventas-masterclass'
+      preLoaderRoute: typeof AdminVentasMasterclassRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/suscriptores': {
       id: '/admin/suscriptores'
       path: '/suscriptores'
@@ -632,6 +663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLibrosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/leads-mx': {
+      id: '/admin/leads-mx'
+      path: '/leads-mx'
+      fullPath: '/admin/leads-mx'
+      preLoaderRoute: typeof AdminLeadsMxRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/eventos': {
       id: '/admin/eventos'
       path: '/eventos'
@@ -651,19 +689,23 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminEventosRoute: typeof AdminEventosRoute
+  AdminLeadsMxRoute: typeof AdminLeadsMxRoute
   AdminLibrosRoute: typeof AdminLibrosRoute
   AdminPedidosLibrosRoute: typeof AdminPedidosLibrosRoute
   AdminSpeakersRoute: typeof AdminSpeakersRoute
   AdminSuscriptoresRoute: typeof AdminSuscriptoresRoute
+  AdminVentasMasterclassRoute: typeof AdminVentasMasterclassRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminEventosRoute: AdminEventosRoute,
+  AdminLeadsMxRoute: AdminLeadsMxRoute,
   AdminLibrosRoute: AdminLibrosRoute,
   AdminPedidosLibrosRoute: AdminPedidosLibrosRoute,
   AdminSpeakersRoute: AdminSpeakersRoute,
   AdminSuscriptoresRoute: AdminSuscriptoresRoute,
+  AdminVentasMasterclassRoute: AdminVentasMasterclassRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
