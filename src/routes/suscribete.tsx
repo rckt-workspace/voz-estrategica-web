@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShieldCheck, Sparkles } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { publicBackend } from "@/lib/public-backend-client";
+import { notifyNewsletterAdmin } from "@/lib/newsletter-admin-email.functions";
 import { trackGA4Event } from "@/lib/ga4";
 
 const CANONICAL = "https://vozestrategica.com/suscribete";
@@ -132,7 +133,7 @@ function SuscribetePage() {
       <main className="relative flex-1 px-6 py-12 md:py-20">
         <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16">
           {/* Columna de apoyo — arriba en mobile */}
-          <div className="order-1 md:order-1 md:sticky md:top-16">
+          <div className="order-2 md:order-1 md:sticky md:top-16">
             <h1 className="font-display text-3xl uppercase leading-tight md:text-5xl">
               Súmate a la conversación
             </h1>
@@ -167,7 +168,7 @@ function SuscribetePage() {
           </div>
 
           {/* Columna del formulario */}
-          <div className="order-2 md:order-2">
+          <div className="order-1 md:order-2">
             {done ? (
               <div className="rounded-3xl border border-foreground/10 bg-card p-6 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] md:p-8">
                 <p className="font-display text-lg uppercase">¡Listo!</p>
