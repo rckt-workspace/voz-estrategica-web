@@ -14,7 +14,7 @@ import { z } from "zod";
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 // Remitente por defecto verificado por Resend. Cuando vozestrategica.com quede
 // verificado en Resend, basta con definir RESEND_FROM_EMAIL en el servidor.
-const DEFAULT_FROM = "Voz Estratégica <onboarding@resend.dev>";
+const DEFAULT_FROM = "Voz Estratégica <send@vozestrategica.com>";
 const FALLBACK_FROM = "Voz Estratégica <onboarding@resend.dev>";
 const DEFAULT_TO = "tatinsu83@gmail.com";
 
