@@ -315,10 +315,12 @@ function SuscribetePage() {
               >
                 {loading ? "Enviando…" : "Suscribirme"}
               </button>
-            </form>
-          )}
+              </form>
+            )}
+          </div>
         </div>
       </main>
+
 
       <footer className="border-t border-border/60 px-6 py-6">
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 text-xs text-muted-foreground sm:flex-row sm:justify-between">
