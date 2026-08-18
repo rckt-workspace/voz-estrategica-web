@@ -17,7 +17,12 @@ import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieConsent } from "@/components/CookieConsent";
 import { initConsentMode } from "@/lib/consent";
-import { initMetaPixel, trackEvent, META_PIXEL_ID } from "@/lib/meta-pixel";
+import {
+  initMetaPixel,
+  trackEvent,
+  META_PIXEL_ID,
+  trackPageView as trackMetaPageView,
+} from "@/lib/meta-pixel";
 import { initGA4 } from "@/lib/ga4";
 import { trackPageView, trackWhatsAppContact } from "@/lib/analytics";
 import { getConsentBootstrapScript, getGTMScripts } from "@/lib/gtm";
