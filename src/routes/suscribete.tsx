@@ -77,20 +77,14 @@ function SuscribetePage() {
 
     setLoading(true);
     try {
-      const { error: dbError } = await publicBackend
-        .from("suscriptores_newsletter")
-        .upsert(
-          {
-            nombre: nombre.trim().slice(0, 200),
-            email: email.trim().toLowerCase().slice(0, 320),
-            empresa: empresa.trim() ? empresa.trim().slice(0, 200) : null,
-            rol: rol || null,
-            intereses,
-            consentimiento: true,
-            source: "suscribete",
-          },
-          { onConflict: "email" },
-        );
+      const { error: dbError } = await publicBackend.rpc("subscribe_newsletter", {
+        p_nombre: nombre.trim().slice(0, 200),
+        p_email: email.trim().toLowerCase().slice(0, 320),
+        p_empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
+        p_rol: rol || undefined,
+        p_intereses: intereses,
+        p_source: "suscribete",
+      });
 
       if (dbError) throw dbError;
 
