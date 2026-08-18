@@ -187,8 +187,15 @@ function Shell() {
   }, []);
 
   // Track PageView on route change (SPA)
+  const firstPageView = useRef(true);
   useEffect(() => {
     trackPageView();
+    // initMetaPixel() already fires the first Meta PageView on load
+    if (firstPageView.current) {
+      firstPageView.current = false;
+      return;
+    }
+    trackMetaPageView();
   }, [location.pathname]);
 
   const isAdmin = normalizedPathname.startsWith("/admin");
