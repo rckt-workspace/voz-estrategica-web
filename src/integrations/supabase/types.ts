@@ -409,6 +409,7 @@ export type Database = {
       }
       suscriptores_newsletter: {
         Row: {
+          activo: boolean
           consentimiento: boolean
           created_at: string
           email: string
@@ -422,6 +423,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          activo?: boolean
           consentimiento?: boolean
           created_at?: string
           email: string
@@ -435,6 +437,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          activo?: boolean
           consentimiento?: boolean
           created_at?: string
           email?: string
