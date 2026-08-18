@@ -57,6 +57,8 @@ function SuscribetePage() {
   const [email, setEmail] = useState("");
   const [empresa, setEmpresa] = useState("");
   const [rol, setRol] = useState("");
+  const [telefono, setTelefono] = useState("");
+
   const [intereses, setIntereses] = useState<string[]>([]);
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -84,6 +86,7 @@ function SuscribetePage() {
         p_email: email.trim().toLowerCase().slice(0, 320),
         p_empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
         p_rol: rol || undefined,
+        p_telefono: telefono.trim() ? telefono.trim().slice(0, 40) : undefined,
         p_intereses: intereses,
         p_source: "suscribete",
       });
@@ -97,12 +100,14 @@ function SuscribetePage() {
             email: email.trim().toLowerCase().slice(0, 320),
             empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
             rol: rol || undefined,
+            telefono: telefono.trim() ? telefono.trim().slice(0, 40) : undefined,
             intereses,
           },
         });
       } catch {
         // La suscripción ya quedó guardada; un fallo de correo no debe bloquear al usuario.
       }
+
 
 
       trackGA4Event("newsletter_signup", {
@@ -252,6 +257,24 @@ function SuscribetePage() {
               </div>
 
               <div>
+                <label htmlFor="telefono" className="mb-2 block text-sm font-medium text-foreground">
+                  Teléfono <span className="text-muted-foreground">(opcional)</span>
+                </label>
+                <input
+                  id="telefono"
+                  type="tel"
+                  inputMode="tel"
+                  maxLength={40}
+                  placeholder="+57 300 1234567"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value.replace(/[^\d+\s()-]/g, ""))}
+                  className={inputClass}
+                  autoComplete="tel"
+                />
+              </div>
+
+              <div>
+
                 <label htmlFor="rol" className="mb-2 block text-sm font-medium text-foreground">
                   Rol <span className="text-muted-foreground">(opcional)</span>
                 </label>
