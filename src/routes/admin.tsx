@@ -86,9 +86,12 @@ function AdminLayout() {
 
         <nav className="mb-8 flex flex-wrap gap-2">
           {[
+            ["/admin/ventas-masterclass", "Ventas masterclass"],
             ["/admin", "Solicitudes"],
+            ["/admin/leads-mx", "Leads MX"],
             ["/admin/suscriptores", "Suscriptores"],
             ["/admin/pedidos-libros", "Pedidos de libros"],
+
             // Ocultas por pedido del cliente (rutas siguen activas):
             // ["/admin/eventos", "Eventos"],
             // ["/admin/speakers", "Speakers"],

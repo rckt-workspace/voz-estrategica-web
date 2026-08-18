@@ -24,9 +24,10 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
     const { error } = await supabase.rpc("subscribe_newsletter", {
       p_nombre: nombre,
       p_email: email,
-      p_empresa: null,
-      p_rol: null,
-      p_telefono: null,
+      p_empresa: undefined,
+      p_rol: undefined,
+      p_telefono: undefined,
+
       p_intereses: [],
       p_source: data.source ?? "recursos",
     });
