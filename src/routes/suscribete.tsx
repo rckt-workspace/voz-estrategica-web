@@ -243,7 +243,7 @@ function SuscribetePage() {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="space-y-6 rounded-3xl border border-foreground/10 bg-card p-6 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] md:p-8"
+                className="space-y-4 rounded-3xl border border-foreground/10 bg-card p-5 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] md:p-6"
                 noValidate
               >
 
