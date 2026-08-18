@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ShieldCheck, Sparkles } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { publicBackend } from "@/lib/public-backend-client";
 import { trackGA4Event } from "@/lib/ga4";
