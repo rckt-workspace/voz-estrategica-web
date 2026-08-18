@@ -480,6 +480,17 @@ export type Database = {
         }
         Returns: boolean
       }
+      subscribe_newsletter: {
+        Args: {
+          p_email: string
+          p_empresa?: string
+          p_intereses?: string[]
+          p_nombre: string
+          p_rol?: string
+          p_source?: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
