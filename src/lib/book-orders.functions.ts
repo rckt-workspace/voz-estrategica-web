@@ -211,7 +211,7 @@ ${p.formato === "fisico" ? `<h3>Envío</h3><p>${p.direccion}<br>${p.ciudad}, ${p
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Voz Estratégica <onboarding@resend.dev>",
+      from: process.env["RESEND_FROM_EMAIL"] || "Voz Estratégica <send@vozestrategica.com>",
       to: ["contacto@vozestrategica.com"],
       subject: `Pedido aprobado: ${p.libro}`,
       html,
