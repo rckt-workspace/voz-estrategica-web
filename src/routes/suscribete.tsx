@@ -254,7 +254,8 @@ function SuscribetePage() {
               </div>
 
               <fieldset>
-                <legend className="mb-3 block text-sm font-medium text-foreground">
+                <legend className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
+                  <Sparkles className="h-4 w-4 text-brand" aria-hidden="true" />
                   Intereses <span className="text-muted-foreground">(opcional)</span>
                 </legend>
                 <div className="grid gap-2 sm:grid-cols-2">
