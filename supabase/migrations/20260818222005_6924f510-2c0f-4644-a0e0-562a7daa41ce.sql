@@ -1,0 +1,1 @@
+delete from public.suscriptores_newsletter where email like 'qa.remitente%';
