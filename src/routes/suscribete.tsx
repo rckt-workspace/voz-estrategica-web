@@ -80,8 +80,8 @@ function SuscribetePage() {
       const { error: dbError } = await publicBackend.rpc("subscribe_newsletter", {
         p_nombre: nombre.trim().slice(0, 200),
         p_email: email.trim().toLowerCase().slice(0, 320),
-        p_empresa: empresa.trim() ? empresa.trim().slice(0, 200) : null,
-        p_rol: rol || null,
+        p_empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
+        p_rol: rol || undefined,
         p_intereses: intereses,
         p_source: "suscribete",
       });
