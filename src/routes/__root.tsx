@@ -7,7 +7,7 @@ import {
   Scripts,
   useLocation,
 } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
