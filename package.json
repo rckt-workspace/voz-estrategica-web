@@ -16,7 +16,7 @@
     "node": ">=22"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.25.5",
+    "@cloudflare/vite-plugin": "^1.53.0",
     "@fontsource-variable/mada": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
     "@hookform/resolvers": "^5.2.2",
@@ -94,6 +94,7 @@
   },
   "overrides": {
     "seroval": "^1.5.6",
-    "seroval-plugins": "^1.5.6"
+    "seroval-plugins": "^1.5.6",
+    "undici": "^7.29.0"
   }
 }
