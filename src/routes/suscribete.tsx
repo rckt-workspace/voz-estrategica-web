@@ -48,7 +48,7 @@ const INTERESES = [
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 const inputClass =
-  "w-full rounded-md border border-border bg-background px-4 py-3 text-base outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30";
+  "w-full rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-base text-foreground outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30";
 
 function SuscribetePage() {
   const [nombre, setNombre] = useState("");
@@ -130,7 +130,7 @@ function SuscribetePage() {
           </p>
 
           {done ? (
-            <div className="mt-10 rounded-lg border border-primary bg-primary/10 p-6">
+            <div className="mt-10 rounded-2xl border border-foreground/15 bg-card p-6">
               <p className="font-display text-lg uppercase">¡Listo!</p>
               <p className="mt-2 text-muted-foreground">
                 Revisa tu correo para confirmar tu suscripción.
@@ -143,10 +143,10 @@ function SuscribetePage() {
               </Link>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mt-10 space-y-5" noValidate>
+            <form onSubmit={handleSubmit} className="mt-10 space-y-6" noValidate>
               <div>
-                <label htmlFor="nombre" className="mb-2 block text-sm font-medium">
-                  Nombre <span className="text-primary">*</span>
+                <label htmlFor="nombre" className="mb-2 block text-sm font-medium text-foreground">
+                  Nombre <span className="text-brand">*</span>
                 </label>
                 <input
                   id="nombre"
@@ -161,8 +161,8 @@ function SuscribetePage() {
               </div>
 
               <div>
-                <label htmlFor="email" className="mb-2 block text-sm font-medium">
-                  Correo electrónico <span className="text-primary">*</span>
+                <label htmlFor="email" className="mb-2 block text-sm font-medium text-foreground">
+                  Correo electrónico <span className="text-brand">*</span>
                 </label>
                 <input
                   id="email"
@@ -177,7 +177,7 @@ function SuscribetePage() {
               </div>
 
               <div>
-                <label htmlFor="empresa" className="mb-2 block text-sm font-medium">
+                <label htmlFor="empresa" className="mb-2 block text-sm font-medium text-foreground">
                   Empresa <span className="text-muted-foreground">(opcional)</span>
                 </label>
                 <input
@@ -192,7 +192,7 @@ function SuscribetePage() {
               </div>
 
               <div>
-                <label htmlFor="rol" className="mb-2 block text-sm font-medium">
+                <label htmlFor="rol" className="mb-2 block text-sm font-medium text-foreground">
                   Rol <span className="text-muted-foreground">(opcional)</span>
                 </label>
                 <select
@@ -211,20 +211,20 @@ function SuscribetePage() {
               </div>
 
               <fieldset>
-                <legend className="mb-3 block text-sm font-medium">
+                <legend className="mb-3 block text-sm font-medium text-foreground">
                   Intereses <span className="text-muted-foreground">(opcional)</span>
                 </legend>
                 <div className="grid gap-2 sm:grid-cols-2">
                   {INTERESES.map((i) => (
                     <label
                       key={i}
-                      className="flex cursor-pointer items-center gap-3 rounded-md border border-border px-3 py-2.5 text-sm transition hover:border-primary"
+                      className="flex cursor-pointer items-center gap-3 rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-sm transition-colors hover:border-brand"
                     >
                       <input
                         type="checkbox"
                         checked={intereses.includes(i)}
                         onChange={() => toggleInteres(i)}
-                        className="h-4 w-4 accent-primary"
+                        className="h-4 w-4 rounded accent-[var(--brand)]"
                       />
                       {i}
                     </label>
@@ -237,7 +237,7 @@ function SuscribetePage() {
                   type="checkbox"
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 h-4 w-4 accent-primary"
+                  className="mt-1 h-4 w-4 rounded accent-[var(--brand)]"
                   required
                 />
                 <span>
@@ -250,7 +250,7 @@ function SuscribetePage() {
                   >
                     Política de Tratamiento de Datos
                   </a>{" "}
-                  <span className="text-primary">*</span>
+                  <span className="text-brand">*</span>
                 </span>
               </label>
 
@@ -263,7 +263,7 @@ function SuscribetePage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-md bg-primary px-6 py-3.5 font-display text-sm uppercase tracking-widest text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                className="bubble bubble-black w-full justify-center py-4 text-base disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? "Enviando…" : "Suscribirme"}
               </button>
