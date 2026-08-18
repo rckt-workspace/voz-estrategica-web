@@ -234,8 +234,7 @@ export const listPedidosLibros = createServerFn({ method: "GET" })
     });
     if (!isAdmin) throw new Error("Forbidden");
 
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    let query = supabaseAdmin
+    let query = context.supabase
       .from("pedidos_libros")
       .select("*")
       .order("fecha_creacion", { ascending: false });
@@ -259,8 +258,7 @@ export const cancelBookOrder = createServerFn({ method: "POST" })
     });
     if (!isAdmin) throw new Error("Forbidden");
 
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: existing, error: readErr } = await supabaseAdmin
+    const { data: existing, error: readErr } = await context.supabase
       .from("pedidos_libros")
       .select("id, estado_pago")
       .eq("id", data.id)
@@ -272,7 +270,7 @@ export const cancelBookOrder = createServerFn({ method: "POST" })
     }
     if (existing.estado_pago === "cancelado") return { ok: true };
 
-    const { error } = await supabaseAdmin
+    const { error } = await context.supabase
       .from("pedidos_libros")
       .update({ estado_pago: "cancelado" })
       .eq("id", data.id);
