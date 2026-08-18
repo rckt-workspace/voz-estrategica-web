@@ -16,14 +16,22 @@ export const subscribeToNewsletter = createServerFn({ method: "POST" })
       process.env.SUPABASE_PUBLISHABLE_KEY!,
       { auth: { persistSession: false, autoRefreshToken: false } },
     );
-    const { error } = await supabase.from("subscribers").insert({
-      email: data.email.toLowerCase().trim(),
-      source: data.source ?? "recursos",
+    const email = data.email.toLowerCase().trim();
+    // Nombre es obligatorio en la tabla principal; el formulario rápido solo
+    // captura el correo, así que usamos la parte local del email.
+    const nombre = email.split("@")[0]?.slice(0, 200) || "Suscriptor";
+
+    const { error } = await supabase.rpc("subscribe_newsletter", {
+      p_nombre: nombre,
+      p_email: email,
+      p_empresa: undefined,
+      p_rol: undefined,
+      p_telefono: undefined,
+
+      p_intereses: [],
+      p_source: data.source ?? "recursos",
     });
     if (error) {
-      if (/duplicate|unique/i.test(error.message)) {
-        return { ok: true, duplicate: true } as const;
-      }
       throw new Error("No pudimos registrar tu suscripción");
     }
     return { ok: true, duplicate: false } as const;
