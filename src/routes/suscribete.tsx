@@ -90,6 +90,21 @@ function SuscribetePage() {
 
       if (dbError) throw dbError;
 
+      try {
+        await notifyNewsletterAdmin({
+          data: {
+            nombre: nombre.trim().slice(0, 200),
+            email: email.trim().toLowerCase().slice(0, 320),
+            empresa: empresa.trim() ? empresa.trim().slice(0, 200) : undefined,
+            rol: rol || undefined,
+            intereses,
+          },
+        });
+      } catch {
+        // La suscripción ya quedó guardada; un fallo de correo no debe bloquear al usuario.
+      }
+
+
       trackGA4Event("newsletter_signup", {
         method: "pagina_suscribete",
         rol: rol || "no_especificado",
