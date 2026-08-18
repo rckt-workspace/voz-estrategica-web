@@ -52,6 +52,21 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const inputClass =
   "w-full rounded-2xl border border-foreground/15 bg-card px-4 py-3 text-base text-foreground outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30";
 
+const errorClass = "border-destructive focus:border-destructive focus:ring-destructive/30";
+
+function cx(...parts: Array<string | false | undefined>) {
+  return parts.filter(Boolean).join(" ");
+}
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return (
+    <p role="alert" className="mt-2 text-sm text-destructive">
+      {message}
+    </p>
+  );
+}
+
 function SuscribetePage() {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
