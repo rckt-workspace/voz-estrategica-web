@@ -32,11 +32,34 @@ function trimStr(v: unknown, max = 200): string {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
 }
 
-export const getConfiguracion = createServerFn({ method: "GET" }).handler(async () => {
+// Cliente público del servidor (anon key). No requiere SUPABASE_SERVICE_ROLE_KEY,
+// por lo que funciona en Hostinger donde esa clave secreta no está disponible.
+// El acceso queda controlado por las políticas RLS de cada tabla.
+async function publicServerClient() {
   const { createClient } = await import("@supabase/supabase-js");
-  const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!, {
+  const url = process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"];
+  const key =
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    process.env["SUPABASE_ANON_KEY"] ||
+    process.env["VITE_SUPABASE_PUBLISHABLE_KEY"];
+  if (!url || !key) throw new Error("Backend no configurado (SUPABASE_URL / PUBLISHABLE_KEY)");
+  return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
+    global: {
+      fetch: (input: RequestInfo | URL, init?: RequestInit) => {
+        const h = new Headers(init?.headers);
+        if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) {
+          h.delete("Authorization");
+        }
+        h.set("apikey", key);
+        return fetch(input, { ...init, headers: h });
+      },
+    },
   });
+}
+
+export const getConfiguracion = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = await publicServerClient();
   const { data } = await supabase
     .from("configuracion")
     .select("flete_nacional")
@@ -44,6 +67,7 @@ export const getConfiguracion = createServerFn({ method: "GET" }).handler(async 
     .maybeSingle();
   return { flete_nacional: data?.flete_nacional ?? 12000 };
 });
+
 
 type CreateInput = {
   sku: string;
@@ -90,15 +114,16 @@ export const createBookOrder = createServerFn({ method: "POST" })
     if (!secret) throw new Error("BOLD_SECRET_KEY no configurado");
 
     const meta = CATALOG[data.sku as Sku];
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const supabase = await publicServerClient();
 
-    // Flete desde configuracion
-    const { data: cfg } = await supabaseAdmin
+    // Flete desde configuracion (lectura pública permitida por RLS)
+    const { data: cfg } = await supabase
       .from("configuracion")
       .select("flete_nacional")
       .limit(1)
       .maybeSingle();
     const flete = meta.formato === "fisico" ? (cfg?.flete_nacional ?? 12000) : 0;
+
 
     const subtotal = meta.precio * data.cantidad;
     const total = subtotal + flete;
@@ -111,7 +136,7 @@ export const createBookOrder = createServerFn({ method: "POST" })
       .update(`${orderId}${amountStr}${currency}${secret}`, "utf8")
       .digest("hex");
 
-    const { error } = await supabaseAdmin.from("pedidos_libros").insert({
+    const { error } = await supabase.from("pedidos_libros").insert({
       libro: meta.titulo,
       formato: meta.formato,
       nombre_completo: data.nombre,
@@ -152,37 +177,45 @@ export const recordBookOrderStatus = createServerFn({ method: "POST" })
     return { orderId, estado };
   })
   .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: existing } = await supabaseAdmin
-      .from("pedidos_libros")
-      .select(
-        "id, estado_pago, libro, formato, nombre_completo, email, telefono, direccion, ciudad, departamento, cantidad, total",
-      )
-      .eq("bold_order_id", data.orderId)
-      .maybeSingle();
-    if (!existing) return { ok: false, pedido: null as null | typeof existing };
+    // Se usa una operación segura de la base de datos (SECURITY DEFINER) para no
+    // depender de SUPABASE_SERVICE_ROLE_KEY, que no existe en producción (Hostinger).
+    const supabase = await publicServerClient();
+    const { data: row, error } = await supabase.rpc("confirm_book_order", {
+      p_order_id: data.orderId,
+      p_estado: data.estado,
+    });
+    if (error) throw new Error(error.message);
 
-    // No degradar un pedido aprobado
-    if (existing.estado_pago === "aprobado" && data.estado !== "aprobado") {
-      return { ok: true, pedido: existing };
-    }
-    if (existing.estado_pago !== data.estado) {
-      await supabaseAdmin
-        .from("pedidos_libros")
-        .update({ estado_pago: data.estado })
-        .eq("id", existing.id);
+    type Pedido = {
+      id: string;
+      estado_pago: string;
+      libro: string;
+      formato: string;
+      nombre_completo: string;
+      email: string;
+      telefono: string;
+      direccion: string | null;
+      ciudad: string | null;
+      departamento: string | null;
+      cantidad: number;
+      total: number;
+      _changed?: boolean;
+    };
+    const pedido = (row as Pedido | null) ?? null;
+    if (!pedido) return { ok: false, pedido: null as Pedido | null };
 
-      if (data.estado === "aprobado") {
-        // Envío de correo (opcional; no rompe el flujo si falla)
-        try {
-          await sendNotificationEmail(existing);
-        } catch (e) {
-          console.error("[book-order] email fail:", e);
-        }
+    if (pedido._changed && pedido.estado_pago === "aprobado") {
+      // Envío de correo (opcional; no rompe el flujo si falla)
+      try {
+        await sendNotificationEmail(pedido);
+      } catch (e) {
+        console.error("[book-order] email fail:", e);
       }
     }
-    return { ok: true, pedido: { ...existing, estado_pago: data.estado } };
+
+    return { ok: true, pedido };
   });
+
 
 async function sendNotificationEmail(p: {
   libro: string;

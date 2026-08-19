@@ -479,6 +479,10 @@ export type Database = {
     }
     Functions: {
       _notify_call: { Args: { fn: string; payload: Json }; Returns: undefined }
+      confirm_book_order: {
+        Args: { p_estado: string; p_order_id: string }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

@@ -1,0 +1,1 @@
+DELETE FROM public.pedidos_libros WHERE email = 'qa@test.com' AND nombre_completo = 'TEST QA';
