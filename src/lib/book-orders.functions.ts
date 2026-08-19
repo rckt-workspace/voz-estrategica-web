@@ -136,7 +136,7 @@ export const createBookOrder = createServerFn({ method: "POST" })
       .update(`${orderId}${amountStr}${currency}${secret}`, "utf8")
       .digest("hex");
 
-    const { error } = await supabaseAdmin.from("pedidos_libros").insert({
+    const { error } = await supabase.from("pedidos_libros").insert({
       libro: meta.titulo,
       formato: meta.formato,
       nombre_completo: data.nombre,
