@@ -177,37 +177,43 @@ export const recordBookOrderStatus = createServerFn({ method: "POST" })
     return { orderId, estado };
   })
   .handler(async ({ data }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: existing } = await supabaseAdmin
-      .from("pedidos_libros")
-      .select(
-        "id, estado_pago, libro, formato, nombre_completo, email, telefono, direccion, ciudad, departamento, cantidad, total",
-      )
-      .eq("bold_order_id", data.orderId)
-      .maybeSingle();
-    if (!existing) return { ok: false, pedido: null as null | typeof existing };
+    // Se usa una operación segura de la base de datos (SECURITY DEFINER) para no
+    // depender de SUPABASE_SERVICE_ROLE_KEY, que no existe en producción (Hostinger).
+    const supabase = await publicServerClient();
+    const { data: row, error } = await supabase.rpc("confirm_book_order", {
+      p_order_id: data.orderId,
+      p_estado: data.estado,
+    });
+    if (error) throw new Error(error.message);
 
-    // No degradar un pedido aprobado
-    if (existing.estado_pago === "aprobado" && data.estado !== "aprobado") {
-      return { ok: true, pedido: existing };
-    }
-    if (existing.estado_pago !== data.estado) {
-      await supabaseAdmin
-        .from("pedidos_libros")
-        .update({ estado_pago: data.estado })
-        .eq("id", existing.id);
+    type Pedido = {
+      id: string;
+      estado_pago: string;
+      libro: string;
+      formato: string;
+      nombre_completo: string;
+      email: string;
+      telefono: string;
+      direccion: string | null;
+      ciudad: string | null;
+      departamento: string | null;
+      cantidad: number;
+      total: number;
+    };
+    const pedido = (row as Pedido | null) ?? null;
+    if (!pedido) return { ok: false, pedido: null as Pedido | null };
 
-      if (data.estado === "aprobado") {
-        // Envío de correo (opcional; no rompe el flujo si falla)
-        try {
-          await sendNotificationEmail(existing);
-        } catch (e) {
-          console.error("[book-order] email fail:", e);
-        }
+    if (data.estado === "aprobado" && pedido.estado_pago === "aprobado") {
+      // Envío de correo (opcional; no rompe el flujo si falla)
+      try {
+        await sendNotificationEmail(pedido);
+      } catch (e) {
+        console.error("[book-order] email fail:", e);
       }
     }
-    return { ok: true, pedido: { ...existing, estado_pago: data.estado } };
+    return { ok: true, pedido };
   });
+
 
 async function sendNotificationEmail(p: {
   libro: string;
