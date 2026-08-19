@@ -32,11 +32,34 @@ function trimStr(v: unknown, max = 200): string {
   return typeof v === "string" ? v.trim().slice(0, max) : "";
 }
 
-export const getConfiguracion = createServerFn({ method: "GET" }).handler(async () => {
+// Cliente público del servidor (anon key). No requiere SUPABASE_SERVICE_ROLE_KEY,
+// por lo que funciona en Hostinger donde esa clave secreta no está disponible.
+// El acceso queda controlado por las políticas RLS de cada tabla.
+async function publicServerClient() {
   const { createClient } = await import("@supabase/supabase-js");
-  const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_PUBLISHABLE_KEY!, {
+  const url = process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"];
+  const key =
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    process.env["SUPABASE_ANON_KEY"] ||
+    process.env["VITE_SUPABASE_PUBLISHABLE_KEY"];
+  if (!url || !key) throw new Error("Backend no configurado (SUPABASE_URL / PUBLISHABLE_KEY)");
+  return createClient(url, key, {
     auth: { persistSession: false, autoRefreshToken: false },
+    global: {
+      fetch: (input: RequestInfo | URL, init?: RequestInit) => {
+        const h = new Headers(init?.headers);
+        if (key.startsWith("sb_") && h.get("Authorization") === `Bearer ${key}`) {
+          h.delete("Authorization");
+        }
+        h.set("apikey", key);
+        return fetch(input, { ...init, headers: h });
+      },
+    },
   });
+}
+
+export const getConfiguracion = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = await publicServerClient();
   const { data } = await supabase
     .from("configuracion")
     .select("flete_nacional")
@@ -44,6 +67,7 @@ export const getConfiguracion = createServerFn({ method: "GET" }).handler(async 
     .maybeSingle();
   return { flete_nacional: data?.flete_nacional ?? 12000 };
 });
+
 
 type CreateInput = {
   sku: string;
