@@ -114,15 +114,16 @@ export const createBookOrder = createServerFn({ method: "POST" })
     if (!secret) throw new Error("BOLD_SECRET_KEY no configurado");
 
     const meta = CATALOG[data.sku as Sku];
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const supabase = await publicServerClient();
 
-    // Flete desde configuracion
-    const { data: cfg } = await supabaseAdmin
+    // Flete desde configuracion (lectura pública permitida por RLS)
+    const { data: cfg } = await supabase
       .from("configuracion")
       .select("flete_nacional")
       .limit(1)
       .maybeSingle();
     const flete = meta.formato === "fisico" ? (cfg?.flete_nacional ?? 12000) : 0;
+
 
     const subtotal = meta.precio * data.cantidad;
     const total = subtotal + flete;
