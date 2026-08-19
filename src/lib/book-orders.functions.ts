@@ -199,11 +199,12 @@ export const recordBookOrderStatus = createServerFn({ method: "POST" })
       departamento: string | null;
       cantidad: number;
       total: number;
+      _changed?: boolean;
     };
     const pedido = (row as Pedido | null) ?? null;
     if (!pedido) return { ok: false, pedido: null as Pedido | null };
 
-    if (data.estado === "aprobado" && pedido.estado_pago === "aprobado") {
+    if (pedido._changed && pedido.estado_pago === "aprobado") {
       // Envío de correo (opcional; no rompe el flujo si falla)
       try {
         await sendNotificationEmail(pedido);
@@ -211,6 +212,7 @@ export const recordBookOrderStatus = createServerFn({ method: "POST" })
         console.error("[book-order] email fail:", e);
       }
     }
+
     return { ok: true, pedido };
   });
 
