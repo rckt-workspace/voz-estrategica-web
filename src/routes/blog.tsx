@@ -61,8 +61,9 @@ function Blog() {
     const syncCanonicals = () => {
       const soroCanonical = document.querySelector('link[rel="canonical"][data-soro]');
       const allCanonicals = Array.from(
-        document.querySelectorAll('link[rel="canonical"]')
+        document.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]')
       );
+
 
       if (soroCanonical) {
         // Article view: keep only Soro's canonical
