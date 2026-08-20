@@ -5,7 +5,12 @@
  */
 const css = `
 #soro-blog .soro-blog,
-#soro-blog .soro-blog-content { background: transparent; }
+#soro-blog .soro-blog-content {
+  background: transparent;
+  max-width: 100%;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
 
 /* ---------- Listado ---------- */
 #soro-blog .soro-blog-list {
@@ -29,6 +34,8 @@ const css = `
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) + 8px);
   box-shadow: none;
+  padding: 0;
+  gap: 0;
   text-decoration: none;
   transition:
     transform 0.25s ease,
@@ -47,7 +54,9 @@ const css = `
 
 #soro-blog .soro-blog-card-image {
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 10;
+  flex-shrink: 1;
   object-fit: cover;
   margin: 0;
   border-radius: 0;
@@ -116,7 +125,10 @@ const css = `
   }
   #soro-blog .soro-blog-card:first-child .soro-blog-card-image {
     width: 46%;
+    height: auto;
+    min-height: 22rem;
     aspect-ratio: auto;
+    align-self: stretch;
     border-bottom: 0;
     border-right: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent);
   }
@@ -174,6 +186,7 @@ const css = `
 }
 #soro-blog .soro-blog-article-image {
   width: 100%;
+  max-height: 26rem;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   border-radius: calc(var(--radius) + 12px);
