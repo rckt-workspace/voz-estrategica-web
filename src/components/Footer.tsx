@@ -23,7 +23,7 @@ export function Footer() {
                 ["/soluciones", "Soluciones"],
                 ["/programas", "Programas"],
                 ["/speakers", "Conferencistas"],
-
+                ["/blog", "Blog"],
                 ["/recursos", "Recursos"],
                 ["/nosotros", "Nosotros"],
                 ["/contratar", "Solicitar propuesta"],
