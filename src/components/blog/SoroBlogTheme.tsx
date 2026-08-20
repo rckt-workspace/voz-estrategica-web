@@ -56,9 +56,14 @@ const css = `
 /* Micro-CTA en hover */
 #soro-blog .soro-blog-card-content::after {
   content: "Leer artículo →";
+  box-sizing: border-box;
   align-self: flex-start;
-  margin-top: 0.35rem;
-  padding: 0.3rem 0.85rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 0;
+  margin-top: 0;
+  padding: 0 0.85rem;
   border-radius: 9999px;
   background-color: var(--brand);
   color: var(--brand-foreground);
@@ -68,16 +73,18 @@ const css = `
   text-transform: uppercase;
   letter-spacing: 0.18em;
   opacity: 0;
-  transform: translateY(4px);
   transition:
     opacity 0.22s ease,
-    transform 0.22s ease;
+    height 0.22s ease,
+    margin-top 0.22s ease;
 }
 #soro-blog .soro-blog-card:hover .soro-blog-card-content::after,
 #soro-blog .soro-blog-card:focus-visible .soro-blog-card-content::after {
   opacity: 1;
-  transform: translateY(0);
+  height: 1.6rem;
+  margin-top: 0.5rem;
 }
+
 
 /* La primera tarjeta se muestra como featured en el hero */
 #soro-blog[data-featured-lifted] .soro-blog-card:first-child {
