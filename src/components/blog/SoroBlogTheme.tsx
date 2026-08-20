@@ -148,7 +148,7 @@ const css = `
 
 /* Destacado: primera tarjeta a ancho completo */
 @media (min-width: 1024px) {
-  #soro-blog .soro-blog-card:first-child {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child {
     grid-column: span 3;
     flex-direction: row;
     align-items: stretch;
@@ -156,7 +156,7 @@ const css = `
     color: var(--brand-foreground);
     border-color: color-mix(in oklab, var(--foreground) 18%, transparent);
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-image {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-image {
     width: 46%;
     height: auto;
     min-height: 22rem;
@@ -165,22 +165,22 @@ const css = `
     border-bottom: 0;
     border-right: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent);
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-content {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-content {
     justify-content: center;
     gap: 1rem;
     padding: 2.75rem 3rem;
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-title {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-title {
     font-size: clamp(1.9rem, 3vw, 2.9rem);
     color: var(--brand-foreground);
     background-image: linear-gradient(var(--brand-foreground), var(--brand-foreground));
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-excerpt {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-excerpt {
     font-size: 1.05rem;
     color: color-mix(in oklab, var(--brand-foreground) 78%, transparent);
     -webkit-line-clamp: 3;
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-date {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-date {
     margin-top: 0;
     color: color-mix(in oklab, var(--brand-foreground) 70%, transparent);
   }
