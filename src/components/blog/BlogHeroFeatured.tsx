@@ -71,26 +71,27 @@ export function BlogHeroFeatured() {
           <img
             src={data.image}
             alt={data.title}
-            className="aspect-[16/10] w-full border-b border-border object-cover"
+            className="aspect-[16/7] w-full border-b border-border object-cover"
             loading="lazy"
           />
         ) : null}
-        <div className="flex flex-col gap-3 p-6">
-          <span className="section-badge w-fit bg-brand text-brand-foreground">
+        <div className="flex flex-col gap-2 p-4">
+          <span className="section-badge w-fit scale-90 origin-left bg-brand text-brand-foreground">
             Último artículo
           </span>
-          <h2 className="font-display text-2xl uppercase leading-[1.02] md:text-3xl">
+          <h2 className="font-display text-lg uppercase leading-[1.05] md:text-xl">
             {data.title}
           </h2>
           {data.date ? (
-            <p className="font-mono text-[0.625rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+            <p className="font-mono text-[0.5625rem] font-bold uppercase tracking-[0.18em] text-muted-foreground">
               {data.date}
             </p>
           ) : null}
-          <span className="bubble bubble-yellow w-fit opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <span className="bubble bubble-yellow w-fit scale-90 origin-left opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             Leer artículo →
           </span>
         </div>
+
       </a>
     </div>
   );
