@@ -44,6 +44,17 @@ function Blog() {
       document.body.appendChild(script);
     }
 
+    // Update a meta tag by property name
+    const updateMetaTag = (property: string, content: string) => {
+      let tag = document.querySelector(`meta[property="${property}"]`);
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute("property", property);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+    };
+
     // Manage canonicals: ensure only one exists at a time
     // When Soro adds its canonical (data-soro), remove ours
     // When back at list view, ensure ours is present
@@ -81,14 +92,80 @@ function Blog() {
       }
     };
 
+    // Sync Open Graph tags based on view (article or list)
+    const syncOpenGraph = () => {
+      const soroCanonical = document.querySelector('link[rel="canonical"][data-soro]');
+
+      if (soroCanonical) {
+        // Article view: extract data from DOM and update og: tags
+        const title = document.title || "Article";
+        const description =
+          document.querySelector('meta[name="description"]')?.getAttribute("content") || "";
+        const url = soroCanonical.href;
+
+        // Extract image from Soro's JSON-LD (#soro-blog-jsonld)
+        let image = "";
+        const jsonld = document.querySelector("#soro-blog-jsonld");
+        if (jsonld?.textContent) {
+          try {
+            const parsed = JSON.parse(jsonld.textContent);
+            if (parsed.image) {
+              image =
+                typeof parsed.image === "string"
+                  ? parsed.image
+                  : Array.isArray(parsed.image)
+                    ? parsed.image[0]
+                    : "";
+            }
+          } catch (e) {
+            // Silently ignore JSON parse errors
+          }
+        }
+
+        // Fallback: try to find image from article element
+        if (!image) {
+          const imgElement = document.querySelector(".soro-blog-article-image");
+          if (imgElement instanceof HTMLImageElement) {
+            image = imgElement.src;
+          }
+        }
+
+        // Update og: tags for article
+        updateMetaTag("og:title", title);
+        updateMetaTag("og:description", description);
+        updateMetaTag("og:url", url);
+        updateMetaTag("og:type", "article");
+        if (image) {
+          updateMetaTag("og:image", image);
+        }
+      } else {
+        // List view: restore original og: tags
+        updateMetaTag("og:title", "Blog · Voz Estratégica");
+        updateMetaTag("og:description", "Aprendizaje corporativo en artículos de alto impacto.");
+        updateMetaTag("og:url", "https://vozestrategica.com/blog");
+        updateMetaTag("og:type", "website");
+        // Remove og:image in list view
+        const ogImage = document.querySelector('meta[property="og:image"]');
+        if (ogImage) {
+          ogImage.remove();
+        }
+      }
+    };
+
     // Initial sync
     syncCanonicals();
+    syncOpenGraph();
 
-    // Watch for changes in <head> when Soro adds/removes canonicals
-    const observer = new MutationObserver(syncCanonicals);
+    // Watch for changes in <head> when Soro adds/removes canonicals and updates title/description
+    const observer = new MutationObserver(() => {
+      syncCanonicals();
+      syncOpenGraph();
+    });
     observer.observe(document.head, {
       childList: true,
       subtree: false,
+      attributes: true,
+      attributeFilter: ["content"],
     });
 
     return () => {
