@@ -61,8 +61,9 @@ function Blog() {
     const syncCanonicals = () => {
       const soroCanonical = document.querySelector('link[rel="canonical"][data-soro]');
       const allCanonicals = Array.from(
-        document.querySelectorAll('link[rel="canonical"]')
+        document.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]')
       );
+
 
       if (soroCanonical) {
         // Article view: keep only Soro's canonical
@@ -94,7 +95,10 @@ function Blog() {
 
     // Sync Open Graph tags based on view (article or list)
     const syncOpenGraph = () => {
-      const soroCanonical = document.querySelector('link[rel="canonical"][data-soro]');
+      const soroCanonical = document.querySelector<HTMLLinkElement>(
+        'link[rel="canonical"][data-soro]'
+      );
+
 
       if (soroCanonical) {
         // Article view: extract data from DOM and update og: tags
