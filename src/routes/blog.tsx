@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { SoroBlogTheme } from "@/components/blog/SoroBlogTheme";
 
 export const Route = createFileRoute("/blog")({
   head: () => {
