@@ -56,7 +56,7 @@ export function BlogHeroFeatured() {
   if (!data) return null;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       {/* Stats reales */}
       <div className="flex flex-wrap gap-2">
         <span className="section-badge">{data.total} artículos</span>
@@ -65,21 +65,21 @@ export function BlogHeroFeatured() {
 
       <a
         href={data.href}
-        className="group block overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_24px_50px_-30px_color-mix(in_oklab,var(--foreground)_50%,transparent)]"
+        className="group flex items-stretch gap-0 overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_24px_50px_-30px_color-mix(in_oklab,var(--foreground)_50%,transparent)]"
       >
         {data.image ? (
           <img
             src={data.image}
             alt={data.title}
-            className="aspect-[16/7] w-full border-b border-border object-cover"
+            className="hidden w-32 shrink-0 border-r border-border object-cover sm:block"
             loading="lazy"
           />
         ) : null}
-        <div className="flex flex-col gap-2 p-4">
-          <span className="section-badge w-fit scale-90 origin-left bg-brand text-brand-foreground">
+        <div className="flex min-w-0 flex-col gap-2 p-4">
+          <span className="section-badge w-fit origin-left scale-90 bg-brand text-brand-foreground">
             Último artículo
           </span>
-          <h2 className="font-display text-lg uppercase leading-[1.05] md:text-xl">
+          <h2 className="font-display text-xl font-bold uppercase leading-[1.02] tracking-tight md:text-2xl">
             {data.title}
           </h2>
           {data.date ? (
@@ -87,12 +87,12 @@ export function BlogHeroFeatured() {
               {data.date}
             </p>
           ) : null}
-          <span className="bubble bubble-yellow w-fit scale-90 origin-left opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <span className="bubble bubble-yellow w-fit origin-left scale-90 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
             Leer artículo →
           </span>
         </div>
-
       </a>
     </div>
   );
 }
+
