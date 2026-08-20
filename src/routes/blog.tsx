@@ -220,16 +220,37 @@ function Blog() {
           className="pointer-events-none absolute -right-24 -top-24 h-[24rem] w-[24rem] rounded-full bg-brand/35 blur-3xl"
         />
         <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 md:grid-cols-2 md:gap-10">
-          <div>
-            <span className="section-badge">Ideas · Voz Estratégica</span>
-            <h1 className="mt-6 font-display text-5xl uppercase sm:text-6xl lg:text-7xl">
-              Blog
-            </h1>
-            <p className="mt-6 max-w-xl font-sans text-base text-muted-foreground sm:text-lg">
-              Artículos, insights y recursos sobre liderazgo, comunicación, cultura y
-              transformación organizacional.
-            </p>
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-secondary p-6 sm:p-8">
+            {/* Formas decorativas de marca */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-brand/30 blur-2xl"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rotate-12 rounded-[42%_58%_46%_54%/54%_42%_58%_46%] bg-brand/60"
+            />
+            <div className="relative">
+              <span className="section-badge bg-brand text-brand-foreground">
+                Ideas · Voz Estratégica
+              </span>
+              <h1 className="mt-6 font-display text-5xl uppercase sm:text-6xl lg:text-7xl">
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-[-0.15em] bottom-[0.08em] h-[0.28em] -rotate-1 rounded-sm bg-brand"
+                  />
+                  <span className="relative">Bl</span>
+                  <span className="relative text-brand-foreground">og</span>
+                </span>
+              </h1>
+              <p className="mt-6 max-w-xl font-sans text-base text-muted-foreground sm:text-lg">
+                Artículos, insights y recursos sobre liderazgo, comunicación, cultura y
+                transformación organizacional.
+              </p>
+            </div>
           </div>
+
           <BlogHeroFeatured />
         </div>
       </header>
