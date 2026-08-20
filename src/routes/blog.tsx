@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { SoroBlogTheme } from "@/components/blog/SoroBlogTheme";
+import { BlogHeroFeatured } from "@/components/blog/BlogHeroFeatured";
+import { subscribeToNewsletter } from "@/lib/subscribers.functions";
+
 
 export const Route = createFileRoute("/blog")({
   head: () => {
@@ -29,6 +34,29 @@ export const Route = createFileRoute("/blog")({
 });
 
 function Blog() {
+  const subscribe = useServerFn(subscribeToNewsletter);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleNewsletter(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setLoading(true);
+    try {
+      const res = await subscribe({ data: { email, source: "blog" } });
+      if (res.duplicate) {
+        toast.info("Ese correo ya estaba suscrito.");
+      } else {
+        toast.success("¡Gracias por suscribirte!");
+      }
+      setEmail("");
+    } catch {
+      toast.error("No pudimos registrarte. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     // Soro official embed script URL
     const SORO_SCRIPT_URL =
@@ -191,15 +219,18 @@ function Blog() {
           aria-hidden
           className="pointer-events-none absolute -right-24 -top-24 h-[24rem] w-[24rem] rounded-full bg-brand/35 blur-3xl"
         />
-        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-24 sm:pb-16">
-          <span className="section-badge">Ideas · Voz Estratégica</span>
-          <h1 className="mt-6 max-w-3xl font-display text-5xl uppercase sm:text-6xl lg:text-7xl">
-            Blog
-          </h1>
-          <p className="mt-6 max-w-2xl font-sans text-base text-muted-foreground sm:text-lg">
-            Artículos, insights y recursos sobre liderazgo, comunicación, cultura y
-            transformación organizacional.
-          </p>
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:grid-cols-2 lg:gap-14">
+          <div>
+            <span className="section-badge">Ideas · Voz Estratégica</span>
+            <h1 className="mt-6 font-display text-5xl uppercase sm:text-6xl lg:text-7xl">
+              Blog
+            </h1>
+            <p className="mt-6 max-w-xl font-sans text-base text-muted-foreground sm:text-lg">
+              Artículos, insights y recursos sobre liderazgo, comunicación, cultura y
+              transformación organizacional.
+            </p>
+          </div>
+          <BlogHeroFeatured />
         </div>
       </header>
 
@@ -208,7 +239,38 @@ function Blog() {
         <div id="soro-blog" className="min-h-[600px]">
           {/* Soro script will render content here */}
         </div>
+
+        {/* Newsletter */}
+        <section data-blog-newsletter className="mt-16">
+          <div className="rounded-3xl border border-border bg-secondary p-8 md:p-12">
+            <span className="section-badge">Newsletter</span>
+            <h2 className="mt-5 max-w-xl font-display text-3xl uppercase leading-[0.98] md:text-4xl">
+              Ideas que sí mueven equipos, cada quince días.
+            </h2>
+            <form
+              onSubmit={handleNewsletter}
+              className="mt-7 flex max-w-xl flex-col gap-3 sm:flex-row"
+            >
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@email.com"
+                className="w-full rounded-full border border-foreground/15 bg-background px-6 py-3 text-base outline-none focus:border-brand focus:ring-2 focus:ring-brand/30"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="bubble bubble-black shrink-0 justify-center disabled:opacity-60"
+              >
+                {loading ? "Enviando..." : "Suscribirme →"}
+              </button>
+            </form>
+          </div>
+        </section>
       </main>
     </div>
   );
 }
+

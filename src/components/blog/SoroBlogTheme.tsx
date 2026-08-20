@@ -29,11 +29,12 @@ const css = `
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
   background-color: var(--card);
   color: var(--foreground);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) + 8px);
-  box-shadow: none;
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent);
   padding: 0;
   gap: 0;
   text-decoration: none;
@@ -44,13 +45,52 @@ const css = `
 }
 #soro-blog .soro-blog-card:hover {
   transform: translateY(-4px);
-  border-color: color-mix(in oklab, var(--foreground) 22%, transparent);
-  box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--foreground) 45%, transparent);
+  border-color: color-mix(in oklab, var(--foreground) 28%, transparent);
+  box-shadow: 0 22px 46px -26px color-mix(in oklab, var(--foreground) 50%, transparent);
 }
 #soro-blog .soro-blog-card:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 3px;
 }
+
+/* Micro-CTA en hover */
+#soro-blog .soro-blog-card-content::after {
+  content: "Leer artículo →";
+  box-sizing: border-box;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 0;
+  margin-top: 0;
+  padding: 0 0.85rem;
+  border-radius: 9999px;
+  background-color: var(--brand);
+  color: var(--brand-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0;
+  transition:
+    opacity 0.22s ease,
+    height 0.22s ease,
+    margin-top 0.22s ease;
+}
+#soro-blog .soro-blog-card:hover .soro-blog-card-content::after,
+#soro-blog .soro-blog-card:focus-visible .soro-blog-card-content::after {
+  opacity: 1;
+  height: 1.6rem;
+  margin-top: 0.5rem;
+}
+
+
+/* La primera tarjeta se muestra como featured en el hero */
+#soro-blog[data-featured-lifted] .soro-blog-card:first-child {
+  display: none;
+}
+
 
 #soro-blog .soro-blog-card-image {
   width: 100%;
@@ -115,7 +155,7 @@ const css = `
 
 /* Destacado: primera tarjeta a ancho completo */
 @media (min-width: 1024px) {
-  #soro-blog .soro-blog-card:first-child {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child {
     grid-column: span 3;
     flex-direction: row;
     align-items: stretch;
@@ -123,7 +163,7 @@ const css = `
     color: var(--brand-foreground);
     border-color: color-mix(in oklab, var(--foreground) 18%, transparent);
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-image {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-image {
     width: 46%;
     height: auto;
     min-height: 22rem;
@@ -132,22 +172,22 @@ const css = `
     border-bottom: 0;
     border-right: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent);
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-content {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-content {
     justify-content: center;
     gap: 1rem;
     padding: 2.75rem 3rem;
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-title {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-title {
     font-size: clamp(1.9rem, 3vw, 2.9rem);
     color: var(--brand-foreground);
     background-image: linear-gradient(var(--brand-foreground), var(--brand-foreground));
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-excerpt {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-excerpt {
     font-size: 1.05rem;
     color: color-mix(in oklab, var(--brand-foreground) 78%, transparent);
     -webkit-line-clamp: 3;
   }
-  #soro-blog .soro-blog-card:first-child .soro-blog-card-date {
+  #soro-blog:not([data-featured-lifted]) .soro-blog-card:first-child .soro-blog-card-date {
     margin-top: 0;
     color: color-mix(in oklab, var(--brand-foreground) 70%, transparent);
   }
