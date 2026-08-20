@@ -14,6 +14,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AvisoDePrivacidadRouteImport } from './routes/aviso-de-privacidad'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as CasosRouteImport } from './routes/casos'
 import { Route as ConferencistasRouteImport } from './routes/conferencistas'
 import { Route as ContratarRouteImport } from './routes/contratar'
@@ -67,6 +68,11 @@ const AuthRoute = AuthRouteImport.update({
 const AvisoDePrivacidadRoute = AvisoDePrivacidadRouteImport.update({
   id: '/aviso-de-privacidad',
   path: '/aviso-de-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CasosRoute = CasosRouteImport.update({
@@ -224,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
+  '/blog': typeof BlogRoute
   '/casos': typeof CasosRoute
   '/conferencistas': typeof ConferencistasRoute
   '/contratar': typeof ContratarRoute
@@ -259,6 +266,7 @@ export interface FileRoutesByTo {
   '/$': typeof SplatRoute
   '/auth': typeof AuthRoute
   '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
+  '/blog': typeof BlogRoute
   '/casos': typeof CasosRoute
   '/conferencistas': typeof ConferencistasRoute
   '/contratar': typeof ContratarRoute
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
+  '/blog': typeof BlogRoute
   '/casos': typeof CasosRoute
   '/conferencistas': typeof ConferencistasRoute
   '/contratar': typeof ContratarRoute
@@ -334,6 +343,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/aviso-de-privacidad'
+    | '/blog'
     | '/casos'
     | '/conferencistas'
     | '/contratar'
@@ -369,6 +379,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/auth'
     | '/aviso-de-privacidad'
+    | '/blog'
     | '/casos'
     | '/conferencistas'
     | '/contratar'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/aviso-de-privacidad'
+    | '/blog'
     | '/casos'
     | '/conferencistas'
     | '/contratar'
@@ -442,6 +454,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   AvisoDePrivacidadRoute: typeof AvisoDePrivacidadRoute
+  BlogRoute: typeof BlogRoute
   CasosRoute: typeof CasosRoute
   ConferencistasRoute: typeof ConferencistasRoute
   ContratarRoute: typeof ContratarRoute
@@ -499,6 +512,13 @@ declare module '@tanstack/react-router' {
       path: '/aviso-de-privacidad'
       fullPath: '/aviso-de-privacidad'
       preLoaderRoute: typeof AvisoDePrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/casos': {
@@ -739,6 +759,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   AvisoDePrivacidadRoute: AvisoDePrivacidadRoute,
+  BlogRoute: BlogRoute,
   CasosRoute: CasosRoute,
   ConferencistasRoute: ConferencistasRoute,
   ContratarRoute: ContratarRoute,
