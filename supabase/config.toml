@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.notify-book-order]
 verify_jwt = false
+
+[functions.soro-webhook]
+verify_jwt = false
