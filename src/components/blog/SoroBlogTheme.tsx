@@ -317,7 +317,9 @@ const css = `
 }
 
 /* En vista de artículo el hero del listado no se repite */
-body:has(#soro-blog .soro-blog-article) [data-blog-hero] { display: none; }
+body:has(#soro-blog .soro-blog-article) [data-blog-hero],
+body:has(#soro-blog .soro-blog-article) [data-blog-grid-heading] { display: none; }
+
 `;
 
 export function SoroBlogTheme() {
