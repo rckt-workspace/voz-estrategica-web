@@ -178,14 +178,24 @@ function Blog() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-gray-200 py-12 sm:py-16">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          <h1 className="font-display text-4xl sm:text-5xl uppercase leading-tight">
+    <div className="min-h-screen bg-background text-foreground">
+      <SoroBlogTheme />
+
+      {/* Hero */}
+      <header
+        data-blog-hero
+        className="relative overflow-hidden border-b border-border"
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 h-[24rem] w-[24rem] rounded-full bg-brand/35 blur-3xl"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-6 sm:pt-24 sm:pb-16">
+          <span className="section-badge">Ideas · Voz Estratégica</span>
+          <h1 className="mt-6 max-w-3xl font-display text-5xl uppercase sm:text-6xl lg:text-7xl">
             Blog
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl">
+          <p className="mt-6 max-w-2xl font-sans text-base text-muted-foreground sm:text-lg">
             Artículos, insights y recursos sobre liderazgo, comunicación, cultura y
             transformación organizacional.
           </p>
@@ -193,7 +203,7 @@ function Blog() {
       </header>
 
       {/* Soro Widget Container - Official HTML from Soro */}
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
+      <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <div id="soro-blog" className="min-h-[600px]">
           {/* Soro script will render content here */}
         </div>
