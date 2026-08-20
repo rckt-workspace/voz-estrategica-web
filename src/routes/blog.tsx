@@ -219,7 +219,7 @@ function Blog() {
           aria-hidden
           className="pointer-events-none absolute -right-24 -top-24 h-[24rem] w-[24rem] rounded-full bg-brand/35 blur-3xl"
         />
-        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 lg:grid-cols-2 lg:gap-14">
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-14 md:grid-cols-2 md:gap-10">
           <div>
             <span className="section-badge">Ideas · Voz Estratégica</span>
             <h1 className="mt-6 font-display text-5xl uppercase sm:text-6xl lg:text-7xl">
@@ -236,9 +236,16 @@ function Blog() {
 
       {/* Soro Widget Container - Official HTML from Soro */}
       <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+        <div data-blog-grid-heading className="mb-8">
+          <span className="section-badge">Más lecturas</span>
+          <h2 className="mt-4 font-display text-3xl uppercase leading-[0.98] md:text-4xl">
+            Otros artículos que podrían interesarte
+          </h2>
+        </div>
         <div id="soro-blog" className="min-h-[600px]">
           {/* Soro script will render content here */}
         </div>
+
 
         {/* Newsletter */}
         <section data-blog-newsletter className="mt-16">
