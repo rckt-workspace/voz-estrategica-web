@@ -34,6 +34,29 @@ export const Route = createFileRoute("/blog")({
 });
 
 function Blog() {
+  const subscribe = useServerFn(subscribeToNewsletter);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleNewsletter(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setLoading(true);
+    try {
+      const res = await subscribe({ data: { email, source: "blog" } });
+      if (res.duplicate) {
+        toast.info("Ese correo ya estaba suscrito.");
+      } else {
+        toast.success("¡Gracias por suscribirte!");
+      }
+      setEmail("");
+    } catch {
+      toast.error("No pudimos registrarte. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     // Soro official embed script URL
     const SORO_SCRIPT_URL =
