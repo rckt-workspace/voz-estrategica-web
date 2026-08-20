@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { SoroBlogTheme } from "@/components/blog/SoroBlogTheme";
+import { BlogHeroFeatured } from "@/components/blog/BlogHeroFeatured";
+import { subscribeToNewsletter } from "@/lib/subscribers.functions";
+
 
 export const Route = createFileRoute("/blog")({
   head: () => {
