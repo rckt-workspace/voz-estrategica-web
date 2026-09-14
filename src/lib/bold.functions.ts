@@ -1,8 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createHash, randomBytes } from "crypto";
 
-export const BOLD_IDENTITY_KEY = "W8kaIYyKJxwgjUg094TWycTBTEDFhNf9zBWElV3aukI";
-
 export type BoldOrder = {
   orderId: string;
   integritySignature: string;
@@ -38,7 +36,10 @@ export const createBoldOrder = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }): Promise<BoldOrder> => {
     const secret = process.env.BOLD_SECRET_KEY;
+    const identityKey = process.env.BOLD_IDENTITY_KEY;
+
     if (!secret) throw new Error("BOLD_SECRET_KEY not configured");
+    if (!identityKey) throw new Error("BOLD_IDENTITY_KEY not configured");
 
     const expectedCode = normalizeCode(process.env.MASTERCLASS_DISCOUNT_CODE);
     const providedCode = normalizeCode(data.discountCode);
@@ -54,7 +55,7 @@ export const createBoldOrder = createServerFn({ method: "POST" })
     return {
       orderId,
       integritySignature,
-      apiKey: BOLD_IDENTITY_KEY,
+      apiKey: identityKey,
       amount: amountStr,
       currency: data.currency,
       description: discountApplied ? `${data.description} (50% OFF)` : data.description,

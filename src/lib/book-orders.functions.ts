@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createHash, randomBytes } from "crypto";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { BOLD_IDENTITY_KEY } from "./bold.functions";
 
 // Server-side catálogo — precio y formato NUNCA vienen del cliente
 const CATALOG = {
@@ -111,7 +110,10 @@ export const createBookOrder = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }) => {
     const secret = process.env.BOLD_SECRET_KEY;
+    const identityKey = process.env.BOLD_IDENTITY_KEY;
+
     if (!secret) throw new Error("BOLD_SECRET_KEY no configurado");
+    if (!identityKey) throw new Error("BOLD_IDENTITY_KEY no configurado");
 
     const meta = CATALOG[data.sku as Sku];
     const supabase = await publicServerClient();
@@ -158,7 +160,7 @@ export const createBookOrder = createServerFn({ method: "POST" })
     return {
       orderId,
       integritySignature,
-      apiKey: BOLD_IDENTITY_KEY,
+      apiKey: identityKey,
       amount: amountStr,
       currency,
       description,

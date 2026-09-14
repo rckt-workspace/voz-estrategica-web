@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createHash, randomBytes } from "crypto";
-import { BOLD_IDENTITY_KEY } from "./bold.functions";
 import {
   KIT_PRICE_COP,
   MASTERCLASS_PRICE_COP,
@@ -36,7 +35,10 @@ export const createMasterclassCheckout = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }): Promise<MasterclassCheckout> => {
     const secret = process.env["BOLD_SECRET_KEY"];
+    const identityKey = process.env["BOLD_IDENTITY_KEY"];
+
     if (!secret) throw new Error("BOLD_SECRET_KEY no está configurada");
+    if (!identityKey) throw new Error("BOLD_IDENTITY_KEY no está configurada");
 
     const amount = MASTERCLASS_PRICE_COP + (data.kit ? KIT_PRICE_COP : 0);
     const currency = "COP" as const;
@@ -63,7 +65,7 @@ export const createMasterclassCheckout = createServerFn({ method: "POST" })
     return {
       orderId,
       integritySignature,
-      apiKey: BOLD_IDENTITY_KEY,
+      apiKey: identityKey,
       amount: amountStr,
       currency,
       description,
