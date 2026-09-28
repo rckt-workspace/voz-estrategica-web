@@ -72,6 +72,70 @@ function RecursosPage() {
         descripcion="Ideas, lecturas y herramientas para desarrollar a tu equipo."
       />
 
+      {/* Libros */}
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <Reveal>
+          <div className="flex items-center gap-4">
+            <span className="section-badge">Libros</span>
+            <div className="h-px flex-1 bg-foreground/15" />
+          </div>
+        </Reveal>
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {books.map((b, i) => (
+            <Reveal key={b.id} delay={i * 60}>
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-foreground/5">
+                <img
+                  src={b.portada}
+                  alt={`Portada de ${b.titulo}`}
+                  loading="lazy"
+                  width={768}
+                  height={1024}
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="font-display text-lg uppercase leading-tight">{b.titulo}</div>
+                  <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    {b.anio}
+                  </div>
+                  {b.sku && b.precio ? (
+                    <div className="mt-4 flex flex-1 flex-col gap-4">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-display text-3xl font-bold leading-none text-foreground">
+                          ${b.precio.toLocaleString("es-CO")}
+                        </span>
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                          COP
+                        </span>
+                      </div>
+                      {b.sku === "ebook-paola" ? (
+                        <a
+                          href="https://pay.hotmart.com/U99654992V?sck=HOTMART_SITE&off=vi04neq9&hotfeature=32&bid=1775133064192"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bubble bubble-yellow mt-auto w-full justify-center text-sm"
+                        >
+                          Comprar ahora →
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setOpenBook(b)}
+                          className="bubble bubble-yellow mt-auto w-full justify-center text-sm"
+                        >
+                          Comprar ahora →
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="mt-auto" />
+                  )}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* Newsletter */}
       <section className="mx-auto max-w-4xl px-6 py-16">
         <Reveal>
@@ -102,61 +166,6 @@ function RecursosPage() {
             </form>
           </div>
         </Reveal>
-      </section>
-
-      {/* Libros */}
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <Reveal>
-          <div className="flex items-center gap-4">
-            <span className="section-badge">Libros</span>
-            <div className="h-px flex-1 bg-foreground/15" />
-          </div>
-        </Reveal>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {books.map((b, i) => (
-            <Reveal key={b.id} delay={i * 60}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-foreground/5">
-                <img
-                  src={b.portada}
-                  alt={`Portada de ${b.titulo}`}
-                  loading="lazy"
-                  width={768}
-                  height={1024}
-                  className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="flex flex-1 flex-col p-4">
-                  <div className="font-display text-lg uppercase leading-tight">{b.titulo}</div>
-                  <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                    {b.anio}
-                  </div>
-                  {b.sku && b.precio ? (
-                    <div className="mt-3 flex items-center justify-between gap-3">
-                      <div className="text-base font-bold">${b.precio.toLocaleString("es-CO")}</div>
-                      {b.sku === "ebook-paola" ? (
-                        <a
-                          href="https://pay.hotmart.com/U99654992V?sck=HOTMART_SITE&off=vi04neq9&hotfeature=32&bid=1775133064192"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-full bg-foreground px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
-                        >
-                          Comprar →
-                        </a>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => setOpenBook(b)}
-                          className="rounded-full bg-foreground px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
-                        >
-                          Comprar →
-                        </button>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
       </section>
 
       {/* Estudios */}
