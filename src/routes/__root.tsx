@@ -11,6 +11,7 @@ import { useEffect, useRef } from "react";
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PublicVozAssistant } from "@/components/agent/PublicVozAssistant";
 // Anuncios masterclass Carlos Laguna desactivados temporalmente (reactivar junto con el JSX de abajo)
 // import { TopBar } from "@/components/TopBar";
 // import { BottomBar } from "@/components/BottomBar";
@@ -199,10 +200,13 @@ function Shell() {
   }, [location.pathname]);
 
   const isAdmin = normalizedPathname.startsWith("/admin");
+  const isAuth = normalizedPathname === "/auth";
+  const isControl = normalizedPathname.startsWith("/control");
   const isSalesLanding = normalizedPathname.startsWith("/masterclass");
   const isCampaignLanding = normalizedPathname.startsWith("/mx/");
   const isNewsletterPage = normalizedPathname === "/suscribete";
-  const hideChrome = isAdmin || isSalesLanding || isCampaignLanding || isNewsletterPage;
+  const hideChrome = isAdmin || isControl || isSalesLanding || isCampaignLanding || isNewsletterPage;
+  const hidePublicFloatingTools = isAdmin || isAuth || isControl;
 
   // Todo el embudo de la masterclass (venta, checkout, gracias) va sin barras promocionales.
   const hidePromoBars = isSalesLanding || isCampaignLanding;
@@ -225,8 +229,9 @@ function Shell() {
       {/* {!hidePromoBars && <BottomBar />} */}
       <Toaster />
       <CookieConsent />
+      {!hidePublicFloatingTools && <PublicVozAssistant />}
       {/* WhatsApp floating button — hidden on masterclass landing */}
-      {!isSalesLanding && (
+      {!isSalesLanding && !hidePublicFloatingTools && (
         <a
           href={
             isCampaignLanding
