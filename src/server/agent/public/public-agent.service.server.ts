@@ -7,6 +7,7 @@ import type {
   AgentIntent,
   Recommendation,
   SafeSignals,
+  NextAction,
 } from "../core/agent.types";
 
 export interface PublicAgentInput {
