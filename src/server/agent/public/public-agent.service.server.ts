@@ -7,6 +7,7 @@ import type {
   AgentIntent,
   Recommendation,
   SafeSignals,
+  NextAction,
 } from "../core/agent.types";
 
 export interface PublicAgentInput {
@@ -177,7 +178,7 @@ function parseRecommendations(
 function determineNextAction(
   intent: AgentIntent,
   recommendations: Recommendation[],
-) {
+): NextAction | null {
   if (intent.stage === "high_intent") {
     if (intent.category === "commercial" || intent.category === "payment_help") {
       return {

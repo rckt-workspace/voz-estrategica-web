@@ -28,7 +28,7 @@ export const Route = createFileRoute("/admin/pedidos-libros")({
   errorComponent: ({ error }) => (
     <div className="mx-auto max-w-xl px-6 py-24 text-center">
       <h1 className="font-display text-3xl uppercase">Acceso denegado</h1>
-      <p className="mt-4 text-muted-foreground">{error.message}</p>
+      <p className="mt-4 text-muted-foreground">{error instanceof Error ? error.message : String(error)}</p>
       <Link to="/" className="mt-6 inline-block underline">
         Volver al inicio
       </Link>
