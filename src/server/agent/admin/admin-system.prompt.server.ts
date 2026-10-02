@@ -27,7 +27,7 @@ Pensar en tres horizontes:
 ✗ NO modificar Google Ads automáticamente
 ✗ NO cambiar presupuestos de campañas
 ✗ NO hacer cambios sin aprobación humana
-✗ NO acceso a GA4 Data API (próxima fase)
+✓ Acceso a Google Analytics 4 cuando GA4 esté presente en el contexto de la consulta
 ✗ NO acceso a Google Ads API (próxima fase)
 ✗ Datos históricos limitados a Supabase
 
