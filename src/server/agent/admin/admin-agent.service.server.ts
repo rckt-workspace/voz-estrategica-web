@@ -1,10 +1,3 @@
-import {
-  getGA4Metrics,
-  isGA4Configured,
-} from "../analytics/ga4.datasource";
-import { getAdsMetrics, isAdsConfigured } from "../analytics/ads.datasource";
-import { getAgentMetrics, isAgentMetricsConfigured } from "../analytics/agent-metrics.datasource";
-
 import type {
   EngagementMetrics,
   CampaignsMetrics,
@@ -187,22 +180,25 @@ async function loadGA4MetricsSafely(
     return null;
   }
 
-  if (!isGA4Configured()) {
-    console.warn(
-      "[AdminAgent][GA4] GA4 datasource is not configured.",
-    );
-
-    return null;
-  }
-
   try {
+    const {
+      getGA4Metrics,
+      isGA4Configured,
+    } = await import("../analytics/ga4.datasource");
+
+    if (!isGA4Configured()) {
+      console.warn(
+        "[AdminAgent][GA4] GA4 datasource is not configured.",
+      );
+      return null;
+    }
+
     return await getGA4Metrics();
   } catch (error) {
     console.error(
-      "[AdminAgent][GA4] Failed to load GA4 metrics:",
-      error,
+      "[AdminAgent][GA4 import/load error]",
+      error instanceof Error ? error.message : error,
     );
-
     return null;
   }
 }
@@ -222,15 +218,22 @@ async function loadAdsMetricsSafely(
     return null;
   }
 
-  if (!isAdsConfigured()) {
-    console.warn("[AdminAgent][Ads] Ads datasource is not configured.");
-    return null;
-  }
-
   try {
+    const { getAdsMetrics, isAdsConfigured } = await import(
+      "../analytics/ads.datasource"
+    );
+
+    if (!isAdsConfigured()) {
+      console.warn("[AdminAgent][Ads] Ads datasource is not configured.");
+      return null;
+    }
+
     return await getAdsMetrics();
   } catch (error) {
-    console.error("[AdminAgent][Ads] Failed to load Ads metrics:", error);
+    console.error(
+      "[AdminAgent][Ads import/load error]",
+      error instanceof Error ? error.message : error,
+    );
     return null;
   }
 }
@@ -250,15 +253,22 @@ async function loadAgentMetricsSafely(
     return null;
   }
 
-  if (!isAgentMetricsConfigured()) {
-    console.warn("[AdminAgent][Agent] Agent metrics not configured.");
-    return null;
-  }
-
   try {
+    const { getAgentMetrics, isAgentMetricsConfigured } = await import(
+      "../analytics/agent-metrics.datasource"
+    );
+
+    if (!isAgentMetricsConfigured()) {
+      console.warn("[AdminAgent][Agent] Agent metrics not configured.");
+      return null;
+    }
+
     return await getAgentMetrics("30daysAgo");
   } catch (error) {
-    console.error("[AdminAgent][Agent] Failed to load Agent metrics:", error);
+    console.error(
+      "[AdminAgent][Agent import/load error]",
+      error instanceof Error ? error.message : error,
+    );
     return null;
   }
 }

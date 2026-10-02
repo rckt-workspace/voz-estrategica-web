@@ -19,7 +19,13 @@ function ControlIntegrationsPage() {
     try {
       const response = await fetch("/api/control/integrations");
       if (!response.ok) {
-        setLastError("No autorizado");
+        if (response.status === 401) {
+          setLastError("No autorizado");
+        } else if (response.status === 500) {
+          setLastError("Error interno al consultar integraciones");
+        } else {
+          setLastError(`Error HTTP ${response.status}`);
+        }
         setLoading(false);
         return;
       }

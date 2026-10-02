@@ -1,6 +1,5 @@
 import type { Integration } from "@/lib/control-integrations-schema";
 import { fetchControlOverview } from "@/lib/agent-server-boundaries";
-import { getGA4Metrics, isGA4Configured } from "../agent/analytics/ga4.datasource";
 
 export async function checkSupabaseHealth(): Promise<Integration> {
   const start = Date.now();
@@ -149,26 +148,30 @@ export async function checkOpenRouterHealth(): Promise<Integration> {
 export async function checkGA4Health(): Promise<Integration> {
   const start = Date.now();
 
-  if (!isGA4Configured()) {
-    const missingVars: string[] = [];
-    if (!process.env.GA4_PROPERTY_ID) missingVars.push("GA4_PROPERTY_ID");
-    if (
-      !process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL ||
-      !process.env.GOOGLE_ANALYTICS_PRIVATE_KEY
-    ) {
-      missingVars.push("credenciales de Google");
+  try {
+    const { getGA4Metrics, isGA4Configured } = await import(
+      "../agent/analytics/ga4.datasource"
+    );
+
+    if (!isGA4Configured()) {
+      const missingVars: string[] = [];
+      if (!process.env.GA4_PROPERTY_ID) missingVars.push("GA4_PROPERTY_ID");
+      if (
+        !process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL ||
+        !process.env.GOOGLE_ANALYTICS_PRIVATE_KEY
+      ) {
+        missingVars.push("credenciales de Google");
+      }
+
+      return {
+        id: "ga4",
+        name: "Google Analytics 4",
+        status: "pending",
+        description: `No configurado. Faltan: ${missingVars.join(", ")}`,
+        details: { missing: missingVars },
+      };
     }
 
-    return {
-      id: "ga4",
-      name: "Google Analytics 4",
-      status: "pending",
-      description: `No configurado. Faltan: ${missingVars.join(", ")}`,
-      details: { missing: missingVars },
-    };
-  }
-
-  try {
     const metrics = await getGA4Metrics();
     const latency = Date.now() - start;
 
@@ -189,13 +192,13 @@ export async function checkGA4Health(): Promise<Integration> {
       details,
     };
   } catch (error) {
-    console.error("[GA4 Health] Error:", error);
+    console.error("[GA4 Health] Error:", error instanceof Error ? error.message : error);
 
     return {
       id: "ga4",
       name: "Google Analytics 4",
       status: "error",
-      description: "Google Analytics API no responde",
+      description: "No se pudo cargar la integración GA4",
       latencyMs: Date.now() - start,
       details: { error: error instanceof Error ? error.message : "Unknown error" },
     };

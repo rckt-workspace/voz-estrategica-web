@@ -3,6 +3,66 @@ import type {} from "@tanstack/react-start";
 import { verifySession } from "@/lib/agent-server-boundaries";
 import { z } from "zod";
 
+async function loadGA4Safe() {
+  try {
+    const { getGA4Metrics, isGA4Configured } = await import(
+      "@/server/agent/analytics/ga4.datasource"
+    );
+
+    if (!isGA4Configured()) {
+      return null;
+    }
+
+    return await getGA4Metrics();
+  } catch (error) {
+    console.error(
+      "[ControlAnalytics][GA4 import/load error]",
+      error instanceof Error ? error.message : error,
+    );
+    return null;
+  }
+}
+
+async function loadAdsSafe() {
+  try {
+    const { getAdsMetrics, isAdsConfigured } = await import(
+      "@/server/agent/analytics/ads.datasource"
+    );
+
+    if (!isAdsConfigured()) {
+      return null;
+    }
+
+    return await getAdsMetrics({ startDate: "90daysAgo", endDate: "today" });
+  } catch (error) {
+    console.error(
+      "[ControlAnalytics][Ads import/load error]",
+      error instanceof Error ? error.message : error,
+    );
+    return null;
+  }
+}
+
+async function loadAgentMetricsSafe() {
+  try {
+    const { getAgentMetrics, isAgentMetricsConfigured } = await import(
+      "@/server/agent/analytics/agent-metrics.datasource"
+    );
+
+    if (!isAgentMetricsConfigured()) {
+      return null;
+    }
+
+    return await getAgentMetrics("30daysAgo");
+  } catch (error) {
+    console.error(
+      "[ControlAnalytics][AgentMetrics import/load error]",
+      error instanceof Error ? error.message : error,
+    );
+    return null;
+  }
+}
+
 /**
  * GET /api/control/analytics
  * Fetch real analytics data (GA4, Google Ads, Agent Metrics).
@@ -30,27 +90,11 @@ export const Route = createFileRoute("/api/control/analytics")({
             );
           }
 
-          // 2. Load analytics data in parallel
-          const { getGA4Metrics, isGA4Configured } = await import(
-            "@/server/agent/analytics/ga4.datasource"
-          );
-          const { getAdsMetrics, isAdsConfigured } = await import(
-            "@/server/agent/analytics/ads.datasource"
-          );
-          const { getAgentMetrics, isAgentMetricsConfigured } = await import(
-            "@/server/agent/analytics/agent-metrics.datasource"
-          );
-
+          // 2. Load analytics data in parallel with independent error handling
           const [ga4Data, adsData, agentData] = await Promise.all([
-            isGA4Configured()
-              ? getGA4Metrics().catch(() => null)
-              : Promise.resolve(null),
-            isAdsConfigured()
-              ? getAdsMetrics({ startDate: "90daysAgo", endDate: "today" }).catch(() => null)
-              : Promise.resolve(null),
-            isAgentMetricsConfigured()
-              ? getAgentMetrics("30daysAgo").catch(() => null)
-              : Promise.resolve(null),
+            loadGA4Safe(),
+            loadAdsSafe(),
+            loadAgentMetricsSafe(),
           ]);
 
           // 3. Build response
@@ -84,7 +128,7 @@ export const Route = createFileRoute("/api/control/analytics")({
               : { available: false },
           };
 
-          // 4. Validate and return
+          // 4. Return
           return new Response(JSON.stringify(response), {
             status: 200,
             headers: {
@@ -93,7 +137,10 @@ export const Route = createFileRoute("/api/control/analytics")({
             },
           });
         } catch (error) {
-          console.error("[ControlAnalytics] Error:", error instanceof Error ? error.message : "Unknown error");
+          console.error(
+            "[ControlAnalytics] Unexpected error:",
+            error instanceof Error ? error.message : "Unknown error",
+          );
 
           return new Response(
             JSON.stringify({ success: false, error: "Unable to load analytics" }),
