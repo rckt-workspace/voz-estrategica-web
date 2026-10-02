@@ -9,90 +9,110 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
-import { Route as SuscribeteRouteImport } from './routes/suscribete'
-import { Route as SolucionesRouteImport } from './routes/soluciones'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as RecursosRouteImport } from './routes/recursos'
-import { Route as ProgramasRouteImport } from './routes/programas'
-import { Route as PagoConfirmadoRouteImport } from './routes/pago-confirmado'
-import { Route as NosotrosRouteImport } from './routes/nosotros'
-import { Route as MasterclassDeClientesAFansRouteImport } from './routes/masterclass-de-clientes-a-fans'
-import { Route as LibrosRouteImport } from './routes/libros'
-import { Route as EventosRouteImport } from './routes/eventos'
-import { Route as ControlRouteImport } from './routes/control'
-import { Route as ContratarRouteImport } from './routes/contratar'
-import { Route as ConferencistasRouteImport } from './routes/conferencistas'
-import { Route as CasosRouteImport } from './routes/casos'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AvisoDePrivacidadRouteImport } from './routes/aviso-de-privacidad'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
-import { Route as ControlIndexRouteImport } from './routes/control.index'
+import { Route as SplatRouteImport } from './routes/$'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AvisoDePrivacidadRouteImport } from './routes/aviso-de-privacidad'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as CasosRouteImport } from './routes/casos'
+import { Route as ConferencistasRouteImport } from './routes/conferencistas'
+import { Route as ContratarRouteImport } from './routes/contratar'
+import { Route as ControlRouteImport } from './routes/control'
+import { Route as EventosRouteImport } from './routes/eventos'
+import { Route as LibrosRouteImport } from './routes/libros'
+import { Route as MasterclassDeClientesAFansRouteImport } from './routes/masterclass-de-clientes-a-fans'
+import { Route as NosotrosRouteImport } from './routes/nosotros'
+import { Route as PagoConfirmadoRouteImport } from './routes/pago-confirmado'
+import { Route as ProgramasRouteImport } from './routes/programas'
+import { Route as RecursosRouteImport } from './routes/recursos'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SolucionesRouteImport } from './routes/soluciones'
+import { Route as SuscribeteRouteImport } from './routes/suscribete'
+import { Route as TerminosYCondicionesRouteImport } from './routes/terminos-y-condiciones'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
-import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
-import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
-import { Route as MasterclassCheckoutRouteImport } from './routes/masterclass.checkout'
-import { Route as ControlLoginRouteImport } from './routes/control_.login'
-import { Route as ControlIntelligenceRouteImport } from './routes/control.intelligence'
-import { Route as ControlIntegrationsRouteImport } from './routes/control.integrations'
-import { Route as ControlDocumentsRouteImport } from './routes/control.documents'
-import { Route as AdminVentasMasterclassRouteImport } from './routes/admin.ventas-masterclass'
-import { Route as AdminSuscriptoresRecursosRouteImport } from './routes/admin.suscriptores-recursos'
-import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
-import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
-import { Route as AdminPedidosLibrosRouteImport } from './routes/admin.pedidos-libros'
-import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
-import { Route as AdminLeadsMxRouteImport } from './routes/admin.leads-mx'
 import { Route as AdminEventosRouteImport } from './routes/admin.eventos'
-import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
-import { Route as ApiControlOverviewRouteImport } from './routes/api.control.overview'
-import { Route as ApiAgentChatRouteImport } from './routes/api.agent.chat'
-import { Route as ApiAdminSessionRouteImport } from './routes/api.admin.session'
+import { Route as AdminLeadsMxRouteImport } from './routes/admin.leads-mx'
+import { Route as AdminLibrosRouteImport } from './routes/admin.libros'
+import { Route as AdminPedidosLibrosRouteImport } from './routes/admin.pedidos-libros'
+import { Route as AdminSpeakersRouteImport } from './routes/admin.speakers'
+import { Route as AdminSuscriptoresRouteImport } from './routes/admin.suscriptores'
+import { Route as AdminSuscriptoresRecursosRouteImport } from './routes/admin.suscriptores-recursos'
+import { Route as AdminVentasMasterclassRouteImport } from './routes/admin.ventas-masterclass'
+import { Route as ControlIndexRouteImport } from './routes/control.index'
+import { Route as ControlDocumentsRouteImport } from './routes/control.documents'
+import { Route as ControlIntegrationsRouteImport } from './routes/control.integrations'
+import { Route as ControlIntelligenceRouteImport } from './routes/control.intelligence'
+import { Route as ControlLoginRouteImport } from './routes/control_.login'
+import { Route as MasterclassCheckoutRouteImport } from './routes/masterclass.checkout'
+import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gracias'
+import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
+import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
+import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 import { Route as ApiAdminAgentRouteImport } from './routes/api.admin.agent'
+import { Route as ApiAdminSessionRouteImport } from './routes/api.admin.session'
+import { Route as ApiAgentChatRouteImport } from './routes/api.agent.chat'
+import { Route as ApiControlOverviewRouteImport } from './routes/api.control.overview'
+import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
-const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
-  id: '/terminos-y-condiciones',
-  path: '/terminos-y-condiciones',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SuscribeteRoute = SuscribeteRouteImport.update({
-  id: '/suscribete',
-  path: '/suscribete',
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SolucionesRoute = SolucionesRouteImport.update({
-  id: '/soluciones',
-  path: '/soluciones',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecursosRoute = RecursosRouteImport.update({
-  id: '/recursos',
-  path: '/recursos',
+const AvisoDePrivacidadRoute = AvisoDePrivacidadRouteImport.update({
+  id: '/aviso-de-privacidad',
+  path: '/aviso-de-privacidad',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProgramasRoute = ProgramasRouteImport.update({
-  id: '/programas',
-  path: '/programas',
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PagoConfirmadoRoute = PagoConfirmadoRouteImport.update({
-  id: '/pago-confirmado',
-  path: '/pago-confirmado',
+const CasosRoute = CasosRouteImport.update({
+  id: '/casos',
+  path: '/casos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NosotrosRoute = NosotrosRouteImport.update({
-  id: '/nosotros',
-  path: '/nosotros',
+const ConferencistasRoute = ConferencistasRouteImport.update({
+  id: '/conferencistas',
+  path: '/conferencistas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContratarRoute = ContratarRouteImport.update({
+  id: '/contratar',
+  path: '/contratar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ControlRoute = ControlRouteImport.update({
+  id: '/control',
+  path: '/control',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibrosRoute = LibrosRouteImport.update({
+  id: '/libros',
+  path: '/libros',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MasterclassDeClientesAFansRoute =
@@ -101,124 +121,79 @@ const MasterclassDeClientesAFansRoute =
     path: '/masterclass-de-clientes-a-fans',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LibrosRoute = LibrosRouteImport.update({
-  id: '/libros',
-  path: '/libros',
+const NosotrosRoute = NosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EventosRoute = EventosRouteImport.update({
-  id: '/eventos',
-  path: '/eventos',
+const PagoConfirmadoRoute = PagoConfirmadoRouteImport.update({
+  id: '/pago-confirmado',
+  path: '/pago-confirmado',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ControlRoute = ControlRouteImport.update({
-  id: '/control',
-  path: '/control',
+const ProgramasRoute = ProgramasRouteImport.update({
+  id: '/programas',
+  path: '/programas',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContratarRoute = ContratarRouteImport.update({
-  id: '/contratar',
-  path: '/contratar',
+const RecursosRoute = RecursosRouteImport.update({
+  id: '/recursos',
+  path: '/recursos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConferencistasRoute = ConferencistasRouteImport.update({
-  id: '/conferencistas',
-  path: '/conferencistas',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CasosRoute = CasosRouteImport.update({
-  id: '/casos',
-  path: '/casos',
+const SolucionesRoute = SolucionesRouteImport.update({
+  id: '/soluciones',
+  path: '/soluciones',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
+const SuscribeteRoute = SuscribeteRouteImport.update({
+  id: '/suscribete',
+  path: '/suscribete',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AvisoDePrivacidadRoute = AvisoDePrivacidadRouteImport.update({
-  id: '/aviso-de-privacidad',
-  path: '/aviso-de-privacidad',
+const TerminosYCondicionesRoute = TerminosYCondicionesRouteImport.update({
+  id: '/terminos-y-condiciones',
+  path: '/terminos-y-condiciones',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SplatRoute = SplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SpeakersIndexRoute = SpeakersIndexRouteImport.update({
-  id: '/speakers/',
-  path: '/speakers/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ControlIndexRoute = ControlIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ControlRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
-  id: '/speakers/$slug',
-  path: '/speakers/$slug',
-  getParentRoute: () => rootRouteImport,
+const AdminEventosRoute = AdminEventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => AdminRoute,
 } as any)
-const MxDiegoCamachoRoute = MxDiegoCamachoRouteImport.update({
-  id: '/mx/diego-camacho',
-  path: '/mx/diego-camacho',
-  getParentRoute: () => rootRouteImport,
+const AdminLeadsMxRoute = AdminLeadsMxRouteImport.update({
+  id: '/leads-mx',
+  path: '/leads-mx',
+  getParentRoute: () => AdminRoute,
 } as any)
-const MasterclassGraciasRoute = MasterclassGraciasRouteImport.update({
-  id: '/masterclass/gracias',
-  path: '/masterclass/gracias',
-  getParentRoute: () => rootRouteImport,
+const AdminLibrosRoute = AdminLibrosRouteImport.update({
+  id: '/libros',
+  path: '/libros',
+  getParentRoute: () => AdminRoute,
 } as any)
-const MasterclassCheckoutRoute = MasterclassCheckoutRouteImport.update({
-  id: '/masterclass/checkout',
-  path: '/masterclass/checkout',
-  getParentRoute: () => rootRouteImport,
+const AdminPedidosLibrosRoute = AdminPedidosLibrosRouteImport.update({
+  id: '/pedidos-libros',
+  path: '/pedidos-libros',
+  getParentRoute: () => AdminRoute,
 } as any)
-const ControlLoginRoute = ControlLoginRouteImport.update({
-  id: '/control_/login',
-  path: '/control/login',
-  getParentRoute: () => rootRouteImport,
+const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
+  id: '/speakers',
+  path: '/speakers',
+  getParentRoute: () => AdminRoute,
 } as any)
-const ControlIntelligenceRoute = ControlIntelligenceRouteImport.update({
-  id: '/intelligence',
-  path: '/intelligence',
-  getParentRoute: () => ControlRoute,
-} as any)
-const ControlIntegrationsRoute = ControlIntegrationsRouteImport.update({
-  id: '/integrations',
-  path: '/integrations',
-  getParentRoute: () => ControlRoute,
-} as any)
-const ControlDocumentsRoute = ControlDocumentsRouteImport.update({
-  id: '/documents',
-  path: '/documents',
-  getParentRoute: () => ControlRoute,
-} as any)
-const AdminVentasMasterclassRoute = AdminVentasMasterclassRouteImport.update({
-  id: '/ventas-masterclass',
-  path: '/ventas-masterclass',
+const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
+  id: '/suscriptores',
+  path: '/suscriptores',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminSuscriptoresRecursosRoute =
@@ -227,55 +202,59 @@ const AdminSuscriptoresRecursosRoute =
     path: '/suscriptores-recursos',
     getParentRoute: () => AdminRoute,
   } as any)
-const AdminSuscriptoresRoute = AdminSuscriptoresRouteImport.update({
-  id: '/suscriptores',
-  path: '/suscriptores',
+const AdminVentasMasterclassRoute = AdminVentasMasterclassRouteImport.update({
+  id: '/ventas-masterclass',
+  path: '/ventas-masterclass',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminSpeakersRoute = AdminSpeakersRouteImport.update({
-  id: '/speakers',
-  path: '/speakers',
-  getParentRoute: () => AdminRoute,
+const ControlIndexRoute = ControlIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ControlRoute,
 } as any)
-const AdminPedidosLibrosRoute = AdminPedidosLibrosRouteImport.update({
-  id: '/pedidos-libros',
-  path: '/pedidos-libros',
-  getParentRoute: () => AdminRoute,
+const ControlDocumentsRoute = ControlDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => ControlRoute,
 } as any)
-const AdminLibrosRoute = AdminLibrosRouteImport.update({
-  id: '/libros',
-  path: '/libros',
-  getParentRoute: () => AdminRoute,
+const ControlIntegrationsRoute = ControlIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => ControlRoute,
 } as any)
-const AdminLeadsMxRoute = AdminLeadsMxRouteImport.update({
-  id: '/leads-mx',
-  path: '/leads-mx',
-  getParentRoute: () => AdminRoute,
+const ControlIntelligenceRoute = ControlIntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => ControlRoute,
 } as any)
-const AdminEventosRoute = AdminEventosRouteImport.update({
-  id: '/eventos',
-  path: '/eventos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const SpeakersDiegoCamachoMexicoRoute =
-  SpeakersDiegoCamachoMexicoRouteImport.update({
-    id: '/speakers/diego-camacho/mexico',
-    path: '/speakers/diego-camacho/mexico',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiControlOverviewRoute = ApiControlOverviewRouteImport.update({
-  id: '/api/control/overview',
-  path: '/api/control/overview',
+const ControlLoginRoute = ControlLoginRouteImport.update({
+  id: '/control_/login',
+  path: '/control/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAgentChatRoute = ApiAgentChatRouteImport.update({
-  id: '/api/agent/chat',
-  path: '/api/agent/chat',
+const MasterclassCheckoutRoute = MasterclassCheckoutRouteImport.update({
+  id: '/masterclass/checkout',
+  path: '/masterclass/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAdminSessionRoute = ApiAdminSessionRouteImport.update({
-  id: '/api/admin/session',
-  path: '/api/admin/session',
+const MasterclassGraciasRoute = MasterclassGraciasRouteImport.update({
+  id: '/masterclass/gracias',
+  path: '/masterclass/gracias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MxDiegoCamachoRoute = MxDiegoCamachoRouteImport.update({
+  id: '/mx/diego-camacho',
+  path: '/mx/diego-camacho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpeakersIndexRoute = SpeakersIndexRouteImport.update({
+  id: '/speakers/',
+  path: '/speakers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
+  id: '/speakers/$slug',
+  path: '/speakers/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminAgentRoute = ApiAdminAgentRouteImport.update({
@@ -283,6 +262,27 @@ const ApiAdminAgentRoute = ApiAdminAgentRouteImport.update({
   path: '/api/admin/agent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminSessionRoute = ApiAdminSessionRouteImport.update({
+  id: '/api/admin/session',
+  path: '/api/admin/session',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentChatRoute = ApiAgentChatRouteImport.update({
+  id: '/api/agent/chat',
+  path: '/api/agent/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiControlOverviewRoute = ApiControlOverviewRouteImport.update({
+  id: '/api/control/overview',
+  path: '/api/control/overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpeakersDiegoCamachoMexicoRoute =
+  SpeakersDiegoCamachoMexicoRouteImport.update({
+    id: '/speakers/diego-camacho/mexico',
+    path: '/speakers/diego-camacho/mexico',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -603,137 +603,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terminos-y-condiciones': {
-      id: '/terminos-y-condiciones'
-      path: '/terminos-y-condiciones'
-      fullPath: '/terminos-y-condiciones'
-      preLoaderRoute: typeof TerminosYCondicionesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/suscribete': {
-      id: '/suscribete'
-      path: '/suscribete'
-      fullPath: '/suscribete'
-      preLoaderRoute: typeof SuscribeteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/soluciones': {
-      id: '/soluciones'
-      path: '/soluciones'
-      fullPath: '/soluciones'
-      preLoaderRoute: typeof SolucionesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/recursos': {
-      id: '/recursos'
-      path: '/recursos'
-      fullPath: '/recursos'
-      preLoaderRoute: typeof RecursosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/programas': {
-      id: '/programas'
-      path: '/programas'
-      fullPath: '/programas'
-      preLoaderRoute: typeof ProgramasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pago-confirmado': {
-      id: '/pago-confirmado'
-      path: '/pago-confirmado'
-      fullPath: '/pago-confirmado'
-      preLoaderRoute: typeof PagoConfirmadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nosotros': {
-      id: '/nosotros'
-      path: '/nosotros'
-      fullPath: '/nosotros'
-      preLoaderRoute: typeof NosotrosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/masterclass-de-clientes-a-fans': {
-      id: '/masterclass-de-clientes-a-fans'
-      path: '/masterclass-de-clientes-a-fans'
-      fullPath: '/masterclass-de-clientes-a-fans'
-      preLoaderRoute: typeof MasterclassDeClientesAFansRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/libros': {
-      id: '/libros'
-      path: '/libros'
-      fullPath: '/libros'
-      preLoaderRoute: typeof LibrosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eventos': {
-      id: '/eventos'
-      path: '/eventos'
-      fullPath: '/eventos'
-      preLoaderRoute: typeof EventosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/control': {
-      id: '/control'
-      path: '/control'
-      fullPath: '/control'
-      preLoaderRoute: typeof ControlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contratar': {
-      id: '/contratar'
-      path: '/contratar'
-      fullPath: '/contratar'
-      preLoaderRoute: typeof ContratarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conferencistas': {
-      id: '/conferencistas'
-      path: '/conferencistas'
-      fullPath: '/conferencistas'
-      preLoaderRoute: typeof ConferencistasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/casos': {
-      id: '/casos'
-      path: '/casos'
-      fullPath: '/casos'
-      preLoaderRoute: typeof CasosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/aviso-de-privacidad': {
-      id: '/aviso-de-privacidad'
-      path: '/aviso-de-privacidad'
-      fullPath: '/aviso-de-privacidad'
-      preLoaderRoute: typeof AvisoDePrivacidadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$': {
@@ -743,137 +617,144 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/speakers/': {
-      id: '/speakers/'
-      path: '/speakers'
-      fullPath: '/speakers/'
-      preLoaderRoute: typeof SpeakersIndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/control/': {
-      id: '/control/'
-      path: '/'
-      fullPath: '/control/'
-      preLoaderRoute: typeof ControlIndexRouteImport
-      parentRoute: typeof ControlRoute
+    '/aviso-de-privacidad': {
+      id: '/aviso-de-privacidad'
+      path: '/aviso-de-privacidad'
+      fullPath: '/aviso-de-privacidad'
+      preLoaderRoute: typeof AvisoDePrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casos': {
+      id: '/casos'
+      path: '/casos'
+      fullPath: '/casos'
+      preLoaderRoute: typeof CasosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conferencistas': {
+      id: '/conferencistas'
+      path: '/conferencistas'
+      fullPath: '/conferencistas'
+      preLoaderRoute: typeof ConferencistasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contratar': {
+      id: '/contratar'
+      path: '/contratar'
+      fullPath: '/contratar'
+      preLoaderRoute: typeof ContratarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/control': {
+      id: '/control'
+      path: '/control'
+      fullPath: '/control'
+      preLoaderRoute: typeof ControlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/libros': {
+      id: '/libros'
+      path: '/libros'
+      fullPath: '/libros'
+      preLoaderRoute: typeof LibrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/masterclass-de-clientes-a-fans': {
+      id: '/masterclass-de-clientes-a-fans'
+      path: '/masterclass-de-clientes-a-fans'
+      fullPath: '/masterclass-de-clientes-a-fans'
+      preLoaderRoute: typeof MasterclassDeClientesAFansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nosotros': {
+      id: '/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof NosotrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pago-confirmado': {
+      id: '/pago-confirmado'
+      path: '/pago-confirmado'
+      fullPath: '/pago-confirmado'
+      preLoaderRoute: typeof PagoConfirmadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programas': {
+      id: '/programas'
+      path: '/programas'
+      fullPath: '/programas'
+      preLoaderRoute: typeof ProgramasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recursos': {
+      id: '/recursos'
+      path: '/recursos'
+      fullPath: '/recursos'
+      preLoaderRoute: typeof RecursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/soluciones': {
+      id: '/soluciones'
+      path: '/soluciones'
+      fullPath: '/soluciones'
+      preLoaderRoute: typeof SolucionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suscribete': {
+      id: '/suscribete'
+      path: '/suscribete'
+      fullPath: '/suscribete'
+      preLoaderRoute: typeof SuscribeteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terminos-y-condiciones': {
+      id: '/terminos-y-condiciones'
+      path: '/terminos-y-condiciones'
+      fullPath: '/terminos-y-condiciones'
+      preLoaderRoute: typeof TerminosYCondicionesRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/': {
       id: '/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/speakers/$slug': {
-      id: '/speakers/$slug'
-      path: '/speakers/$slug'
-      fullPath: '/speakers/$slug'
-      preLoaderRoute: typeof SpeakersSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mx/diego-camacho': {
-      id: '/mx/diego-camacho'
-      path: '/mx/diego-camacho'
-      fullPath: '/mx/diego-camacho'
-      preLoaderRoute: typeof MxDiegoCamachoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/masterclass/gracias': {
-      id: '/masterclass/gracias'
-      path: '/masterclass/gracias'
-      fullPath: '/masterclass/gracias'
-      preLoaderRoute: typeof MasterclassGraciasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/masterclass/checkout': {
-      id: '/masterclass/checkout'
-      path: '/masterclass/checkout'
-      fullPath: '/masterclass/checkout'
-      preLoaderRoute: typeof MasterclassCheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/control_/login': {
-      id: '/control_/login'
-      path: '/control/login'
-      fullPath: '/control/login'
-      preLoaderRoute: typeof ControlLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/control/intelligence': {
-      id: '/control/intelligence'
-      path: '/intelligence'
-      fullPath: '/control/intelligence'
-      preLoaderRoute: typeof ControlIntelligenceRouteImport
-      parentRoute: typeof ControlRoute
-    }
-    '/control/integrations': {
-      id: '/control/integrations'
-      path: '/integrations'
-      fullPath: '/control/integrations'
-      preLoaderRoute: typeof ControlIntegrationsRouteImport
-      parentRoute: typeof ControlRoute
-    }
-    '/control/documents': {
-      id: '/control/documents'
-      path: '/documents'
-      fullPath: '/control/documents'
-      preLoaderRoute: typeof ControlDocumentsRouteImport
-      parentRoute: typeof ControlRoute
-    }
-    '/admin/ventas-masterclass': {
-      id: '/admin/ventas-masterclass'
-      path: '/ventas-masterclass'
-      fullPath: '/admin/ventas-masterclass'
-      preLoaderRoute: typeof AdminVentasMasterclassRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/suscriptores-recursos': {
-      id: '/admin/suscriptores-recursos'
-      path: '/suscriptores-recursos'
-      fullPath: '/admin/suscriptores-recursos'
-      preLoaderRoute: typeof AdminSuscriptoresRecursosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/suscriptores': {
-      id: '/admin/suscriptores'
-      path: '/suscriptores'
-      fullPath: '/admin/suscriptores'
-      preLoaderRoute: typeof AdminSuscriptoresRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/speakers': {
-      id: '/admin/speakers'
-      path: '/speakers'
-      fullPath: '/admin/speakers'
-      preLoaderRoute: typeof AdminSpeakersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/pedidos-libros': {
-      id: '/admin/pedidos-libros'
-      path: '/pedidos-libros'
-      fullPath: '/admin/pedidos-libros'
-      preLoaderRoute: typeof AdminPedidosLibrosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/libros': {
-      id: '/admin/libros'
-      path: '/libros'
-      fullPath: '/admin/libros'
-      preLoaderRoute: typeof AdminLibrosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/leads-mx': {
-      id: '/admin/leads-mx'
-      path: '/leads-mx'
-      fullPath: '/admin/leads-mx'
-      preLoaderRoute: typeof AdminLeadsMxRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/eventos': {
@@ -883,25 +764,130 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEventosRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/speakers/diego-camacho/mexico': {
-      id: '/speakers/diego-camacho/mexico'
-      path: '/speakers/diego-camacho/mexico'
-      fullPath: '/speakers/diego-camacho/mexico'
-      preLoaderRoute: typeof SpeakersDiegoCamachoMexicoRouteImport
+    '/admin/leads-mx': {
+      id: '/admin/leads-mx'
+      path: '/leads-mx'
+      fullPath: '/admin/leads-mx'
+      preLoaderRoute: typeof AdminLeadsMxRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/libros': {
+      id: '/admin/libros'
+      path: '/libros'
+      fullPath: '/admin/libros'
+      preLoaderRoute: typeof AdminLibrosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pedidos-libros': {
+      id: '/admin/pedidos-libros'
+      path: '/pedidos-libros'
+      fullPath: '/admin/pedidos-libros'
+      preLoaderRoute: typeof AdminPedidosLibrosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/speakers': {
+      id: '/admin/speakers'
+      path: '/speakers'
+      fullPath: '/admin/speakers'
+      preLoaderRoute: typeof AdminSpeakersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/suscriptores': {
+      id: '/admin/suscriptores'
+      path: '/suscriptores'
+      fullPath: '/admin/suscriptores'
+      preLoaderRoute: typeof AdminSuscriptoresRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/suscriptores-recursos': {
+      id: '/admin/suscriptores-recursos'
+      path: '/suscriptores-recursos'
+      fullPath: '/admin/suscriptores-recursos'
+      preLoaderRoute: typeof AdminSuscriptoresRecursosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/ventas-masterclass': {
+      id: '/admin/ventas-masterclass'
+      path: '/ventas-masterclass'
+      fullPath: '/admin/ventas-masterclass'
+      preLoaderRoute: typeof AdminVentasMasterclassRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/control/': {
+      id: '/control/'
+      path: '/'
+      fullPath: '/control/'
+      preLoaderRoute: typeof ControlIndexRouteImport
+      parentRoute: typeof ControlRoute
+    }
+    '/control/documents': {
+      id: '/control/documents'
+      path: '/documents'
+      fullPath: '/control/documents'
+      preLoaderRoute: typeof ControlDocumentsRouteImport
+      parentRoute: typeof ControlRoute
+    }
+    '/control/integrations': {
+      id: '/control/integrations'
+      path: '/integrations'
+      fullPath: '/control/integrations'
+      preLoaderRoute: typeof ControlIntegrationsRouteImport
+      parentRoute: typeof ControlRoute
+    }
+    '/control/intelligence': {
+      id: '/control/intelligence'
+      path: '/intelligence'
+      fullPath: '/control/intelligence'
+      preLoaderRoute: typeof ControlIntelligenceRouteImport
+      parentRoute: typeof ControlRoute
+    }
+    '/control_/login': {
+      id: '/control_/login'
+      path: '/control/login'
+      fullPath: '/control/login'
+      preLoaderRoute: typeof ControlLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/control/overview': {
-      id: '/api/control/overview'
-      path: '/api/control/overview'
-      fullPath: '/api/control/overview'
-      preLoaderRoute: typeof ApiControlOverviewRouteImport
+    '/masterclass/checkout': {
+      id: '/masterclass/checkout'
+      path: '/masterclass/checkout'
+      fullPath: '/masterclass/checkout'
+      preLoaderRoute: typeof MasterclassCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/agent/chat': {
-      id: '/api/agent/chat'
-      path: '/api/agent/chat'
-      fullPath: '/api/agent/chat'
-      preLoaderRoute: typeof ApiAgentChatRouteImport
+    '/masterclass/gracias': {
+      id: '/masterclass/gracias'
+      path: '/masterclass/gracias'
+      fullPath: '/masterclass/gracias'
+      preLoaderRoute: typeof MasterclassGraciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mx/diego-camacho': {
+      id: '/mx/diego-camacho'
+      path: '/mx/diego-camacho'
+      fullPath: '/mx/diego-camacho'
+      preLoaderRoute: typeof MxDiegoCamachoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/speakers/': {
+      id: '/speakers/'
+      path: '/speakers'
+      fullPath: '/speakers/'
+      preLoaderRoute: typeof SpeakersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/speakers/$slug': {
+      id: '/speakers/$slug'
+      path: '/speakers/$slug'
+      fullPath: '/speakers/$slug'
+      preLoaderRoute: typeof SpeakersSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/agent': {
+      id: '/api/admin/agent'
+      path: '/api/admin/agent'
+      fullPath: '/api/admin/agent'
+      preLoaderRoute: typeof ApiAdminAgentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/session': {
@@ -911,11 +897,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminSessionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/admin/agent': {
-      id: '/api/admin/agent'
-      path: '/api/admin/agent'
-      fullPath: '/api/admin/agent'
-      preLoaderRoute: typeof ApiAdminAgentRouteImport
+    '/api/agent/chat': {
+      id: '/api/agent/chat'
+      path: '/api/agent/chat'
+      fullPath: '/api/agent/chat'
+      preLoaderRoute: typeof ApiAgentChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/control/overview': {
+      id: '/api/control/overview'
+      path: '/api/control/overview'
+      fullPath: '/api/control/overview'
+      preLoaderRoute: typeof ApiControlOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/speakers/diego-camacho/mexico': {
+      id: '/speakers/diego-camacho/mexico'
+      path: '/speakers/diego-camacho/mexico'
+      fullPath: '/speakers/diego-camacho/mexico'
+      preLoaderRoute: typeof SpeakersDiegoCamachoMexicoRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
