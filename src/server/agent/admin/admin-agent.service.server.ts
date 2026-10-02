@@ -4,6 +4,8 @@ import type {
   AgentMetrics,
 } from "./business-intelligence.types";
 
+import type { ControlOverviewData } from "../../lib/control-overview-schema";
+
 import { callOpenRouter } from "../llm/openrouter.provider.server";
 import { ADMIN_SYSTEM_PROMPT } from "./admin-system.prompt.server";
 
@@ -39,31 +41,26 @@ export async function executeAdminAgent(
 ): Promise<AdminAgentResponse> {
   let stage = "start";
   try {
-    // 1. Load real GA4 data when available/requested.
-    stage = "load-ga4";
-    const ga4Metrics = await loadGA4MetricsSafely(
-      input.context?.datasources,
-    );
+    // 1. Load all datasources in parallel
+    stage = "load-datasources";
+    const [businessOverview, ga4Metrics, adsMetrics, agentMetrics] =
+      await Promise.all([
+        loadBusinessOverviewSafely(input.context?.datasources),
+        loadGA4MetricsSafely(input.context?.datasources),
+        loadAdsMetricsSafely(input.context?.datasources),
+        loadAgentMetricsSafely(input.context?.datasources),
+      ]);
+
+    console.info("[AdminAgent] Business overview loaded:", Boolean(businessOverview));
     console.info("[AdminAgent] GA4 loaded:", Boolean(ga4Metrics));
+    console.info("[AdminAgent] Ads loaded:", Boolean(adsMetrics));
+    console.info("[AdminAgent] Agent Metrics loaded:", Boolean(agentMetrics));
 
-    // 2. Load Google Ads metrics when available/requested.
-    stage = "load-ads";
-    const adsMetrics = await loadAdsMetricsSafely(
-      input.context?.datasources,
-    );
-    console.info("[AdminAgent] Ads loaded:", Boolean(adsMetrics), adsMetrics?.campaigns?.length || 0, "campaigns");
-
-    // 3. Load Agent Metrics when available/requested.
-    stage = "load-agent-metrics";
-    const agentMetrics = await loadAgentMetricsSafely(
-      input.context?.datasources,
-    );
-    console.info("[AdminAgent] Agent Metrics loaded:", Boolean(agentMetrics), agentMetrics?.conversations?.totalConversations || 0, "conversations");
-
-    // 4. Build grounded context using only data actually loaded.
+    // 2. Build grounded context using only data actually loaded.
     stage = "build-context";
     const adminContext = buildAdminContext(
       input.context,
+      businessOverview,
       ga4Metrics,
       adsMetrics,
       agentMetrics,
@@ -115,6 +112,7 @@ export async function executeAdminAgent(
     stage = "sources-used";
     const sourcesUsed = determineSourcesUsed(
       input.context?.datasources,
+      businessOverview,
       ga4Metrics,
       adsMetrics,
       agentMetrics,
@@ -123,6 +121,9 @@ export async function executeAdminAgent(
     stage = "data-freshness";
     const dataFreshness: Record<string, string> = {};
 
+    if (businessOverview) {
+      dataFreshness.supabase = businessOverview.timestamp;
+    }
     if (ga4Metrics) {
       dataFreshness.ga4 = ga4Metrics.lastUpdated;
     }
@@ -228,7 +229,10 @@ async function loadAdsMetricsSafely(
       return null;
     }
 
-    return await getAdsMetrics();
+    return await getAdsMetrics({
+      startDate: "90daysAgo",
+      endDate: "today",
+    });
   } catch (error) {
     console.error(
       "[AdminAgent][Ads import/load error]",
@@ -274,6 +278,53 @@ async function loadAgentMetricsSafely(
 }
 
 /**
+ * Load Business Overview from Supabase when available/requested.
+ *
+ * Behaviour:
+ * - If no datasource list is provided, Business Overview loads by default when configured.
+ * - If datasources are explicitly supplied, Business Overview loads only when
+ *   "supabase", "business", or "overview" is requested.
+ */
+async function loadBusinessOverviewSafely(
+  datasources?: string[],
+): Promise<ControlOverviewData | null> {
+  const hasExplicitDatasourceSelection =
+    Array.isArray(datasources) && datasources.length > 0;
+
+  const businessRequested =
+    !hasExplicitDatasourceSelection ||
+    datasources?.includes("supabase") ||
+    datasources?.includes("business") ||
+    datasources?.includes("overview");
+
+  if (!businessRequested) {
+    return null;
+  }
+
+  try {
+    const {
+      getBusinessOverview,
+      isBusinessOverviewConfigured,
+    } = await import("./business-overview.datasource.server");
+
+    if (!isBusinessOverviewConfigured()) {
+      console.warn(
+        "[AdminAgent][Business Overview] Business overview datasource is not configured.",
+      );
+      return null;
+    }
+
+    return await getBusinessOverview();
+  } catch (error) {
+    console.error(
+      "[AdminAgent][Business Overview import/load error]",
+      error instanceof Error ? error.message : error,
+    );
+    return null;
+  }
+}
+
+/**
  * Build grounded context for the Master Agent.
  *
  * IMPORTANT:
@@ -282,6 +333,7 @@ async function loadAgentMetricsSafely(
  */
 function buildAdminContext(
   context?: AdminAgentInput["context"],
+  businessOverview?: ControlOverviewData | null,
   ga4Metrics?: EngagementMetrics | null,
   adsMetrics?: CampaignsMetrics | null,
   agentMetrics?: AgentMetrics | null,
@@ -290,13 +342,16 @@ function buildAdminContext(
 
   const loadedSources: string[] = [];
 
+  if (businessOverview) {
+    loadedSources.push("Supabase / Operación");
+  }
   if (ga4Metrics) {
     loadedSources.push("Google Analytics 4");
   }
-  if (adsMetrics && adsMetrics.totalSpend > 0) {
+  if (adsMetrics) {
     loadedSources.push("Google Ads");
   }
-  if (agentMetrics && agentMetrics.conversations.totalConversations > 0) {
+  if (agentMetrics) {
     loadedSources.push("Agent Metrics");
   }
 
@@ -353,7 +408,26 @@ ser consultada en esta ejecución.
 `);
   }
 
-  if (adsMetrics && adsMetrics.totalSpend > 0) {
+  if (businessOverview) {
+    sections.push(buildBusinessOverviewContext(businessOverview));
+  } else {
+    sections.push(`
+=== SUPABASE / OPERACIÓN ===
+
+La fuente operativa no estuvo disponible en esta ejecución.
+
+No inventes:
+- solicitudes
+- suscriptores
+- pedidos
+- ingresos
+- speakers
+- libros
+- eventos
+`);
+  }
+
+  if (adsMetrics) {
     sections.push(buildAdsContext(adsMetrics));
   } else {
     sections.push(`
@@ -389,14 +463,6 @@ No inventes:
   }
 
   sections.push(`
-=== SUPABASE / MÉTRICAS COMERCIALES ===
-
-La plataforma utiliza Supabase para datos operativos, pero este servicio
-todavía no está inyectando esas métricas dentro de esta consulta del copiloto.
-
-No presentes ventas, pedidos, leads o ingresos de Supabase como hechos
-mientras esos datos no aparezcan en el contexto.
-
 === CAPACIDADES ACTUALES ===
 
 Cuando las fuentes estén disponibles puedes:
@@ -437,6 +503,89 @@ como escenario o hipótesis, nunca como hecho observado.
 `);
 
   return sections.join("\n");
+}
+
+/**
+ * Build the Business Overview section from Supabase operational data.
+ */
+function buildBusinessOverviewContext(overview: ControlOverviewData): string {
+  const kpis = overview.kpis;
+
+  const buildMetricLine = (
+    label: string,
+    metric: { total: number | null; last7Days?: number | null; last30Days?: number | null } | null,
+  ): string => {
+    if (!metric || metric.total === null) {
+      return `${label}: no disponible`;
+    }
+
+    const parts = [`${label}: ${formatNumber(metric.total)}`];
+    if (metric.last7Days !== null && metric.last7Days !== undefined) {
+      parts.push(`últimos 7 días: ${formatNumber(metric.last7Days)}`);
+    }
+    if (metric.last30Days !== null && metric.last30Days !== undefined) {
+      parts.push(`últimos 30 días: ${formatNumber(metric.last30Days)}`);
+    }
+
+    return parts.join(" | ");
+  };
+
+  const pedidosStatus: string[] = [];
+  if (kpis.pedidos?.aprobados !== null && kpis.pedidos?.aprobados !== undefined) {
+    pedidosStatus.push(`aprobados: ${formatNumber(kpis.pedidos.aprobados)}`);
+  }
+  if (kpis.pedidos?.pendientes !== null && kpis.pedidos?.pendientes !== undefined) {
+    pedidosStatus.push(`pendientes: ${formatNumber(kpis.pedidos.pendientes)}`);
+  }
+  if (kpis.pedidos?.rechazados !== null && kpis.pedidos?.rechazados !== undefined) {
+    pedidosStatus.push(`rechazados: ${formatNumber(kpis.pedidos.rechazados)}`);
+  }
+  if (kpis.pedidos?.cancelados !== null && kpis.pedidos?.cancelados !== undefined) {
+    pedidosStatus.push(`cancelados: ${formatNumber(kpis.pedidos.cancelados)}`);
+  }
+
+  const pedidosStatusStr =
+    pedidosStatus.length > 0 ? pedidosStatus.join(" | ") : "sin detalles de estado";
+
+  return `
+=== SUPABASE / OPERACIÓN — DATOS OBSERVADOS ===
+
+SOLICITUDES:
+${buildMetricLine("Total", kpis.solicitudes)}
+
+SUSCRIPTORES:
+${buildMetricLine("Total", kpis.subscribers)}
+
+PEDIDOS:
+${buildMetricLine("Total", kpis.pedidos)}
+
+Estados de pedidos:
+${pedidosStatusStr}
+
+REVENUE (Ingresos):
+${
+  kpis.revenue?.total !== null && kpis.revenue?.total !== undefined
+    ? `Total registrado: ${formatNumber(kpis.revenue.total)}`
+    : "no disponible"
+}
+${
+  kpis.revenue?.aprobado !== null && kpis.revenue?.aprobado !== undefined
+    ? ` | Aprobado: ${formatNumber(kpis.revenue.aprobado)}`
+    : ""
+}
+
+SPEAKERS:
+${buildMetricLine("Total", kpis.speakers)}
+
+BOOKS (Libros):
+${buildMetricLine("Total", kpis.books)}
+
+EVENTS (Eventos):
+${buildMetricLine("Total", kpis.events)}
+
+Última actualización:
+${overview.timestamp}
+`;
 }
 
 /**
@@ -543,7 +692,7 @@ function buildAdsContext(adsMetrics: CampaignsMetrics): string {
   return `
 === GOOGLE ADS — DATOS OBSERVADOS ===
 
-Período: últimos 30 días
+Período: últimos 90 días
 
 Gasto total:
 ${formatNumber(adsMetrics.totalSpend)}
@@ -555,7 +704,7 @@ ${adsMetrics.campaigns.length}
 
 ${topCampaigns}
 
-Última consulta a Google Ads (vía GA4):
+Última consulta a Google Ads:
 ${adsMetrics.lastUpdated}
 `;
 }
@@ -593,14 +742,34 @@ ${agentMetrics.lastUpdated}
 
 /**
  * Determine which data sources were actually used.
+ *
+ * IMPORTANT: A value of 0 is a valid observed data point.
+ * Only exclude a source if it was truly unavailable (null/failed).
  */
 function determineSourcesUsed(
   datasources?: string[],
+  businessOverview?: ControlOverviewData | null,
   ga4Metrics?: EngagementMetrics | null,
   adsMetrics?: CampaignsMetrics | null,
   agentMetrics?: AgentMetrics | null,
 ): DataSourceRef[] {
   const used: DataSourceRef[] = [];
+
+  if (businessOverview) {
+    used.push({
+      source: "supabase",
+      updatedAt: businessOverview.timestamp,
+    });
+  } else if (
+    datasources?.includes("supabase") ||
+    datasources?.includes("business") ||
+    datasources?.includes("overview")
+  ) {
+    used.push({
+      source: "supabase",
+      updatedAt: "unavailable",
+    });
+  }
 
   if (ga4Metrics) {
     used.push({
@@ -614,7 +783,7 @@ function determineSourcesUsed(
     });
   }
 
-  if (adsMetrics && adsMetrics.totalSpend > 0) {
+  if (adsMetrics) {
     used.push({
       source: "google_ads",
       updatedAt: adsMetrics.lastUpdated,
