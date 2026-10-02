@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
       kpis: {
         solicitudes: requestsRes.error ? unavailable() : { available: true, total: requests.length, last7Days: countSince(requests, "created_at", last7), last30Days: countSince(requests, "created_at", last30) },
         subscribers: subscribersRes.error ? unavailable() : { available: true, total: subscribers.length, last7Days: countSince(subscribers, "created_at", last7), last30Days: countSince(subscribers, "created_at", last30) },
-        pedidos: pedidosRes.error ? { ...unavailable(), aprobados: null, pendientes: null, rechazados: null } : { available: true, total: pedidos.length, aprobados: approved.length, pendientes: pending, rechazados: rejected },
+        pedidos: pedidosRes.error ? { ...unavailable(), aprobados: null, pendientes: null, rechazados: null, cancelados: null, otros: null } : { available: true, total: pedidos.length, aprobados: approved.length, pendientes: pending, rechazados: rejected, cancelados: canceled, otros: others },
         speakers: speakersRes.error ? unavailable() : { available: true, total: speakers.length },
         books: booksRes.error ? unavailable() : { available: true, total: books.length },
         events: eventsRes.error ? unavailable() : { available: true, total: events.length },
