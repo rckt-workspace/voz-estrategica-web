@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 import type {
   EngagementMetrics,
   CampaignsMetrics,
@@ -41,30 +43,72 @@ export async function executeAdminAgent(
   input: AdminAgentInput,
 ): Promise<AdminAgentResponse> {
   // Generate request ID for tracing
-  const requestId = Math.random().toString(36).substring(2, 9);
-  const prefix = `[AdminAgent:${requestId}]`;
+  const requestId = randomUUID();
+  const prefix = `[AdminAgent][${requestId}]`;
   const startTime = Date.now();
 
   let stage = "start";
   try {
-    // 1. Load all datasources in parallel
+    // 1. Load all datasources in parallel with individual timing
     stage = "load-datasources";
-    const loadStartTime = Date.now();
+
+    // Timing wrapper for each datasource
+    const timedLoader = async <T,>(
+      name: string,
+      loader: () => Promise<T>,
+      logMetrics?: (data: T) => string,
+    ): Promise<T> => {
+      const start = Date.now();
+      try {
+        const result = await loader();
+        const duration = Date.now() - start;
+        const loaded = Boolean(result);
+        const metrics = loaded && logMetrics ? logMetrics(result) : "";
+        console.info(
+          prefix,
+          `source=${name}`,
+          `loaded=${loaded}`,
+          metrics ? `${metrics}` : "",
+          `durationMs=${duration}`,
+        );
+        return result;
+      } catch (err) {
+        const duration = Date.now() - start;
+        const reason = err instanceof Error ? err.message.split(":")[0] : "UNKNOWN";
+        console.info(
+          prefix,
+          `source=${name}`,
+          `loaded=false`,
+          `reason=${reason}`,
+          `durationMs=${duration}`,
+        );
+        return null as T;
+      }
+    };
 
     const [businessOverview, ga4Metrics, adsMetrics, agentMetrics] =
       await Promise.all([
-        loadBusinessOverviewSafely(input.context?.datasources),
-        loadGA4MetricsSafely(input.context?.datasources),
-        loadAdsMetricsSafely(input.context?.datasources),
-        loadAgentMetricsSafely(input.context?.datasources),
+        timedLoader("supabase", () => loadBusinessOverviewSafely(input.context?.datasources)),
+        timedLoader("ga4", () => loadGA4MetricsSafely(input.context?.datasources), (data) =>
+          data ? `sessions=${data.traffic?.sessions || 0}` : "",
+        ),
+        timedLoader(
+          "ads",
+          () => loadAdsMetricsSafely(input.context?.datasources),
+          (data) =>
+            data
+              ? `campaigns=${data.campaigns?.length || 0} spend=${data.totalSpend || 0}`
+              : "",
+        ),
+        timedLoader(
+          "agent_metrics",
+          () => loadAgentMetricsSafely(input.context?.datasources),
+          (data) =>
+            data
+              ? `conversations=${data.conversations?.totalConversations || 0}`
+              : "",
+        ),
       ]);
-
-    const loadDuration = Date.now() - loadStartTime;
-
-    console.info(prefix, "Business overview loaded:", Boolean(businessOverview), `(${loadDuration}ms)`);
-    console.info(prefix, "GA4 loaded:", Boolean(ga4Metrics));
-    console.info(prefix, "Ads loaded:", Boolean(adsMetrics));
-    console.info(prefix, "Agent Metrics loaded:", Boolean(agentMetrics));
 
     // 2. Build grounded context using only data actually loaded.
     stage = "build-context";
@@ -1092,62 +1136,109 @@ function buildSafeExecutiveFallback(
   );
   sections.push("");
 
-  // Query-specific fallback responses
-  if (isSessionQuery && ga4Metrics) {
-    sections.push("### Sesiones web\n");
-    sections.push(
-      `Se registraron ${formatNumber(ga4Metrics.traffic.sessions)} sesiones en el período analizado.`,
-    );
-    sections.push("");
-  }
+  // Query-specific fallback responses (mutually exclusive with general table)
+  let queryWasAnswered = false;
 
-  if (isUserQuery && ga4Metrics) {
-    sections.push("### Usuarios\n");
-    sections.push(
-      `Se registraron ${formatNumber(ga4Metrics.traffic.uniqueUsers)} usuarios únicos en el período analizado.`,
-    );
-    sections.push("");
-  }
-
-  if (isPedidoQuery && businessOverview?.kpis.pedidos) {
-    sections.push("### Pedidos\n");
-    sections.push(
-      `Se registraron ${formatNumber(businessOverview.kpis.pedidos.total || 0)} pedidos en el período analizado.`,
-    );
-    sections.push("");
-  }
-
-  if (isSolicitudQuery && businessOverview?.kpis.solicitudes) {
-    sections.push("### Solicitudes\n");
-    sections.push(
-      `Se registraron ${formatNumber(businessOverview.kpis.solicitudes.total || 0)} solicitudes en el período analizado.`,
-    );
-    sections.push("");
-  }
-
-  if (isGoogleAdsQuery && adsMetrics) {
-    sections.push("### Campañas de Google Ads\n");
-    sections.push(
-      `Se tienen ${adsMetrics.campaigns.length} campañas con datos observados.`,
-    );
-    if (adsMetrics.totalSpend > 0) {
+  if (isSessionQuery) {
+    if (ga4Metrics) {
+      sections.push("### Sesiones web\n");
       sections.push(
-        `Gasto total registrado: ${formatNumber(adsMetrics.totalSpend)}.`,
+        `Se registraron ${formatNumber(ga4Metrics.traffic.sessions)} sesiones en el período analizado.`,
       );
+      sections.push("");
+      queryWasAnswered = true;
+    } else {
+      sections.push("### Sesiones web\n");
+      sections.push("No fue posible consultar datos de sesiones en esta ejecución.");
+      sections.push("");
+      queryWasAnswered = true;
+    }
+  }
+
+  if (isUserQuery) {
+    if (ga4Metrics) {
+      sections.push("### Usuarios\n");
+      sections.push(
+        `Se registraron ${formatNumber(ga4Metrics.traffic.uniqueUsers)} usuarios únicos en el período analizado.`,
+      );
+      sections.push("");
+      queryWasAnswered = true;
+    } else {
+      sections.push("### Usuarios\n");
+      sections.push("No fue posible consultar datos de usuarios en esta ejecución.");
+      sections.push("");
+      queryWasAnswered = true;
+    }
+  }
+
+  if (isPedidoQuery) {
+    if (businessOverview?.kpis.pedidos) {
+      sections.push("### Pedidos\n");
+      sections.push(
+        `Se registraron ${formatNumber(businessOverview.kpis.pedidos.total || 0)} pedidos en el período analizado.`,
+      );
+      sections.push("");
+      queryWasAnswered = true;
+    } else {
+      sections.push("### Pedidos\n");
+      sections.push("No fue posible consultar datos de pedidos en esta ejecución.");
+      sections.push("");
+      queryWasAnswered = true;
+    }
+  }
+
+  if (isSolicitudQuery) {
+    if (businessOverview?.kpis.solicitudes) {
+      sections.push("### Solicitudes\n");
+      sections.push(
+        `Se registraron ${formatNumber(businessOverview.kpis.solicitudes.total || 0)} solicitudes en el período analizado.`,
+      );
+      sections.push("");
+      queryWasAnswered = true;
+    } else {
+      sections.push("### Solicitudes\n");
+      sections.push("No fue posible consultar datos de solicitudes en esta ejecución.");
+      sections.push("");
+      queryWasAnswered = true;
+    }
+  }
+
+  if (isGoogleAdsQuery) {
+    sections.push("### Campañas de Google Ads\n");
+    if (adsMetrics) {
+      sections.push(
+        `Se tienen ${adsMetrics.campaigns.length} campañas con datos observados.`,
+      );
+      if (adsMetrics.totalSpend > 0) {
+        sections.push(
+          `Gasto total registrado: ${formatNumber(adsMetrics.totalSpend)}.`,
+        );
+      }
+    } else {
+      sections.push("No fue posible consultar Google Ads en esta ejecución.");
     }
     sections.push("");
+    queryWasAnswered = true;
   }
 
-  if (isAgentQuery && agentMetrics) {
-    sections.push("### Actividad del Agente\n");
-    sections.push(
-      `Se registraron ${formatNumber(agentMetrics.conversations.totalConversations)} conversaciones en el período analizado.`,
-    );
-    sections.push("");
+  if (isAgentQuery) {
+    if (agentMetrics) {
+      sections.push("### Actividad del Agente\n");
+      sections.push(
+        `Se registraron ${formatNumber(agentMetrics.conversations.totalConversations)} conversaciones en el período analizado.`,
+      );
+      sections.push("");
+      queryWasAnswered = true;
+    } else {
+      sections.push("### Actividad del Agente\n");
+      sections.push("No fue posible consultar datos del Agente en esta ejecución.");
+      sections.push("");
+      queryWasAnswered = true;
+    }
   }
 
   // For general query or when no specific data matches query intent
-  if (isGeneralQuery || (sections.length === 3)) {
+  if (!queryWasAnswered) {
     sections.push("### Indicadores clave observados\n");
     const rows: string[] = ["| Área | Métrica | Valor |"];
     rows.push("|---|---|---|");
@@ -1175,7 +1266,7 @@ function buildSafeExecutiveFallback(
 
     if (adsMetrics && adsMetrics.campaigns.length > 0) {
       rows.push(
-        `| Publicidad | Campañas activas | ${adsMetrics.campaigns.length} |`,
+        `| Publicidad | Campañas con datos observados | ${adsMetrics.campaigns.length} |`,
       );
       rows.push(
         `| Publicidad | Gasto | ${formatNumber(adsMetrics.totalSpend)} |`,
