@@ -141,12 +141,22 @@ export function validateAdminResponse(
     {
       phrase: "campañas activas",
       suggestion: "use 'campañas con datos observados en el período'",
-      severity: "warning" as const,
+      severity: "error" as const,
     },
     {
-      phrase: "ventas observadas",
-      suggestion: "use 'pedidos registrados' instead",
-      severity: "warning" as const,
+      phrase: "ventas incorrectas",
+      suggestion: "only refer to 'pedidos registrados'",
+      severity: "error" as const,
+    },
+    {
+      phrase: "ingresos obtenidos",
+      suggestion: "only refer to 'revenue registrado' if currency known",
+      severity: "error" as const,
+    },
+    {
+      phrase: "no hay oferta",
+      suggestion: "say 'no registros de speakers observados' instead",
+      severity: "error" as const,
     },
   ];
 
@@ -154,9 +164,45 @@ export function validateAdminResponse(
     if (response.toLowerCase().includes(phrase.toLowerCase())) {
       errors.push({
         type: "semantics",
-        message: `Imprecise language: "${phrase}" - ${suggestion}`,
+        message: `Semantic error: "${phrase}" - ${suggestion}`,
         severity,
       });
+    }
+  }
+
+  // INVARIANT 5b: Currency detection with context
+  const currencyDetectionPatterns = [
+    // Pattern: $XXX or €XXX or USD/COP without space
+    { regex: /\$\s*\d+(?:[,\.]\d{2})?(?!\d)/, contexts: ["gasto", "spend", "costo", "budget", "inversión", "importe"] },
+    { regex: /€\s*\d+(?:[,\.]\d{2})?(?!\d)/, contexts: ["gasto", "spend", "costo", "budget", "inversión", "importe"] },
+    { regex: /\d+\s*€(?!\d)/, contexts: ["gasto", "spend", "costo", "budget", "inversión", "importe"] },
+    { regex: /\d+\s*€\s*\/\s*(?:día|mes|year)/, contexts: ["gasto", "spend", "costo", "budget"] },
+    { regex: /(?:USD|COP)\s*\d+(?:[,\.]\d{2})?(?!\d)/, contexts: ["gasto", "spend", "costo", "revenue", "ingresos"] },
+    { regex: /\d+\s*(?:USD|COP)(?!\d)/, contexts: ["gasto", "spend", "costo", "revenue", "ingresos"] },
+  ];
+
+  if (!currencyKnown) {
+    for (const { regex, contexts } of currencyDetectionPatterns) {
+      const matches = response.match(regex);
+      if (matches) {
+        for (const match of matches) {
+          const index = response.indexOf(match);
+          const context = response.substring(Math.max(0, index - 150), Math.min(response.length, index + 150));
+
+          const hasRelevantContext = contexts.some((keyword) =>
+            context.toLowerCase().includes(keyword),
+          );
+
+          if (hasRelevantContext) {
+            errors.push({
+              type: "currency",
+              message: `Currency symbol "${match}" found without confirmed currencyCode`,
+              severity: "error",
+            });
+            break;
+          }
+        }
+      }
     }
   }
 

@@ -40,10 +40,17 @@ export interface AdminAgentInput {
 export async function executeAdminAgent(
   input: AdminAgentInput,
 ): Promise<AdminAgentResponse> {
+  // Generate request ID for tracing
+  const requestId = Math.random().toString(36).substring(2, 9);
+  const prefix = `[AdminAgent:${requestId}]`;
+  const startTime = Date.now();
+
   let stage = "start";
   try {
     // 1. Load all datasources in parallel
     stage = "load-datasources";
+    const loadStartTime = Date.now();
+
     const [businessOverview, ga4Metrics, adsMetrics, agentMetrics] =
       await Promise.all([
         loadBusinessOverviewSafely(input.context?.datasources),
@@ -52,13 +59,16 @@ export async function executeAdminAgent(
         loadAgentMetricsSafely(input.context?.datasources),
       ]);
 
-    console.info("[AdminAgent] Business overview loaded:", Boolean(businessOverview));
-    console.info("[AdminAgent] GA4 loaded:", Boolean(ga4Metrics));
-    console.info("[AdminAgent] Ads loaded:", Boolean(adsMetrics));
-    console.info("[AdminAgent] Agent Metrics loaded:", Boolean(agentMetrics));
+    const loadDuration = Date.now() - loadStartTime;
+
+    console.info(prefix, "Business overview loaded:", Boolean(businessOverview), `(${loadDuration}ms)`);
+    console.info(prefix, "GA4 loaded:", Boolean(ga4Metrics));
+    console.info(prefix, "Ads loaded:", Boolean(adsMetrics));
+    console.info(prefix, "Agent Metrics loaded:", Boolean(agentMetrics));
 
     // 2. Build grounded context using only data actually loaded.
     stage = "build-context";
+    const contextStartTime = Date.now();
     const adminContext = buildAdminContext(
       input.context,
       businessOverview,
@@ -66,13 +76,14 @@ export async function executeAdminAgent(
       adsMetrics,
       agentMetrics,
     );
-    console.info("[AdminAgent] Context built:", adminContext.length, "characters");
+    const contextDuration = Date.now() - contextStartTime;
+    console.info(prefix, "Context built:", adminContext.length, "characters", `(${contextDuration}ms)`);
 
     // 5. Prepare system message.
     stage = "build-system-prompt";
     const systemPrompt =
       ADMIN_SYSTEM_PROMPT + "\n\n" + adminContext;
-    console.info("[AdminAgent] System prompt size:", systemPrompt.length, "characters");
+    console.info(prefix, "System prompt size:", systemPrompt.length, "characters");
 
     // 6. Call LLM with conversation history.
     stage = "openrouter";
@@ -105,30 +116,54 @@ export async function executeAdminAgent(
 
     if (effectiveModel === "openrouter/free") {
       console.warn(
-        "[AdminAgent] ADMIN_LLM_MODEL not configured. Using fallback CHAT_PRIMARY_LLM. For production, set ADMIN_LLM_MODEL=<specific-model>",
+        prefix,
+        "ADMIN_LLM_MODEL not configured. Using fallback CHAT_PRIMARY_LLM. For production, set ADMIN_LLM_MODEL=<specific-model>",
       );
     }
 
-    console.info("[AdminAgent] Model configured:", effectiveModel);
+    console.info(prefix, "Model configured:", effectiveModel);
 
     const adminMaxTokens =
       parseInt(process.env.ADMIN_LLM_MAX_TOKENS || "1800") || 1800;
 
-    const llmResult = await callOpenRouterDetailed(messages, {
-      model: effectiveModel,
-      maxTokens: adminMaxTokens,
-      timeout: 45000,
-      excludeReasoning: true,
-    });
+    let finalResponse: string;
 
-    console.info(
-      "[AdminAgent] LLM response received:",
-      `model=${llmResult.model}`,
-      `finishReason=${llmResult.finishReason}`,
-      `tokens=${llmResult.usage.totalTokens}`,
-    );
+    try {
+      const llmStartTime = Date.now();
+      const llmResult = await callOpenRouterDetailed(messages, {
+        model: effectiveModel,
+        maxTokens: adminMaxTokens,
+        timeout: 45000,
+        excludeReasoning: true,
+      });
+      const llmDuration = Date.now() - llmStartTime;
 
-    let finalResponse = llmResult.content;
+      console.info(
+        prefix,
+        "LLM response received:",
+        `model=${llmResult.model}`,
+        `finishReason=${llmResult.finishReason}`,
+        `tokens=${llmResult.usage.totalTokens}`,
+        `(${llmDuration}ms)`,
+      );
+
+      finalResponse = llmResult.content;
+    } catch (primaryLLMError) {
+      // Primary LLM failure: no original response to correct, use safe fallback directly
+      console.error(
+        prefix,
+        "Primary LLM call failed:",
+        primaryLLMError instanceof Error ? primaryLLMError.message : "Unknown error",
+      );
+      console.info(prefix, "Using safe fallback response (primary LLM failure)...");
+      finalResponse = buildSafeExecutiveFallback(
+        businessOverview,
+        ga4Metrics,
+        adsMetrics,
+        agentMetrics,
+        input.query,
+      );
+    }
 
     // Validate response for contradictions
     stage = "validate-response";
@@ -145,7 +180,8 @@ export async function executeAdminAgent(
 
     if (!isValidationPassed(validation)) {
       console.warn(
-        "[AdminAgent] Response validation: CORRECTION_REQUIRED",
+        prefix,
+        "Response validation: CORRECTION_REQUIRED",
         formatValidationErrors(validation.errors),
       );
 
@@ -218,36 +254,40 @@ CORRECTION INSTRUCTIONS:
 
         if (isValidationPassed(correctedValidation)) {
           finalResponse = correctionResult.content;
-          console.info("[AdminAgent] Corrected response validation: PASS");
+          console.info(prefix, "Corrected response validation: PASS");
         } else {
           // Corrected response still fails - use fallback
           console.warn(
-            "[AdminAgent] Corrected response still has errors:",
+            prefix,
+            "Corrected response still has errors:",
             formatValidationErrors(correctedValidation.errors),
           );
-          console.info("[AdminAgent] Using safe fallback response...");
+          console.info(prefix, "Using safe fallback response...");
           finalResponse = buildSafeExecutiveFallback(
             businessOverview,
             ga4Metrics,
             adsMetrics,
             agentMetrics,
+            input.query,
           );
         }
       } catch (correctionError) {
         console.error(
-          "[AdminAgent] Correction pass failed:",
+          prefix,
+          "Correction pass failed:",
           correctionError instanceof Error ? correctionError.message : "Unknown error",
         );
-        console.info("[AdminAgent] Using safe fallback response...");
+        console.info(prefix, "Using safe fallback response...");
         finalResponse = buildSafeExecutiveFallback(
           businessOverview,
           ga4Metrics,
           adsMetrics,
           agentMetrics,
+          input.query,
         );
       }
     } else {
-      console.info("[AdminAgent] Response validation: PASS");
+      console.info(prefix, "Response validation: PASS");
     }
 
     // 7. Structured extraction placeholders.
@@ -282,7 +322,8 @@ CORRECTION INSTRUCTIONS:
       dataFreshness.agentMetrics = agentMetrics.lastUpdated;
     }
 
-    console.info("[AdminAgent] Query completed successfully");
+    const totalDuration = Date.now() - startTime;
+    console.info(prefix, "Query completed successfully", `(total ${totalDuration}ms)`);
 
     return {
       message: finalResponse,
@@ -297,11 +338,16 @@ CORRECTION INSTRUCTIONS:
       visualizations: undefined,
     };
   } catch (err) {
+    const totalDuration = Date.now() - startTime;
     console.error(
-      `[AdminAgent][stage=${stage}]`,
+      prefix,
+      `[stage=${stage}]`,
       err instanceof Error ? err.message : "Unknown error",
-      err instanceof Error ? err.stack : ""
+      `(failed after ${totalDuration}ms)`
     );
+    if (err instanceof Error) {
+      console.debug(prefix, "Error stack:", err.stack);
+    }
     throw err;
   }
 }
@@ -1019,10 +1065,21 @@ function buildSafeExecutiveFallback(
   ga4Metrics: EngagementMetrics | null,
   adsMetrics: CampaignsMetrics | null,
   agentMetrics: AgentMetrics | null,
+  query?: string,
 ): string {
   const sections: string[] = [];
+  const queryLower = (query || "").toLowerCase();
 
-  sections.push("### Resumen ejecutivo\n");
+  // Detect query intent for targeted responses
+  const isSessionQuery = queryLower.includes("sesión") || queryLower.includes("session");
+  const isUserQuery = queryLower.includes("usuario") || queryLower.includes("user");
+  const isPedidoQuery = queryLower.includes("pedido") || queryLower.includes("order");
+  const isSolicitudQuery = queryLower.includes("solicitud") || queryLower.includes("request");
+  const isGoogleAdsQuery = queryLower.includes("google ads") || queryLower.includes("anuncio") || queryLower.includes("gasto");
+  const isAgentQuery = queryLower.includes("agente") || queryLower.includes("agent") || queryLower.includes("conversación");
+  const isGeneralQuery = !isSessionQuery && !isUserQuery && !isPedidoQuery && !isSolicitudQuery && !isGoogleAdsQuery && !isAgentQuery;
+
+  sections.push("### Resumen de datos disponibles\n");
 
   const sourcesLoaded: string[] = [];
   if (businessOverview) sourcesLoaded.push("Supabase");
@@ -1031,66 +1088,115 @@ function buildSafeExecutiveFallback(
   if (agentMetrics) sourcesLoaded.push("Agent Metrics");
 
   sections.push(
-    `Se disponía de datos de: ${sourcesLoaded.join(", ")}.`,
+    `Se consultaron exitosamente: ${sourcesLoaded.join(", ")}.`,
   );
-  sections.push(
-    "A continuación se presentan los indicadores clave observados:\n",
-  );
-
-  sections.push("### Indicadores clave\n");
-
-  const rows: string[] = ["| Área | Indicador | Valor |"];
-  rows.push("|---|---|---|");
-
-  if (businessOverview?.kpis.solicitudes) {
-    rows.push(
-      `| Operación | Solicitudes | ${formatNumber(businessOverview.kpis.solicitudes.total || 0)} |`,
-    );
-  }
-
-  if (businessOverview?.kpis.pedidos) {
-    rows.push(
-      `| Operación | Pedidos | ${formatNumber(businessOverview.kpis.pedidos.total || 0)} |`,
-    );
-  }
-
-  if (ga4Metrics) {
-    rows.push(
-      `| Web | Usuarios activos | ${formatNumber(ga4Metrics.traffic.uniqueUsers)} |`,
-    );
-    rows.push(
-      `| Web | Sesiones | ${formatNumber(ga4Metrics.traffic.sessions)} |`,
-    );
-  }
-
-  if (adsMetrics) {
-    rows.push(
-      `| Publicidad | Campañas | ${adsMetrics.campaigns.length} |`,
-    );
-    rows.push(
-      `| Publicidad | Gasto | ${formatNumber(adsMetrics.totalSpend)} |`,
-    );
-  }
-
-  if (agentMetrics) {
-    rows.push(
-      `| Agente | Conversaciones | ${formatNumber(agentMetrics.conversations.totalConversations)} |`,
-    );
-  }
-
-  sections.push(rows.join("\n"));
   sections.push("");
 
-  sections.push("### Lectura operativa\n");
-  sections.push(
-    "Los datos corresponden a las fuentes que fueron consultadas exitosamente.",
-  );
-  sections.push("Se presentan únicamente métricas observadas sin interpretación.\n");
+  // Query-specific fallback responses
+  if (isSessionQuery && ga4Metrics) {
+    sections.push("### Sesiones web\n");
+    sections.push(
+      `Se registraron ${formatNumber(ga4Metrics.traffic.sessions)} sesiones en el período analizado.`,
+    );
+    sections.push("");
+  }
 
-  sections.push("### Próximos pasos\n");
+  if (isUserQuery && ga4Metrics) {
+    sections.push("### Usuarios\n");
+    sections.push(
+      `Se registraron ${formatNumber(ga4Metrics.traffic.uniqueUsers)} usuarios únicos en el período analizado.`,
+    );
+    sections.push("");
+  }
+
+  if (isPedidoQuery && businessOverview?.kpis.pedidos) {
+    sections.push("### Pedidos\n");
+    sections.push(
+      `Se registraron ${formatNumber(businessOverview.kpis.pedidos.total || 0)} pedidos en el período analizado.`,
+    );
+    sections.push("");
+  }
+
+  if (isSolicitudQuery && businessOverview?.kpis.solicitudes) {
+    sections.push("### Solicitudes\n");
+    sections.push(
+      `Se registraron ${formatNumber(businessOverview.kpis.solicitudes.total || 0)} solicitudes en el período analizado.`,
+    );
+    sections.push("");
+  }
+
+  if (isGoogleAdsQuery && adsMetrics) {
+    sections.push("### Campañas de Google Ads\n");
+    sections.push(
+      `Se tienen ${adsMetrics.campaigns.length} campañas con datos observados.`,
+    );
+    if (adsMetrics.totalSpend > 0) {
+      sections.push(
+        `Gasto total registrado: ${formatNumber(adsMetrics.totalSpend)}.`,
+      );
+    }
+    sections.push("");
+  }
+
+  if (isAgentQuery && agentMetrics) {
+    sections.push("### Actividad del Agente\n");
+    sections.push(
+      `Se registraron ${formatNumber(agentMetrics.conversations.totalConversations)} conversaciones en el período analizado.`,
+    );
+    sections.push("");
+  }
+
+  // For general query or when no specific data matches query intent
+  if (isGeneralQuery || (sections.length === 3)) {
+    sections.push("### Indicadores clave observados\n");
+    const rows: string[] = ["| Área | Métrica | Valor |"];
+    rows.push("|---|---|---|");
+
+    if (businessOverview?.kpis.solicitudes) {
+      rows.push(
+        `| Operación | Solicitudes | ${formatNumber(businessOverview.kpis.solicitudes.total || 0)} |`,
+      );
+    }
+
+    if (businessOverview?.kpis.pedidos) {
+      rows.push(
+        `| Operación | Pedidos | ${formatNumber(businessOverview.kpis.pedidos.total || 0)} |`,
+      );
+    }
+
+    if (ga4Metrics) {
+      rows.push(
+        `| Web | Usuarios únicos | ${formatNumber(ga4Metrics.traffic.uniqueUsers)} |`,
+      );
+      rows.push(
+        `| Web | Sesiones | ${formatNumber(ga4Metrics.traffic.sessions)} |`,
+      );
+    }
+
+    if (adsMetrics && adsMetrics.campaigns.length > 0) {
+      rows.push(
+        `| Publicidad | Campañas activas | ${adsMetrics.campaigns.length} |`,
+      );
+      rows.push(
+        `| Publicidad | Gasto | ${formatNumber(adsMetrics.totalSpend)} |`,
+      );
+    }
+
+    if (agentMetrics) {
+      rows.push(
+        `| Agente | Conversaciones | ${formatNumber(agentMetrics.conversations.totalConversations)} |`,
+      );
+    }
+
+    sections.push(rows.join("\n"));
+    sections.push("");
+  }
+
+  sections.push("### Nota operativa\n");
   sections.push(
-    "Para un análisis más detallado y recomendaciones estratégicas, consulte de nuevo al asistente.",
+    "Los datos presentados corresponden únicamente a observaciones registradas en las fuentes disponibles.",
   );
+  sections.push("No se han realizado análisis o interpretaciones adicionales.\n");
 
   return sections.join("\n");
 }

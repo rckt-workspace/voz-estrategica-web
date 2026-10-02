@@ -77,7 +77,7 @@ async function queryGoogleAdsCampaigns(
     return { campaigns, totalSpend, totalClicks, totalImpressions };
   } catch (error) {
     console.error("[AdsMetrics] Query campaigns error:", error instanceof Error ? error.message : "Unknown error");
-    return { campaigns: [], totalSpend: 0, totalClicks: 0, totalImpressions: 0 };
+    throw error;
   }
 }
 
@@ -116,13 +116,7 @@ export async function getAdsMetrics(options: AdsMetricsOptions = {}): Promise<Ca
     };
   } catch (error) {
     console.error("[AdsMetrics] Error:", error instanceof Error ? error.message : "Unknown error");
-
-    return {
-      campaigns: [],
-      totalSpend: 0,
-      totalConversions: 0,
-      lastUpdated: new Date().toISOString(),
-    };
+    throw error;
   }
 }
 

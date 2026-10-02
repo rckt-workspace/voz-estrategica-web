@@ -92,21 +92,7 @@ export async function getAgentMetrics(period: string = "30daysAgo"): Promise<Age
     };
   } catch (error) {
     console.error("[AgentMetrics] Error:", error instanceof Error ? error.message : "Unknown error");
-
-    return {
-      period,
-      conversations: {
-        totalConversations: 0,
-        byIntent: {},
-        byStage: {},
-        conversionRate: 0,
-        avgMessagesPerConversation: 0,
-      },
-      leadGeneration: 0,
-      recommendationClicks: 0,
-      contactAttempts: 0,
-      lastUpdated: new Date().toISOString(),
-    };
+    throw error;
   }
 }
 

@@ -6,6 +6,7 @@ interface CachedToken {
 }
 
 let cachedTokenState: CachedToken | null = null;
+let accessTokenPromise: Promise<string> | null = null;
 
 function normalizePrivateKey(value: string): string {
   let key = value.trim();
@@ -32,31 +33,7 @@ function base64UrlEncode(input: string | Buffer): string {
 }
 
 async function getAccessToken(): Promise<string> {
-  const clientEmailRaw = process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL?.trim();
-  const privateKeyRaw = process.env.GOOGLE_ANALYTICS_PRIVATE_KEY;
-
-  if (!clientEmailRaw || !privateKeyRaw) {
-    throw new Error(
-      "GOOGLE_ANALYTICS_CLIENT_EMAIL and GOOGLE_ANALYTICS_PRIVATE_KEY are required"
-    );
-  }
-
-  const clientEmail = clientEmailRaw;
-  const privateKey = normalizePrivateKey(privateKeyRaw);
-
-  const hasBegin = privateKey.includes("-----BEGIN PRIVATE KEY-----");
-  const hasEnd = privateKey.includes("-----END PRIVATE KEY-----");
-
-  if (!hasBegin || !hasEnd) {
-    throw new Error("Invalid private key format: missing PEM markers");
-  }
-
-  console.info("[GA4 OAuth] Credentials validation", {
-    issuerConfigured: true,
-    domain: clientEmail.endsWith(".iam.gserviceaccount.com"),
-    keyNormalized: true,
-  });
-
+  // A: Return cached token if valid
   const nowMs = Date.now();
   if (
     cachedTokenState &&
@@ -67,93 +44,150 @@ async function getAccessToken(): Promise<string> {
     return cachedTokenState.token;
   }
 
-  const header = { alg: "RS256", typ: "JWT" };
-  const payload = {
-    iss: clientEmail,
-    scope: "https://www.googleapis.com/auth/analytics.readonly",
-    aud: "https://oauth2.googleapis.com/token",
-    iat: now,
-    exp: now + 3600,
-  };
+  // B: Await and return the same promise if one is in-flight
+  if (accessTokenPromise) {
+    console.info("[GA4 OAuth] Token exchange in-flight, awaiting...");
+    return accessTokenPromise;
+  }
 
-  const headerEncoded = base64UrlEncode(JSON.stringify(header));
-  const payloadEncoded = base64UrlEncode(JSON.stringify(payload));
-  const signingInput = `${headerEncoded}.${payloadEncoded}`;
+  // C: Create exactly ONE new accessTokenPromise for OAuth exchange
+  accessTokenPromise = (async () => {
+    try {
+      const clientEmailRaw = process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL?.trim();
+      const privateKeyRaw = process.env.GOOGLE_ANALYTICS_PRIVATE_KEY;
 
-  const signingBuffer = Buffer.from(signingInput, "utf8");
-  const signatureBuffer = sign("RSA-SHA256", signingBuffer, privateKey);
-  const signatureEncoded = base64UrlEncode(signatureBuffer);
-  const jwt = `${signingInput}.${signatureEncoded}`;
+      if (!clientEmailRaw || !privateKeyRaw) {
+        throw new Error(
+          "GOOGLE_ANALYTICS_CLIENT_EMAIL and GOOGLE_ANALYTICS_PRIVATE_KEY are required"
+        );
+      }
 
-  try {
-    const publicKey = createPublicKey({ key: privateKey, format: "pem" });
-    const isValid = verify(
-      "RSA-SHA256",
-      signingBuffer,
-      publicKey,
-      signatureBuffer
-    );
+      const clientEmail = clientEmailRaw;
+      const privateKey = normalizePrivateKey(privateKeyRaw);
 
-    if (!isValid) {
-      throw new Error("JWT self-verification failed: signature invalid");
+      const hasBegin = privateKey.includes("-----BEGIN PRIVATE KEY-----");
+      const hasEnd = privateKey.includes("-----END PRIVATE KEY-----");
+
+      if (!hasBegin || !hasEnd) {
+        throw new Error("Invalid private key format: missing PEM markers");
+      }
+
+      console.info("[GA4 OAuth] Credentials validation", {
+        issuerConfigured: true,
+        domain: clientEmail.endsWith(".iam.gserviceaccount.com"),
+        keyNormalized: true,
+      });
+
+      const now = Math.floor(Date.now() / 1000);
+      const header = { alg: "RS256", typ: "JWT" };
+      const payload = {
+        iss: clientEmail,
+        scope: "https://www.googleapis.com/auth/analytics.readonly",
+        aud: "https://oauth2.googleapis.com/token",
+        iat: now,
+        exp: now + 3600,
+      };
+
+      const headerEncoded = base64UrlEncode(JSON.stringify(header));
+      const payloadEncoded = base64UrlEncode(JSON.stringify(payload));
+      const signingInput = `${headerEncoded}.${payloadEncoded}`;
+
+      const signingBuffer = Buffer.from(signingInput, "utf8");
+      const signatureBuffer = sign("RSA-SHA256", signingBuffer, privateKey);
+      const signatureEncoded = base64UrlEncode(signatureBuffer);
+      const jwt = `${signingInput}.${signatureEncoded}`;
+
+      try {
+        const publicKey = createPublicKey({ key: privateKey, format: "pem" });
+        const isValid = verify(
+          "RSA-SHA256",
+          signingBuffer,
+          publicKey,
+          signatureBuffer
+        );
+
+        if (!isValid) {
+          throw new Error("JWT self-verification failed: signature invalid");
+        }
+
+        console.info("[GA4 OAuth] JWT self verification: PASS", {
+          iat: payload.iat,
+          exp: payload.exp,
+          lifetimeSeconds: payload.exp - payload.iat,
+        });
+      } catch (error) {
+        console.error("[GA4 OAuth] JWT self-verification failed");
+        throw new Error(
+          `JWT verification failed: ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`
+        );
+      }
+
+      const tokenBody = new URLSearchParams({
+        grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        assertion: jwt,
+      });
+
+      // Add 15s timeout to OAuth endpoint
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      try {
+        const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: tokenBody.toString(),
+          signal: controller.signal,
+        });
+
+        if (!tokenResponse.ok) {
+          const errorText = await tokenResponse.text().catch(() => "Unknown error");
+          console.error("[GA4 OAuth] Token exchange failed", {
+            status: tokenResponse.status,
+            errorLength: errorText.length,
+          });
+          throw new Error(
+            `OAuth2 token request failed: ${tokenResponse.status} - ${errorText.substring(
+              0,
+              100
+            )}`
+          );
+        }
+
+        const tokenData = (await tokenResponse.json()) as {
+          access_token: string;
+          expires_in: number;
+        };
+
+        console.info("[GA4 OAuth] Token exchange: OK", {
+          expiresIn: tokenData.expires_in,
+        });
+
+        cachedTokenState = {
+          token: tokenData.access_token,
+          expiresAt: Date.now() + tokenData.expires_in * 1000,
+        };
+
+        return tokenData.access_token;
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    } catch (error) {
+      // Propagate error; clear promise so next caller can retry
+      console.error("[GA4 OAuth] Token exchange error:", error instanceof Error ? error.message : String(error));
+      throw error;
     }
+  })();
 
-    console.info("[GA4 OAuth] JWT self verification: PASS", {
-      iat: payload.iat,
-      exp: payload.exp,
-      lifetimeSeconds: payload.exp - payload.iat,
-    });
-  } catch (error) {
-    console.error("[GA4 OAuth] JWT self-verification failed");
-    throw new Error(
-      `JWT verification failed: ${
-        error instanceof Error ? error.message : "Unknown error"
-      }`
-    );
+  // D: Clear promise in finally block after awaiting result
+  try {
+    return await accessTokenPromise;
+  } finally {
+    accessTokenPromise = null;
   }
-
-  const tokenBody = new URLSearchParams({
-    grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-    assertion: jwt,
-  });
-
-  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: tokenBody.toString(),
-  });
-
-  if (!tokenResponse.ok) {
-    const errorText = await tokenResponse.text().catch(() => "Unknown error");
-    console.error("[GA4 OAuth] Token exchange failed", {
-      status: tokenResponse.status,
-      errorLength: errorText.length,
-    });
-    throw new Error(
-      `OAuth2 token request failed: ${tokenResponse.status} - ${errorText.substring(
-        0,
-        100
-      )}`
-    );
-  }
-
-  const tokenData = (await tokenResponse.json()) as {
-    access_token: string;
-    expires_in: number;
-  };
-
-  console.info("[GA4 OAuth] Token exchange: OK", {
-    expiresIn: tokenData.expires_in,
-  });
-
-  cachedTokenState = {
-    token: tokenData.access_token,
-    expiresAt: Date.now() + tokenData.expires_in * 1000,
-  };
-
-  return tokenData.access_token;
 }
 
 interface GA4ReportRequest {
@@ -199,14 +233,23 @@ export async function runGA4Report(
 
   const url = `https://analyticsdata.googleapis.com/v1beta/${requestBody.property}:runReport`;
 
-  const reportResponse = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(requestBody),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+  let reportResponse;
+  try {
+    reportResponse = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!reportResponse.ok) {
     const errorText = await reportResponse
