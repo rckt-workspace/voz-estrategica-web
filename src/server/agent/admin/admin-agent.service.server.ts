@@ -6,8 +6,9 @@ import type {
 
 import type { ControlOverviewData } from "../../lib/control-overview-schema";
 
-import { callOpenRouter } from "../llm/openrouter.provider.server";
+import { callOpenRouterDetailed } from "../llm/openrouter.provider.server";
 import { ADMIN_SYSTEM_PROMPT } from "./admin-system.prompt.server";
+import { validateAdminResponse, isValidationPassed, formatValidationErrors } from "./response-validator.server";
 
 import type {
   AdminAgentResponse,
@@ -97,16 +98,163 @@ export async function executeAdminAgent(
       },
     ];
 
-    const response = await callOpenRouter(messages, {
+    // Determine LLM configuration
+    const adminLLMModel = process.env.ADMIN_LLM_MODEL;
+    const primaryLLM = process.env.CHAT_PRIMARY_LLM || "openrouter/free";
+    const effectiveModel = adminLLMModel || primaryLLM;
+
+    if (effectiveModel === "openrouter/free") {
+      console.warn(
+        "[AdminAgent] ADMIN_LLM_MODEL not configured. Using fallback CHAT_PRIMARY_LLM. For production, set ADMIN_LLM_MODEL=<specific-model>",
+      );
+    }
+
+    console.info("[AdminAgent] Model configured:", effectiveModel);
+
+    const adminMaxTokens =
+      parseInt(process.env.ADMIN_LLM_MAX_TOKENS || "1800") || 1800;
+
+    const llmResult = await callOpenRouterDetailed(messages, {
+      model: effectiveModel,
+      maxTokens: adminMaxTokens,
+      timeout: 45000,
       excludeReasoning: true,
     });
-    console.info("[AdminAgent] OpenRouter response received:", response.length, "characters");
+
+    console.info(
+      "[AdminAgent] LLM response received:",
+      `model=${llmResult.model}`,
+      `finishReason=${llmResult.finishReason}`,
+      `tokens=${llmResult.usage.totalTokens}`,
+    );
+
+    let finalResponse = llmResult.content;
+
+    // Validate response for contradictions
+    stage = "validate-response";
+    const validation = validateAdminResponse(
+      finalResponse,
+      {
+        businessOverview: !!businessOverview,
+        ga4: !!ga4Metrics,
+        ads: !!adsMetrics,
+        agentMetrics: !!agentMetrics,
+      },
+      false, // currencyKnown = false (we don't have currencyCode yet)
+    );
+
+    if (!isValidationPassed(validation)) {
+      console.warn(
+        "[AdminAgent] Response validation: CORRECTION_REQUIRED",
+        formatValidationErrors(validation.errors),
+      );
+
+      // Attempt correction pass (1x only)
+      try {
+        stage = "correction-pass";
+
+        const correctionPrompt = `
+Original response from Master Agent:
+
+${finalResponse}
+
+---
+
+VALIDATION ERRORS DETECTED:
+${validation.errors.map((e) => `- [${e.severity}] ${e.message}`).join("\n")}
+
+---
+
+DATA AVAILABILITY:
+Supabase: ${businessOverview ? "AVAILABLE" : "UNAVAILABLE"}
+GA4: ${ga4Metrics ? "AVAILABLE" : "UNAVAILABLE"}
+Google Ads: ${adsMetrics ? "AVAILABLE" : "UNAVAILABLE"}
+Agent Metrics: ${agentMetrics ? "AVAILABLE" : "UNAVAILABLE"}
+
+---
+
+CORRECTION INSTRUCTIONS:
+1. Fix ONLY the contradictions detected above.
+2. Do NOT invent new metrics or data.
+3. Do NOT change observed numbers.
+4. Do NOT add sources that don't exist.
+5. Maintain executive tone.
+6. Return ONLY the corrected response.
+`;
+
+        console.info("[AdminAgent] Attempting correction pass...");
+
+        const correctionResult = await callOpenRouterDetailed(
+          [
+            {
+              role: "system",
+              content:
+                "You are correcting a response from the Master Agent. Fix contradictions only. Keep the same structure and tone.",
+            },
+            {
+              role: "user",
+              content: correctionPrompt,
+            },
+          ],
+          {
+            model: effectiveModel,
+            maxTokens: adminMaxTokens,
+            timeout: 45000,
+            excludeReasoning: true,
+          },
+        );
+
+        // Revalidate corrected response
+        const correctedValidation = validateAdminResponse(
+          correctionResult.content,
+          {
+            businessOverview: !!businessOverview,
+            ga4: !!ga4Metrics,
+            ads: !!adsMetrics,
+            agentMetrics: !!agentMetrics,
+          },
+          false,
+        );
+
+        if (isValidationPassed(correctedValidation)) {
+          finalResponse = correctionResult.content;
+          console.info("[AdminAgent] Corrected response validation: PASS");
+        } else {
+          // Corrected response still fails - use fallback
+          console.warn(
+            "[AdminAgent] Corrected response still has errors:",
+            formatValidationErrors(correctedValidation.errors),
+          );
+          console.info("[AdminAgent] Using safe fallback response...");
+          finalResponse = buildSafeExecutiveFallback(
+            businessOverview,
+            ga4Metrics,
+            adsMetrics,
+            agentMetrics,
+          );
+        }
+      } catch (correctionError) {
+        console.error(
+          "[AdminAgent] Correction pass failed:",
+          correctionError instanceof Error ? correctionError.message : "Unknown error",
+        );
+        console.info("[AdminAgent] Using safe fallback response...");
+        finalResponse = buildSafeExecutiveFallback(
+          businessOverview,
+          ga4Metrics,
+          adsMetrics,
+          agentMetrics,
+        );
+      }
+    } else {
+      console.info("[AdminAgent] Response validation: PASS");
+    }
 
     // 7. Structured extraction placeholders.
     stage = "postprocess";
-    const insights = parseInsights(response);
-    const recommendations = parseRecommendations(response);
-    const forecasts = parseForecasts(response);
+    const insights = parseInsights(finalResponse);
+    const recommendations = parseRecommendations(finalResponse);
+    const forecasts = parseForecasts(finalResponse);
 
     // 8. Report only sources actually available/used.
     stage = "sources-used";
@@ -137,7 +285,7 @@ export async function executeAdminAgent(
     console.info("[AdminAgent] Query completed successfully");
 
     return {
-      message: response,
+      message: finalResponse,
       insights,
       recommendations,
       forecasts,
@@ -374,7 +522,59 @@ ${
     : "ninguna fuente analítica externa disponible"
 }
 
-=== REGLAS DE VERACIDAD ===
+=== DISPONIBILIDAD DE DATOS (MATRIZ AUTORITATIVA) ===
+
+Supabase / Operación: ${businessOverview ? "DISPONIBLE" : "NO DISPONIBLE"}
+Google Analytics 4: ${ga4Metrics ? "DISPONIBLE" : "NO DISPONIBLE"}
+Google Ads: ${adsMetrics ? "DISPONIBLE" : "NO DISPONIBLE"}
+Agent Metrics: ${agentMetrics ? "DISPONIBLE" : "NO DISPONIBLE"}
+
+NOTA CRÍTICA:
+Si una fuente está marcada como DISPONIBLE, está PROHIBIDO decir que
+"no está disponible", "no tenemos acceso", o "no está integrada".
+
+El modelo debe usar esta matriz como fuente autoritative.
+
+=== REGLAS DE VERACIDAD (INVARIANTES) ===
+
+INVARIANTE 1:
+Si "Supabase / Operación" = DISPONIBLE
+  → PROHIBIDO decir: "Supabase no está integrado/disponible"
+  → PROHIBIDO decir: "no tenemos datos operativos"
+  → PROHIBIDO decir: "sin acceso a pedidos"
+  → PROHIBIDO decir: "no hay información de solicitudes"
+
+INVARIANTE 2:
+Si "Google Analytics 4" = DISPONIBLE
+  → PROHIBIDO decir: "GA4 no está disponible"
+  → PROHIBIDO decir: "no tenemos tráfico web"
+  → PROHIBIDO decir: "sin acceso a Google Analytics"
+
+INVARIANTE 3:
+Si "Google Ads" = DISPONIBLE
+  → PROHIBIDO decir: "Google Ads no está disponible"
+  → PROHIBIDO decir: "sin datos de campañas"
+
+INVARIANTE 4:
+Si "Agent Metrics" = DISPONIBLE
+  Un valor CERO es un dato observado válido.
+  → "0 conversaciones" = dato observado (asistente activo, sin actividad)
+  → NO = "fuente no disponible"
+
+INVARIANTE 5:
+Semántica correcta:
+  → Usar "campañas con datos observados en el período"
+     (no "campañas activas" que no podemos confirmar)
+  → Usar "pedidos registrados" (no automáticamente "ventas")
+  → Usar "importe registrado" sin símbolo monetario (currencyCode=unknown)
+  → Usar "importe aprobado" para ingresos validados
+
+INVARIANTE 6:
+Moneda:
+  → currencyCode = UNKNOWN (no tenemos código oficial)
+  → PROHIBIDO usar $, €, USD, COP automáticamente
+  → Mostrar: "Costo registrado: 641,95" (sin símbolo)
+  → SOLO usar símbolo si el usuario pregunta por una moneda específica
 
 - Usa como hechos únicamente los datos observados incluidos en este contexto.
 - Distingue claramente entre dato observado, interpretación e hipótesis.
@@ -808,6 +1008,91 @@ function determineSourcesUsed(
   }
 
   return used;
+}
+
+/**
+ * Build a safe, deterministic fallback response using only observed data.
+ * Used when LLM response fails validation and correction also fails.
+ */
+function buildSafeExecutiveFallback(
+  businessOverview: ControlOverviewData | null,
+  ga4Metrics: EngagementMetrics | null,
+  adsMetrics: CampaignsMetrics | null,
+  agentMetrics: AgentMetrics | null,
+): string {
+  const sections: string[] = [];
+
+  sections.push("### Resumen ejecutivo\n");
+
+  const sourcesLoaded: string[] = [];
+  if (businessOverview) sourcesLoaded.push("Supabase");
+  if (ga4Metrics) sourcesLoaded.push("Google Analytics");
+  if (adsMetrics) sourcesLoaded.push("Google Ads");
+  if (agentMetrics) sourcesLoaded.push("Agent Metrics");
+
+  sections.push(
+    `Se disponía de datos de: ${sourcesLoaded.join(", ")}.`,
+  );
+  sections.push(
+    "A continuación se presentan los indicadores clave observados:\n",
+  );
+
+  sections.push("### Indicadores clave\n");
+
+  const rows: string[] = ["| Área | Indicador | Valor |"];
+  rows.push("|---|---|---|");
+
+  if (businessOverview?.kpis.solicitudes) {
+    rows.push(
+      `| Operación | Solicitudes | ${formatNumber(businessOverview.kpis.solicitudes.total || 0)} |`,
+    );
+  }
+
+  if (businessOverview?.kpis.pedidos) {
+    rows.push(
+      `| Operación | Pedidos | ${formatNumber(businessOverview.kpis.pedidos.total || 0)} |`,
+    );
+  }
+
+  if (ga4Metrics) {
+    rows.push(
+      `| Web | Usuarios activos | ${formatNumber(ga4Metrics.traffic.uniqueUsers)} |`,
+    );
+    rows.push(
+      `| Web | Sesiones | ${formatNumber(ga4Metrics.traffic.sessions)} |`,
+    );
+  }
+
+  if (adsMetrics) {
+    rows.push(
+      `| Publicidad | Campañas | ${adsMetrics.campaigns.length} |`,
+    );
+    rows.push(
+      `| Publicidad | Gasto | ${formatNumber(adsMetrics.totalSpend)} |`,
+    );
+  }
+
+  if (agentMetrics) {
+    rows.push(
+      `| Agente | Conversaciones | ${formatNumber(agentMetrics.conversations.totalConversations)} |`,
+    );
+  }
+
+  sections.push(rows.join("\n"));
+  sections.push("");
+
+  sections.push("### Lectura operativa\n");
+  sections.push(
+    "Los datos corresponden a las fuentes que fueron consultadas exitosamente.",
+  );
+  sections.push("Se presentan únicamente métricas observadas sin interpretación.\n");
+
+  sections.push("### Próximos pasos\n");
+  sections.push(
+    "Para un análisis más detallado y recomendaciones estratégicas, consulte de nuevo al asistente.",
+  );
+
+  return sections.join("\n");
 }
 
 /**

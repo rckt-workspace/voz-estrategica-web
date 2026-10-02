@@ -57,8 +57,13 @@ async function getAccessToken(): Promise<string> {
     keyNormalized: true,
   });
 
-  const now = Math.floor(Date.now() / 1000);
-  if (cachedTokenState && cachedTokenState.expiresAt - now > 60) {
+  const nowMs = Date.now();
+  if (
+    cachedTokenState &&
+    cachedTokenState.expiresAt - nowMs > 60_000
+  ) {
+    console.info("[GA4 OAuth] Using cached token (valid for",
+      Math.round((cachedTokenState.expiresAt - nowMs) / 1000), "seconds)");
     return cachedTokenState.token;
   }
 
