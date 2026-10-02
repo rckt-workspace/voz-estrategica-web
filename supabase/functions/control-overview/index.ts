@@ -48,6 +48,9 @@ Deno.serve(async (req) => {
     const approved = pedidos.filter((p) => p.estado_pago === "aprobado");
     const pending = pedidos.filter((p) => p.estado_pago === "pendiente").length;
     const rejected = pedidos.filter((p) => p.estado_pago === "rechazado").length;
+    const canceled = pedidos.filter((p) => p.estado_pago === "cancelado").length;
+    const knownStates = new Set(["aprobado", "pendiente", "rechazado", "cancelado"]);
+    const others = pedidos.filter((p) => !knownStates.has(p.estado_pago as string)).length;
     const revenueTotal = pedidos.reduce((sum, p) => sum + (Number(p.total) || 0), 0);
     const revenueApproved = approved.reduce((sum, p) => sum + (Number(p.total) || 0), 0);
 
