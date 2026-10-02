@@ -1,21 +1,5 @@
-import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import { runGA4Report } from "./ga4-rest-client.server";
 import type { AgentMetrics } from "../admin/business-intelligence.types";
-
-function getClient(): BetaAnalyticsDataClient {
-  const clientEmail = process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_ANALYTICS_PRIVATE_KEY?.replace(/\\n/g, "\n");
-
-  if (clientEmail && privateKey) {
-    return new BetaAnalyticsDataClient({
-      credentials: {
-        client_email: clientEmail,
-        private_key: privateKey,
-      },
-    });
-  }
-
-  return new BetaAnalyticsDataClient();
-}
 
 function metricValue(values: Array<{ value?: string | null }> | null | undefined, index: number): number {
   const value = values?.[index]?.value;
@@ -54,11 +38,10 @@ export async function getAgentMetrics(period: string = "30daysAgo"): Promise<Age
   }
 
   try {
-    const client = getClient();
     const property = `properties/${propertyId}`;
 
-    // Query all agent events in one go
-    const eventsResult = await client.runReport({
+    // Query all events, filter agent events in code
+    const eventsResult = await runGA4Report({
       property,
       dateRanges: [
         {
@@ -68,22 +51,16 @@ export async function getAgentMetrics(period: string = "30daysAgo"): Promise<Age
       ],
       dimensions: [{ name: "eventName" }],
       metrics: [{ name: "eventCount" }],
-      dimensionFilter: {
-        filter: {
-          inListFilter: {
-            expressions: AGENT_EVENTS.map((e) => ({ value: e })),
-            caseSensitive: true,
-          },
-        },
-      },
     });
 
     const eventCounts: Record<string, number> = {};
 
-    for (const row of eventsResult[0].rows ?? []) {
+    for (const row of eventsResult.rows ?? []) {
       const eventName = row.dimensionValues?.[0]?.value ?? "";
       const count = metricValue(row.metricValues, 0);
-      eventCounts[eventName] = count;
+      if (AGENT_EVENTS.includes(eventName)) {
+        eventCounts[eventName] = count;
+      }
     }
 
     const agentOpens = eventCounts["agent_open"] || 0;
@@ -139,7 +116,6 @@ export function isAgentMetricsConfigured(): boolean {
   const hasCredentials = Boolean(
     process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL && process.env.GOOGLE_ANALYTICS_PRIVATE_KEY,
   );
-  const hasAppCredentials = Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-  return hasProperty && (hasCredentials || hasAppCredentials);
+  return hasProperty && hasCredentials;
 }

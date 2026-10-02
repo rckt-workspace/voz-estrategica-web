@@ -1,25 +1,9 @@
-import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import { runGA4Report } from "./ga4-rest-client.server";
 import type { CampaignsMetrics, CampaignMetrics } from "../admin/business-intelligence.types";
 
 export interface AdsMetricsOptions {
   startDate?: string;
   endDate?: string;
-}
-
-function getClient(): BetaAnalyticsDataClient {
-  const clientEmail = process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_ANALYTICS_PRIVATE_KEY?.replace(/\\n/g, "\n");
-
-  if (clientEmail && privateKey) {
-    return new BetaAnalyticsDataClient({
-      credentials: {
-        client_email: clientEmail,
-        private_key: privateKey,
-      },
-    });
-  }
-
-  return new BetaAnalyticsDataClient();
 }
 
 function metricValue(values: Array<{ value?: string | null }> | null | undefined, index: number): number {
@@ -30,14 +14,13 @@ function metricValue(values: Array<{ value?: string | null }> | null | undefined
 }
 
 async function queryGoogleAdsCampaigns(
-  client: BetaAnalyticsDataClient,
   property: string,
   startDate: string,
   endDate: string,
 ): Promise<{ campaigns: CampaignMetrics[]; totalSpend: number; totalClicks: number; totalImpressions: number }> {
   try {
     // Execute the proven query: sessionGoogleAdsCustomerId + sessionGoogleAdsCampaignName
-    const campaignsResult = await client.runReport({
+    const campaignsResult = await runGA4Report({
       property,
       dateRanges: [
         {
@@ -65,7 +48,7 @@ async function queryGoogleAdsCampaigns(
     let totalClicks = 0;
     let totalImpressions = 0;
 
-    for (const row of campaignsResult[0].rows ?? []) {
+    for (const row of campaignsResult.rows ?? []) {
       const accountId = row.dimensionValues?.[0]?.value ?? "";
       const campaignName = row.dimensionValues?.[1]?.value ?? "Unknown Campaign";
       const spend = metricValue(row.metricValues, 0);
@@ -114,12 +97,10 @@ export async function getAdsMetrics(options: AdsMetricsOptions = {}): Promise<Ca
   const endDate = options.endDate ?? "today";
 
   try {
-    const client = getClient();
     const property = `properties/${propertyId}`;
 
     // Use the proven query directly (don't rely on aggregate report)
     const { campaigns, totalSpend, totalClicks, totalImpressions } = await queryGoogleAdsCampaigns(
-      client,
       property,
       startDate,
       endDate,
@@ -150,7 +131,6 @@ export function isAdsConfigured(): boolean {
   const hasCredentials = Boolean(
     process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL && process.env.GOOGLE_ANALYTICS_PRIVATE_KEY,
   );
-  const hasAppCredentials = Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-  return hasProperty && (hasCredentials || hasAppCredentials);
+  return hasProperty && hasCredentials;
 }

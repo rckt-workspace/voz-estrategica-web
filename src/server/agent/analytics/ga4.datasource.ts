@@ -1,28 +1,5 @@
-import { BetaAnalyticsDataClient } from "@google-analytics/data";
+import { runGA4Report } from "./ga4-rest-client.server";
 import type { EngagementMetrics } from "../admin/business-intelligence.types";
-
-function getClient(): BetaAnalyticsDataClient {
-  const clientEmail = process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_ANALYTICS_PRIVATE_KEY?.replace(
-    /\\n/g,
-    "\n",
-  );
-
-  // Producción: credenciales suministradas por variables de entorno.
-  if (clientEmail && privateKey) {
-    return new BetaAnalyticsDataClient({
-      credentials: {
-        client_email: clientEmail,
-        private_key: privateKey,
-      },
-    });
-  }
-
-  // Desarrollo local: Application Default Credentials.
-  // Ejemplo:
-  // GOOGLE_APPLICATION_CREDENTIALS=C:\RCKT-Secure-Temp\ga4-service-account.json
-  return new BetaAnalyticsDataClient();
-}
 
 function metricValue(
   values: Array<{ value?: string | null }> | null | undefined,
@@ -42,11 +19,10 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
     throw new Error("GA4_PROPERTY_ID is not configured");
   }
 
-  const client = getClient();
   const property = `properties/${propertyId}`;
 
   const [trafficResult, pagesResult, eventsResult] = await Promise.all([
-    client.runReport({
+    runGA4Report({
       property,
       dateRanges: [
         {
@@ -63,7 +39,7 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
       ],
     }),
 
-    client.runReport({
+    runGA4Report({
       property,
       dateRanges: [
         {
@@ -88,7 +64,7 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
       limit: 10,
     }),
 
-    client.runReport({
+    runGA4Report({
       property,
       dateRanges: [
         {
@@ -162,18 +138,10 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
 
 export function isGA4Configured(): boolean {
   const hasProperty = Boolean(process.env.GA4_PROPERTY_ID);
-
-  const hasExplicitCredentials = Boolean(
+  const hasCredentials = Boolean(
     process.env.GOOGLE_ANALYTICS_CLIENT_EMAIL &&
       process.env.GOOGLE_ANALYTICS_PRIVATE_KEY,
   );
 
-  const hasApplicationCredentials = Boolean(
-    process.env.GOOGLE_APPLICATION_CREDENTIALS,
-  );
-
-  return (
-    hasProperty &&
-    (hasExplicitCredentials || hasApplicationCredentials)
-  );
+  return hasProperty && hasCredentials;
 }
