@@ -153,22 +153,19 @@ export async function executeAdminAgent(
       },
     ];
 
-    // Determine LLM configuration
+    // Determine LLM configuration - OpenRouter free models are acceptable in production
     const adminLLMModel = process.env.ADMIN_LLM_MODEL;
     const primaryLLM = process.env.CHAT_PRIMARY_LLM || "openrouter/free";
     const effectiveModel = adminLLMModel || primaryLLM;
 
-    if (effectiveModel === "openrouter/free") {
-      console.warn(
-        prefix,
-        "ADMIN_LLM_MODEL not configured. Using fallback CHAT_PRIMARY_LLM. For production, set ADMIN_LLM_MODEL=<specific-model>",
-      );
-    }
-
-    console.info(prefix, "Model configured:", effectiveModel);
+    console.info(
+      prefix,
+      "configuredRouter=" + effectiveModel,
+      "Note: OpenRouter may dynamically route to different free models",
+    );
 
     const adminMaxTokens =
-      parseInt(process.env.ADMIN_LLM_MAX_TOKENS || "1800") || 1800;
+      parseInt(process.env.ADMIN_LLM_MAX_TOKENS || "3000") || 3000;
 
     let finalResponse: string;
 
@@ -192,21 +189,96 @@ export async function executeAdminAgent(
       );
 
       finalResponse = llmResult.content;
+
+      // Handle truncation: if finish_reason=length OR response appears incomplete, attempt ONE continuation
+      if (
+        llmResult.finishReason === "length" ||
+        isResponseLikelyTruncated(finalResponse)
+      ) {
+        const continuationReason =
+          llmResult.finishReason === "length"
+            ? "FINISH_REASON_LENGTH"
+            : "LIKELY_TRUNCATED";
+
+        console.info(
+          prefix,
+          "continuation=true",
+          `continuationReason=${continuationReason}`,
+        );
+
+        try {
+          const continuationMessages = [
+            {
+              role: "system" as const,
+              content:
+                "Continue exactly from where the previous response ended. Do not repeat previous content. Complete only the unfinished sections. Preserve the same facts and numbers. Do not introduce new metrics.",
+            },
+            {
+              role: "user" as const,
+              content: `Previous response:\n\n${finalResponse}\n\nContinue from where it ended.`,
+            },
+          ];
+
+          const continuationResult = await callOpenRouterDetailed(
+            continuationMessages,
+            {
+              model: effectiveModel,
+              maxTokens: adminMaxTokens,
+              timeout: 45000,
+              excludeReasoning: true,
+            },
+          );
+
+          const continuationDuration = Date.now() - llmStartTime;
+          console.info(
+            prefix,
+            "Continuation received:",
+            `finishReason=${continuationResult.finishReason}`,
+            `tokens=${continuationResult.usage.totalTokens}`,
+            `(${continuationDuration}ms total)`,
+          );
+
+          // Combine responses without duplication
+          finalResponse = (finalResponse + "\n" + continuationResult.content)
+            .trim();
+        } catch (continuationError) {
+          console.warn(
+            prefix,
+            "Continuation failed:",
+            continuationError instanceof Error
+              ? continuationError.message
+              : "Unknown error",
+          );
+          // Continue with original truncated response - validator will handle it
+        }
+      }
     } catch (primaryLLMError) {
-      // Primary LLM failure: no original response to correct, use safe fallback directly
+      // Primary LLM failure: use deterministic business report
       console.error(
         prefix,
         "Primary LLM call failed:",
         primaryLLMError instanceof Error ? primaryLLMError.message : "Unknown error",
       );
-      console.info(prefix, "Using safe fallback response (primary LLM failure)...");
-      finalResponse = buildSafeExecutiveFallback(
+      console.info(
+        prefix,
+        "fallback=true",
+        "reason=PRIMARY_LLM_FAILURE",
+      );
+      // Return deterministic fact sheet - backend is authoritative, not LLM
+      finalResponse = buildCompleteBusinessReport(
         businessOverview,
         ga4Metrics,
         adsMetrics,
         agentMetrics,
-        input.query,
       );
+    }
+
+    // Apply deterministic semantic repairs
+    stage = "deterministic-repair";
+    const repairedResponse = repairAdminResponseDeterministically(finalResponse);
+    if (repairedResponse !== finalResponse) {
+      console.info(prefix, "Applied deterministic semantic repair");
+      finalResponse = repairedResponse;
     }
 
     // Validate response for contradictions
@@ -262,7 +334,12 @@ CORRECTION INSTRUCTIONS:
 6. Return ONLY the corrected response.
 `;
 
-        console.info("[AdminAgent] Attempting correction pass...");
+        console.info(
+          prefix,
+          "Attempting correction pass...",
+          `correctionModelConfigured=${adminLLMModel ? "true" : "false"}`,
+          `correctionModelActual=${effectiveModel}`,
+        );
 
         const correctionResult = await callOpenRouterDetailed(
           [
@@ -284,9 +361,17 @@ CORRECTION INSTRUCTIONS:
           },
         );
 
+        // Apply deterministic repair to correction
+        let correctedContent = correctionResult.content;
+        const repairedCorrectionContent = repairAdminResponseDeterministically(correctedContent);
+        if (repairedCorrectionContent !== correctedContent) {
+          console.info(prefix, "Applied deterministic semantic repair to corrected response");
+          correctedContent = repairedCorrectionContent;
+        }
+
         // Revalidate corrected response
         const correctedValidation = validateAdminResponse(
-          correctionResult.content,
+          correctedContent,
           {
             businessOverview: !!businessOverview,
             ga4: !!ga4Metrics,
@@ -297,7 +382,7 @@ CORRECTION INSTRUCTIONS:
         );
 
         if (isValidationPassed(correctedValidation)) {
-          finalResponse = correctionResult.content;
+          finalResponse = correctedContent;
           console.info(prefix, "Corrected response validation: PASS");
         } else {
           // Corrected response still fails - use fallback
@@ -306,7 +391,11 @@ CORRECTION INSTRUCTIONS:
             "Corrected response still has errors:",
             formatValidationErrors(correctedValidation.errors),
           );
-          console.info(prefix, "Using safe fallback response...");
+          console.info(
+            prefix,
+            "fallback=true",
+            "reason=CORRECTED_RESPONSE_INVALID",
+          );
           finalResponse = buildSafeExecutiveFallback(
             businessOverview,
             ga4Metrics,
@@ -321,7 +410,11 @@ CORRECTION INSTRUCTIONS:
           "Correction pass failed:",
           correctionError instanceof Error ? correctionError.message : "Unknown error",
         );
-        console.info(prefix, "Using safe fallback response...");
+        console.info(
+          prefix,
+          "fallback=true",
+          "reason=CORRECTION_FAILED",
+        );
         finalResponse = buildSafeExecutiveFallback(
           businessOverview,
           ga4Metrics,
@@ -364,6 +457,28 @@ CORRECTION INSTRUCTIONS:
     }
     if (agentMetrics) {
       dataFreshness.agentMetrics = agentMetrics.lastUpdated;
+    }
+
+    // Validate final response (whether from LLM or fallback)
+    const finalValidation = validateAdminResponse(
+      finalResponse,
+      {
+        businessOverview: !!businessOverview,
+        ga4: !!ga4Metrics,
+        ads: !!adsMetrics,
+        agentMetrics: !!agentMetrics,
+      },
+      false,
+    );
+
+    if (!isValidationPassed(finalValidation)) {
+      console.warn(
+        prefix,
+        "FINAL_RESPONSE_INVALID",
+        formatValidationErrors(finalValidation.errors),
+      );
+    } else {
+      console.info(prefix, "finalResponse=valid");
     }
 
     const totalDuration = Date.now() - startTime;
@@ -1101,6 +1216,319 @@ function determineSourcesUsed(
 }
 
 /**
+ * Build a fact sheet with all deterministic business data.
+ * This is the authoritative source of truth - LLM reads from this.
+ */
+function buildBusinessFactSheet(
+  businessOverview: ControlOverviewData | null,
+  ga4Metrics: EngagementMetrics | null,
+  adsMetrics: CampaignsMetrics | null,
+  agentMetrics: AgentMetrics | null,
+): string {
+  const sections: string[] = [];
+
+  sections.push("# AUTORIDAD DE HECHOS - NO MODIFICAR\n");
+  sections.push("(Datos observados del servidor. Para interpretación estratégica, ver secciones posteriores.)\n\n");
+
+  // OPERATION
+  if (businessOverview) {
+    sections.push("## OPERACIÓN\n");
+    const rows = ["| Indicador | Valor | Unidad | Período |"];
+    rows.push("|---|---|---|---|");
+    if (businessOverview.kpis.solicitudes) {
+      const m = businessOverview.kpis.solicitudes;
+      rows.push(`| Solicitudes | ${m.total || 0} | solicitudes | Total |`);
+      if (m.last7Days) rows.push(`| Solicitudes (7d) | ${m.last7Days} | solicitudes | Últimos 7 días |`);
+      if (m.last30Days) rows.push(`| Solicitudes (30d) | ${m.last30Days} | solicitudes | Últimos 30 días |`);
+    }
+    if (businessOverview.kpis.pedidos) {
+      const m = businessOverview.kpis.pedidos;
+      rows.push(`| Pedidos | ${m.total || 0} | pedidos | Total |`);
+    }
+    sections.push(rows.join("\n") + "\n");
+  }
+
+  // GA4
+  if (ga4Metrics) {
+    sections.push("## TRÁFICO WEB (últimos 30 días)\n");
+    const rows = ["| Indicador | Valor | Unidad |"];
+    rows.push("|---|---|---|");
+    rows.push(`| Usuarios únicos | ${formatNumber(ga4Metrics.traffic.uniqueUsers)} | usuarios |`);
+    rows.push(`| Sesiones | ${formatNumber(ga4Metrics.traffic.sessions)} | sesiones |`);
+    if (ga4Metrics.traffic.bounceRate !== undefined) {
+      rows.push(`| Tasa de rebote | ${formatPercent(ga4Metrics.traffic.bounceRate)} | % |`);
+    }
+    if (ga4Metrics.traffic.avgSessionDuration !== undefined) {
+      rows.push(`| Duración media | ${formatNumber(ga4Metrics.traffic.avgSessionDuration)} | segundos |`);
+    }
+    sections.push(rows.join("\n") + "\n");
+  }
+
+  // ADS
+  if (adsMetrics) {
+    sections.push("## GOOGLE ADS (últimos 90 días)\n");
+    const rows = ["| Indicador | Valor | Unidad |"];
+    rows.push("|---|---|---|");
+    rows.push(`| Campañas con datos | ${adsMetrics.campaigns.length} | campañas |`);
+    rows.push(`| Gasto | ${formatNumber(adsMetrics.totalSpend)} | moneda no confirmada |`);
+    if (adsMetrics.campaigns.length > 0) {
+      const totalClicks = adsMetrics.campaigns.reduce((sum, c) => sum + (c.clicks || 0), 0);
+      rows.push(`| Clics | ${formatNumber(totalClicks)} | clics |`);
+    }
+    sections.push(rows.join("\n") + "\n");
+  }
+
+  // AGENT
+  if (agentMetrics) {
+    sections.push("## ACTIVIDAD DEL AGENTE\n");
+    const rows = ["| Indicador | Valor | Unidad |"];
+    rows.push("|---|---|---|");
+    rows.push(`| Conversaciones | ${formatNumber(agentMetrics.conversations.totalConversations)} | conversaciones |`);
+    if (agentMetrics.contactAttempts !== undefined) {
+      rows.push(`| Intentos de contacto | ${formatNumber(agentMetrics.contactAttempts)} | intentos |`);
+    }
+    sections.push(rows.join("\n") + "\n");
+  }
+
+  return sections.join("\n");
+}
+
+/**
+ * Detect if response appears truncated (incomplete).
+ */
+function isResponseLikelyTruncated(response: string): boolean {
+  const trimmed = response.trim();
+
+  // Ends with unclosed markdown
+  if (trimmed.endsWith("**") || trimmed.endsWith("*") || trimmed.endsWith("-") || trimmed.endsWith(":")) {
+    return true;
+  }
+
+  // Ends with numbered item like "2." or "2. **"
+  if (/\d+\.\s*\*{0,2}$/.test(trimmed)) {
+    return true;
+  }
+
+  // Ends with unclosed list item
+  if (trimmed.endsWith("- ") || trimmed.endsWith("* ")) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Repair common semantic errors in admin response deterministically.
+ * Safe replacements only - no rewriting of business logic.
+ */
+function repairAdminResponseDeterministically(response: string): string {
+  let repaired = response;
+
+  // Fix: "campañas activas" → "campañas con datos observados"
+  repaired = repaired.replace(
+    /campañas\s+activas/gi,
+    "campañas con datos observados en el período",
+  );
+
+  // Fix: "Campañas activas" (capitalized)
+  repaired = repaired.replace(
+    /Campañas\s+Activas/g,
+    "Campañas con datos observados en el período",
+  );
+
+  // Fix: "campañas activas con" variations
+  repaired = repaired.replace(
+    /campañas\s+activas\s+con/gi,
+    "campañas con datos observados en el período con",
+  );
+
+  return repaired;
+}
+
+/**
+ * Build a complete deterministic business report using all available data.
+ */
+function buildCompleteBusinessReport(
+  businessOverview: ControlOverviewData | null,
+  ga4Metrics: EngagementMetrics | null,
+  adsMetrics: CampaignsMetrics | null,
+  agentMetrics: AgentMetrics | null,
+): string {
+  const sections: string[] = [];
+
+  sections.push("# Resumen Ejecutivo del Negocio\n");
+
+  const sourcesLoaded: string[] = [];
+  if (businessOverview) sourcesLoaded.push("Supabase");
+  if (ga4Metrics) sourcesLoaded.push("Google Analytics");
+  if (adsMetrics) sourcesLoaded.push("Google Ads");
+  if (agentMetrics) sourcesLoaded.push("Agent Metrics");
+
+  sections.push(`Se consultaron exitosamente: ${sourcesLoaded.join(", ")}.\n`);
+
+  // OPERATION SECTION
+  if (businessOverview) {
+    sections.push("## Operación\n");
+    const rows = ["| Métrica | Total | Últimos 7d | Últimos 30d |"];
+    rows.push("|---|---|---|---|");
+
+    if (businessOverview.kpis.solicitudes) {
+      const m = businessOverview.kpis.solicitudes;
+      rows.push(
+        `| Solicitudes | ${m.total || 0} | ${m.last7Days || "-"} | ${m.last30Days || "-"} |`,
+      );
+    }
+
+    if (businessOverview.kpis.suscriptores) {
+      const m = businessOverview.kpis.suscriptores;
+      rows.push(
+        `| Suscriptores | ${m.total || 0} | ${m.last7Days || "-"} | ${m.last30Days || "-"} |`,
+      );
+    }
+
+    if (businessOverview.kpis.pedidos) {
+      const m = businessOverview.kpis.pedidos;
+      rows.push(`| Pedidos (Total) | ${m.total || 0} | - | - |`);
+      if (m.aprobado !== null) rows.push(`| Pedidos (Aprobados) | ${m.aprobado} | - | - |`);
+    }
+
+    if (businessOverview.kpis.revenue?.registrado !== null) {
+      rows.push(`| Ingresos Registrados | ${formatNumber(businessOverview.kpis.revenue.registrado)} | - | - |`);
+    }
+    if (businessOverview.kpis.revenue?.aprobado !== null) {
+      rows.push(`| Ingresos Aprobados | ${formatNumber(businessOverview.kpis.revenue.aprobado)} | - | - |`);
+    }
+
+    if (businessOverview.kpis.speakers?.total !== null) {
+      rows.push(`| Speakers | ${businessOverview.kpis.speakers.total} | - | - |`);
+    }
+    if (businessOverview.kpis.books?.total !== null) {
+      rows.push(`| Libros | ${businessOverview.kpis.books.total} | - | - |`);
+    }
+    if (businessOverview.kpis.events?.total !== null) {
+      rows.push(`| Eventos | ${businessOverview.kpis.events.total} | - | - |`);
+    }
+
+    sections.push(rows.join("\n") + "\n");
+  }
+
+  // GA4 SECTION
+  if (ga4Metrics) {
+    sections.push("## Tráfico Web (últimos 30 días)\n");
+    sections.push(`| Métrica | Valor |`);
+    sections.push(`|---|---|`);
+    sections.push(`| Usuarios únicos | ${formatNumber(ga4Metrics.traffic.uniqueUsers)} |`);
+    sections.push(`| Sesiones | ${formatNumber(ga4Metrics.traffic.sessions)} |`);
+    if (ga4Metrics.traffic.engagedSessions !== undefined) {
+      sections.push(`| Sesiones comprometidas | ${formatNumber(ga4Metrics.traffic.engagedSessions)} |`);
+    }
+    if (ga4Metrics.traffic.bounceRate !== undefined) {
+      sections.push(`| Tasa de rebote | ${formatPercent(ga4Metrics.traffic.bounceRate)} |`);
+    }
+    if (ga4Metrics.traffic.avgSessionDuration !== undefined) {
+      sections.push(`| Duración promedio sesión | ${formatSeconds(ga4Metrics.traffic.avgSessionDuration)} |`);
+    }
+    sections.push("");
+  }
+
+  // GOOGLE ADS SECTION
+  if (adsMetrics && adsMetrics.campaigns.length > 0) {
+    sections.push("## Campañas de Google Ads (últimos 90 días)\n");
+    sections.push(`| Campaña | Gasto | Clics | Impresiones | CPC |`);
+    sections.push(`|---|---|---|---|---|`);
+    for (const campaign of adsMetrics.campaigns.slice(0, 10)) {
+      sections.push(
+        `| ${campaign.name} | ${formatNumber(campaign.spend)} | ${formatNumber(campaign.clicks)} | ${formatNumber(campaign.impressions)} | ${formatNumber(campaign.cpc)} |`,
+      );
+    }
+    sections.push(`\n**Totales:** Gasto = ${formatNumber(adsMetrics.totalSpend)}, Clics = ${adsMetrics.campaigns.reduce((sum, c) => sum + (c.clicks || 0), 0)}, Impresiones = ${adsMetrics.campaigns.reduce((sum, c) => sum + (c.impressions || 0), 0)}\n`);
+  }
+
+  // AGENT METRICS SECTION
+  if (agentMetrics) {
+    sections.push("## Actividad del Agente\n");
+    sections.push(`| Métrica | Valor |`);
+    sections.push(`|---|---|`);
+    sections.push(`| Conversaciones | ${formatNumber(agentMetrics.conversations.totalConversations)} |`);
+    if (agentMetrics.conversations.avgMessagesPerConversation) {
+      sections.push(`| Mensajes promedio | ${formatNumber(agentMetrics.conversations.avgMessagesPerConversation)} |`);
+    }
+    if (agentMetrics.contactAttempts !== undefined) {
+      sections.push(`| Intentos de contacto | ${formatNumber(agentMetrics.contactAttempts)} |`);
+    }
+    if (agentMetrics.recommendationClicks !== undefined) {
+      sections.push(`| Clics en recomendaciones | ${formatNumber(agentMetrics.recommendationClicks)} |`);
+    }
+    sections.push("");
+  }
+
+  // DETERMINISTIC READING
+  sections.push("## Lectura Operativa\n");
+  const readings: string[] = [];
+
+  if (businessOverview?.kpis.pedidos?.total === 0) {
+    readings.push("No se observan pedidos registrados en el período.");
+  } else if (businessOverview?.kpis.pedidos?.aprobado === 0) {
+    readings.push("Se registran pedidos pero ninguno ha sido aprobado aún.");
+  }
+
+  if (ga4Metrics && ga4Metrics.traffic.sessions > 0) {
+    readings.push("Existe tráfico web durante el período analizado.");
+  } else if (ga4Metrics) {
+    readings.push("No se registró tráfico web en el período.");
+  }
+
+  if (adsMetrics && adsMetrics.campaigns.length === 0) {
+    readings.push("Google Ads está disponible pero sin campañas con datos observados.");
+  } else if (adsMetrics && adsMetrics.totalSpend > 0) {
+    readings.push(`Google Ads registra actividad con gasto observado en ${adsMetrics.campaigns.length} campaña(s).`);
+  }
+
+  if (agentMetrics) {
+    if (agentMetrics.conversations.totalConversations === 0) {
+      readings.push("El Agente está disponible pero sin conversaciones registradas en el período.");
+    } else {
+      readings.push(`Se registran ${agentMetrics.conversations.totalConversations} conversaciones con el agente.`);
+    }
+  }
+
+  if (readings.length > 0) {
+    sections.push(readings.join(" "));
+    sections.push("");
+  }
+
+  // INVESTIGATION ITEMS
+  sections.push("## Aspectos a Investigar\n");
+  const investigations: string[] = [];
+  if (businessOverview?.kpis.pedidos?.total === 0) {
+    investigations.push("- Revisar canales de captura de pedidos y disponibilidad de producto");
+  }
+  if (businessOverview?.kpis.pedidos?.aprobado === 0 && businessOverview?.kpis.pedidos?.total > 0) {
+    investigations.push("- Revisar proceso de aprobación de pedidos");
+  }
+  if (ga4Metrics && ga4Metrics.traffic.bounceRate && ga4Metrics.traffic.bounceRate > 70) {
+    investigations.push("- Revisar experiencia del sitio web (alta tasa de rebote)");
+  }
+  if (adsMetrics && adsMetrics.campaigns.length > 0 && ga4Metrics && ga4Metrics.traffic.sessions === 0) {
+    investigations.push("- Verificar sincronización entre Google Ads y GA4");
+  }
+
+  if (investigations.length > 0) {
+    sections.push(investigations.join("\n") + "\n");
+  }
+
+  // DATA FRESHNESS
+  sections.push("## Fuentes de Datos\n");
+  if (businessOverview) sections.push(`- Supabase: ${businessOverview.timestamp}`);
+  if (ga4Metrics) sections.push(`- Google Analytics: ${ga4Metrics.lastUpdated}`);
+  if (adsMetrics) sections.push(`- Google Ads: ${adsMetrics.lastUpdated}`);
+  if (agentMetrics) sections.push(`- Agent Metrics: ${agentMetrics.lastUpdated}`);
+  sections.push("");
+
+  return sections.join("\n");
+}
+
+/**
  * Build a safe, deterministic fallback response using only observed data.
  * Used when LLM response fails validation and correction also fails.
  */
@@ -1111,7 +1539,6 @@ function buildSafeExecutiveFallback(
   agentMetrics: AgentMetrics | null,
   query?: string,
 ): string {
-  const sections: string[] = [];
   const queryLower = (query || "").toLowerCase();
 
   // Detect query intent for targeted responses
@@ -1121,7 +1548,22 @@ function buildSafeExecutiveFallback(
   const isSolicitudQuery = queryLower.includes("solicitud") || queryLower.includes("request");
   const isGoogleAdsQuery = queryLower.includes("google ads") || queryLower.includes("anuncio") || queryLower.includes("gasto");
   const isAgentQuery = queryLower.includes("agente") || queryLower.includes("agent") || queryLower.includes("conversación");
-  const isGeneralQuery = !isSessionQuery && !isUserQuery && !isPedidoQuery && !isSolicitudQuery && !isGoogleAdsQuery && !isAgentQuery;
+
+  const isGeneralBusinessQuery =
+    queryLower.includes("resumen del negocio") ||
+    queryLower.includes("informe del negocio") ||
+    queryLower.includes("estado del negocio") ||
+    queryLower.includes("informe completo") ||
+    queryLower.includes("cómo va el negocio") ||
+    (!isSessionQuery && !isUserQuery && !isPedidoQuery && !isSolicitudQuery && !isGoogleAdsQuery && !isAgentQuery &&
+     (!query || query.length < 30)); // Short/general queries
+
+  // For general business queries, return complete deterministic report
+  if (isGeneralBusinessQuery) {
+    return buildCompleteBusinessReport(businessOverview, ga4Metrics, adsMetrics, agentMetrics);
+  }
+
+  const sections: string[] = [];
 
   sections.push("### Resumen de datos disponibles\n");
 
