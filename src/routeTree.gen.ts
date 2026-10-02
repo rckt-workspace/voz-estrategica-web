@@ -52,6 +52,8 @@ import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
 import { Route as ApiAdminAgentRouteImport } from './routes/api.admin.agent'
 import { Route as ApiAdminSessionRouteImport } from './routes/api.admin.session'
 import { Route as ApiAgentChatRouteImport } from './routes/api.agent.chat'
+import { Route as ApiControlAnalyticsRouteImport } from './routes/api.control.analytics'
+import { Route as ApiControlIntegrationsRouteImport } from './routes/api.control.integrations'
 import { Route as ApiControlOverviewRouteImport } from './routes/api.control.overview'
 import { Route as SpeakersDiegoCamachoMexicoRouteImport } from './routes/speakers.diego-camacho.mexico'
 
@@ -272,6 +274,16 @@ const ApiAgentChatRoute = ApiAgentChatRouteImport.update({
   path: '/api/agent/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiControlAnalyticsRoute = ApiControlAnalyticsRouteImport.update({
+  id: '/api/control/analytics',
+  path: '/api/control/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiControlIntegrationsRoute = ApiControlIntegrationsRouteImport.update({
+  id: '/api/control/integrations',
+  path: '/api/control/integrations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiControlOverviewRoute = ApiControlOverviewRouteImport.update({
   id: '/api/control/overview',
   path: '/api/control/overview',
@@ -328,6 +340,8 @@ export interface FileRoutesByFullPath {
   '/api/admin/agent': typeof ApiAdminAgentRoute
   '/api/admin/session': typeof ApiAdminSessionRoute
   '/api/agent/chat': typeof ApiAgentChatRoute
+  '/api/control/analytics': typeof ApiControlAnalyticsRoute
+  '/api/control/integrations': typeof ApiControlIntegrationsRoute
   '/api/control/overview': typeof ApiControlOverviewRoute
   '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
@@ -373,6 +387,8 @@ export interface FileRoutesByTo {
   '/api/admin/agent': typeof ApiAdminAgentRoute
   '/api/admin/session': typeof ApiAdminSessionRoute
   '/api/agent/chat': typeof ApiAgentChatRoute
+  '/api/control/analytics': typeof ApiControlAnalyticsRoute
+  '/api/control/integrations': typeof ApiControlIntegrationsRoute
   '/api/control/overview': typeof ApiControlOverviewRoute
   '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
@@ -421,6 +437,8 @@ export interface FileRoutesById {
   '/api/admin/agent': typeof ApiAdminAgentRoute
   '/api/admin/session': typeof ApiAdminSessionRoute
   '/api/agent/chat': typeof ApiAgentChatRoute
+  '/api/control/analytics': typeof ApiControlAnalyticsRoute
+  '/api/control/integrations': typeof ApiControlIntegrationsRoute
   '/api/control/overview': typeof ApiControlOverviewRoute
   '/speakers/diego-camacho/mexico': typeof SpeakersDiegoCamachoMexicoRoute
 }
@@ -470,6 +488,8 @@ export interface FileRouteTypes {
     | '/api/admin/agent'
     | '/api/admin/session'
     | '/api/agent/chat'
+    | '/api/control/analytics'
+    | '/api/control/integrations'
     | '/api/control/overview'
     | '/speakers/diego-camacho/mexico'
   fileRoutesByTo: FileRoutesByTo
@@ -515,6 +535,8 @@ export interface FileRouteTypes {
     | '/api/admin/agent'
     | '/api/admin/session'
     | '/api/agent/chat'
+    | '/api/control/analytics'
+    | '/api/control/integrations'
     | '/api/control/overview'
     | '/speakers/diego-camacho/mexico'
   id:
@@ -562,6 +584,8 @@ export interface FileRouteTypes {
     | '/api/admin/agent'
     | '/api/admin/session'
     | '/api/agent/chat'
+    | '/api/control/analytics'
+    | '/api/control/integrations'
     | '/api/control/overview'
     | '/speakers/diego-camacho/mexico'
   fileRoutesById: FileRoutesById
@@ -597,6 +621,8 @@ export interface RootRouteChildren {
   ApiAdminAgentRoute: typeof ApiAdminAgentRoute
   ApiAdminSessionRoute: typeof ApiAdminSessionRoute
   ApiAgentChatRoute: typeof ApiAgentChatRoute
+  ApiControlAnalyticsRoute: typeof ApiControlAnalyticsRoute
+  ApiControlIntegrationsRoute: typeof ApiControlIntegrationsRoute
   ApiControlOverviewRoute: typeof ApiControlOverviewRoute
   SpeakersDiegoCamachoMexicoRoute: typeof SpeakersDiegoCamachoMexicoRoute
 }
@@ -904,6 +930,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAgentChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/control/analytics': {
+      id: '/api/control/analytics'
+      path: '/api/control/analytics'
+      fullPath: '/api/control/analytics'
+      preLoaderRoute: typeof ApiControlAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/control/integrations': {
+      id: '/api/control/integrations'
+      path: '/api/control/integrations'
+      fullPath: '/api/control/integrations'
+      preLoaderRoute: typeof ApiControlIntegrationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/control/overview': {
       id: '/api/control/overview'
       path: '/api/control/overview'
@@ -995,6 +1035,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminAgentRoute: ApiAdminAgentRoute,
   ApiAdminSessionRoute: ApiAdminSessionRoute,
   ApiAgentChatRoute: ApiAgentChatRoute,
+  ApiControlAnalyticsRoute: ApiControlAnalyticsRoute,
+  ApiControlIntegrationsRoute: ApiControlIntegrationsRoute,
   ApiControlOverviewRoute: ApiControlOverviewRoute,
   SpeakersDiegoCamachoMexicoRoute: SpeakersDiegoCamachoMexicoRoute,
 }

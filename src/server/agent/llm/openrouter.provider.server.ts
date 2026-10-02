@@ -17,6 +17,11 @@ interface LLMRequest {
   messages: LLMMessage[];
   temperature: number;
   max_tokens: number;
+  reasoning?: {
+    type?: string;
+    budget_tokens?: number;
+    exclude?: boolean;
+  };
 }
 
 interface LLMResponse {
@@ -47,6 +52,7 @@ export async function callOpenRouter(
     temperature?: number;
     maxTokens?: number;
     timeout?: number;
+    excludeReasoning?: boolean;
   },
 ): Promise<string> {
   const apiKey = process.env.OPENROUTER_API_KEY;
@@ -68,6 +74,11 @@ export async function callOpenRouter(
     temperature,
     max_tokens: maxTokens,
   };
+
+  // Exclude reasoning from response if requested (for production admin agent)
+  if (options?.excludeReasoning) {
+    request.reasoning = { exclude: true };
+  }
 
   try {
     const controller = new AbortController();

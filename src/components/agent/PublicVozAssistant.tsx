@@ -1,6 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Send, MessageCircle } from "lucide-react";
 import { useLocation } from "@tanstack/react-router";
+import {
+  trackAgentOpened,
+  trackAgentMessageSent,
+  trackAgentResponseReceived,
+  trackAgentError,
+  trackAgentRecommendationClick,
+  trackAgentContactAttempt,
+} from "@/lib/analytics";
 
 interface Message {
   role: "user" | "assistant";
@@ -94,6 +102,7 @@ export function PublicVozAssistant() {
   // Show initial message on first open
   useEffect(() => {
     if (isOpen && messages.length === 0) {
+      trackAgentOpened({ source: normalizedPath });
       setMessages([
         {
           role: "assistant",
@@ -122,6 +131,7 @@ export function PublicVozAssistant() {
     setShowQuickActions(false);
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
+    trackAgentMessageSent({ source: normalizedPath });
 
     try {
       abortControllerRef.current = new AbortController();
@@ -147,6 +157,7 @@ export function PublicVozAssistant() {
         throw new Error(data.error || "Error en el agente");
       }
 
+      trackAgentResponseReceived({ response_type: "standard" });
       const agentMsg = data.data.message;
       setMessages((prev) => [...prev, { role: "assistant", content: agentMsg }]);
 
@@ -155,6 +166,7 @@ export function PublicVozAssistant() {
       }
     } catch (error) {
       if (error instanceof Error && error.name !== "AbortError") {
+        trackAgentError({ error_type: error.message });
         setMessages((prev) => [
           ...prev,
           {
@@ -176,13 +188,16 @@ export function PublicVozAssistant() {
   const handleNextAction = (action: NextAction) => {
     switch (action.type) {
       case "navigate":
+        trackAgentRecommendationClick({ recommendation_type: "navigate" });
         if (action.href) window.location.href = action.href;
         break;
       case "whatsapp":
+        trackAgentContactAttempt({ contact_method: "whatsapp" });
         if (action.href) window.open(action.href, "_blank");
         break;
       case "contact":
       case "proposal":
+        trackAgentContactAttempt({ contact_method: "proposal_form" });
         window.location.href = "/contratar";
         break;
     }

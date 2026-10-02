@@ -14,6 +14,8 @@ export const PedidoMetricSchema = MetricSchema.extend({
   aprobados: z.number().nullable().optional(),
   pendientes: z.number().nullable().optional(),
   rechazados: z.number().nullable().optional(),
+  cancelados: z.number().nullable().optional(),
+  otros: z.number().nullable().optional(),
 });
 
 export const RevenueMetricSchema = z.object({

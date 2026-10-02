@@ -69,6 +69,17 @@ export interface PublicAgentResponse {
   signals: SafeSignals;
 }
 
+export interface Visualization {
+  type: "bar" | "line";
+  title: string;
+  xLabel?: string;
+  yLabel?: string;
+  data: Array<{
+    label: string;
+    value: number;
+  }>;
+}
+
 export interface AdminAgentResponse {
   message: string;
   insights: ExecutiveInsight[];
@@ -76,6 +87,7 @@ export interface AdminAgentResponse {
   forecasts: Forecast[];
   sourcesUsed: DataSourceRef[];
   dataFreshness?: Record<string, string>;
+  visualizations?: Visualization[];
 }
 
 export interface ExecutiveInsight {

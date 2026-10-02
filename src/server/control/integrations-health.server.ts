@@ -268,35 +268,168 @@ export async function checkSoroHealth(): Promise<Integration> {
 }
 
 export async function checkGoogleAdsHealth(): Promise<Integration> {
-  const hasConfig = Boolean(process.env.GOOGLE_ADS_CUSTOMER_ID);
+  const start = Date.now();
 
-  if (!hasConfig) {
+  try {
+    const { getAdsMetrics, isAdsConfigured } = await import(
+      "../agent/analytics/ads.datasource"
+    );
+
+    if (!isAdsConfigured()) {
+      return {
+        id: "google-ads",
+        name: "Google Ads",
+        status: "pending",
+        description: "GA4 no está configurado",
+        details: { configured: false },
+      };
+    }
+
+    // A. Check recent activity (last 30 days)
+    const recentMetrics = await getAdsMetrics({ startDate: "30daysAgo", endDate: "today" });
+    const hasRecentActivity = recentMetrics.campaigns.length > 0;
+
+    const latency = Date.now() - start;
+
+    if (hasRecentActivity) {
+      // B. Has recent activity in last 30 days
+      const details: Record<string, unknown> = {
+        source: "GA4",
+        connected: true,
+        recentActivity: true,
+        spend: recentMetrics.totalSpend,
+        impressions: recentMetrics.campaigns.reduce((sum, c) => sum + c.impressions, 0),
+        clicks: recentMetrics.campaigns.reduce((sum, c) => sum + c.clicks, 0),
+        campaignCount: recentMetrics.campaigns.length,
+      };
+
+      const totalClicks = recentMetrics.campaigns.reduce((sum, c) => sum + c.clicks, 0);
+      if (totalClicks > 0) {
+        details.cpc = recentMetrics.totalSpend / totalClicks;
+      }
+
+      return {
+        id: "google-ads",
+        name: "Google Ads",
+        status: "connected",
+        description: "Google Ads conectado mediante GA4",
+        latencyMs: latency,
+        details,
+      };
+    }
+
+    // C. No recent activity, check historical (90 days)
+    const historicalMetrics = await getAdsMetrics({ startDate: "90daysAgo", endDate: "today" });
+    const hasHistoricalData = historicalMetrics.campaigns.length > 0;
+
+    // D. If has historical data, still connected
+    if (hasHistoricalData) {
+      const details: Record<string, unknown> = {
+        source: "GA4",
+        connected: true,
+        recentActivity: false,
+        recentPeriod: "30 días",
+        historicalPeriod: "90 días",
+        historicalCampaigns: historicalMetrics.campaigns.length,
+        historicalSpend: historicalMetrics.totalSpend,
+        historicalClicks: historicalMetrics.campaigns.reduce((sum, c) => sum + c.clicks, 0),
+        historicalImpressions: historicalMetrics.campaigns.reduce((sum, c) => sum + c.impressions, 0),
+      };
+
+      return {
+        id: "google-ads",
+        name: "Google Ads",
+        status: "connected",
+        description: "Google Ads conectado; sin actividad en los últimos 30 días",
+        latencyMs: latency,
+        details,
+      };
+    }
+
+    // No data at all in 90 days
     return {
       id: "google-ads",
       name: "Google Ads",
       status: "pending",
-      description: "Integración todavía no configurada",
-      details: { configured: false },
+      description: "Google Ads no está configurado o no tiene datos vinculados",
+      latencyMs: latency,
+      details: {
+        configured: false,
+        source: "GA4",
+      },
+    };
+  } catch (error) {
+    console.error("[GoogleAds Health] Error:", error);
+
+    return {
+      id: "google-ads",
+      name: "Google Ads",
+      status: "error",
+      description: "Error al consultar métricas de Google Ads",
+      latencyMs: Date.now() - start,
+      details: { error: error instanceof Error ? error.message : "Unknown error" },
     };
   }
-
-  return {
-    id: "google-ads",
-    name: "Google Ads",
-    status: "pending",
-    description: "Health check no implementado",
-    details: { configured: true, checkImplemented: false },
-  };
 }
 
 export async function checkAgentMetricsHealth(): Promise<Integration> {
-  return {
-    id: "agent-metrics",
-    name: "Agent Metrics",
-    status: "pending",
-    description: "Instrumentación todavía no implementada",
-    details: { implemented: false },
-  };
+  const start = Date.now();
+
+  try {
+    const { getAgentMetrics, isAgentMetricsConfigured } = await import(
+      "../agent/analytics/agent-metrics.datasource"
+    );
+
+    if (!isAgentMetricsConfigured()) {
+      return {
+        id: "agent-metrics",
+        name: "Agent Metrics",
+        status: "pending",
+        description: "GA4 no está configurado para leer eventos de agente",
+        details: { configured: false },
+      };
+    }
+
+    const metrics = await getAgentMetrics("30daysAgo");
+    const latency = Date.now() - start;
+
+    const details: Record<string, unknown> = {
+      conversations: metrics.conversations.totalConversations,
+      messages: Math.round(metrics.conversations.avgMessagesPerConversation * 1000) / 1000,
+      recommendationClicks: metrics.recommendationClicks,
+      contactAttempts: metrics.contactAttempts,
+      source: "GA4",
+    };
+
+    // If no events yet, still consider connected if tracking is deployed
+    const status =
+      metrics.conversations.totalConversations === 0 ? "connected" : "connected";
+
+    const description =
+      metrics.conversations.totalConversations === 0
+        ? "Tracking activo; esperando interacciones"
+        : `${metrics.conversations.totalConversations} conversaciones en últimos 30 días`;
+
+    return {
+      id: "agent-metrics",
+      name: "Agent Metrics",
+      status,
+      description,
+      latencyMs: latency,
+      details,
+    };
+  } catch (error) {
+    console.error("[AgentMetrics Health] Error:", error);
+
+    return {
+      id: "agent-metrics",
+      name: "Agent Metrics",
+      status: "error",
+      description: "Error al leer métricas del agente desde GA4",
+      latencyMs: Date.now() - start,
+      details: { error: error instanceof Error ? error.message : "Unknown error" },
+    };
+  }
 }
 
 export async function getIntegrationsHealth(): Promise<Integration[]> {

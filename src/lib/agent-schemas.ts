@@ -35,6 +35,18 @@ export const AdminAgentRequestSchema = z.object({
       datasources: z.array(z.string()).optional(),
     })
     .optional(),
+  history: z
+    .array(
+      z.object({
+        role: z.enum(["user", "assistant"]),
+        content: z
+          .string()
+          .min(1)
+          .max(8000, "Message in history too long"),
+      }),
+    )
+    .max(20, "History limited to 20 messages")
+    .optional(),
 });
 
 export type AdminAgentRequest = z.infer<typeof AdminAgentRequestSchema>;

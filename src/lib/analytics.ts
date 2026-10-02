@@ -130,3 +130,53 @@ export function trackPurchase(params: {
 export function trackEvent(eventName: string, params?: Record<string, unknown>) {
   sendEvent(eventName, params);
 }
+
+// ============ AGENT METRICS TRACKING ============
+
+/**
+ * Agent Opened event
+ * Fired when user opens the public Voz Assistant.
+ */
+export function trackAgentOpened(params?: { source?: string; placement?: string }) {
+  sendEvent("agent_open", params ?? {});
+}
+
+/**
+ * Agent Message Sent event
+ * Fired when user sends a message to the agent.
+ */
+export function trackAgentMessageSent(params?: { intent?: string; source?: string }) {
+  sendEvent("agent_message", params ?? {});
+}
+
+/**
+ * Agent Response Received event
+ * Fired when agent returns a response.
+ */
+export function trackAgentResponseReceived(params?: { response_type?: string }) {
+  sendEvent("agent_response", params ?? {});
+}
+
+/**
+ * Agent Error event
+ * Fired when an error occurs during agent interaction.
+ */
+export function trackAgentError(params?: { error_type?: string }) {
+  sendEvent("agent_error", params ?? {});
+}
+
+/**
+ * Agent Recommendation Click event
+ * Fired when user clicks on an agent recommendation.
+ */
+export function trackAgentRecommendationClick(params?: { recommendation_type?: string; index?: number }) {
+  sendEvent("agent_recommendation_click", params ?? {});
+}
+
+/**
+ * Agent Contact Attempt event
+ * Fired when user attempts to contact via agent (WhatsApp, form, etc.).
+ */
+export function trackAgentContactAttempt(params?: { contact_method?: string; stage?: string }) {
+  sendEvent("agent_contact_attempt", params ?? {});
+}

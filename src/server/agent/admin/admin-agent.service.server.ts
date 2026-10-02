@@ -2,9 +2,13 @@ import {
   getGA4Metrics,
   isGA4Configured,
 } from "../analytics/ga4.datasource";
+import { getAdsMetrics, isAdsConfigured } from "../analytics/ads.datasource";
+import { getAgentMetrics, isAgentMetricsConfigured } from "../analytics/agent-metrics.datasource";
 
 import type {
   EngagementMetrics,
+  CampaignsMetrics,
+  AgentMetrics,
 } from "./business-intelligence.types";
 
 import { callOpenRouter } from "../llm/openrouter.provider.server";
@@ -24,6 +28,10 @@ export interface AdminAgentInput {
     metric?: string;
     datasources?: string[];
   };
+  history?: Array<{
+    role: "user" | "assistant";
+    content: string;
+  }>;
 }
 
 /**
@@ -36,50 +44,103 @@ export interface AdminAgentInput {
 export async function executeAdminAgent(
   input: AdminAgentInput,
 ): Promise<AdminAgentResponse> {
+  let stage = "start";
   try {
     // 1. Load real GA4 data when available/requested.
+    stage = "load-ga4";
     const ga4Metrics = await loadGA4MetricsSafely(
       input.context?.datasources,
     );
+    console.info("[AdminAgent] GA4 loaded:", Boolean(ga4Metrics));
 
-    // 2. Build grounded context using only data actually loaded.
+    // 2. Load Google Ads metrics when available/requested.
+    stage = "load-ads";
+    const adsMetrics = await loadAdsMetricsSafely(
+      input.context?.datasources,
+    );
+    console.info("[AdminAgent] Ads loaded:", Boolean(adsMetrics), adsMetrics?.campaigns?.length || 0, "campaigns");
+
+    // 3. Load Agent Metrics when available/requested.
+    stage = "load-agent-metrics";
+    const agentMetrics = await loadAgentMetricsSafely(
+      input.context?.datasources,
+    );
+    console.info("[AdminAgent] Agent Metrics loaded:", Boolean(agentMetrics), agentMetrics?.conversations?.totalConversations || 0, "conversations");
+
+    // 4. Build grounded context using only data actually loaded.
+    stage = "build-context";
     const adminContext = buildAdminContext(
       input.context,
       ga4Metrics,
+      adsMetrics,
+      agentMetrics,
     );
+    console.info("[AdminAgent] Context built:", adminContext.length, "characters");
 
-    // 3. Prepare system message.
+    // 5. Prepare system message.
+    stage = "build-system-prompt";
     const systemPrompt =
       ADMIN_SYSTEM_PROMPT + "\n\n" + adminContext;
+    console.info("[AdminAgent] System prompt size:", systemPrompt.length, "characters");
 
-    // 4. Call LLM.
-    const response = await callOpenRouter([
+    // 6. Call LLM with conversation history.
+    stage = "openrouter";
+
+    // Sanitize history: max 20 messages, only user/assistant
+    const sanitizedHistory = (input.history || [])
+      .slice(-20)
+      .filter((msg) => msg.role === "user" || msg.role === "assistant")
+      .map((msg) => ({
+        role: msg.role as "user" | "assistant",
+        content: msg.content.slice(0, 8000),
+      }));
+
+    const messages = [
       {
-        role: "system",
+        role: "system" as const,
         content: systemPrompt,
       },
+      ...sanitizedHistory,
       {
-        role: "user",
+        role: "user" as const,
         content: input.query,
       },
-    ]);
+    ];
 
-    // 5. Structured extraction placeholders.
+    const response = await callOpenRouter(messages, {
+      excludeReasoning: true,
+    });
+    console.info("[AdminAgent] OpenRouter response received:", response.length, "characters");
+
+    // 7. Structured extraction placeholders.
+    stage = "postprocess";
     const insights = parseInsights(response);
     const recommendations = parseRecommendations(response);
     const forecasts = parseForecasts(response);
 
-    // 6. Report only sources actually available/used.
+    // 8. Report only sources actually available/used.
+    stage = "sources-used";
     const sourcesUsed = determineSourcesUsed(
       input.context?.datasources,
       ga4Metrics,
+      adsMetrics,
+      agentMetrics,
     );
 
+    stage = "data-freshness";
     const dataFreshness: Record<string, string> = {};
 
     if (ga4Metrics) {
       dataFreshness.ga4 = ga4Metrics.lastUpdated;
     }
+    if (adsMetrics) {
+      dataFreshness.googleAds = adsMetrics.lastUpdated;
+    }
+    if (agentMetrics) {
+      dataFreshness.agentMetrics = agentMetrics.lastUpdated;
+    }
+
+    console.info("[AdminAgent] Query completed successfully");
 
     return {
       message: response,
@@ -91,18 +152,15 @@ export async function executeAdminAgent(
         Object.keys(dataFreshness).length > 0
           ? dataFreshness
           : undefined,
+      visualizations: undefined,
     };
   } catch (err) {
-    console.error("[AdminAgent] Error:", err);
-
-    return {
-      message:
-        "Error procesando consulta. Por favor intenta de nuevo o contacta soporte.",
-      insights: [],
-      recommendations: [],
-      forecasts: [],
-      sourcesUsed: [],
-    };
+    console.error(
+      `[AdminAgent][stage=${stage}]`,
+      err instanceof Error ? err.message : "Unknown error",
+      err instanceof Error ? err.stack : ""
+    );
+    throw err;
   }
 }
 
@@ -149,6 +207,62 @@ async function loadGA4MetricsSafely(
   }
 }
 
+async function loadAdsMetricsSafely(
+  datasources?: string[],
+): Promise<CampaignsMetrics | null> {
+  const hasExplicitDatasourceSelection =
+    Array.isArray(datasources) && datasources.length > 0;
+
+  const adsRequested =
+    !hasExplicitDatasourceSelection ||
+    datasources?.includes("ads") ||
+    datasources?.includes("google_ads");
+
+  if (!adsRequested) {
+    return null;
+  }
+
+  if (!isAdsConfigured()) {
+    console.warn("[AdminAgent][Ads] Ads datasource is not configured.");
+    return null;
+  }
+
+  try {
+    return await getAdsMetrics();
+  } catch (error) {
+    console.error("[AdminAgent][Ads] Failed to load Ads metrics:", error);
+    return null;
+  }
+}
+
+async function loadAgentMetricsSafely(
+  datasources?: string[],
+): Promise<AgentMetrics | null> {
+  const hasExplicitDatasourceSelection =
+    Array.isArray(datasources) && datasources.length > 0;
+
+  const agentRequested =
+    !hasExplicitDatasourceSelection ||
+    datasources?.includes("agent") ||
+    datasources?.includes("agent_metrics");
+
+  if (!agentRequested) {
+    return null;
+  }
+
+  if (!isAgentMetricsConfigured()) {
+    console.warn("[AdminAgent][Agent] Agent metrics not configured.");
+    return null;
+  }
+
+  try {
+    return await getAgentMetrics("30daysAgo");
+  } catch (error) {
+    console.error("[AdminAgent][Agent] Failed to load Agent metrics:", error);
+    return null;
+  }
+}
+
 /**
  * Build grounded context for the Master Agent.
  *
@@ -159,6 +273,8 @@ async function loadGA4MetricsSafely(
 function buildAdminContext(
   context?: AdminAgentInput["context"],
   ga4Metrics?: EngagementMetrics | null,
+  adsMetrics?: CampaignsMetrics | null,
+  agentMetrics?: AgentMetrics | null,
 ): string {
   const sections: string[] = [];
 
@@ -166,6 +282,12 @@ function buildAdminContext(
 
   if (ga4Metrics) {
     loadedSources.push("Google Analytics 4");
+  }
+  if (adsMetrics && adsMetrics.totalSpend > 0) {
+    loadedSources.push("Google Ads");
+  }
+  if (agentMetrics && agentMetrics.conversations.totalConversations > 0) {
+    loadedSources.push("Agent Metrics");
   }
 
   sections.push(`
@@ -221,54 +343,78 @@ ser consultada en esta ejecución.
 `);
   }
 
+  if (adsMetrics && adsMetrics.totalSpend > 0) {
+    sections.push(buildAdsContext(adsMetrics));
+  } else {
+    sections.push(`
+=== GOOGLE ADS ===
+
+Google Ads no está disponible en esta consulta o no tiene datos vinculados.
+
+No inventes:
+- gasto en publicidad
+- clics
+- impresiones
+- CPC
+- campañas
+- conversiones de Google Ads
+`);
+  }
+
+  if (agentMetrics) {
+    sections.push(buildAgentContext(agentMetrics));
+  } else {
+    sections.push(`
+=== AGENT METRICS ===
+
+Agent Metrics no está disponible en esta consulta.
+
+No inventes:
+- conversaciones del agente
+- intents
+- recomendaciones dadas
+- contactos intentados
+- métricas de interacción del agente
+`);
+  }
+
   sections.push(`
-=== ESTADO ACTUAL DE OTRAS FUENTES ===
+=== SUPABASE / MÉTRICAS COMERCIALES ===
 
-Google Ads:
-- todavía no está integrado en este servicio.
-- no inventes inversión, campañas, clics, conversiones, CPA o ROAS.
+La plataforma utiliza Supabase para datos operativos, pero este servicio
+todavía no está inyectando esas métricas dentro de esta consulta del copiloto.
 
-Supabase / métricas comerciales:
-- la plataforma utiliza Supabase para datos operativos,
-  pero este servicio todavía no está inyectando esas métricas
-  dentro de esta consulta del copiloto.
-- no presentes ventas, pedidos, leads o ingresos de Supabase
-  como hechos mientras esos datos no aparezcan en el contexto.
-
-Agent Metrics:
-- todavía no hay una fuente persistente conectada a este servicio.
-- no inventes número de conversaciones, intents o conversiones
-  del agente.
+No presentes ventas, pedidos, leads o ingresos de Supabase como hechos
+mientras esos datos no aparezcan en el contexto.
 
 === CAPACIDADES ACTUALES ===
 
-Cuando GA4 esté disponible puedes:
+Cuando las fuentes estén disponibles puedes:
 
-- analizar tráfico web;
-- analizar usuarios activos;
-- analizar sesiones;
-- analizar sesiones con interacción;
-- analizar duración media de sesión;
-- analizar bounce rate;
-- identificar páginas con mayor actividad;
-- analizar los principales eventos registrados;
-- identificar patrones observados;
-- formular hipótesis claramente marcadas como hipótesis;
-- recomendar qué métricas deberían monitorearse;
-- sugerir próximos pasos sujetos a aprobación humana.
+GA4:
+- analizar tráfico web y usuarios
+- analizar sesiones y engagement
+- identificar páginas y eventos populares
+
+Google Ads:
+- analizar gasto y eficiencia de campañas
+- calcular CPC y ROAS
+- identificar campañas mejor/peor desempeño
+
+Agent Metrics:
+- analizar interacción con el asistente
+- medir conversiones y contactos del agente
+- identificar intents populares
 
 === LIMITACIONES ===
 
 No puedes:
 
-- modificar campañas;
-- cambiar presupuestos;
-- ejecutar acciones empresariales;
-- modificar Analytics;
-- modificar Google Ads;
-- realizar compras;
-- enviar dinero;
-- inventar métricas ausentes.
+- modificar campañas o presupuestos
+- ejecutar acciones empresariales
+- modificar Analytics o Google Ads
+- realizar compras o enviar dinero
+- inventar métricas ausentes
 
 === HORIZONTES DE ANÁLISIS ===
 
@@ -364,11 +510,85 @@ ${ga4Metrics.lastUpdated}
 }
 
 /**
+ * Build the observed Google Ads section.
+ */
+function buildAdsContext(adsMetrics: CampaignsMetrics): string {
+  const topCampaigns =
+    adsMetrics.campaigns.length > 0
+      ? adsMetrics.campaigns
+          .slice(0, 5)
+          .map((campaign, index) => {
+            const cpc = campaign.clicks > 0 ? campaign.spend / campaign.clicks : 0;
+            return [
+              `${index + 1}. ${campaign.name}`,
+              `gasto=${formatNumber(campaign.spend)}`,
+              `clics=${formatNumber(campaign.clicks)}`,
+              `impresiones=${formatNumber(campaign.impressions)}`,
+              `cpc=${formatNumber(cpc)}`,
+            ].join(" | ");
+          })
+          .join("\n")
+      : "Sin campañas disponibles.";
+
+  return `
+=== GOOGLE ADS — DATOS OBSERVADOS ===
+
+Período: últimos 30 días
+
+Gasto total:
+${formatNumber(adsMetrics.totalSpend)}
+
+Número de campañas:
+${adsMetrics.campaigns.length}
+
+=== TOP CAMPAÑAS ===
+
+${topCampaigns}
+
+Última consulta a Google Ads (vía GA4):
+${adsMetrics.lastUpdated}
+`;
+}
+
+/**
+ * Build the observed Agent Metrics section.
+ */
+function buildAgentContext(agentMetrics: AgentMetrics): string {
+  const convMetrics = agentMetrics.conversations;
+
+  return `
+=== AGENT METRICS — DATOS OBSERVADOS ===
+
+Período: últimos 30 días
+
+Conversaciones totales (aperturas):
+${formatNumber(convMetrics.totalConversations)}
+
+Mensajes promedio por conversación:
+${formatNumber(convMetrics.avgMessagesPerConversation)}
+
+Clics en recomendaciones:
+${formatNumber(agentMetrics.recommendationClicks)}
+
+Intentos de contacto:
+${formatNumber(agentMetrics.contactAttempts)}
+
+Tasa de conversación a contacto:
+${formatPercent(convMetrics.conversionRate)}
+
+Última consulta a Agent Metrics (vía GA4):
+${agentMetrics.lastUpdated}
+`;
+}
+
+/**
  * Determine which data sources were actually used.
  */
 function determineSourcesUsed(
   datasources?: string[],
   ga4Metrics?: EngagementMetrics | null,
+  adsMetrics?: CampaignsMetrics | null,
+  agentMetrics?: AgentMetrics | null,
 ): DataSourceRef[] {
   const used: DataSourceRef[] = [];
 
@@ -384,10 +604,27 @@ function determineSourcesUsed(
     });
   }
 
-  if (datasources?.includes("google_ads")) {
+  if (adsMetrics && adsMetrics.totalSpend > 0) {
     used.push({
       source: "google_ads",
-      updatedAt: "not configured",
+      updatedAt: adsMetrics.lastUpdated,
+    });
+  } else if (datasources?.includes("google_ads") || datasources?.includes("ads")) {
+    used.push({
+      source: "google_ads",
+      updatedAt: "unavailable",
+    });
+  }
+
+  if (agentMetrics) {
+    used.push({
+      source: "agent_metrics",
+      updatedAt: agentMetrics.lastUpdated,
+    });
+  } else if (datasources?.includes("agent") || datasources?.includes("agent_metrics")) {
+    used.push({
+      source: "agent_metrics",
+      updatedAt: "unavailable",
     });
   }
 
