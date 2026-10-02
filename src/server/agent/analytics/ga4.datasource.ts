@@ -86,7 +86,7 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
     }),
   ]);
 
-  const trafficRow = trafficResult[0].rows?.[0];
+  const trafficRow = trafficResult.rows?.[0];
 
   const uniqueUsers = metricValue(trafficRow?.metricValues, 0);
   const sessions = metricValue(trafficRow?.metricValues, 1);
@@ -97,7 +97,7 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
   const bounceRate = metricValue(trafficRow?.metricValues, 4) * 100;
 
   const topPages =
-    pagesResult[0].rows?.map((row) => {
+    pagesResult.rows?.map((row) => {
       const path = row.dimensionValues?.[0]?.value ?? "/";
       const pageViews = metricValue(row.metricValues, 0);
       const users = metricValue(row.metricValues, 1);
@@ -114,7 +114,7 @@ export async function getGA4Metrics(): Promise<EngagementMetrics> {
 
   const events: Record<string, number> = {};
 
-  for (const row of eventsResult[0].rows ?? []) {
+  for (const row of eventsResult.rows ?? []) {
     const eventName = row.dimensionValues?.[0]?.value;
 
     if (!eventName) continue;
