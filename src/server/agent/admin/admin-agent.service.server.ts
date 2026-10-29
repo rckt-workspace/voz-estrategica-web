@@ -6,7 +6,7 @@ import type {
   AgentMetrics,
 } from "./business-intelligence.types";
 
-import type { ControlOverviewData } from "../../lib/control-overview-schema";
+import type { ControlOverviewData } from "@/lib/control-overview-schema";
 
 import { callOpenRouterDetailed } from "../llm/openrouter.provider.server";
 import { ADMIN_SYSTEM_PROMPT } from "./admin-system.prompt.server";

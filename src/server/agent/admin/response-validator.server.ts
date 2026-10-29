@@ -3,7 +3,7 @@
  * Detects contradictions and invalid claims about data availability
  */
 
-import type { ControlOverviewData } from "../../lib/control-overview-schema";
+import type { ControlOverviewData } from "@/lib/control-overview-schema";
 import type { EngagementMetrics, CampaignsMetrics, AgentMetrics } from "./business-intelligence.types";
 
 interface ValidationResult {
