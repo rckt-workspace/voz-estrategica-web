@@ -6,7 +6,7 @@ import type {
   AgentMetrics,
 } from "./business-intelligence.types";
 
-import type { ControlOverviewData } from "../../lib/control-overview-schema";
+import type { ControlOverviewData } from "@/lib/control-overview-schema";
 
 import { callOpenRouterDetailed } from "../llm/openrouter.provider.server";
 import { ADMIN_SYSTEM_PROMPT } from "./admin-system.prompt.server";
@@ -1379,8 +1379,8 @@ function buildCompleteBusinessReport(
       );
     }
 
-    if (businessOverview.kpis.suscriptores) {
-      const m = businessOverview.kpis.suscriptores;
+    if (businessOverview.kpis.subscribers) {
+      const m = businessOverview.kpis.subscribers;
       rows.push(
         `| Suscriptores | ${m.total || 0} | ${m.last7Days || "-"} | ${m.last30Days || "-"} |`,
       );
@@ -1389,11 +1389,11 @@ function buildCompleteBusinessReport(
     if (businessOverview.kpis.pedidos) {
       const m = businessOverview.kpis.pedidos;
       rows.push(`| Pedidos (Total) | ${m.total || 0} | - | - |`);
-      if (m.aprobado !== null) rows.push(`| Pedidos (Aprobados) | ${m.aprobado} | - | - |`);
+      if (m.aprobados != null) rows.push(`| Pedidos (Aprobados) | ${m.aprobados} | - | - |`);
     }
 
-    if (businessOverview.kpis.revenue?.registrado !== null) {
-      rows.push(`| Ingresos Registrados | ${formatNumber(businessOverview.kpis.revenue.registrado)} | - | - |`);
+    if (businessOverview.kpis.revenue?.total !== null) {
+      rows.push(`| Ingresos Registrados | ${formatNumber(businessOverview.kpis.revenue.total)} | - | - |`);
     }
     if (businessOverview.kpis.revenue?.aprobado !== null) {
       rows.push(`| Ingresos Aprobados | ${formatNumber(businessOverview.kpis.revenue.aprobado)} | - | - |`);
@@ -1468,7 +1468,7 @@ function buildCompleteBusinessReport(
 
   if (businessOverview?.kpis.pedidos?.total === 0) {
     readings.push("No se observan pedidos registrados en el período.");
-  } else if (businessOverview?.kpis.pedidos?.aprobado === 0) {
+  } else if (businessOverview?.kpis.pedidos?.aprobados === 0) {
     readings.push("Se registran pedidos pero ninguno ha sido aprobado aún.");
   }
 
@@ -1503,7 +1503,7 @@ function buildCompleteBusinessReport(
   if (businessOverview?.kpis.pedidos?.total === 0) {
     investigations.push("- Revisar canales de captura de pedidos y disponibilidad de producto");
   }
-  if (businessOverview?.kpis.pedidos?.aprobado === 0 && businessOverview?.kpis.pedidos?.total > 0) {
+  if (businessOverview?.kpis.pedidos?.aprobados === 0 && (businessOverview?.kpis.pedidos?.total ?? 0) > 0) {
     investigations.push("- Revisar proceso de aprobación de pedidos");
   }
   if (ga4Metrics && ga4Metrics.traffic.bounceRate && ga4Metrics.traffic.bounceRate > 70) {

@@ -6,6 +6,7 @@ import williamImg from "@/assets/speaker-william-vinasco.webp";
 import diegoImg from "@/assets/speaker-diego-camacho.jpg";
 import elsaImg from "@/assets/speaker-elsa-maria-gonzalez.jpg";
 import martanImg from "@/assets/speaker-martan.png";
+import camiloImg from "@/assets/speaker-camilo-gomez-ortiz.jpg";
 
 import bookMilagrosamente from "@/assets/book-milagrosamente.webp";
 import bookClientesFans from "@/assets/book-clientes-fans.webp";
@@ -233,6 +234,36 @@ export const speakers: Speaker[] = [
     ],
     destacado: false,
     quote: "La IA no reemplaza a tu equipo: lo libera para vender mejor.",
+  },
+  {
+    slug: "camilo-gomez-ortiz",
+    nombre: "Camilo Gómez Ortiz",
+    especialidad: "Venta consultiva & IA aplicada a equipos comerciales",
+    foto: camiloImg,
+    bio: [
+      "Camilo Gómez Ortiz trabajó más de diez años en Google. Como Head de Desarrollo de Nuevos Negocios y Gestión de Cuentas B2B para Latinoamérica, lideró un equipo de 12 a 15 personas en cinco países y gestionó un portafolio de más de US$300 millones. Lanzó productos tecnológicos en ocho países de la región.",
+      "Co-lideró la Google Partnerships Sales Academy y su programa e-learning Fundamentals, y fue uno de los Trusted Advisors de Google en español. Desde 2023 diseña y facilita programas de ventas, liderazgo e IA para equipos comerciales en Latinoamérica, y es creador de Trusted Advisor AI Edition, cohortes que combinan la venta como asesor de confianza con el trabajo apoyado en IA.",
+      "Su enfoque parte de una idea simple: la IA prepara y ayuda a practicar, pero son las personas las que generan la confianza que cierra negocios. Trabaja con un marco de cuatro pasos (Conectar, Aprender, Resolver y Cerrar) en el que cada equipo aprende qué delegar en la IA y qué sigue siendo suyo, practicando en vivo sobre sus propias cuentas.",
+      "Ha trabajado con equipos de Google, Meta, Walmart Advertising, AllianceBernstein, Uber Advertising y Grupo Fórmula. Radica en México y facilita en español e inglés, en formatos presenciales o virtuales: bootcamps, programas por cohortes, Pitch Clinics y conferencias para kickoffs y convenciones comerciales.",
+    ],
+    tematicas: [
+      "Venta consultiva",
+      "Inteligencia artificial",
+      "Ventas B2B",
+      "Liderazgo comercial",
+      "Publicidad y medios",
+      "Trusted Advisor",
+    ],
+    charlas: [
+      "Bootcamp de venta consultiva con IA",
+      "Trusted Advisor AI Edition: asesores de confianza apoyados en IA",
+      "Pitch Clinic: presentaciones clave que cierran negocios",
+      "Qué cambia la IA en la venta y qué sigue siendo humano",
+      "Pensamiento estratégico para equipos comerciales",
+      "Hacking Failure: aprender del error para crecer",
+    ],
+    destacado: false,
+    quote: "La IA prepara la reunión. Tu equipo gana la confianza.",
   },
 ];
 

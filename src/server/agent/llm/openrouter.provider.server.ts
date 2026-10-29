@@ -59,7 +59,7 @@ function isRetryableError(status?: number, error?: Error): boolean {
   if (!status && !error) return false;
 
   // Retryable HTTP statuses
-  if (status === 429 || status >= 500) {
+  if (status !== undefined && (status === 429 || status >= 500)) {
     return true;
   }
 
