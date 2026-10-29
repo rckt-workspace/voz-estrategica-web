@@ -238,15 +238,15 @@ function CamiloPage() {
           aria-hidden
           className="pointer-events-none absolute -right-32 top-0 h-[28rem] w-[28rem] rounded-full bg-brand/40 blur-3xl"
         />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pt-24 pb-20 md:grid-cols-[1fr_1.1fr] md:pt-32">
-          <Reveal>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-foreground/5">
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pt-24 pb-20 md:grid-cols-[1fr_1.1fr] md:items-stretch md:pt-32">
+          <Reveal className="md:h-full">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-foreground/5 md:aspect-auto md:h-full">
               <img
                 src={camiloImg}
                 alt="Retrato editorial de Camilo Gómez Ortiz"
                 width={900}
                 height={1350}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover object-top"
               />
             </div>
           </Reveal>
@@ -445,7 +445,8 @@ function CamiloPage() {
 
       {/* 8. QUIÉN ES CAMILO */}
       <section className="bg-secondary">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.3fr]">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-[1fr_1.3fr] md:items-start">
+          <div className="md:sticky md:top-28 md:self-start">
           <Reveal>
             <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-foreground/5">
               <img
@@ -458,6 +459,7 @@ function CamiloPage() {
               />
             </div>
           </Reveal>
+          </div>
           <div>
             <SectionHead badge="06 · Quién es Camilo" title="De la operación comercial de Google a la sala con tu equipo." />
             <div className="mt-6 space-y-5 text-lg text-muted-foreground">
