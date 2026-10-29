@@ -1503,7 +1503,7 @@ function buildCompleteBusinessReport(
   if (businessOverview?.kpis.pedidos?.total === 0) {
     investigations.push("- Revisar canales de captura de pedidos y disponibilidad de producto");
   }
-  if (businessOverview?.kpis.pedidos?.aprobados === 0 && businessOverview?.(kpis.pedidos?.total ?? 0) > 0) {
+  if (businessOverview?.kpis.pedidos?.aprobados === 0 && (businessOverview?.kpis.pedidos?.total ?? 0) > 0) {
     investigations.push("- Revisar proceso de aprobación de pedidos");
   }
   if (ga4Metrics && ga4Metrics.traffic.bounceRate && ga4Metrics.traffic.bounceRate > 70) {
