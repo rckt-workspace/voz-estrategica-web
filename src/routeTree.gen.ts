@@ -49,6 +49,7 @@ import { Route as MasterclassGraciasRouteImport } from './routes/masterclass.gra
 import { Route as MxDiegoCamachoRouteImport } from './routes/mx.diego-camacho'
 import { Route as SpeakersIndexRouteImport } from './routes/speakers.index'
 import { Route as SpeakersSlugRouteImport } from './routes/speakers.$slug'
+import { Route as SpeakersCamiloGomezOrtizRouteImport } from './routes/speakers.camilo-gomez-ortiz'
 import { Route as ApiAdminAgentRouteImport } from './routes/api.admin.agent'
 import { Route as ApiAdminSessionRouteImport } from './routes/api.admin.session'
 import { Route as ApiAgentChatRouteImport } from './routes/api.agent.chat'
@@ -259,6 +260,12 @@ const SpeakersSlugRoute = SpeakersSlugRouteImport.update({
   path: '/speakers/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpeakersCamiloGomezOrtizRoute =
+  SpeakersCamiloGomezOrtizRouteImport.update({
+    id: '/speakers/camilo-gomez-ortiz',
+    path: '/speakers/camilo-gomez-ortiz',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAdminAgentRoute = ApiAdminAgentRouteImport.update({
   id: '/api/admin/agent',
   path: '/api/admin/agent',
@@ -334,6 +341,7 @@ export interface FileRoutesByFullPath {
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
+  '/speakers/camilo-gomez-ortiz': typeof SpeakersCamiloGomezOrtizRoute
   '/admin/': typeof AdminIndexRoute
   '/control/': typeof ControlIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
@@ -381,6 +389,7 @@ export interface FileRoutesByTo {
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
+  '/speakers/camilo-gomez-ortiz': typeof SpeakersCamiloGomezOrtizRoute
   '/admin': typeof AdminIndexRoute
   '/control': typeof ControlIndexRoute
   '/speakers': typeof SpeakersIndexRoute
@@ -431,6 +440,7 @@ export interface FileRoutesById {
   '/masterclass/gracias': typeof MasterclassGraciasRoute
   '/mx/diego-camacho': typeof MxDiegoCamachoRoute
   '/speakers/$slug': typeof SpeakersSlugRoute
+  '/speakers/camilo-gomez-ortiz': typeof SpeakersCamiloGomezOrtizRoute
   '/admin/': typeof AdminIndexRoute
   '/control/': typeof ControlIndexRoute
   '/speakers/': typeof SpeakersIndexRoute
@@ -482,6 +492,7 @@ export interface FileRouteTypes {
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
     | '/speakers/$slug'
+    | '/speakers/camilo-gomez-ortiz'
     | '/admin/'
     | '/control/'
     | '/speakers/'
@@ -529,6 +540,7 @@ export interface FileRouteTypes {
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
     | '/speakers/$slug'
+    | '/speakers/camilo-gomez-ortiz'
     | '/admin'
     | '/control'
     | '/speakers'
@@ -578,6 +590,7 @@ export interface FileRouteTypes {
     | '/masterclass/gracias'
     | '/mx/diego-camacho'
     | '/speakers/$slug'
+    | '/speakers/camilo-gomez-ortiz'
     | '/admin/'
     | '/control/'
     | '/speakers/'
@@ -617,6 +630,7 @@ export interface RootRouteChildren {
   MasterclassGraciasRoute: typeof MasterclassGraciasRoute
   MxDiegoCamachoRoute: typeof MxDiegoCamachoRoute
   SpeakersSlugRoute: typeof SpeakersSlugRoute
+  SpeakersCamiloGomezOrtizRoute: typeof SpeakersCamiloGomezOrtizRoute
   SpeakersIndexRoute: typeof SpeakersIndexRoute
   ApiAdminAgentRoute: typeof ApiAdminAgentRoute
   ApiAdminSessionRoute: typeof ApiAdminSessionRoute
@@ -909,6 +923,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeakersSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/speakers/camilo-gomez-ortiz': {
+      id: '/speakers/camilo-gomez-ortiz'
+      path: '/speakers/camilo-gomez-ortiz'
+      fullPath: '/speakers/camilo-gomez-ortiz'
+      preLoaderRoute: typeof SpeakersCamiloGomezOrtizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/agent': {
       id: '/api/admin/agent'
       path: '/api/admin/agent'
@@ -1031,6 +1052,7 @@ const rootRouteChildren: RootRouteChildren = {
   MasterclassGraciasRoute: MasterclassGraciasRoute,
   MxDiegoCamachoRoute: MxDiegoCamachoRoute,
   SpeakersSlugRoute: SpeakersSlugRoute,
+  SpeakersCamiloGomezOrtizRoute: SpeakersCamiloGomezOrtizRoute,
   SpeakersIndexRoute: SpeakersIndexRoute,
   ApiAdminAgentRoute: ApiAdminAgentRoute,
   ApiAdminSessionRoute: ApiAdminSessionRoute,
